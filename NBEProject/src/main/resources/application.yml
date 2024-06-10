@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: NBEProject
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db326
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: user326
+    password: 1234
