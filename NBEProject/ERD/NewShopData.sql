@@ -20,13 +20,10 @@ CREATE TABLE basket
 
 CREATE TABLE comment
 (
-  id            INT          NOT NULL AUTO_INCREMENT COMMENT 'CommentID',
-  content       VARCHAR(200) NOT NULL COMMENT 'CommentContent',
-  regdate       DATETIME     NULL     DEFAULT now() COMMENT 'CommentRegDate',
-  comment_order INT          NULL     DEFAULT 1 COMMENT 'CommentOrder',
-  reply_order   INT          NULL     DEFAULT 0 COMMENT 'ReplyOrder',
-  reply_depth   INT          NULL     DEFAULT 0 COMMENT 'ReplyDepth',
-  post_id       INT          NOT NULL COMMENT 'PostID',
+  id      INT          NOT NULL AUTO_INCREMENT COMMENT 'CommentID',
+  content VARCHAR(200) NOT NULL COMMENT 'CommentContent',
+  regdate DATETIME     NULL     DEFAULT now() COMMENT 'CommentRegDate',
+  post_id INT          NOT NULL COMMENT 'PostID',
   PRIMARY KEY (id)
 ) COMMENT '댓글';
 
@@ -81,7 +78,7 @@ CREATE TABLE order
   id            INT          NOT NULL AUTO_INCREMENT COMMENT 'OrderID',
   price         INT          NOT NULL DEFAULT 0 COMMENT 'OrderPrice',
   date          DATETIME     NULL     DEFAULT now() COMMENT 'OrderDate',
-  status        ENUM('Paid','Ready','Shipping', 'Complete')         NULL     DEFAULT 'Paid' COMMENT 'OrderStatus',
+  status        ENUM('Paid','Ready','Ship','Complete')         NULL     DEFAULT 'Paid' COMMENT 'OrderStatus',
   address       VARCHAR(200) NOT NULL COMMENT 'OrderAddress',
   zipcode       VARCHAR(6)   NOT NULL COMMENT 'OrderZipCode',
   phone         VARCHAR(20)  NOT NULL COMMENT 'OrderPhone',
@@ -189,7 +186,8 @@ ALTER TABLE comment
   ADD CONSTRAINT FK_post_TO_comment
     FOREIGN KEY (post_id)
     REFERENCES post (id)
-        ON UPDATE RESTRICT;
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE;
 
 ALTER TABLE review
   ADD CONSTRAINT FK_goods_TO_review
