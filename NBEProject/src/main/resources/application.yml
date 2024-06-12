@@ -3,7 +3,20 @@ spring:
     name: NBEProject
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db326
+    url: jdbc:mysql://localhost:3306/nbe_db
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: user326
+    username: Admin
     password: 1234
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+
+app:
+  # 페이징 관련 세팅값
+  pagination:
+    write_pages: 10 # 한 [페이징] 당 몇 개의 페이지를 표시
+    page_rows: 10 # 한 '페이지' 에 몇 개의 글을 리스트 할 지?
+
+  # 파일 업로드 경로
+  upload:
+    path: upload
