@@ -20,10 +20,13 @@ CREATE TABLE basket
 
 CREATE TABLE comment
 (
-  id      INT          NOT NULL AUTO_INCREMENT COMMENT 'CommentID',
-  content VARCHAR(200) NOT NULL COMMENT 'CommentContent',
-  regdate DATETIME     NULL     DEFAULT now() COMMENT 'CommentRegDate',
-  post_id INT          NOT NULL COMMENT 'PostID',
+  id            INT          NOT NULL AUTO_INCREMENT COMMENT 'CommentID',
+  content       VARCHAR(200) NOT NULL COMMENT 'CommentContent',
+  regdate       DATETIME     NULL     DEFAULT now() COMMENT 'CommentRegDate',
+  comment_order INT          NULL     DEFAULT 1 COMMENT 'CommentOrder',
+  reply_order   INT          NULL     DEFAULT 0 COMMENT 'ReplyOrder',
+  reply_depth   INT          NULL     DEFAULT 0 COMMENT 'ReplyDepth',
+  post_id       INT          NOT NULL COMMENT 'PostID',
   PRIMARY KEY (id)
 ) COMMENT '댓글';
 
@@ -78,7 +81,7 @@ CREATE TABLE order
   id            INT          NOT NULL AUTO_INCREMENT COMMENT 'OrderID',
   price         INT          NOT NULL DEFAULT 0 COMMENT 'OrderPrice',
   date          DATETIME     NULL     DEFAULT now() COMMENT 'OrderDate',
-  status        ENUM('Paid', 'Ready', 'Shipping', 'Complete') NULL DEFAULT 'Paid' COMMENT 'OrderStatus',
+  status        ENUM('Paid','Ready','Shipping', 'Complete')         NULL     DEFAULT 'Paid' COMMENT 'OrderStatus',
   address       VARCHAR(200) NOT NULL COMMENT 'OrderAddress',
   zipcode       VARCHAR(6)   NOT NULL COMMENT 'OrderZipCode',
   phone         VARCHAR(20)  NOT NULL COMMENT 'OrderPhone',
@@ -118,18 +121,11 @@ CREATE TABLE search
 (
   id           INT          NOT NULL AUTO_INCREMENT COMMENT 'SearchID',
   title        VARCHAR(200) NULL     COMMENT 'Title',
-  season       ENUM('None', 'Spring', 'Summer', 'Fall', 'Winter')  NULL     DEFAULT 'None' COMMENT 'Season',
+  season       ENUM('None','Spring','Summer','Fall','Winter')         NULL     DEFAULT 'None' COMMENT 'Season',
   expired_date DATETIME     NULL     COMMENT 'ExpiredDate',
   user_id      INT          NOT NULL COMMENT 'UserID',
   PRIMARY KEY (id)
 ) COMMENT '검색';
-
-CREATE TABLE sub_comment
-(
-  id         INT NOT NULL AUTO_INCREMENT COMMENT 'SubCommentID',
-  comment_id INT NOT NULL COMMENT 'CommentID',
-  PRIMARY KEY (id)
-) COMMENT '대댓글';
 
 CREATE TABLE user
 (
@@ -142,7 +138,7 @@ CREATE TABLE user
   email    VARCHAR(50)  NOT NULL COMMENT 'Email',
   gender   INT          NULL     DEFAULT 0 COMMENT 'Gender',
   regdate  DATETIME     NULL     DEFAULT now() COMMENT 'RegDate',
-  grade    ENUM('Bronze', 'Sliver', 'Gold', 'Diamond')  NULL     DEFAULT 'Bronze' COMMENT 'Grade',
+  grade    ENUM('Bronze','Sliver','Gold','Diamond')         NULL     DEFAULT 'Bronze' COMMENT 'Grade',
   point    INT          NOT NULL DEFAULT 0 COMMENT 'Point',
   PRIMARY KEY (id)
 ) COMMENT '유저';
@@ -193,20 +189,12 @@ ALTER TABLE comment
   ADD CONSTRAINT FK_post_TO_comment
     FOREIGN KEY (post_id)
     REFERENCES post (id)
-        ON DELETE CASCADE
         ON UPDATE RESTRICT;
 
 ALTER TABLE review
   ADD CONSTRAINT FK_goods_TO_review
     FOREIGN KEY (goods_id)
     REFERENCES goods (id)
-        ON UPDATE RESTRICT;
-
-ALTER TABLE sub_comment
-  ADD CONSTRAINT FK_comment_TO_sub_comment
-    FOREIGN KEY (comment_id)
-    REFERENCES comment (id)
-        ON DELETE CASCADE
         ON UPDATE RESTRICT;
 
 ALTER TABLE coupon
