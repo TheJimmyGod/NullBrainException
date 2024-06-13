@@ -51,7 +51,7 @@ public class HomeController {
                 HttpMethod.GET,
                 entity,
                 Product.class,
-                "셔츠");
+                "남성의류, 맨투맨");
 
         Product p = (Product) response.getBody();
         List<String> images = new ArrayList<>();
