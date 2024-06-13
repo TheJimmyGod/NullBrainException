@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.CommentRepository">
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_email" property="email"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_regdate" property="regDate"/>
+    </resultMap>
+
+    <resultMap id="mapComment" type="com.lec.spring.domain.Comment">
+        <result column="c_id" property="id"/>
+        <result column="c_content" property="content"/>
+        <result column="c_regdate" property="regDate"/>
+        <result column="c_post_id" property="post_id"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
+    <select id="findByPost" resultMap="mapComment">
+        <!--TODO-->
+    </select>
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Comment" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <!--TODO-->
+    </insert>
+    <delete id="deleteById" flushCache="true">
+        <!--TODO-->
+    </delete>
+</mapper>
