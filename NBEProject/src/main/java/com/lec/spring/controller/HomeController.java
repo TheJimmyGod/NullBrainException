@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class HomeController {
     String requestUrl = "https://openapi.naver.com/v1/search/shop.json";
 
     RestTemplate rt = new RestTemplate();
-
+    int i=1;
     @GetMapping("/hello")
     public String hello(){return "hello";}
     @GetMapping("/product")
@@ -52,19 +54,28 @@ public class HomeController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Naver-Client-Id","u8KkPZWhFC1zC65uYoqr");
         headers.add("X-Naver-Client-Secret","Ls8LfoYruJ");
+        for(int j = 1; j <= 10; j++){
 
-        // HttpEntity 생성
-        HttpEntity<MultiValueMap<String, String>> entity =
-                new HttpEntity<>(headers);
-        // 요청
-        ResponseEntity<?> response = rt.exchange(requestUrl +"?query={query}",
-                HttpMethod.GET,
-                entity,
-                Product.class,
-                "의류");
+            URI uri = UriComponentsBuilder
+                    .fromUriString(requestUrl)
+                    .queryParam("query", "패션의류")
+                    .queryParam("start", i)
+                    .queryParam("display",100)
+                    .build()
+                    .toUri();
+            // HttpEntity 생성
+            HttpEntity<MultiValueMap<String, String>> entity =
+                    new HttpEntity<>(headers);
+            // 요청
+            ResponseEntity<?> response = rt.exchange(uri.toString(),
+                    HttpMethod.GET,
+                    entity,
+                    Product.class);
 
-        Product p = (Product) response.getBody();
-        p.getItems().stream().forEach(e -> itemRepository.insert(e));
+            Product p = (Product) response.getBody();
+            p.getItems().stream().forEach(e -> itemRepository.insert(e));
+            i += 100;
+        }
 
 
         return "success";
