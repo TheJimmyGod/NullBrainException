@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.GoodsRepo">
+    <sql id="SELECT_BASE">
+        select * from goods
+        where 1=1
+    </sql>
+    <select id="selectById" resultType="com.lec.spring.domain.shop.Goods">
+        <include refid="SELECT_BASE"/>
+        AND productId=#{id}
+    </select>
+
+    <select id="selectByCategory" resultType="com.lec.spring.domain.shop.Goods">
+        <include refid="SELECT_BASE"/>
+        AND category1=#{category1}
+        AND category2=#{category2}
+        AND category3=#{category3}
+    </select>
+</mapper>

@@ -1,11 +1,15 @@
 package com.lec.spring.controller;
 import com.lec.spring.domain.Product;
+import com.lec.spring.repository.ItemRepository;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -30,6 +34,11 @@ import java.util.List;
 @RequestMapping("/shop")
 @Controller
 public class HomeController {
+    ItemRepository itemRepository ;
+    @Autowired
+    public HomeController(SqlSession sqlSession){
+        itemRepository = sqlSession.getMapper(ItemRepository.class);
+    }
     String requestUrl = "https://openapi.naver.com/v1/search/shop.json";
 
     RestTemplate rt = new RestTemplate();
@@ -37,7 +46,8 @@ public class HomeController {
     @GetMapping("/hello")
     public String hello(){return "hello";}
     @GetMapping("/product")
-    public String getInfo(Model model){
+    @ResponseBody
+    public String getInfo(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Naver-Client-Id","u8KkPZWhFC1zC65uYoqr");
@@ -51,14 +61,13 @@ public class HomeController {
                 HttpMethod.GET,
                 entity,
                 Product.class,
-                "남성의류, 맨투맨");
+                "의류");
 
         Product p = (Product) response.getBody();
-        List<String> images = new ArrayList<>();
-        p.getItems().stream().forEach(e -> images.add(e.getImage()));
-        model.addAttribute("images", images);
+        p.getItems().stream().forEach(e -> itemRepository.insert(e));
 
-        return "/product";
+
+        return "success";
     }
 
 

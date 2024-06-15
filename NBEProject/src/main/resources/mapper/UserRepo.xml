@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.UserRepo">
+    <insert id="insert" parameterType="com.lec.spring.domain.shop.User"
+    useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO user (id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point)
+        VALUE (#{id}, #{username}, #{password}, #{regdate}, #{name}, #{phone}, #{birth}, #{email}, #{gender}, #{profileimage}, #{grade}, #{total_price}, #{point})
+    </insert>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM user
+        WHERE id=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.lec.spring.domain.shop.User">
+        UPDATE user
+        SET
+            username=#{username},
+            password=#{password},
+            phone=#{phone},
+            email=#{email},
+            profileimage=#{profileimage},
+            grade=#{grade},
+            total_price=#{total_price},
+            point=#{point}
+        WHERE
+            id=#{id}
+
+    </update>
+    <sql id="SELECT_BASE">
+        SELECT id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point
+        FROM user
+        WHERE 1=1
+    </sql>
+    <select id="selectAll" flushCache="true" resultType="com.lec.spring.domain.shop.User">
+        <include refid="SELECT_BASE"/>
+    </select>
+
+    <select id="selectByUsername" flushCache="true" resultType="com.lec.spring.domain.shop.User">
+        <include refid="SELECT_BASE"/>
+        AND
+        username=#{username}
+    </select>
+
+    <select id="selectById" flushCache="true" resultType="com.lec.spring.domain.shop.User">
+        <include refid="SELECT_BASE"/>
+        AND
+        id=#{id}
+    </select>
+    
+</mapper>
