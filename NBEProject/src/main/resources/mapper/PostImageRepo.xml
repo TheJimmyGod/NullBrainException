@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lec.spring.repository.PostImageRepo">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.AttachmentRepo">
+    <insert id="insert" flushCache="true" parameterType="arraylist">
+        INSERT INTO post_image(file_name, post_id)
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (#{e.file_name}, #{param2})
+        </foreach>
+    </insert>
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.shop.Post_image">
+        INSERT INTO post_image(file_name, post_id)
+        VALUES (#{file_name}, #{post_id})
+    </insert>
+    <sql id="SELECT_FILE">
+        SELECT id, file_name, post_id
+        FROM post_image
+        WHERE 1=1
+    </sql>
+    <select id="findByPost" resultType="com.lec.spring.domain.shop.Post_image">
+        <include refid="SELECT_FILE"/>
+            AND post_id = #{param1}
+            ORDER BY id ASC
+    </select>
 
+    <select id="findById" resultType="com.lec.spring.domain.shop.Post_image">
+        <include refid="SELECT_FILE"/>
+        AND id = #{id}
+    </select>
+    <select id="findByIds" resultType="com.lec.spring.domain.shop.Post_image" parameterType="arraylist">
+        <include refid="SELECT_FILE" />
+        AND id IN
+        <foreach collection="array" item="e" separator="," open="(" close=")">
+            #{e}
+        </foreach>
+        ORDER BY id ASC
+    </select>
+    <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
+        DELETE FROM post_image
+        WHERE id IN (<foreach collection="array" item="item" separator=",">
+                        #{item}
+                    </foreach>)
+    </delete>
+    <delete id="delete" flushCache="true">
+        DELETE FROM post_image WHERE id = #{id}
+    </delete>
 </mapper>
