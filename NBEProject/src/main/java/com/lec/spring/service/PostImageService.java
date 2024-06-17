@@ -1,7 +1,7 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.shop.Post_image;
+import com.lec.spring.domain.shop.PostImage;
 
 public interface PostImageService {
-    Post_image findById(Integer id);
+    PostImage findById(Integer id);
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Post_image {
+public class PostImage {
     private Integer id;
     private String file_name;
     private Integer post_id;

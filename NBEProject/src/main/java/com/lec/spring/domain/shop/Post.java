@@ -18,7 +18,7 @@ public class Post {
 
     @ToString.Exclude
     @Builder.Default // builder 제공 안 함
-    private List<Post_image> imageList = new ArrayList<>();
+    private List<PostImage> imageList = new ArrayList<>();
 
     private User user;
 }

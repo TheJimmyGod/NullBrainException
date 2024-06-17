@@ -2,7 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.shop.Post;
-import com.lec.spring.domain.shop.Post_image;
+import com.lec.spring.domain.shop.PostImage;
 import com.lec.spring.repository.AttachmentRepo;
 import com.lec.spring.repository.PostImageRepo;
 import com.lec.spring.repository.PostRepo;
@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
     public Post detail(Integer id) {
         Post post = postRepository.findById(id);
         if(post != null){
-            List<Post_image> imageList = postImageRepository.findByPost(post.getId());
+            List<PostImage> imageList = postImageRepository.findByPost(post.getId());
             if(!IsImage(imageList))
                 return null;
             post.setImageList(imageList);
@@ -69,7 +69,7 @@ public class PostServiceImpl implements PostService {
         if(files == null || files.isEmpty()) return;
         for (Map.Entry<String, MultipartFile> e : files.entrySet()){
             if(!e.getKey().startsWith("upfile")) continue;
-            Post_image file = upload(e.getValue());
+            PostImage file = upload(e.getValue());
             if(file != null){
                 file.setPost_id(id);
                 postImageRepository.save(file);
@@ -77,8 +77,8 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    private Post_image upload(MultipartFile multipartFile){
-        Post_image image = null;
+    private PostImage upload(MultipartFile multipartFile){
+        PostImage image = null;
         String originalFileName = multipartFile.getOriginalFilename();
         if(originalFileName == null || originalFileName.isEmpty()) return null;
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -105,13 +105,13 @@ public class PostServiceImpl implements PostService {
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        image = Post_image.builder().file_name(fileName).build();
+        image = PostImage.builder().file_name(fileName).build();
         return image;
     }
 
-    private boolean IsImage(List<Post_image> imageList){
+    private boolean IsImage(List<PostImage> imageList){
         String realPath = new File(uploadDir).getAbsolutePath();
-        for(Post_image a : imageList){
+        for(PostImage a : imageList){
             BufferedImage imgData = null;
             File f = new File(realPath, a.getFile_name());
             try{
@@ -183,7 +183,7 @@ public class PostServiceImpl implements PostService {
     public Post selectById(Integer id) {
         Post post = postRepository.findById(id);
         if(post != null){
-            List<Post_image> imageList = postImageRepository.findByPost(post.getId());
+            List<PostImage> imageList = postImageRepository.findByPost(post.getId());
             if(IsImage(imageList))
             {
                 post.setImageList(imageList);
@@ -202,7 +202,7 @@ public class PostServiceImpl implements PostService {
 
         if(delfile != null){
             for(Integer id : delfile){
-                Post_image file = postImageRepository.findById(id);
+                PostImage file = postImageRepository.findById(id);
                 if(file != null){
                     delfile(file);
                     postImageRepository.delete(file);
@@ -213,7 +213,7 @@ public class PostServiceImpl implements PostService {
         return result;
     }
 
-    private void delfile(Post_image file){
+    private void delfile(PostImage file){
         String saveDir = new File(uploadDir).getAbsolutePath();
         File f = new File(saveDir, file.getFile_name());
         if(f.exists()){
@@ -232,9 +232,9 @@ public class PostServiceImpl implements PostService {
         int result = 0;
         Post post = postRepository.findById(id);
         if(post != null){
-            List<Post_image> imageList = postImageRepository.findByPost(id);
+            List<PostImage> imageList = postImageRepository.findByPost(id);
             if(imageList != null && !imageList.isEmpty()){
-                for(Post_image f : imageList){
+                for(PostImage f : imageList){
                     delfile(f);
                 }
             }
