@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.AddressRepo">
+    <insert id="insert">
+        insert into address (user_id, street_addr, detail_addr, name)
+        VALUE (#{user_id}, #{street_addr}, #{detail_addr}, #{name})
+    </insert>
 
+    <update id="update" parameterType="com.lec.spring.domain.shop.Address" flushCache="true"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        update address
+        set street_addr=#{street_addr},
+            detail_addr=#{detail_addr},
+            isDefault=#{isDefault},
+            name=#{name}
+        where id=#{id}
+    </update>
+
+    <delete id="delete" flushCache="true">
+        delete from address
+        where id=#{param1}
+    </delete>
+
+    <select id="selectAll" flushCache="true" resultType="com.lec.spring.domain.shop.Address">
+        select * from address
+        where user_id=#{param1}
+    </select>
+
+    <select id="selectById" flushCache="true" resultType="com.lec.spring.domain.shop.Address">
+        select * from address
+        where id=#{param1}
+    </select>
 </mapper>

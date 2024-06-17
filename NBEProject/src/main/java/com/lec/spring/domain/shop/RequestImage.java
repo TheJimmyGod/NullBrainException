@@ -1,11 +1,13 @@
 package com.lec.spring.domain.shop;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class Request_image {
+@Builder
+public class RequestImage {
     private Integer id;
     private String file_name;
     private Integer user_id;
-    private Integer purchase_id;
+    private Integer item_id;
 }

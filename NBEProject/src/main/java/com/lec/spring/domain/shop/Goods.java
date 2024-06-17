@@ -1,11 +1,12 @@
 package com.lec.spring.domain.shop;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Goods {
     private String productId;
-    private String title;
     private String image;
     private String price;
     private String content;

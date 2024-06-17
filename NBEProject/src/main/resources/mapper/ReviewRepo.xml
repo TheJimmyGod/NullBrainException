@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ReviewRepo">
+    <insert id="insert" parameterType="com.lec.spring.domain.shop.Review" flushCache="true"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into review (user_id, goods_id, regdate, title, content, rate)
+        value (#{user_id}, #{goods_id}, #{regdate}, #{title}, #{content}, #{rate})
+    </insert>
 
+    <delete id="delete" flushCache="true">
+        delete from review
+        where id=#{param1}
+    </delete>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Review">
+        update review
+        set title=#{title},
+            content=#{content},
+            rate=#{rate}
+        where
+            id=#{id}
+
+    </update>
+
+    <select id="allReview" flushCache="true" resultType="com.lec.spring.domain.shop.Review">
+        select * from review
+        where user_id=#{param1}
+    </select>
+
+    <select id="showReview" flushCache="true" resultType="com.lec.spring.domain.shop.Review">
+        select * from review
+        where id=#{param1}
+    </select>
 </mapper>
