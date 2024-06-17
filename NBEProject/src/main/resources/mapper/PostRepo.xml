@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PostRepo">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.shop.Post" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO post
+            (content, user_id)
+        VALUES
+            (#{content}, #{user.id})
+    </insert>
+    <sql id="SELECT_BASE">
+        SELECT
+            p.id "p_id",
+            p.content "p_content",
+            p.regdate "p_regdate",
+            u.id "u_id",
+            u.username "u_username",
+            u.name "u_name",
+            u.email "u_email",
+            u.regdate "u_regdate"
+        FROM
+            post p, user u
+        WHERE
+            p.user_id = u.id
+    </sql>
+    <resultMap id="mapUser" type="com.lec.spring.domain.shop.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_email" property="email"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_regdate" property="regDate"/>
+    </resultMap>
+    <resultMap id="mapPost" type="com.lec.spring.domain.shop.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_content" property="content"/>
+        <result column="p_regdate" property="regDate"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
 
+    <select id="postList" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        <!--ORDER BY p.id DESC-->
+    </select>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Post">
+        UPDATE post
+        SET content=#{content}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.shop.Post">
+        DELETE FROM post WHERE id=#{id}
+    </delete>
+
+    <select id="selectRow" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM post;
+    </select>
 </mapper>
