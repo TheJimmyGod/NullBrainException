@@ -8,6 +8,12 @@ spring:
     username: Admin
     password: 1234
 
+#  datasource:
+#    url: jdbc:mysql://localhost/practice
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: user326
+#    password: 1234
+
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
 

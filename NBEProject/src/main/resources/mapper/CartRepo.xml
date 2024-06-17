@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.CartRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Cart">
+        insert into nbe_db.cart (user_id, item_id)
+        value (#{user_id}, #{item_id})
+    </insert>
+    <delete id="delete" flushCache="true">
+        delete from nbe_db.cart
+        where user_id=#{param1} and item_id=#{param2}
+    </delete>
+</mapper>

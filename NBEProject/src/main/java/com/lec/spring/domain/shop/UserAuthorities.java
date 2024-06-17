@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class User_authorities {
+public class UserAuthorities {
     private Integer user_id;
     private Integer authority_id;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Review_image {
+public class ReviewImage {
     private Integer id;
     private Integer review_id;
     private String file_name;
