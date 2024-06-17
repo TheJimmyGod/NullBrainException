@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PostImageRepo">
+    <insert id="insert" flushCache="true"
+            parameterType="arraylist">
 
+        INSERT INTO post_Image(file_name, post_id)
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (#{e.filename}, #{param2})
+        </foreach>
+    </insert>
+
+    <insert id="save" flushCache="true"
+            parameterType="com.lec.spring.domain.shop.PostImage">
+        INSERT INTO post_Image(file_name, post_id)
+        VALUES (#{file_name}, #{param2})
+    </insert>
+
+    <sql id="SELECTFILE">
+        SELECT id, post_id, file_name
+        FROM post_Image
+        WHERE 1=1
+    </sql>
+
+    <select id="findByPost" resultType="com.lec.spring.domain.shop.PostImage">
+        <include refid="SELECTFILE"/>
+        AND
+        post_id = #{param1}
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById" resultType="com.lec.spring.domain.shop.PostImage">
+        <include refid="SELECTFILE"/>
+        AND id = #{param1}
+    </select>
+
+    <select id="findByIds" resultType="com.lec.spring.domain.shop.PostImage"
+            parameterType="java.util.ArrayList">
+        <include refid="SELECTFILE"/>
+        AND id IN(
+        <foreach collection="array" item="e" separator=",">
+            #{e}
+        </foreach>
+        )
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteByIds" flushCache="true"
+            parameterType="java.util.ArrayList">
+        DELETE FROM post_Image
+        WHERE id IN (<foreach collection="array" item="item" separator=",">
+        #{item}
+    </foreach>)
+    </delete>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM post_Image WHERE id = #{id}
+    </delete>
 </mapper>

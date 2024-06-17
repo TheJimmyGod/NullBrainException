@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.AuthorityRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Authority"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into authority (auth) value(#{auth})
+    </insert>
 
+    <delete id="delete" flushCache="true">
+        delete from authority
+        where id=#{param1}
+    </delete>
+
+    <select id="findByUser" flushCache="true" parameterType="com.lec.spring.domain.shop.Authority">
+        select  auth
+        from authority
+        where id in
+        (
+            select authority_id from user_authorities
+            where user_id=#{param1}
+        )
+    </select>
+
+    <insert id="addAuthority" flushCache="true">
+        insert into user_authorities (user_id, authority_id) VALUE (#{param1}, #{#param2})
+    </insert>
 </mapper>

@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ContactRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Contact"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into nbe_db.contact (user_id, goods_id, title, content)
+        VALUE (#{user_id}, #{goods_id}, #{title}, #{content})
+    </insert>
 
+    <delete id="delete" flushCache="true">
+        delete from contact
+        where id=#{param1}
+    </delete>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Contact">
+        update contact
+        set title=#{title}, content=#{content}
+        where id=#{id}
+    </update>
+
+    <select id="showById" resultType="com.lec.spring.domain.shop.Contact" flushCache="true">
+        select * from contact
+        where id=#{param1}
+    </select>
+
+    <select id="showMyContact" resultType="com.lec.spring.domain.shop.Contact" flushCache="true">
+        select * from contact
+        where user_id=#{param1}
+    </select>
+
+    <update id="answer" flushCache="true" parameterType="com.lec.spring.domain.shop.Contact">
+        update contact set status=#{status}, answer=#{answer}
+        where id=#{id}
+    </update>
 </mapper>

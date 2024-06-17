@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Request_image {
+public class RequestImage {
     private Integer id;
     private String file_name;
     private Integer user_id;
-    private Integer purchase_id;
+    private Integer item_id;
 }

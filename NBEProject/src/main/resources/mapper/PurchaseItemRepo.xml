@@ -3,7 +3,7 @@
 <mapper namespace="com.lec.spring.repository.PurchaseItemRepo">
     <insert id="insert" flushCache="true" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
             parameterType="com.lec.spring.domain.shop.PurchaseItem">
-        insert into practice.purchase_item (goods_id, amount)
+        insert into purchase_item (goods_id, amount)
         VALUE (#{goods_id}, #{amount})
     </insert>
 </mapper>

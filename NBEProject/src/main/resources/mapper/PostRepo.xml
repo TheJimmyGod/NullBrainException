@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PostRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Post"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into nbe_db.post (user_id, content)
+        value (#{user_id}, #{content})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Post">
+        update nbe_db.post
+        set content=#{content}
+        where id=#{id}
+    </update>
+
+    <delete id="delete" flushCache="true">
+        delete from nbe_db.post
+        where id=#{param1}
+    </delete>
+
+    <select id="showAll" flushCache="true" resultType="com.lec.spring.domain.shop.Post">
+        select * from nbe_db.post
+    </select>
+
+    <select id="showById" flushCache="true" resultType="com.lec.spring.domain.shop.Post">
+        select * from nbe_db.post
+        where id=#{param1}
+    </select>
+
+<!--   좋아요 기능 -->
+    <insert id="like" flushCache="true">
+        insert into nbe_db.likes (user_id, post_id)
+        value (#{param1}, #{param2})
+    </insert>
+
+    <delete id="cancelLike" flushCache="true">
+        delete from nbe_db.likes
+        where user_id=#{param1} and post_id=#{param2}
+    </delete>
+
+    <select id="showLikedPost" resultType="com.lec.spring.domain.shop.Post">
+        select * from nbe_db.post
+        where id in (
+            select likes.post_id from nbe_db.likes where likes.user_id=#{param1}
+            )
+    </select>
 
 </mapper>

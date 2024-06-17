@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -821,
-    "scrollLeft": -769,
+    "scrollTop": -1325,
+    "scrollLeft": -768,
     "zoomLevel": 0.9,
     "show": 511,
     "database": 4,
@@ -5198,20 +5198,20 @@
       "5bXh4R-2yIof2P2kdCujt": {
         "id": "5bXh4R-2yIof2P2kdCujt",
         "tableId": "1uwnCDRal-uoTx9uQ03Eq",
-        "name": "purchase_id",
+        "name": "item_id",
         "comment": "",
         "dataType": "INT",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 2,
-          "widthName": 65,
+          "widthName": 60,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1718327397053,
+          "updateAt": 1718604483367,
           "createAt": 1718327397052
         }
       },
@@ -9551,7 +9551,7 @@
       -1,
       {
         "options(notNull)": 1718327397045,
-        "name": 1718327397045,
+        "name": 1718604483367,
         "dataType": 1718327397045,
         "default": 1718327397045,
         "comment": 1718327397045

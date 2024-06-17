@@ -8,7 +8,7 @@ import lombok.Data;
 public class Options {
 
     private Integer id;
-    private Integer purchase_item_id;
+    private Integer item_id;
     private String name;
     private String value;
 

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.CommentRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Comment"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into comment (user_id, post_id, content)
+        value (#{user_id}, #{post_id}, #{content})
+    </insert>
 
+    <delete id="delete" flushCache="true">
+        delete from comment
+        where id=#{param1}
+    </delete>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Comment"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        update comment
+        set content=#{content}
+        where id=#{id}
+    </update>
+
+    <select id="selectById" resultType="com.lec.spring.domain.shop.Comment" flushCache="true">
+        select * from comment
+        where id=#{param1}
+    </select>
+
+    <select id="selectByPost" resultType="com.lec.spring.domain.shop.Comment" flushCache="true">
+        select * from comment
+        where post_id=#{param1}
+    </select>
 </mapper>
