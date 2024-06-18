@@ -2,6 +2,10 @@ spring:
   application:
     name: NBEProject
 
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+
   datasource:
     url: jdbc:mysql://192.168.0.81:3306/nbe_db
     driver-class-name: com.mysql.cj.jdbc.Driver
