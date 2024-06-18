@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 목록 페이지</title>
+<link rel="stylesheet" href="userlist.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="menu-item admin-menu" onclick="location.href='main.html'">관리자 메뉴</div>
+        <div class="menu-item admin-menu" onclick="location.href='userlist.html'">회원 목록</div>
+        <div class="menu-item order-list" onclick="location.href='usergrade.html'">회원 등급 관리</div>
+    </div>
+    <div class="main-content">
+      <h1>회원 리스트 페이지</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="고객 이름을 입력">
+            <button>검색</button>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>회원 ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>가입일</th>
+                        <th>상태</th>
+                        <th>상태 변경</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>abc</td>
+                        <td>홍길동</td>
+                        <td>abc@mail.com</td>
+                        <td>010-1234-5678</td>
+                        <td>2024-01-01</td>
+                        <td>
+                            <select class="status-select">
+                                <option>활성</option>
+                                <option>비활성</option>
+                            </select>
+                        </td>
+                        <td><button class="apply-button">적용</button></td>
+                    </tr>
+                    <tr>
+                        <td>def</td>
+                        <td>이순신</td>
+                        <td>abc@mail.com</td>
+                        <td>010-1234-5678</td>
+                        <td>2024-01-01</td>
+                        <td>
+                            <select class="status-select">
+                                <option>활성</option>
+                                <option>비활성</option>
+                            </select>
+                        </td>
+                        <td><button class="apply-button">적용</button></td>
+                    </tr>
+                    <tr>
+                        <td>gh</td>
+                        <td>김유신</td>
+                        <td>abc@mail.com</td>
+                        <td>010-1234-5678</td>
+                        <td>2024-01-01</td>
+                        <td>
+                            <select class="status-select">
+                                <option>활성</option>
+                                <option>비활성</option>
+                            </select>
+                        </td>
+                        <td><button class="apply-button">적용</button></td>
+                    </tr>
+                    <tr>
+                        <td>ij</td>
+                        <td>장보고</td>
+                        <td>abc@mail.com</td>
+                        <td>010-1234-5678</td>
+                        <td>2024-01-01</td>
+                        <td>
+                            <select class="status-select">
+                                <option>활성</option>
+                                <option>비활성</option>
+                            </select>
+                        </td>
+                        <td><button class="apply-button">적용</button></td>
+                    </tr>
+                    <tr>
+                        <td>qqwe</td>
+                        <td>홍길동</td>
+                        <td>abc@mail.com</td>
+                        <td>010-1234-5678</td>
+                        <td>2024-01-01</td>
+                        <td>
+                            <select class="status-select">
+                                <option>활성</option>
+                                <option>비활성</option>
+                            </select>
+                        </td>
+                        <td><button class="apply-button">적용</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+</body>
+</html>

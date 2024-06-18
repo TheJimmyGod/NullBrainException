@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의사항 목록 페이지</title>
+    <link rel="stylesheet" href="inquirylist.css">
+
+</head>
+<body>
+    <div class="sidebar">
+        <div class="menu-item admin-menu" onclick="location.href='main.html'">관리자 메뉴</div>
+        <div class="menu-item inquiry-list">문의사항 목록</div>
+    </div>
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" placeholder="회원 이름 입력">
+            <button>검색</button>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>회원 ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>문의 제목</th>
+                        <th>문의 날짜</th>
+                        <th>상태</th>
+                        <th>상세 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>abc</td>
+                        <td>홍길동</td>
+                        <td>abc@mail.com</td>
+                        <td>상품 문의</td>
+                        <td>2024-01-01</td>
+                        <td>답변 대기</td>
+                        <td><a href="inquiry_deatil.html">상세 보기</a></td>
+                    </tr>
+                    <tr>
+                        <td>ddd</td>
+                        <td>이순신</td>
+                        <td>ddd@mail.com</td>
+                        <td>배송 문의</td>
+                        <td>2024-01-02</td>
+                        <td>답변 대기</td>
+                        <td><a href="inquiry_detail.html">상세 보기</a></td>
+                    </tr>
+                    <tr>
+                        <td>eee</td>
+                        <td>홍길동</td>
+                        <td>eee@mail.com</td>
+                        <td>상품 문의</td>
+                        <td>2024-01-03</td>
+                        <td>답변 완료</td>
+                        <td><a href="inquiry_detail.html">상세 보기</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+</body>
+</html>
