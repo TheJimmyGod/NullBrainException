@@ -43,7 +43,7 @@
     height: 15px;
     width: 15px;
     margin: 0 2px;
-    background-color: #bbb;
+    background-color: hotpink;
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
@@ -65,7 +65,6 @@
 
   .submitComment {
     position: absolute;
-    background: #16bdae;
     border: 0;
     border-radius: 7px;
     color: white;
@@ -89,4 +88,20 @@
 
   .addressTable{
     width: 300px; height: 125px;
+  }
+
+  .btn{
+      background-color: lightpink;
+  }
+
+.basicIconColor{
+    color: lightpink;
+    text-decoration: none;
+}
+
+  #btnColor{
+      color: white;
+  }
+  hr {
+      color: hotpink;
   }
