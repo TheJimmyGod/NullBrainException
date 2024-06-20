@@ -1,0 +1,130 @@
+/* 기본 모바일 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+header .logo h1 {
+    font-size: 18px;
+}
+
+header .menu ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+header .menu ul li {
+    display: inline;
+}
+
+header .menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 2vw;
+}
+
+.category {
+    padding: 10px;
+}
+
+.category1 button {
+    margin-right: 10px;
+}
+
+.category2-man.hidden,
+.category2-woman.hidden {
+    display: none;
+}
+
+.category2-man .item,
+.category2-woman .item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1.5vw;
+}
+
+/* .product 스타일 */
+.product {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* 이미지의 최대 높이 설정 */
+    object-fit: cover; /* 이미지 비율을 유지하면서 잘라내기 */
+}
+
+/* 태블릿 이상 화면을 위한 스타일 */
+@media (min-width: 600px) {
+    header .logo h1 {
+        font-size: 24px;
+    }
+
+    header .menu ul li a {
+        font-size: 16px;
+    }
+
+    .category1 button {
+        margin-right: 15px;
+    }
+
+    .category2-man .item,
+    .category2-woman .item {
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 1.5vw;
+    }
+
+    .product {
+        margin: 15px 0;
+    }
+}
+
+/* 데스크탑 이상 화면을 위한 스타일 */
+@media (min-width: 1024px) {
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .category2-man .item,
+    .category2-woman .item {
+        display: inline-block;
+        width: calc(33.333% - 20px);
+        margin: 10px;
+        font-size: 1vw;
+    }
+
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product {
+        width: calc(33.333% - 20px);
+        margin: 10px;
+    }
+
+    .product img {
+        max-height: 300px; /* 데스크탑 화면에서는 이미지의 최대 높이 조정 */
+    }
+}
