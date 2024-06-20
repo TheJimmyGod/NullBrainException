@@ -1,10 +1,12 @@
 package com.lec.spring.domain;
 
 import com.lec.spring.domain.shop.Post;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Component
 public class PostValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
@@ -13,8 +15,8 @@ public class PostValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        Post post = (Post)target;
-        System.out.println("Post-Validator-validate() 호출: " + post);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "image", "이미지는 필수입니다.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "글은 필수입니다.");
+
+        System.out.println("Post Validator Complete");
     }
 }
