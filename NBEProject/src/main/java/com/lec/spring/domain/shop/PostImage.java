@@ -13,5 +13,4 @@ public class PostImage {
     private Integer id;
     private String file_name;
     private Integer post_id;
-
 }

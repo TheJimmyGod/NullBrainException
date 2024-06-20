@@ -52,3 +52,41 @@
   .active, .dot:hover {
     background-color: #717171;
   }
+
+  .pt-site-footer__submit{
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .commentTable{
+    background: lightgray;
+  }
+
+  .submitComment {
+    position: absolute;
+    background: #16bdae;
+    border: 0;
+    border-radius: 7px;
+    color: white;
+    padding: 15px;
+    cursor:pointer;
+    right: 5px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  
+  .inputComment{
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    min-width: 320px;
+  }
+  .clear{
+    clear: both;
+  }
+
+  .addressTable{
+    width: 300px; height: 125px;
+  }

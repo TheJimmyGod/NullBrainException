@@ -22,9 +22,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public QryCommentList list(Integer postId) {
+    public QryCommentList list(Integer post_id) {
         QryCommentList list = new QryCommentList();
-        List<Comment> comments = commentRepository.findByPost(postId);
+        List<Comment> comments = commentRepository.findByPost(post_id);
         list.setCount(comments.size());
         list.setList(comments);
         list.setStatus("OK");
@@ -33,8 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public QryResult write(Integer postId, Integer userId, String content) {
-        //User user = userRepository.findById(userId);
-        User user = null;
+        User user = userRepository.selectById(userId);
 
         Comment comment = Comment.builder()
                 .user(user)
