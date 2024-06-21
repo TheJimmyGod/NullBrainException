@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.shop.Goods;
 import com.lec.spring.domain.shop.Opt;
 import com.lec.spring.repository.ItemRepo;
+import com.lec.spring.repository.OptRepo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -40,9 +41,12 @@ import java.util.Map;
 @Controller
 public class HomeController {
     ItemRepo goodsRepo;
+    OptRepo optRepo;
     @Autowired
     public HomeController(SqlSession sqlSession){
+
         goodsRepo = sqlSession.getMapper(ItemRepo.class);
+        optRepo = sqlSession.getMapper(OptRepo.class);
     }
     RestTemplate rt = new RestTemplate();
 
@@ -256,10 +260,29 @@ public class HomeController {
             ResponseEntity<Goods> response = rt.exchange(url.toString(), HttpMethod.GET, entity, Goods.class);
             Goods responseBody = response.getBody();
             responseBody.getData().forEach(e -> {
-                goodsRepo.insert(e);
-//                List<Map<String, String>> opt = new ArrayList<>();
-//                List<String> titles = e.getOption_titles();
-//                List<Opt> options = e.getOption_values();
+                //상품정보 입력
+//                goodsRepo.insert(e);
+
+
+                // 옵션정보 입력
+                List<Opt> options = e.getOption_values();
+                List<String> titles = e.getOption_titles();
+                int len = titles.size();
+                if (len == 2){
+                    options.forEach(item ->{
+                        List<Map<String, String>> x = new ArrayList<>();
+
+                        x.add(Map.of("color", item.getValues().get(0), "size", item.getValues().get(1)));
+                        optRepo.insert(x, e.getGoods_no());
+                    });
+                } else if(len ==1){
+                    options.forEach(item ->{
+                        List<Map<String, String>> x = new ArrayList<>();
+
+                        x.add(Map.of("color", item.getValues().get(0)));
+                        optRepo.insert(x, e.getGoods_no());
+                    });
+                }
 
             });
         }

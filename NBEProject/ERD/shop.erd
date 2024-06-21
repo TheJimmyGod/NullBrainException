@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -983.774,
-    "scrollLeft": -1.7593,
+    "scrollTop": -1172.774,
+    "scrollLeft": -278.7593,
     "zoomLevel": 0.8,
     "show": 511,
     "database": 4,
@@ -4957,7 +4957,7 @@
       "WrNv2D_xin_DeTd4F-Jm7": {
         "id": "WrNv2D_xin_DeTd4F-Jm7",
         "tableId": "ovDLl4BkLXbKsMUsKDuIh",
-        "name": "name",
+        "name": "color",
         "comment": "",
         "dataType": "varchar(10)",
         "default": "",
@@ -4970,14 +4970,14 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1718928561345,
+          "updateAt": 1718930837055,
           "createAt": 1718928542353
         }
       },
       "q4SYPPmTL0x7b4ERz30AX": {
         "id": "q4SYPPmTL0x7b4ERz30AX",
         "tableId": "ovDLl4BkLXbKsMUsKDuIh",
-        "name": "value",
+        "name": "size",
         "comment": "",
         "dataType": "varchar(10)",
         "default": "",
@@ -4990,7 +4990,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1718928577858,
+          "updateAt": 1718930840879,
           "createAt": 1718928544243
         }
       }
@@ -8477,7 +8477,7 @@
       1718928542349,
       -1,
       {
-        "name": 1718928554294,
+        "name": 1718930837054,
         "dataType": 1718928561345
       }
     ],
@@ -8486,7 +8486,7 @@
       1718928544243,
       -1,
       {
-        "name": 1718928566601,
+        "name": 1718930840863,
         "dataType": 1718928577857
       }
     ]
