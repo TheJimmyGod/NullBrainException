@@ -10,7 +10,7 @@
         <result column="u_name" property="name"/>
         <result column="u_email" property="email"/>
         <result column="u_phone" property="phone"/>
-        <result column="u_regdate" property="regDate"/>
+        <result column="u_regdate" property="regdate"/>
     </resultMap>
 
     <resultMap id="mapComment" type="com.lec.spring.domain.shop.Comment">

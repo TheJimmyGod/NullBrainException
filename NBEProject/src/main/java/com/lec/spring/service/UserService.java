@@ -1,16 +1,20 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.shop.Authority;
 import com.lec.spring.domain.shop.User;
+import com.lec.spring.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    // username(회원 아이디) 의 User 정보 읽어오기
-    User findUserByUsername(String username);
+    //username(회원아이디)으로 User 정보 가져오기
+    User findByUsername(String username);
 
-    // 신규 회원 등록
-    int registerUser(User user);
+    boolean isExist(String username);
 
+    //회원가입
+    int register(UserDto userDto);
 
+    List<Authority> selectAuthoritiesById(Long id);
 }
