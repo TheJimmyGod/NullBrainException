@@ -17,5 +17,4 @@ public interface UserService {
     int register(UserDto userDto);
 
     List<Authority> selectAuthoritiesById(Long id);
-
 }
