@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반품 관리 페이지</title>
+<link rel="stylesheet" href="returnpage.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="menu-item admin-menu" onclick="location.href='main.html'">관리자 메뉴</div>
+        <div class="menu-item order-list">반품 목록</div>
+    </div>
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" placeholder="고객 이름을 입력">
+            <button>검색</button>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>반품번호</th>
+                        <th>고객 이름</th>
+                        <th>주문 일시</th>
+                        <th>상품명</th>
+                        <th>상품 가격</th>
+                        <th>구매 수량</th>
+                        <th>상태</th>
+                        <th>문의 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>홍길동</td>
+                        <td>2024/06/01</td>
+                        <td>셔츠</td>
+                        <td>30,000</td>
+                        <td>3</td>
+                        <td>반품 접수</td>
+                        <td><button class="details-button" onclick="window.location.href='returnDetailPage.html'">상세보기</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>홍길동</td>
+                        <td>2024/06/01</td>
+                        <td>셔츠</td>
+                        <td>30,000</td>
+                        <td>2</td>
+                        <td>반품 완료</td>
+                        <td><button class="details-button" onclick="window.location.href='returnDetailPage.html'">상세보기</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>홍길동</td>
+                        <td>2024/06/01</td>
+                        <td>셔츠</td>
+                        <td>30,000</td>
+                        <td>5</td>
+                        <td>반품 완료</td>
+                        <td><button class="details-button" onclick="window.location.href='returnDetailPage.html'">상세보기</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>홍길동</td>
+                        <td>2024/06/01</td>
+                        <td>셔츠</td>
+                        <td>30,000</td>
+                        <td>10</td>
+                        <td>반품 실패</td>
+                        <td><button class="details-button" onclick="window.location.href='returnDetailPage.html'">상세보기</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>홍길동</td>
+                        <td>2024/06/01</td>
+                        <td>셔츠</td>
+                        <td>30,000</td>
+                        <td>4</td>
+                        <td>반품 접수</td>
+                        <td><button class="details-button" onclick="window.location.href='returnDetailPage.html'">상세보기</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+</body>
+</html>

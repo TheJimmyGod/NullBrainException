@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 수정 페이지</title>
+    <link rel="stylesheet" href="edit_notice.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title">공지사항 수정 페이지</div>
+        <div class="form-group">
+            <label for="title">공지사항 제목</label>
+            <input type="text" id="title" name="title" placeholder="공지사항 제목">
+        </div>
+        <div class="form-group">
+            <label for="author">작성자 표시</label>
+            <input type="text" id="author" name="author" placeholder="작성자 표시">
+        </div>
+        <div class="form-group">
+            <label for="content">공지사항의 상세 내용 입력</label>
+            <textarea id="content" name="content" placeholder="공지사항의 상세 내용 입력"></textarea>
+        </div>
+        <div class="buttons">
+            <button class="submit-button" onclick="updateNotice()">수정</button>
+            <button class="cancel-button" onclick="window.location.href='notice.html'">취소</button>
+        </div>
+    </div>
+    <script>
+        // URL에서 인덱스를 가져오는 함수
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // 공지사항 데이터를 로드하여 수정 페이지에 표시하는 함수
+        function loadNoticeForEdit() {
+            const index = getQueryParam('index');
+            const notices = JSON.parse(localStorage.getItem('notices')) || [];
+            const notice = notices[index];
+            if (notice) {
+                document.getElementById('title').value = notice.title;
+                document.getElementById('author').value = notice.author;
+                document.getElementById('content').value = notice.content;
+            }
+        }
+
+        // 공지사항을 수정하여 저장하는 함수
+        function updateNotice() {
+            const index = getQueryParam('index');
+            const notices = JSON.parse(localStorage.getItem('notices')) || [];
+            const notice = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                content: document.getElementById('content').value,
+                date: new Date().toISOString().split('T')[0]
+            };
+            notices[index] = notice;
+            localStorage.setItem('notices', JSON.stringify(notices));
+            alert('공지사항이 수정되었습니다.');
+            window.location.href = 'notice.html';
+        }
+
+        // 페이지 로드 시 공지사항 데이터를 불러와서 수정 페이지에 표시
+        window.onload = loadNoticeForEdit;
+    </script>
+</body>
+</html>
