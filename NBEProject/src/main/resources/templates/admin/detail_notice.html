@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 상세 페이지</title>
+    <link rel="stylesheet" href="detail_notice.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title">공지사항 상세 페이지</div>
+        <div class="detail-group">
+            <label for="title">공지사항 제목</label>
+            <p id="title"></p>
+        </div>  
+        <div class="detail-group">
+            <label for="number">공지사항 번호</label>
+            <p id="number"></p>
+        </div>
+        <div class="detail-group">
+            <label for="author">작성자 표시</label>
+            <p id="author"></p>
+        </div>
+        <div class="detail-group">
+            <label for="date">작성일 표시</label>
+            <p id="date"></p>
+        </div>
+        <div class="content-group">
+            <label for="content">공지사항의 상세 내용 표시</label>
+            <div id="content"></div>
+        </div>
+        <div class="buttons">
+            <button class="edit-button" onclick="editNotice()">수정</button>
+            <button class="delete-button" onclick="deleteNotice()">삭제</button>
+        </div>
+        <div class="buttons">
+            <button class="back-button" onclick="window.location.href='notice.html'">목록으로 돌아가기</button>
+        </div>
+    </div>
+    <script>
+        // URL에서 인덱스를 가져오는 함수
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // 공지사항 데이터를 로드하여 페이지에 표시하는 함수
+        function loadNoticeDetail() {
+            const index = getQueryParam('index');
+            const notices = JSON.parse(localStorage.getItem('notices')) || [];
+            const notice = notices[index];
+            if (notice) {
+                document.getElementById('title').innerText = notice.title;
+                document.getElementById('number').innerText = parseInt(index) + 1;
+                document.getElementById('author').innerText = notice.author;
+                document.getElementById('date').innerText = notice.date;
+                document.getElementById('content').innerText = notice.content;
+            }
+        }
+
+        // 공지사항을 수정 페이지로 이동하는 함수
+        function editNotice() {
+            const index = getQueryParam('index');
+            window.location.href = `edit_notice.html?index=${index}`;
+        }
+
+        // 공지사항을 삭제하는 함수
+        function deleteNotice() {
+            const index = getQueryParam('index');
+            let notices = JSON.parse(localStorage.getItem('notices')) || [];
+            notices.splice(index, 1);
+            localStorage.setItem('notices', JSON.stringify(notices));
+            alert('공지사항이 삭제되었습니다.');
+            window.location.href = 'notice.html';
+        }
+
+        // 페이지 로드 시 공지사항 데이터를 불러와서 상세 페이지에 표시
+        window.onload = loadNoticeDetail;
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+}
+.sidebar {
+    width: 200px;
+    background-color: #000;
+    padding: 20px;
+    color: white;
+    height: 100vh;
+}
+.sidebar h2 {
+    background-color: black;
+    padding: 10px;
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+}
+.sidebar h2:hover {
+    background-color: #444;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+.sidebar ul li {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: black;
+    cursor: pointer;
+    text-align: center;
+}
+.sidebar ul li:hover {
+    background-color: #444;
+}
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #e0e0e0;
+    height: 100vh;
+}
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.card h3 {
+    margin-top: 0;
+}
+.card .more-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.card .more-btn:hover {
+    background-color: black;
+}

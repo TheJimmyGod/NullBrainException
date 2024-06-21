@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.section {
+    margin-bottom: 20px;
+}
+.section h3 {
+    background-color: gray;
+    color: white;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.section p {
+    margin: 5px 0;
+    padding: 0 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+}
+.approve-button {
+    background-color: #28a745;
+}
+.reject-button {
+    background-color: #dc3545;
+}
+.back-button {
+    background-color: #007bff;
+}
+.approve-button:hover {
+    background-color: #218838;
+}
+.reject-button:hover {
+    background-color: #c82333;
+}
+.back-button:hover {
+    background-color: #0056b3;
+}
