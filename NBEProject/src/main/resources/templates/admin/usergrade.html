@@ -1,114 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 등급 관리 페이지</title>
-<link rel="stylesheet" href="usergrade.css">
+    <link rel="stylesheet" th:href="@{/css/usergrade.css}">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="menu-item" onclick="location.href='main.html'">관리자 메뉴</div>
-        <div class="menu-item" onclick="location.href='userlist.html'">회원 목록</div>
-        <div class="menu-item" onclick="location.href='usergrade.html'">회원 등급 관리</div>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='/admin/main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-        <h1>회원 등급 페이지</h1>
-        <div class="search-bar">
-            <input type="text" placeholder="고객 이름을 입력">
-            <button>검색</button>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>회원 ID</th>
-                        <th>이름</th>
-                        <th>현재 등급</th>
-                        <th>변경 등급</th>
-                        <th>상태 변경</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>abc</td>
-                        <td>홍길동</td>
-                        <td>브론즈</td>
-                        <td>
-                            <select class="status-select">
-                                <option>브론즈</option>
-                                <option>실버</option>
-                                <option>골드</option>
-                                <option>다이아</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">등급변경</button></td>
-                    </tr>
-                    <tr>
-                        <td>def</td>
-                        <td>이순신</td>
-                        <td>실버</td>
-                        <td>
-                            <select class="status-select">
-                                <option>브론즈</option>
-                                <option>실버</option>
-                                <option>골드</option>
-                                <option>다이아</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">등급변경</button></td>
-                    </tr>
-                    <tr>
-                        <td>gh</td>
-                        <td>김유신</td>
-                        <td>다이아</td>
-                        <td>
-                            <select class="status-select">
-                                <option>브론즈</option>
-                                <option>실버</option>
-                                <option>골드</option>
-                                <option>다이아</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">등급변경</button></td>
-                    </tr>
-                    <tr>
-                        <td>ij</td>
-                        <td>장보고</td>
-                        <td>골드</td>
-                        <td>
-                            <select class="status-select">
-                                <option>브론즈</option>
-                                <option>실버</option>
-                                <option>골드</option>
-                                <option>다이아</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">등급변경</button></td>
-                    </tr>
-                    <tr>
-                        <td>qqwe</td>
-                        <td>홍길동</td>
-                        <td>브론즈</td>
-                        <td>
-                            <select class="status-select">
-                                <option>브론즈</option>
-                                <option>실버</option>
-                                <option>골드</option>
-                                <option>다이아</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">등급변경</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">&raquo;</a>
-        </div>
+    <div class="header-right">
+        <span>관리자</span>
+        <span>eces92@gmail.com</span>
+        <a href="/logout">로그아웃</a>
     </div>
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='/admin/userlist'">회원 목록</li>
+        <li onclick="location.href='/admin/usergrade'">회원 등급 관리</li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>회원 등급 페이지</h1> <br>
+    <h3>총 <span th:text="${userCnt}"></span> 명의 회원이 있습니다.</h3>
+    <div class="search-bar">
+        <form th:action="@{/admin/usergrade}" method="get">
+            <input type="text" class="username" name="username" placeholder="고객 이름을 입력" th:value="${param.username}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>회원 ID</th>
+                <th>이름</th>
+                <th>현재 등급</th>
+                <th>변경 등급</th>
+                <th>상태 변경</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">abc</td>
+                <td th:text="${user.username}">홍길동</td>
+                <td th:text="${user.grade}">브론즈</td>
+                <td>
+                    <form th:action="@{/admin/updateGrade}" method="post" class="grade-form">
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <select name="grade" class="status-select">
+                            <option value="Bronze" th:selected="${user.grade == 'Bronze'}">Bronze</option>
+                            <option value="Silver" th:selected="${user.grade == 'Silver'}">Silver</option>
+                            <option value="Gold" th:selected="${user.grade == 'Gold'}">Gold</option>
+                            <option value="Diamond" th:selected="${user.grade == 'Diamond'}">Diamond</option>
+                        </select>
+                </td>
+
+                <td>
+                    <button type="submit" class="apply-button">등급변경</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <a th:href="@{/admin/usergrade(page=${currentPage - 1})}" th:if="${currentPage > 1}">&laquo;</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/admin/usergrade(page=${i})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
+        </span>
+        <a th:href="@{/admin/usergrade(page=${currentPage + 1})}" th:if="${currentPage < totalPages}">&raquo;</a>
+    </div>
+    <script src="/js/usergrade.js"></script>
+</div>
 </body>
 </html>

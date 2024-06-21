@@ -15,13 +15,16 @@ public interface UserRepo {
     // 아이디로 유저 찾기
     public User selectById(Integer id);
     // 유저 이름으로
-    public User selectByUsername(String username);
+    List<User> selectByUsername(String username);
     // 모든 유저확인
     public List<User> selectAll();
 
-    //유저 생성00
-    public int saveUser(UserDto userDto);
+    // 유저 카운트
+    Long countUsers();
 
-    //주소 추가
-    public int saveAddr(UserDto userDto);
+    // 유저 페이지네이션 기능
+    List<User> pagination(int offset, int limit);
+
+    // 유저 등급 변경
+    void updateGrade(int userId, String grade);
 }

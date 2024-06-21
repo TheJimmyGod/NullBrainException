@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 상세 페이지</title>
-    <link rel="stylesheet" href="detail_notice.css">
+    <link rel="stylesheet" href="/css/detail_notice.css">
 </head>
 <body>
     <div class="container">
@@ -34,7 +34,7 @@
             <button class="delete-button" onclick="deleteNotice()">삭제</button>
         </div>
         <div class="buttons">
-            <button class="back-button" onclick="window.location.href='notice.html'">목록으로 돌아가기</button>
+            <button class="back-button" onclick="window.location.href='notice'">목록으로 돌아가기</button>
         </div>
     </div>
     <script>
@@ -61,7 +61,7 @@
         // 공지사항을 수정 페이지로 이동하는 함수
         function editNotice() {
             const index = getQueryParam('index');
-            window.location.href = `edit_notice.html?index=${index}`;
+            window.location.href = `edit_notice?index=${index}`;
         }
 
         // 공지사항을 삭제하는 함수
@@ -71,7 +71,7 @@
             notices.splice(index, 1);
             localStorage.setItem('notices', JSON.stringify(notices));
             alert('공지사항이 삭제되었습니다.');
-            window.location.href = 'notice.html';
+            window.location.href = 'notice';
         }
 
         // 페이지 로드 시 공지사항 데이터를 불러와서 상세 페이지에 표시

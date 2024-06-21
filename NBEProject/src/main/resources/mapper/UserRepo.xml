@@ -62,6 +62,23 @@
         id=#{id}
     </select>
 
+    <!-- 총 사용자 수 카운트 -->
+    <select id="countUsers" resultType="long">
+        SELECT COUNT(*) FROM user
+    </select>
+
+    <!--  페이지네이션 기능  -->
+    <select id="pagination" resultType="com.lec.spring.domain.shop.User">
+        <include refid="SELECT_BASE"/>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!--  유저의 등급 변경 기능  -->
+    <update id="updateGrade">
+        UPDATE user
+        SET grade = #{grade}
+        WHERE id = #{userId}
+    </update>
 
     
 </mapper>

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 목록 페이지</title>
-<link rel="stylesheet" href="notice.css">
+<link rel="stylesheet" href="/css/notice.css">
 </head>
 <body>
     <div class="sidebar">
-      <div class="menu-item" onclick="location.href='main.html'">관리자 메뉴</div>
-      <div class="menu-item" onclick="location.href='notice.html'">공지사항 목록</div>
+      <div class="menu-item" onclick="location.href='main'">관리자 메뉴</div>
+      <div class="menu-item" onclick="location.href='notice'">공지사항 목록</div>
     </div>
     <div class="main-content">
         <div class="search-bar">
@@ -38,7 +38,7 @@
             <a href="#">2</a>
             <a href="#">&raquo;</a>
         </div>
-        <button class="write-button" onclick="location.href='write_notice.html'">글 작성</button>
+        <button class="write-button" onclick="location.href='writenotice'">글 작성</button>
     </div>
 </body>
 <script>
@@ -54,7 +54,7 @@
                 <td>${notice.title}</td>
                 <td>${notice.author}</td>
                 <td>${notice.date}</td>
-                <td><a href="detail_notice.html?index=${index}">상세 보기</a></td>
+                <td><a href="detailnotice?index=${index}">상세 보기</a></td>
             `;
             noticeList.appendChild(row);
         });

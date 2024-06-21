@@ -63,4 +63,8 @@ public class UserServiceImpl implements UserService {
     public List<Authority> selectAuthoritiesById(Long id) {
         return null;
     }
+
+
+
+    // 한승욱 코드
 }
