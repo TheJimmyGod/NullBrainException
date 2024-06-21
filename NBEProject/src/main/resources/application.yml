@@ -1,25 +1,31 @@
 spring:
   application:
     name: NBEProject
+#  datasource:
+#    url: jdbc:mysql://192.168.0.81:3306/nbe_db
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: Admin
+#    password: 1234
 
   thymeleaf:
     cache: false
     prefix: classpath:templates/
 
   datasource:
-    url: jdbc:mysql://192.168.0.81:3306/nbe_db
+    url: jdbc:mysql://localhost/practice
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: Admin
+    username: user326
     password: 1234
-
-#  datasource:
-#    url: jdbc:mysql://localhost/practice
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: user326
-#    password: 1234
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 
 app:
   # 페이징 관련 세팅값
