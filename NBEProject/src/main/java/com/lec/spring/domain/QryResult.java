@@ -1,4 +1,4 @@
-package com.lec.spring.domain.shop;
+package com.lec.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostImage {
-    private Integer id;
-    private String file_name;
-    private Integer post_id;
+public class QryResult {
+    int count;
+    String status;
 }

@@ -1,48 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PostRepo">
-    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Post"
-            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into nbe_db.post (user_id, content)
-        value (#{user_id}, #{content})
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.shop.Post" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO post
+            (content, user_id)
+        VALUES
+            (#{content}, #{user.id})
     </insert>
+    <sql id="SELECT_BASE">
+        SELECT
+            p.id "p_id",
+            p.content "p_content",
+            p.regdate "p_regDate",
+            u.id "u_id",
+            u.username "u_username",
+            u.name "u_name",
+            u.email "u_email",
+            u.regdate "u_regdate"
+        FROM
+            post p, user u
+        WHERE
+            p.user_id = u.id
+    </sql>
+    <resultMap id="mapUser" type="com.lec.spring.domain.shop.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_email" property="email"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_regdate" property="regdate"/>
+    </resultMap>
+    <resultMap id="mapPost" type="com.lec.spring.domain.shop.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_content" property="content"/>
+        <result column="p_regdate" property="regDate"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
 
+    <select id="findAll" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+    </select>
+    <select id="findById" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        AND p.id = #{id}
+    </select>
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Post">
-        update nbe_db.post
-        set content=#{content}
-        where id=#{id}
+        UPDATE post
+        SET content=#{content}
+        WHERE id=#{id}
     </update>
 
-    <delete id="delete" flushCache="true">
-        delete from nbe_db.post
-        where id=#{param1}
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.shop.Post">
+        DELETE FROM post WHERE id=#{id}
     </delete>
 
-    <select id="showAll" flushCache="true" resultType="com.lec.spring.domain.shop.Post">
-        select * from nbe_db.post
+    <select id="selectRow" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
     </select>
 
-    <select id="showById" flushCache="true" resultType="com.lec.spring.domain.shop.Post">
-        select * from nbe_db.post
-        where id=#{param1}
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM post;
     </select>
 
-<!--   좋아요 기능 -->
-    <insert id="like" flushCache="true">
-        insert into nbe_db.likes (user_id, post_id)
-        value (#{param1}, #{param2})
-    </insert>
-
-    <delete id="cancelLike" flushCache="true">
-        delete from nbe_db.likes
-        where user_id=#{param1} and post_id=#{param2}
-    </delete>
-
-    <select id="showLikedPost" resultType="com.lec.spring.domain.shop.Post">
-        select * from nbe_db.post
-        where id in (
-            select likes.post_id from nbe_db.likes where likes.user_id=#{param1}
-            )
+    <select id="collectPostsByUser" resultType="com.lec.spring.domain.shop.Post">
+        SELECT p.id
+        FROM post p
+                 INNER JOIN likes l ON p.id = l.post_id
+        WHERE l.user_id = #{user_id}
     </select>
-
 </mapper>
