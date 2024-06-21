@@ -1,40 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 메인 페이지</title>
-<link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <div class="sidebar">
-        <ul>
-            <li onclick="location.href='main.html'">관리자 메뉴</li>
-            <li onclick="location.href='orderpage.html'">주문 관리</li>
-            <li onclick="location.href='returnpage.html'">반품 관리</li>
-            <li onclick="location.href='userlist.html'">회원 관리</li>
-            <li onclick="location.href='notice.html'">공지사항 관리</li>
-        </ul>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-        <div class="card">
-            <h3>판매현황</h3>
-            <p>결제 완료: 0</p>
-            <p>상품 준비: 0</p>
-            <p>배송 중: 0</p>
-            <p>배송 완료: 0</p>
-        </div>
-        <div class="card">
-            <h3>취소/반품현황</h3>
-            <p>취소 주문: 0</p>
-            <p>반품 주문: 0</p>
-        </div>
-        <div class="card">
-            <h3>상품 문의</h3>
-            <p>미 답변 문의: 0</p>
-            <p>전체 문의 내역: 0</p>
-            <button class="more-btn" onclick="window.location.href='inquirylist.html'">더 보기</button>
-        </div>
+    <div class="header-right">
+        <span>관리자</span>
+        <span th:text="${username}"></span>
+        <a href="logout">로그아웃</a>
     </div>
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='orderpage'">주문 관리</li>
+        <li onclick="location.href='returnpage'">반품 관리</li>
+        <li onclick="location.href='userlist'">회원 관리</li>
+        <li onclick="location.href='notice'">공지사항 관리</li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <div class="card">
+        <h3>총 회원 수</h3>
+        <br>
+        <p>유저 수 : <span th:text="${userCnt}"></span></p>
+    </div>
+    <div class="card">
+        <h3>판매현황</h3>
+        <br>
+        <p>결제 완료: 0</p>
+        <p>상품 준비: 0</p>
+        <p>배송 중: 0</p>
+        <p>배송 완료: 0</p>
+    </div>
+    <div class="card">
+        <h3>취소/반품현황</h3>
+        <br>
+        <p>취소 주문: 0</p>
+        <p>반품 주문: 0</p>
+    </div>
+    <div class="card">
+        <h3>상품 문의</h3>
+        <br>
+        <p>전체 문의 내역: <span th:text="${cntcontact}"></span></p>
+        <br>
+        <p>미 답변 문의: <span th:text="${cntunanswer}"></span></p>
+        <br><br>
+        <button class="more-btn" onclick="location.href='inquirylist'">더 보기</button>
+    </div>
+</div>
 </body>
 </html>

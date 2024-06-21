@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 글 작성 페이지</title>
-    <link rel="stylesheet" href="write_notice.css">
+    <link rel="stylesheet" href="/css/writenotice.css">
 </head>
 <body>
     <div class="container">
@@ -23,7 +23,7 @@
         </div>
         <div class="buttons">
             <button class="submit-button" onclick="saveNotice()">작성</button>
-            <button class="cancel-button" onclick="window.location.href='notice.html'">취소</button>
+            <button class="cancel-button" onclick="window.location.href='notice'">취소</button>
         </div>
     </div>
     <script>
@@ -40,7 +40,7 @@
             localStorage.setItem('notices', JSON.stringify(notices));
 
             alert('공지사항이 저장되었습니다.');
-            window.location.href = 'notice.html';
+            window.location.href = 'notice';
         }
     </script>
 </body>

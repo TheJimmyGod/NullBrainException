@@ -32,4 +32,13 @@
         update contact set status=#{status}, answer=#{answer}
         where id=#{id}
     </update>
+
+
+    <select id="countAllContacts" resultType="long">
+        SELECT count(*) FROM contact
+    </select>
+
+    <select id="countUnanswered" resultType="Long">
+        SELECT COUNT(*) from contact WHERE status = '대기 중'
+    </select>
 </mapper>

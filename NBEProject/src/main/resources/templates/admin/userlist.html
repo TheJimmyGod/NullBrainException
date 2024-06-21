@@ -1,116 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 목록 페이지</title>
-<link rel="stylesheet" href="userlist.css">
+    <link rel="stylesheet" th:href="@{/css/userlist.css}">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="menu-item admin-menu" onclick="location.href='main.html'">관리자 메뉴</div>
-        <div class="menu-item admin-menu" onclick="location.href='userlist.html'">회원 목록</div>
-        <div class="menu-item order-list" onclick="location.href='usergrade.html'">회원 등급 관리</div>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='/admin/main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-      <h1>회원 리스트 페이지</h1>
-        <div class="search-bar">
-            <input type="text" placeholder="고객 이름을 입력">
-            <button>검색</button>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>회원 ID</th>
-                        <th>이름</th>
-                        <th>이메일</th>
-                        <th>전화번호</th>
-                        <th>가입일</th>
-                        <th>상태</th>
-                        <th>상태 변경</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>abc</td>
-                        <td>홍길동</td>
-                        <td>abc@mail.com</td>
-                        <td>010-1234-5678</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select class="status-select">
-                                <option>활성</option>
-                                <option>비활성</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                    <tr>
-                        <td>def</td>
-                        <td>이순신</td>
-                        <td>abc@mail.com</td>
-                        <td>010-1234-5678</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select class="status-select">
-                                <option>활성</option>
-                                <option>비활성</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                    <tr>
-                        <td>gh</td>
-                        <td>김유신</td>
-                        <td>abc@mail.com</td>
-                        <td>010-1234-5678</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select class="status-select">
-                                <option>활성</option>
-                                <option>비활성</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                    <tr>
-                        <td>ij</td>
-                        <td>장보고</td>
-                        <td>abc@mail.com</td>
-                        <td>010-1234-5678</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select class="status-select">
-                                <option>활성</option>
-                                <option>비활성</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                    <tr>
-                        <td>qqwe</td>
-                        <td>홍길동</td>
-                        <td>abc@mail.com</td>
-                        <td>010-1234-5678</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select class="status-select">
-                                <option>활성</option>
-                                <option>비활성</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">&raquo;</a>
-        </div>
+    <div class="header-right">
+        <span>관리자</span>
+        <span>eces92@gmail.com</span>
+        <a href="/logout">로그아웃</a>
     </div>
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='/admin/userlist'">회원 목록</li>
+        <li onclick="location.href='/admin/usergrade'">회원 등급 관리</li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>회원 리스트 페이지</h1> <br>
+    <h3>총 <span th:text="${userCnt}"></span> 명의 회원이 있습니다.</h3>
+    <div class="search-bar">
+        <form th:action="@{/admin/userlist}" method="get">
+            <input type="text" class="username" name="username" placeholder="회원 이름을 입력" th:value="${param.username}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>회원 ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th>가입일</th>
+                <th>상태</th>
+                <th>상태 변경</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">abc</td>
+                <td th:text="${user.name}">홍길동</td>
+                <td th:text="${user.email}">abc@mail.com</td>
+                <td th:text="${user.phone}">010-1234-5678</td>
+                <td th:text="${#temporals.format(user.regdate)}">2024-01-01</td>
+                <td>
+                    <select class="status-select">
+                        <option>활성</option>
+                        <option>비활성</option>
+                    </select>
+                </td>
+                <td><button class="apply-button">적용</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <a th:href="@{/admin/userlist(page=${currentPage - 1}, username=${param.username})}" th:if="${currentPage > 1}">&laquo;</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:href="@{/admin/userlist(page=${i}, username=${param.username})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
+    </span>
+        <a th:href="@{/admin/userlist(page=${currentPage + 1}, username=${param.username})}" th:if="${currentPage < totalPages}">&raquo;</a>
+    </div>
+</div>
 </body>
 </html>
