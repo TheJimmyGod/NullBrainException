@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.shop.User;
+import com.lec.spring.dto.UserDto;
 
 import java.util.List;
 
@@ -17,4 +18,10 @@ public interface UserRepo {
     public User selectByUsername(String username);
     // 모든 유저확인
     public List<User> selectAll();
+
+    //유저 생성00
+    public int saveUser(UserDto userDto);
+
+    //주소 추가
+    public int saveAddr(UserDto userDto);
 }
