@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.LikeRepo">
+    <insert id="insertLike" parameterType="com.lec.spring.domain.shop.Likes">
+        INSERT INTO likes (post_id, user_id) VALUES (#{post_id}, #{user_id})
+    </insert>
+    <select id="existsLike" resultType="int" parameterType="map">
+        SELECT COUNT(*) FROM likes
+        WHERE user_id = #{user_id} AND post_id = #{post_id}
+    </select>
+    <delete id="deleteLike" parameterType="map">
+        DELETE FROM likes
+        WHERE user_id = #{user_id} AND post_id = #{post_id}
+    </delete>
+</mapper>

@@ -43,7 +43,7 @@
     height: 15px;
     width: 15px;
     margin: 0 2px;
-    background-color: #bbb;
+    background-color: hotpink;
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
@@ -51,4 +51,57 @@
   
   .active, .dot:hover {
     background-color: #717171;
+  }
+
+  .pt-site-footer__submit{
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .commentTable{
+    background: lightgray;
+  }
+
+  .submitComment {
+    position: absolute;
+    border: 0;
+    border-radius: 7px;
+    color: white;
+    padding: 15px;
+    cursor:pointer;
+    right: 5px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  
+  .inputComment{
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    min-width: 320px;
+  }
+  .clear{
+    clear: both;
+  }
+
+  .addressTable{
+    width: 300px; height: 125px;
+  }
+
+  .btn{
+      background-color: lightpink;
+  }
+
+.basicIconColor{
+    color: lightpink;
+    text-decoration: none;
+}
+
+  #btnColor{
+      color: white;
+  }
+  hr {
+      color: hotpink;
   }
