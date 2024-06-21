@@ -12,9 +12,9 @@ spring:
     prefix: classpath:templates/
 
   datasource:
-    url: jdbc:mysql://localhost/practice
+    url: jdbc:mysql://192.168.0.81:3306/nbe_db
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: user326
+    username: Admin
     password: 1234
 
 mybatis:
