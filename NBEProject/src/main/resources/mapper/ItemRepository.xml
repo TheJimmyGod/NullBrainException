@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lec.spring.repository.ItemRepository">
-    <insert id="insert">
-        insert into practice.goods (productId, image, price, content, category1, category2, category3)
-        VALUE (#{productId}, #{image}, #{lprice} , #{title}, #{category1}, #{category2}, #{category3})
-    </insert>
-</mapper>

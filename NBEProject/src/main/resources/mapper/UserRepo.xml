@@ -7,6 +7,20 @@
         VALUE (#{id}, #{username}, #{password}, #{regdate}, #{name}, #{phone}, #{birth}, #{email}, #{gender}, #{profileimage}, #{grade}, #{total_price}, #{point})
     </insert>
 
+    <insert id="saveUser" parameterType="com.lec.spring.dto.UserDto">
+        INSERT INTO user (username, password, name, phone, birth, email, gender)
+        VALUE (#{username}, #{password}, #{name}, #{phone}, #{birth}, #{email}, #{gender})
+    </insert>
+
+    <insert id="saveAddr" parameterType="com.lec.spring.domain.shop.Address">
+        INSERT INTO address(user_id, isDefault, street_addr, detail_addr, name)
+        VALUES (#{user_id}, #{isDefault}, #{street_addr}, #{detail_addr}, #{name})
+    </insert>
+
+    <select id="getLastInsertedUserId" resultType="int">
+        SELECT LAST_INSERT_ID();
+    </select>
+
     <delete id="delete" flushCache="true">
         DELETE FROM user
         WHERE id=#{id}
@@ -47,5 +61,7 @@
         AND
         id=#{id}
     </select>
+
+
     
 </mapper>
