@@ -28,7 +28,7 @@
     <h3>총 <span th:text="${userCnt}"></span> 명의 회원이 있습니다.</h3>
     <div class="search-bar">
         <form th:action="@{/admin/userlist}" method="get">
-            <input type="text" class="username" name="username" placeholder="회원 이름을 입력" th:value="${param.username}">
+            <input type="text" class="name" name="name" placeholder="회원 이름을 입력" th:value="${param.name}">
             <button type="submit">검색</button>
         </form>
     </div>
@@ -64,11 +64,11 @@
         </table>
     </div>
     <div class="pagination">
-        <a th:href="@{/admin/userlist(page=${currentPage - 1}, username=${param.username})}" th:if="${currentPage > 1}">&laquo;</a>
+        <a th:href="@{/admin/userlist(page=${currentPage - 1}, name=${param.name})}" th:if="${currentPage > 1}">&laquo;</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-        <a th:href="@{/admin/userlist(page=${i}, username=${param.username})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
+        <a th:href="@{/admin/userlist(page=${i}, name=${param.name})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
     </span>
-        <a th:href="@{/admin/userlist(page=${currentPage + 1}, username=${param.username})}" th:if="${currentPage < totalPages}">&raquo;</a>
+        <a th:href="@{/admin/userlist(page=${currentPage + 1}, name=${param.name})}" th:if="${currentPage < totalPages}">&raquo;</a>
     </div>
 </div>
 </body>

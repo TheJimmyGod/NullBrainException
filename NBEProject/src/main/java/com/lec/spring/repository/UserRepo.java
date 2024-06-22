@@ -29,6 +29,5 @@ public interface UserRepo {
     void updateGrade(int userId, String grade);
 
     // 유저의 "이름"으로 전체 조회
-
     List<User> allUser(String name);
 }

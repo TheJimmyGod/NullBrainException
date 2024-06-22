@@ -7,7 +7,7 @@ $(function (){
         {
             $("#files").append(`<div class="input-group mb-2">
    <input class="form-control col-xs-3" type="file" id="imageList" name="upfile${i}" accept="image/jpeg, image/png, image/jpg"/>
-   <button type="button" class="btn" onclick="$(this).parent().remove()"><a id="btnColor">삭제</a></button>
+   <button type="button" class="btn btn-outline-danger" onclick="$(this).parent().remove()">삭제</button>
     </div>`);
             i++;
         }
@@ -23,7 +23,3 @@ $(function (){
     // });
 
 });
-
-function Back(){
-    history.back();
-}
