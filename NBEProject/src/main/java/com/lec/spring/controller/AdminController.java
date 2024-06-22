@@ -180,7 +180,7 @@ public class AdminController {
     // 문의사항 목록 페이지
     @RequestMapping("/inquirylist")
     public String inquiryList(@RequestParam(value = "page" ,defaultValue= "1") int page,
-                            @RequestParam(value = "username", required = false) String username,
+                            @RequestParam(value = "name", required = false) String name,
                               Model model) {
         List<Contact> contacts;
         Long countAll = contactService.countAll();
@@ -189,8 +189,8 @@ public class AdminController {
         int offset = (page - 1) * limit;
 
 
-        if (username != null && !username.isEmpty()) {
-            contacts = contactService.findContactsByUsername(username);
+        if (name != null && !name.isEmpty()) {
+            contacts = contactService.findContactsByUsername(name);
             countAll = (long) contacts.size();
         } else {
             contacts = contactService.allContacts();
@@ -202,7 +202,7 @@ public class AdminController {
 
         model.addAttribute("contacts", contacts);
         model.addAttribute("cntcontact", countAll);
-        model.addAttribute("username", username);
+        model.addAttribute("username", name);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         return "admin/inquirylist";
