@@ -81,8 +81,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> findContactsByUsername(String username) {
-        List<User> users = userRepo.selectByUsername(username);
+    public List<Contact> findContactsByUsername(String name) {
+        List<User> users = userRepo.allUser(name);
         List<Contact> contacts = new ArrayList<>();
         for(User user : users){
             List<Contact> userContacts = contactRepo.showMyContact(user.getId());
