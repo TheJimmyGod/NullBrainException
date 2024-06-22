@@ -60,10 +60,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllUser() {
+        return userRepo.selectAll();
+    }
+
+
+    @Override
     public List<Authority> selectAuthoritiesById(Long id) {
         return null;
     }
 
+    @Override
+    public List<User> pagination(int offset, int limit) {
+        return userRepo.pagination(offset, limit);
+    }
+
+    @Override
+    public void updateGrade(int userId, String grade) {
+        userRepo.updateGrade(userId, grade);
+    }
+
+
+
+    @Override
+    public Long cntUser() {
+        return userRepo.countUsers();
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userRepo.selectById(id);
+    }
+
+    
+    // 유저의 이름으로 검색 회원 다 나오게 하기
+    @Override
+    public List<User> findAllName(String name) {
+        return userRepo.allUser(name);
+    }
 
 
     // 한승욱 코드

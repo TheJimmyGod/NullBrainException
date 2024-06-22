@@ -33,7 +33,13 @@ public interface UserService {
     // 유저의 등급 변경 기능
     void updateGrade(int userId, String grade);
 
-    //총 회원의 수 체크하기
-    List<User> finAllUser();
+
+
+    // 회원 수 체크
+    Long cntUser();
+
+    User findById(Integer id);
+
+    List<User> findAllName(String name);
 
 }

@@ -15,7 +15,7 @@ public interface UserRepo {
     // 아이디로 유저 찾기
     public User selectById(Integer id);
     // 유저 이름으로
-    List<User> selectByUsername(String username);
+    public User selectByUsername(String username);
     // 모든 유저확인
     public List<User> selectAll();
 
@@ -27,4 +27,8 @@ public interface UserRepo {
 
     // 유저 등급 변경
     void updateGrade(int userId, String grade);
+
+    // 유저의 "이름"으로 전체 조회
+
+    List<User> allUser(String name);
 }

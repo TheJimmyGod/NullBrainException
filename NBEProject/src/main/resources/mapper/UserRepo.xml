@@ -80,5 +80,11 @@
         WHERE id = #{userId}
     </update>
 
+    <select id="allUser" flushCache="true" resultType="com.lec.spring.domain.shop.User">
+        <include refid="SELECT_BASE"/>
+        AND
+            name = #{name}
+    </select>
+
     
 </mapper>

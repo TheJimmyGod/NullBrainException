@@ -88,15 +88,15 @@ public class AdminController {
     // 회원 목록 페이지
     @RequestMapping("/userlist")
     public String userList(@RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "username", required = false) String username,
+                           @RequestParam(value = "name", required = false) String name,
                            Model model) {
         int limit = 10;
         int offset = (page - 1) * limit;
         List<User> users;
         Long userCnt = userService.cntUser();
 
-        if (username != null && !username.isEmpty()) {
-            users = userService.findByUserName(username);
+        if (name != null && !name.isEmpty()) {
+            users = userService.findAllName(name);
             userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
@@ -117,7 +117,7 @@ public class AdminController {
     // 회원 등급관리 페이지
     @RequestMapping("/usergrade")
     public String userGrade(@RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "username", required = false) String username,
+                            @RequestParam(value = "name", required = false) String name,
                             Model model) {
 
         int limit = 10;
@@ -126,8 +126,8 @@ public class AdminController {
         List<User> users = userService.pagination(offset, limit);
         Long userCnt = userService.cntUser();
 
-        if (username != null && !username.isEmpty()) {
-            users = userService.findByUserName(username);
+        if (name != null && !name.isEmpty()) {
+            users = userService.findAllName(name);
             userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
