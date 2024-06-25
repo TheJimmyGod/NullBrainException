@@ -1,6 +1,6 @@
 package com.lec.spring.repository;
 
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.dto.UserDto;
 
 import java.util.List;

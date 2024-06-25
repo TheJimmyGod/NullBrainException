@@ -1,9 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.shop.Likes;
 import com.lec.spring.domain.shop.Post;
-import com.lec.spring.domain.shop.User;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 

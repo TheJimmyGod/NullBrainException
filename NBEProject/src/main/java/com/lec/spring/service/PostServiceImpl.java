@@ -1,16 +1,13 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.shop.Likes;
 import com.lec.spring.domain.shop.Post;
 import com.lec.spring.domain.shop.PostImage;
-import com.lec.spring.domain.shop.User;
-import com.lec.spring.repository.LikeRepo;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.PostImageRepo;
 import com.lec.spring.repository.PostRepo;
 import com.lec.spring.repository.UserRepo;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
