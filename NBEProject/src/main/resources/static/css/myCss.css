@@ -1,0 +1,59 @@
+@charset "UTF-8";
+.bronze{
+    color: saddlebrown;
+}
+
+.silver{
+    color: silver;
+}
+
+.gold{
+    color: gold;
+}
+
+.diamond{
+    color: lightskyblue;
+}
+
+.input-file-button{
+    padding: 6px 25px;
+    background-color: lightpink;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    width: 120px;
+}
+
+.clear{
+    clear: both;
+}
+
+.btn{
+    background-color: lightpink;
+}
+#btnColor{
+    color: white;
+}
+
+.parent {
+    position: relative; /* 부모 요소를 relative로 설정 */
+    width: 300px;
+    height: 300px;
+}
+
+.child {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-100%, 300%);
+    z-index: 1;
+}
+
+.spin {
+    transform: rotate(1440deg);
+    transition: transform 1s;
+}
+
+#grade{
+    opacity: 0;
+}

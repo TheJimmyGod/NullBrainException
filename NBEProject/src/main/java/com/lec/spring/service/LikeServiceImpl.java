@@ -4,7 +4,6 @@ import com.lec.spring.domain.shop.Likes;
 import com.lec.spring.repository.LikeRepo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LikeServiceImpl implements LikeService {

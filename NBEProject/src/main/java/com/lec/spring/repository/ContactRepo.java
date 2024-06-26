@@ -1,7 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.shop.Contact;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 
 import java.util.List;
 

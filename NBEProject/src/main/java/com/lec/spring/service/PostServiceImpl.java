@@ -20,7 +20,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -98,7 +101,6 @@ public class PostServiceImpl implements PostService {
         }
 
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
-        System.out.println(copyOfLocation);
         try{
             Files.copy(multipartFile.getInputStream(),
                     copyOfLocation,
@@ -107,7 +109,6 @@ public class PostServiceImpl implements PostService {
         catch (IOException e){
             throw new RuntimeException(e);
         }
-
         image = PostImage.builder().file_name(fileName).build();
         return image;
     }
@@ -192,7 +193,7 @@ public class PostServiceImpl implements PostService {
         model.addAttribute("totalPage",totalPage);
         model.addAttribute("pageRows", pageRows);
 
-        //model.addAttribute("url", U.getRequest().getRequestURI());
+        model.addAttribute("url", U.getRequest().getRequestURI());
         model.addAttribute("writePages", writePages);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
