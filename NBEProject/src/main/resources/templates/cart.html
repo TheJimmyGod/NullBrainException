@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="/js/cart.js" defer></script>
+    <title>Document</title>
+
+</head>
+<body>
+<header class="header">
+    <div class="menu">
+        <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton">ACC</button>
+    </div>
+    <div class="container">
+        <div class="container-1">
+            <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>&nbsp;
+            <input type="search" id="search" placeholder="Search..." />
+        </div>
+        <div class="container-2">
+            <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;&nbsp;
+            <i name="menuIcon" class="fa-solid fa-cart-plus"></i>
+        </div>
+    </div>
+</header>
+<hr>
+<div class="title-container">
+    <div class="title">
+        <hr>
+        <h2>SHOPPING CART</h2>
+        <hr>
+    </div>
+</div>
+<br><br>
+<div class="title-container">
+    <div class="select-container">
+        <div class="left">
+            <input type="checkbox" name="chk" id="checkAll" onclick='selectAll(this)'>&nbsp;&nbsp;전체선택
+        </div>
+        <div id="delItems"></div>   <!-- 삭제할 파일의 id값들을 담기위한 div -->
+        <div class="right">
+            <button name="deleteButton" class="btn btn-outline-danger" onclick="deleteSelected()">선택삭제</button>
+        </div>
+    </div>
+</div>
+
+<div class="cart-item" th:each="item : ${CartpurchaseItemList}" th:data-id="${item.id}">
+    <input type="checkbox" name="chk" class="fakeRadio" th:value="${item.id}" style="margin-right: 20px;" onclick="updateDelItems(this)">&nbsp;&nbsp;
+    <img src="https://via.placeholder.com/100" alt="item image">
+    <div class="cart-item-details">
+        <div th:text="${item.goodsName}">상품명</div>
+        <div>옵션명옵션명옵션명</div>
+        <div class="cart-item-price" th:text="${item.price} + '원  ' + ${item.count} + '개'">123,456원  3개</div>
+    </div>
+</div>
+
+<div class="title-container">
+    <div class="total-container">
+        <div class="totalPay" th:text="'총 결제금액: ' + ${totalPrice} + '원'">총 결제금액: 12345원</div>
+        <div id="selectItems"></div> <!-- 선택한 아이템들을 담아오는 div -->
+        <button type="button" id="checkoutButton" class="checkout-button" onclick="checkout()">결제하기</button>
+        </form>
+    </div>
+</div>
+
+<!-- 삭제 form -->
+<form id="deleteForm" method="post" th:action="@{/cart}">
+    <input type="hidden" name="delitem" id="delItemIds">
+    <input type="hidden" name="userId" th:value="${userId}">
+</form>
+
+<form id="paymentForm" method="post" th:action="@{/cart}">
+    <input type="hidden" name="selectitem" id="selectedItemIds">
+    <input type="hidden" name="userId" th:value="${userId}">
+</form>
+
+
+</body>
+</html>

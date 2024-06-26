@@ -1,7 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.shop.Authority;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.dto.UserDto;
 import com.lec.spring.util.U;
 
@@ -21,7 +21,7 @@ public interface UserService {
     // 전체 회원 조회
     List<User> findAllUser();
 
-    List<Authority> selectAuthoritiesById(Long id);
+    List<Authority> selectAuthoritiesById(int id);
 
 
     // ----------------------------------------------------

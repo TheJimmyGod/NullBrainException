@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.OptRepo">
-    <insert id="insert" parameterType="arraylist" flushCache="true">
-        insert into opt (goods_id, color, size)
-        VALUES
-            <foreach collection="list" item="e" separator=",">
-                (#{param2}, #{e.color}, #{e.size})
-            </foreach>
+    <insert id="insert" flushCache="true">
+        insert into opt (goods_id, value)
+        VALUE (#{param1}, #{param2})
+
     </insert>
+
+    <select id="selectByGoods" flushCache="true">
+        select value from opt
+        where goods_id=#{param1}
+    </select>
 </mapper>

@@ -10,9 +10,6 @@ CREATE TABLE address
   PRIMARY KEY (id)
 );
 
-ALTER TABLE address
-  ADD CONSTRAINT UQ_isDefault UNIQUE (isDefault);
-
 CREATE TABLE authority
 (
   id   INT         NOT NULL AUTO_INCREMENT COMMENT 'AuthorityID',
@@ -23,14 +20,13 @@ CREATE TABLE authority
 ALTER TABLE authority
   ADD CONSTRAINT UQ_auth UNIQUE (auth);
 
-CREATE TABLE basket
+CREATE TABLE cart
 (
-  id          INT      NOT NULL AUTO_INCREMENT COMMENT 'BasketID',
-  user_id     INT      NOT NULL COMMENT 'UserID',
-  regdate     DATETIME NULL     DEFAULT now() COMMENT 'RegDate',
-  total_price INT      NOT NULL DEFAULT 0,
-  PRIMARY KEY (id)
-) COMMENT '장바구니';
+  user_id INT      NOT NULL COMMENT 'UserID',
+  item_id INT      NOT NULL,
+  regdate DATETIME NULL    ,
+  PRIMARY KEY (user_id, item_id)
+);
 
 CREATE TABLE comment
 (
@@ -46,29 +42,26 @@ CREATE TABLE contact
 (
   id       INT          NOT NULL AUTO_INCREMENT COMMENT 'ContactID',
   user_id  INT          NOT NULL COMMENT 'UserID',
-  goods_id VARCHAR(50)  NOT NULL COMMENT 'GoodsID',
+  goods_no VARCHAR(50)  NOT NULL COMMENT 'GoodsNO',
   regdate  DATETIME     NULL     DEFAULT now() COMMENT 'ContactRegDate',
   title    VARCHAR(100) NOT NULL COMMENT 'ContactTitle',
   content  VARCHAR(300) NOT NULL COMMENT 'ContactContent',
-  status   BOOLEAN      NULL     DEFAULT false COMMENT 'Status',
+  status   VARCHAR(50)  NULL     DEFAULT false COMMENT 'Status',
   answer   VARCHAR(300) NULL    ,
   PRIMARY KEY (id)
 ) COMMENT '문의사항';
 
 CREATE TABLE contact_image
 (
-  id         INT          NOT NULL,
+  id         INT          NOT NULL AUTO_INCREMENT,
   contact_id INT          NOT NULL COMMENT 'ContactID',
-  filen_ame  VARCHAR(100) NOT NULL,
+  file_name  VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
 
-ALTER TABLE contact_image
-  ADD CONSTRAINT UQ_filen_ame UNIQUE (filen_ame);
-
 CREATE TABLE coupon
 (
-  id   INT         NOT NULL,
+  id   INT         NOT NULL AUTO_INCREMENT,
   rate DOUBLE      NOT NULL,
   name VARCHAR(50) NOT NULL,
   PRIMARY KEY (id)
@@ -87,15 +80,21 @@ CREATE TABLE coupon_box
 
 CREATE TABLE goods
 (
-  productId VARCHAR(50)  NOT NULL COMMENT 'GoodsID',
-  title     VARCHAR(100) NOT NULL COMMENT 'GoodsTitle',
-  image     VARCHAR(200) NULL    ,
-  price     INT          NOT NULL DEFAULT 0 COMMENT 'GoodsPrice',
-  content   VARCHAR(500) NULL     COMMENT 'GoodsContent',
-  category1 VARCHAR(20)  NULL     COMMENT 'Category1',
-  category2 VARCHAR(20)  NULL     COMMENT 'Category2',
-  category3 VARCHAR(20)  NULL     COMMENT 'Category3',
-  PRIMARY KEY (productId)
+  goods_no      VARCHAR(50)  NOT NULL,
+  category_code VARCHAR(200) NOT NULL,
+  name          text         NULL    ,
+  keywords      longtext     NULL    ,
+  brand_name    VARCHAR(20)  NULL    ,
+  maker         VARCHAR(20)  NULL    ,
+  price         VARCHAR(20)  NULL    ,
+  image_1       longtext     NULL    ,
+  image_2       longtext     NULL    ,
+  image_3       longtext     NULL    ,
+  image_4       longtext     NULL    ,
+  image_5       longtext     NULL    ,
+  image_6       longtext     NULL    ,
+  contents      longtext     NULL    ,
+  PRIMARY KEY (goods_no)
 ) COMMENT '제품';
 
 CREATE TABLE likes
@@ -105,14 +104,14 @@ CREATE TABLE likes
   PRIMARY KEY (user_id, post_id)
 );
 
-CREATE TABLE options
+CREATE TABLE opt
 (
-  id               INT         NOT NULL AUTO_INCREMENT,
-  purchase_item_id INT         NOT NULL,
-  name             VARCHAR(10) NULL    ,
-  value            VARCHAR(10) NULL    ,
+  id       int         NOT NULL AUTO_INCREMENT,
+  goods_no VARCHAR(50) NOT NULL,
+  color    varchar(20) NULL    ,
+  size     varchar(20) NULL    ,
   PRIMARY KEY (id)
-);
+) COMMENT '각제품이 가질수 있는 옵션';
 
 CREATE TABLE post
 (
@@ -125,7 +124,7 @@ CREATE TABLE post
 
 CREATE TABLE post_image
 (
-  id        INT          NOT NULL,
+  id        INT          NOT NULL AUTO_INCREMENT,
   file_name VARCHAR(200) NULL    ,
   post_id   INT          NOT NULL COMMENT 'PostID',
   PRIMARY KEY (id)
@@ -135,6 +134,7 @@ CREATE TABLE purchase
 (
   id             INT          NOT NULL AUTO_INCREMENT COMMENT 'OrderID',
   user_id        INT          NOT NULL COMMENT 'UserID',
+  item_id        INT          NOT NULL,
   regdate        DATETIME     NULL     DEFAULT now() COMMENT 'OrderDate',
   street_addr    VARCHAR(200) NOT NULL,
   detail_address VARCHAR(200) NOT NULL COMMENT 'OrderAddress',
@@ -145,38 +145,38 @@ CREATE TABLE purchase
 
 CREATE TABLE purchase_item
 (
-  id          INT         NOT NULL,
-  basket_id   INT         NULL     COMMENT 'BasketID',
-  purchase_id INT         NULL     COMMENT 'OrderID',
-  goods_id    VARCHAR(50) NOT NULL COMMENT 'GoodsID',
-  amount      INT         NOT NULL DEFAULT 0,
+  id       INT         NOT NULL,
+  goods_id VARCHAR(50) NOT NULL COMMENT 'GoodsID',
+  amount   INT         NOT NULL DEFAULT 0,
+  color    varchar(30) NULL    ,
+  size     varchar(30) NULL    ,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE recent_item
 (
-  id       INT         NOT NULL,
+  id       INT         NOT NULL AUTO_INCREMENT,
   user_id  INT         NOT NULL COMMENT 'UserID',
-  goods_id VARCHAR(50) NOT NULL COMMENT 'GoodsID',
+  goods_no VARCHAR(50) NOT NULL COMMENT 'GoodsID',
   regdate  DATETIME    NOT NULL DEFAULT now(),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE request
 (
-  user_id          INT         NOT NULL COMMENT 'UserID',
-  purchase_item_id INT         NOT NULL,
-  type             VARCHAR(20) NOT NULL DEFAULT 'paid',
-  result           VARCHAR(50) NOT NULL DEFAULT 'processing',
-  PRIMARY KEY (user_id, purchase_item_id)
+  user_id INT         NOT NULL COMMENT 'UserID',
+  item_id INT         NOT NULL,
+  type    VARCHAR(20) NOT NULL DEFAULT 'paid',
+  result  VARCHAR(50) NOT NULL DEFAULT 'processing',
+  PRIMARY KEY (user_id, item_id)
 );
 
 CREATE TABLE request_image
 (
-  id          INT          NOT NULL,
-  file_name   VARCHAR(200) NOT NULL,
-  user_id     INT          NOT NULL COMMENT 'UserID',
-  purchase_id INT          NOT NULL,
+  id        INT          NOT NULL AUTO_INCREMENT,
+  file_name VARCHAR(200) NOT NULL,
+  user_id   INT          NOT NULL COMMENT 'UserID',
+  item_id   INT          NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -184,7 +184,7 @@ CREATE TABLE review
 (
   id       INT          NOT NULL AUTO_INCREMENT COMMENT 'ReviewID',
   user_id  INT          NOT NULL COMMENT 'UserID',
-  goods_id VARCHAR(50)  NOT NULL COMMENT 'GoodsID',
+  goods_no VARCHAR(50)  NOT NULL COMMENT 'GoodsNO',
   regdate  DATETIME     NULL     DEFAULT now() COMMENT 'ReviewRegDate',
   title    VARCHAR(100) NOT NULL COMMENT 'ReviewTitle',
   content  VARCHAR(200) NOT NULL COMMENT 'ReviewContent',
@@ -194,8 +194,8 @@ CREATE TABLE review
 
 CREATE TABLE review_image
 (
+  id        INT          NOT NULL AUTO_INCREMENT,
   review_id INT          NOT NULL COMMENT 'ReviewID',
-  id        INT          NOT NULL,
   file_name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -215,7 +215,7 @@ CREATE TABLE user
   email        VARCHAR(50)  NOT NULL COMMENT 'Email',
   gender       INT          NULL     DEFAULT 0 COMMENT 'Gender',
   profileimage VARCHAR(600) NULL     COMMENT 'ProfileImage',
-  grade        ENUM('Bronze','Silver','Gold','Diamond')        NULL     DEFAULT 'Bronze' COMMENT 'Grade',
+  grade        ENUM         NULL     DEFAULT 'Bronze' COMMENT 'Grade',
   total_price  INT          NULL     DEFAULT 0,
   point        INT          NOT NULL DEFAULT 0 COMMENT 'Point',
   PRIMARY KEY (id)
@@ -248,8 +248,8 @@ ALTER TABLE contact
 
 ALTER TABLE contact
   ADD CONSTRAINT FK_goods_TO_contact
-    FOREIGN KEY (goods_id)
-    REFERENCES goods (productId);
+    FOREIGN KEY (goods_no)
+    REFERENCES goods (goods_no);
 
 ALTER TABLE comment
   ADD CONSTRAINT FK_post_TO_comment
@@ -258,8 +258,8 @@ ALTER TABLE comment
 
 ALTER TABLE review
   ADD CONSTRAINT FK_goods_TO_review
-    FOREIGN KEY (goods_id)
-    REFERENCES goods (productId);
+    FOREIGN KEY (goods_no)
+    REFERENCES goods (goods_no);
 
 ALTER TABLE coupon_box
   ADD CONSTRAINT FK_user_TO_coupon_box
@@ -268,11 +268,6 @@ ALTER TABLE coupon_box
 
 ALTER TABLE post
   ADD CONSTRAINT FK_user_TO_post
-    FOREIGN KEY (user_id)
-    REFERENCES user (id);
-
-ALTER TABLE basket
-  ADD CONSTRAINT FK_user_TO_basket
     FOREIGN KEY (user_id)
     REFERENCES user (id);
 
@@ -291,16 +286,6 @@ ALTER TABLE comment
     FOREIGN KEY (user_id)
     REFERENCES user (id);
 
-ALTER TABLE purchase_item
-  ADD CONSTRAINT FK_purchase_TO_purchase_item
-    FOREIGN KEY (purchase_id)
-    REFERENCES purchase (id);
-
-ALTER TABLE purchase_item
-  ADD CONSTRAINT FK_basket_TO_purchase_item
-    FOREIGN KEY (basket_id)
-    REFERENCES basket (id);
-
 ALTER TABLE recent_item
   ADD CONSTRAINT FK_user_TO_recent_item
     FOREIGN KEY (user_id)
@@ -308,8 +293,8 @@ ALTER TABLE recent_item
 
 ALTER TABLE recent_item
   ADD CONSTRAINT FK_goods_TO_recent_item
-    FOREIGN KEY (goods_id)
-    REFERENCES goods (productId);
+    FOREIGN KEY (goods_no)
+    REFERENCES goods (goods_no);
 
 ALTER TABLE coupon_box
   ADD CONSTRAINT FK_coupon_TO_coupon_box
@@ -339,12 +324,7 @@ ALTER TABLE likes
 ALTER TABLE purchase_item
   ADD CONSTRAINT FK_goods_TO_purchase_item
     FOREIGN KEY (goods_id)
-    REFERENCES goods (productId);
-
-ALTER TABLE options
-  ADD CONSTRAINT FK_purchase_item_TO_options
-    FOREIGN KEY (purchase_item_id)
-    REFERENCES purchase_item (id);
+    REFERENCES goods (goods_no);
 
 ALTER TABLE request
   ADD CONSTRAINT FK_user_TO_request
@@ -353,7 +333,7 @@ ALTER TABLE request
 
 ALTER TABLE request
   ADD CONSTRAINT FK_purchase_item_TO_request
-    FOREIGN KEY (purchase_item_id)
+    FOREIGN KEY (item_id)
     REFERENCES purchase_item (id);
 
 ALTER TABLE post_image
@@ -368,5 +348,25 @@ ALTER TABLE purchase
 
 ALTER TABLE request_image
   ADD CONSTRAINT FK_request_TO_request_image
-    FOREIGN KEY (user_id, purchase_id)
-    REFERENCES request (user_id, purchase_item_id);
+    FOREIGN KEY (user_id, item_id)
+    REFERENCES request (user_id, item_id);
+
+ALTER TABLE cart
+  ADD CONSTRAINT FK_user_TO_cart
+    FOREIGN KEY (user_id)
+    REFERENCES user (id);
+
+ALTER TABLE cart
+  ADD CONSTRAINT FK_purchase_item_TO_cart
+    FOREIGN KEY (item_id)
+    REFERENCES purchase_item (id);
+
+ALTER TABLE purchase
+  ADD CONSTRAINT FK_purchase_item_TO_purchase
+    FOREIGN KEY (item_id)
+    REFERENCES purchase_item (id);
+
+ALTER TABLE opt
+  ADD CONSTRAINT FK_goods_TO_opt
+    FOREIGN KEY (goods_no)
+    REFERENCES goods (goods_no);

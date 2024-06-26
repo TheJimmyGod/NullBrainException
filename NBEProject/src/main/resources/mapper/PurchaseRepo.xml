@@ -1,18 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
-    <insert id="insert" parameterType="com.lec.spring.domain.shop.Purchase"
+    <insert id="insert" parameterType="com.lec.spring.domain.Purchase"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into purchase (nbe_db.purchase.user_id, nbe_db.purchase.item_id, nbe_db.purchase.street_addr, nbe_db.purchase.detail_address, nbe_db.purchase.phone, nbe_db.purchase.request)
-        value (#{user_id}, #{item_id}, #{street_addr}, #{detail_address}, #{phone}, #{request})
+        insert into purchase (user_id, purchase_item_id, street_addr, detail_address, phone, request)
+        value (#{userId}, #{itemId}, #{streetAddr}, #{detailAddress}, #{phone}, #{request})
     </insert>
 
     <update id="update" flushCache="true">
-        update nbe_db.purchase
-        set street_addr=#{street_addr},
-            detail_address=#{detail_address},
+        update purchase
+        set street_addr=#{streetAddr},
+            detail_address=#{detailAddress},
             phone=#{phone},
             request=#{request}
         where id=#{id}
     </update>
+    <select id="selectById" resultType="com.lec.spring.domain.shop.Purchase">
+            select * from purchase
+            where user_id=#{param1}
+            and purchase_item_id=#{param2};
+    </select>
+<!--    <resultMap id="goods" type="com.lec.spring.domain.shop.Goods">-->
+<!--        <result property="goods_no" column="goods_no"/>-->
+<!--        <result property="name" column="goods_name"/>-->
+<!--        <result property="price" column="goods_price"/>-->
+<!--        <result property="image_1" column="goods_image_1"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="purItem" type="com.lec.spring.domain.shop.PurchaseItem">-->
+<!--        <result property="id" column="iId"/>-->
+<!--        <result property="amount" column="amount"/>-->
+<!--        <collection property="goods" resultMap="goods"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="purchase" type="com.lec.spring.domain.shop.Purchase">-->
+<!--        <result property="id" column="id"/>-->
+<!--        <result property="userId" column="uId"/>-->
+<!--        <result property="regdate" column="reg"/>-->
+<!--        <result property="streetAddress" column="sAddr"/>-->
+<!--        <result property="detailAddress" column="dAddr"/>-->
+<!--        <result property="phone" column="phoneNum"/>-->
+<!--        <result property="request" column="req"/>-->
+<!--        <collection property="purchaseItem" resultMap="purItem"/>-->
+<!--    </resultMap>-->
+<!--    <select id="selectById" resultMap="purchase">-->
+<!--        select-->
+<!--            p.id as "id",-->
+<!--            p.user_id as "uId",-->
+<!--            p.regdate as "reg",-->
+<!--            p.street_addr as "sAddr",-->
+<!--            p.detail_address as "dAddr",-->
+<!--            p.phone as "phoneNum",-->
+<!--            p.request as "req",-->
+<!--            i.id as "iId",-->
+<!--            i.amount as "amount",-->
+<!--            g.goods_no as "goods_no",-->
+<!--            g.name as "goods_name",-->
+<!--            g.price as "goods_price",-->
+<!--            g.image_1 as "goods_image_1"-->
+<!--        from purchase p-->
+<!--                 join purchase_item i on p.purchase_item_id = i.id-->
+<!--                 join goods g on i.goods_id = g.goods_no-->
+<!--        where p.id = #{param2}-->
+<!--          and p.user_id = #{param1}-->
+<!--    </select>-->
 </mapper>

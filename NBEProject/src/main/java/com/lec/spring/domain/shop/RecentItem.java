@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class Recent_item {
+public class RecentItem {
 
     private Integer id;
     private Integer user_id;

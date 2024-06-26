@@ -34,16 +34,16 @@
     <div id="registerbox">
         <form id="regform" th:action="@{/user/register}" method="post">
             <div id="text03">회원가입</div>
-            <input id="inputid" class="form-control" name="username" type="text" placeholder="아이디 입력" required>
+            <input id="inputid" class="form-control" name="username" type="text" placeholder="아이디 입력" th:value="${username }" required>
             <input id="inputpw" class="form-control" name="password" type="password" placeholder="비밀번호 입력" required>
 
-            <input id="inputname" type="text" name="name" class="form-control" placeholder="이름을 입력해주세요." >
-            <input type="text" name="phone" class="form-control" placeholder="휴대폰번호를 입력해주세요.">
-            <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요">
-            <input type="text" name="birth" class="form-control" placeholder="생년월일을 입력해주세요">
-            <input type="text" name="addressName" class="form-control" placeholder="주소지명을 입력해주세요">
-            <input type="text" name="street_addr" class="form-control" placeholder="주소를 입력해주세요.">
-            <input type="text" name="detail_addr" class="form-control" placeholder="상세 주소를 입력해주세요.">
+            <input id="inputname" type="text" name="name" class="form-control" placeholder="이름을 입력해주세요." th:value="${name }">
+            <input type="text" name="phone" class="form-control" placeholder="휴대폰번호를 입력해주세요." th:value="${phone }">
+            <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요" th:value="${email }">
+            <input type="text" name="birth" class="form-control" placeholder="생년월일을 입력해주세요" th:value="${birth }">
+            <input type="text" name="addressName" class="form-control" placeholder="주소지명을 입력해주세요" th:value="${addressname }">
+            <input type="text" name="street_addr" class="form-control" placeholder="주소를 입력해주세요." th:value="${street_addr }">
+            <input type="text" name="detail_addr" class="form-control" placeholder="상세 주소를 입력해주세요." th:value="${detail_addr }">
             <div id="text04">성별을 선택해주세요.</div>
 
             <div id="container-box">

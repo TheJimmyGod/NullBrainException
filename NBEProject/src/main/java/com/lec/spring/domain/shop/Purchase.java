@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @Builder
 public class Purchase {
     private Integer id;
-    private Integer user_id;
-    private Integer item_id;
+    private Integer userId;
+    private Integer purchaseItem;
     private LocalDateTime regdate;
-    private String street_addr;
-    private String detail_address;
+    private String streetAddress; // 주소
+    private String detailAddress;  // 상세주소
     private String phone;
     private String request;
 }

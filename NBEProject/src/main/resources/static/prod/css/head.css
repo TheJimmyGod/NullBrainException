@@ -1,0 +1,147 @@
+.header {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    width: 800px;
+    margin-left: 90px;
+}
+
+.logoButton {
+    height: 70px;
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.HOMEButton {
+    border: none;
+    background-color: white;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.container-3 {
+    width: 500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.container-1 {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.container-1 input#search {
+    width: 300px;
+    height: 50px;
+    font-size: 10pt;
+    float: left;
+    color: #63717f;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.container-1 .icon {
+    position: absolute;
+    left: 20px;
+    color: #4f5b66;
+}
+
+[name="menuIcon"] {
+    font-size: 30px;
+}
+
+.container-2 {
+    width: 200px;
+    padding-right: 40px;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+header .logo h1 {
+    font-size: 18px;
+}
+
+header .menu ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+header .menu ul li {
+    display: inline;
+}
+
+header .menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 2vw;
+}
+
+.category {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+
+.btn {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
+    padding: 10px;
+    margin-top: 5px;
+    border-top: 1px solid #ccc;
+    background-color: #e9ecef;
+}
+
+.category2-man .item,
+.category2-woman .item {
+    padding: 5px;
+    margin: 2px;
+    background-color: white;
+    border: 1px solid #ddd;
+}

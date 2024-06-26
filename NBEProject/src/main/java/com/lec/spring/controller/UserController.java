@@ -9,17 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -41,7 +44,25 @@ public class UserController {
     public void login(){}
 
     @GetMapping("/register")
-    public void register(){}
+    public void register(){
+
+
+    }
+
+    @PostMapping("/register")
+    public String registerOk(@Valid @ModelAttribute UserDto userDto, BindingResult result,
+                             Model model, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("username", userDto.getUsername());
+            redirectAttributes.addFlashAttribute("name", userDto.getName());
+            redirectAttributes.addFlashAttribute("phone", userDto.getPhone());
+            redirectAttributes.addFlashAttribute("birth", userDto.getBirth());
+            redirectAttributes.addFlashAttribute("email", userDto.getEmail());
+            redirectAttributes.addFlashAttribute("gender", userDto.getGender());
+            redirectAttributes.addFlashAttribute("street_addr", userDto.getStreet_addr());
+            redirectAttributes.addFlashAttribute("detail_addr", userDto.getDetail_addr());
+            redirectAttributes.addFlashAttribute("addressname", userDto.getAddressName());
+
 
     @RequestMapping("/contact")
     public String contact(Model model){
@@ -59,7 +80,6 @@ public class UserController {
                             @RequestParam("file1") MultipartFile file1,
                             @RequestParam("file2") MultipartFile file2
                            ) throws IOException {
-
         Contact contact = Contact.builder()
                 .user_id(2)
                 .goods_id(1)
@@ -101,9 +121,7 @@ public class UserController {
         }
     }
 
-
-
-//    @PostMapping("/register")  //아직 검증로직 x 두번째 레지스터부터는 오류 존재함
+//    @PostMapping("/register")
 //    public String registerOk(@Valid @ModelAttribute UserDto userDto, Model model){
 //        int cnt = userService.register(userDto);
 //
@@ -113,4 +131,23 @@ public class UserController {
 //        return page;
 //    }
 
+    @PostMapping("/loginError")
+    public String loginError(){
+        return "user/login";
+    }
+
+    @RequestMapping("/rejectAuth")
+    public String rejectAuth() {
+        return "user/rejectAuth";
+    }
+
+    @RequestMapping("/test")
+    public void userTest(){
+
+    }
+
+    @RequestMapping("/changePassword")
+    public void changePassword(){
+
+    }
 }
