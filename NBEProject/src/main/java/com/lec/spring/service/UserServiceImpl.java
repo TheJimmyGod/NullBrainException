@@ -2,7 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Authority;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.UserAuthorities;
 import com.lec.spring.dto.UserDto;
 import com.lec.spring.repository.AuthorityRepo;

@@ -2,9 +2,11 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.shop.Contact;
 import com.lec.spring.domain.shop.ContactImage;
+import com.lec.spring.dto.UserDto;
 import com.lec.spring.service.ContactImageService;
 import com.lec.spring.service.ContactService;
 import com.lec.spring.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -51,7 +53,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerOk(@Valid @ModelAttribute UserDto userDto, BindingResult result,
-                             Model model, RedirectAttributes redirectAttributes){
+                             Model model, RedirectAttributes redirectAttributes) {
         if(result.hasErrors()){
             redirectAttributes.addFlashAttribute("username", userDto.getUsername());
             redirectAttributes.addFlashAttribute("name", userDto.getName());
@@ -62,7 +64,18 @@ public class UserController {
             redirectAttributes.addFlashAttribute("street_addr", userDto.getStreet_addr());
             redirectAttributes.addFlashAttribute("detail_addr", userDto.getDetail_addr());
             redirectAttributes.addFlashAttribute("addressname", userDto.getAddressName());
-
+            List<FieldError> errList = result.getFieldErrors();
+            for(FieldError err : errList) {
+                redirectAttributes.addFlashAttribute("error", err.getCode());
+                break;
+            }
+            return "redirect:/user/register";
+        }
+        int cnt = userService.register(userDto);
+        String page = "/user/registerOk";
+        model.addAttribute("result", cnt);
+        return page;
+    }
 
     @RequestMapping("/contact")
     public String contact(Model model){
