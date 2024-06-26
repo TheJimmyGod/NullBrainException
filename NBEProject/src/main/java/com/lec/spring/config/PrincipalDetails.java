@@ -1,7 +1,7 @@
 package com.lec.spring.config;
 
 import com.lec.spring.domain.shop.Authority;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

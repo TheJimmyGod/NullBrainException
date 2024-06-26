@@ -1,7 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.shop.Contact;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.ContactRepo;
 import com.lec.spring.repository.UserRepo;
 import org.apache.ibatis.session.SqlSession;

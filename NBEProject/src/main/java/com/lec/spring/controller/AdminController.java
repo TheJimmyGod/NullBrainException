@@ -3,7 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.shop.Contact;
 import com.lec.spring.domain.shop.ContactImage;
 import com.lec.spring.domain.shop.Purchase;
-import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

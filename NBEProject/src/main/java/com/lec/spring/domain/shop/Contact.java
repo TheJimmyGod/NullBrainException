@@ -1,5 +1,6 @@
 package com.lec.spring.domain.shop;
 
+import com.lec.spring.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
