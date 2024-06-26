@@ -2,10 +2,9 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.shop.Contact;
 import com.lec.spring.domain.shop.ContactImage;
+import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.domain.shop.User;
-import com.lec.spring.service.ContactImageService;
-import com.lec.spring.service.ContactService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -33,6 +32,13 @@ public class AdminController {
 
     @Autowired
     private ContactImageService contactImageService;
+
+    @Autowired
+    private AuthorityService authorityService;
+
+    @Autowired
+    private PurchaseService purchaseService;
+
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -64,9 +70,39 @@ public class AdminController {
 
     // 주문 관리 페이지
     @RequestMapping("/orderpage")
-    public void orderPage(){
+    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
+                            @RequestParam(value = "username", required = false) String username
+                            ,Model model){
+       Long orderCnt = purchaseService.orderCnt();
+       List<Purchase> orderList;
 
+        int limit = 10;
+        int offset = (page - 1) * limit;
+
+        if (username != null && !username.isEmpty()) {
+            orderList = purchaseService.orderUsername(username);
+            orderCnt = (long) orderList.size();
+        } else {
+            orderList = purchaseService.pagination(offset,limit);
+            orderCnt = userService.cntUser();
+        }
+
+        int totalPages = (int) Math.ceil((double) orderCnt / limit);
+
+
+       model.addAttribute("orderCnt", orderCnt);
+       model.addAttribute("totalPages", totalPages);
+       model.addAttribute("currentPage", page);
+       model.addAttribute("orderList", orderList);
+
+       if(username != null && !username.isEmpty()){
+           List<Purchase> usernameList = purchaseService.orderUsername(username);
+           model.addAttribute("username", username);
+
+       }
+        return "admin/orderpage";
     }
+
 
 
 
@@ -75,12 +111,16 @@ public class AdminController {
     @RequestMapping("/returnpage")
     public void returnPage(){
 
+
     }
 
     // 반품 상세내용 페이지
     @RequestMapping("/returnDetailPage")
-    public void returnDetailPage(){
+    public String returnDetailPage(Model model){
 
+
+
+        return "/admin/returnDetailPage";
     }
 
 
@@ -88,16 +128,17 @@ public class AdminController {
     // 회원 목록 페이지
     @RequestMapping("/userlist")
     public String userList(@RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "name", required = false) String name,
+                           @RequestParam(value = "username", required = false) String username,
+                           @RequestParam(value = "updateSuccess", required = false) String updateSuccess,
                            Model model) {
         int limit = 10;
         int offset = (page - 1) * limit;
         List<User> users;
         Long userCnt = userService.cntUser();
 
-        if (name != null && !name.isEmpty()) {
-            users = userService.findAllName(name);
-            userCnt = (long) users.size();
+        if (username != null && !username.isEmpty()) {
+//            users = userService.findByUserName(username);
+//            userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
             userCnt = userService.cntUser();
@@ -105,19 +146,32 @@ public class AdminController {
 
         int totalPages = (int) Math.ceil((double) userCnt / limit);
 
-
-        model.addAttribute("users", users);
+//        model.addAttribute("users", users);
         model.addAttribute("userCnt", userCnt);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("updateSuccess", updateSuccess);
 
         return "admin/userlist";
+    }
+
+
+    // 유저 권한 업데이트
+    @PostMapping("/updateStatus")
+    public String updateStatus(@RequestParam("userId") int userId, @RequestParam("status") boolean status
+                                ,RedirectAttributes redirectAttributes, Model model) {
+
+//        userService.setStatus(userId, status);
+
+        model.addAttribute("status", status);
+
+        return "redirect:/admin/userlist";
     }
 
     // 회원 등급관리 페이지
     @RequestMapping("/usergrade")
     public String userGrade(@RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "username", required = false) String username,
                             Model model) {
 
         int limit = 10;
@@ -126,8 +180,8 @@ public class AdminController {
         List<User> users = userService.pagination(offset, limit);
         Long userCnt = userService.cntUser();
 
-        if (name != null && !name.isEmpty()) {
-            users = userService.findAllName(name);
+        if (username != null && !username.isEmpty()) {
+//            users = userService.findByUserName(username);
             userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
@@ -179,18 +233,20 @@ public class AdminController {
 
     // 문의사항 목록 페이지
     @RequestMapping("/inquirylist")
-    public String inquiryList(@RequestParam(value = "page" ,defaultValue= "1") int page,
-                            @RequestParam(value = "name", required = false) String name,
+    public String inquiryList(
+                            @RequestParam(value = "page" ,defaultValue= "1") int page,
+                            @RequestParam(value = "username", required = false) String username,
                               Model model) {
         List<Contact> contacts;
         Long countAll = contactService.countAll();
+//        String type = contactService.type();
 
         int limit = 10;
         int offset = (page - 1) * limit;
 
 
-        if (name != null && !name.isEmpty()) {
-            contacts = contactService.findContactsByUsername(name);
+        if (username != null && !username.isEmpty()) {
+            contacts = contactService.findContactsByUsername(username);
             countAll = (long) contacts.size();
         } else {
             contacts = contactService.allContacts();
@@ -200,9 +256,10 @@ public class AdminController {
         int totalPages = (int) Math.ceil((double) countAll / limit);
 
 
+//        model.addAttribute("contactType", type);
         model.addAttribute("contacts", contacts);
         model.addAttribute("cntcontact", countAll);
-        model.addAttribute("username", name);
+        model.addAttribute("username", username);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         return "admin/inquirylist";
