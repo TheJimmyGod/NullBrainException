@@ -1,8 +1,8 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.shop.Comment;
 import com.lec.spring.domain.QryCommentList;
 import com.lec.spring.domain.QryResult;
-import com.lec.spring.domain.shop.Comment;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.CommentRepo;
 import com.lec.spring.repository.UserRepo;

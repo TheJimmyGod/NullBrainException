@@ -3,7 +3,7 @@ $(function (){
     let i = 0;
     $("#btnAdd").click(function (){
 
-        if(i < 5)
+        if(i < 3)
         {
             $("#files").append(`<div class="input-group mb-2">
    <input class="form-control col-xs-3" type="file" id="imageList" name="upfile${i}" accept="image/jpeg, image/png, image/jpg"/>

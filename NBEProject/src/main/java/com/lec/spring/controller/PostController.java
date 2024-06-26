@@ -39,9 +39,7 @@ public class PostController {
     }
 
     @GetMapping("/write")
-    public void write(Model model){
-        model.addAttribute("username", "Tommy");
-    }
+    public void write(){}
 
     @PostMapping("/write")
     public String writeOk(
