@@ -21,7 +21,7 @@ public interface UserService {
     // 전체 회원 조회
     List<User> findAllUser();
 
-    List<Authority> selectAuthoritiesById(Long id);
+    List<Authority> selectAuthoritiesById(int id);
 
 
     // ----------------------------------------------------

@@ -30,7 +30,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/register")  //아직 검증로직 x 두번째 레지스터부터는 오류 존재함
+    @PostMapping("/register")
     public String registerOk(@Valid @ModelAttribute UserDto userDto, BindingResult result,
                              Model model, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
@@ -59,6 +59,26 @@ public class UserController {
 
         model.addAttribute("result", cnt);
         return page;
+    }
+
+    @PostMapping("/loginError")
+    public String loginError(){
+        return "user/login";
+    }
+
+    @RequestMapping("/rejectAuth")
+    public String rejectAuth() {
+        return "user/rejectAuth";
+    }
+
+    @RequestMapping("/test")
+    public void userTest(){
+
+    }
+
+    @RequestMapping("/changePassword")
+    public void changePassword(){
+
     }
 
 }

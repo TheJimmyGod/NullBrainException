@@ -13,7 +13,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="searchbtn01">
+    <div id="searchbtn01">                         <!--검색버튼↓ -->
         <form class="d-flex" role="search" th:action="@{/}" method="get">
             <input id="searchquery" class="form-control me-2" name="searchQuery" type="search" placeholder="Search" aria-label="Search">
             <button id="searchsubmit" class="btn btn-outline-success" type="submit">Search</button>
@@ -31,9 +31,9 @@
     </div>
     <div id="loginbox">
         <div id="text01">로그인</div>
-        <form action="/" method="post">
-            <input id="inputid" class="form-control" type="text" placeholder="아이디 입력" required>
-            <input id="inputpw" class="form-control" type="password" placeholder="비밀번호 입력" required>
+        <form th:action="@{/user/login}" method="POST">
+            <input id="inputid" class="form-control" name="username" type="text" placeholder="아이디 입력" required>
+            <input id="inputpw" class="form-control" name="password" type="password" placeholder="비밀번호 입력" required>
             <button class="btn btn-secondary btn-lg" type="submit">로그인</button>
         </form>
         <div class = "container_box01">
