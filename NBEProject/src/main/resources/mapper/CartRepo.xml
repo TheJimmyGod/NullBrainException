@@ -1,12 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.CartRepository">
-    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Cart">
-        insert into nbe_db.cart (user_id, item_id)
-        value (#{user_id}, #{item_id})
-    </insert>
-    <delete id="delete" flushCache="true">
-        delete from nbe_db.cart
-        where user_id=#{param1} and item_id=#{param2}
+
+    <select id="findPurchaseItem" parameterType="int" resultMap="mapPurchase">
+        SELECT p.id, p.user_id, g.price, g.name, p.amount, g.image_1
+        FROM
+            goods g
+                JOIN purchase_item p ON g.goods_no = p.goods_id
+                JOIN user u ON p.user_id = u.id
+        WHERE p.user_id = #{userId};
+    </select>
+
+
+    <resultMap id="mapPurchase" type="com.lec.spring.domain.CartPurchaseItem">
+        <result column="user_id" property="userId"/>
+        <result column="price" property="price"/>
+        <result column="name" property="goodsName"/>
+        <result column="amount" property="count"/>
+        <result column="image_1" property="goodsImage"/>
+    </resultMap>
+
+    <resultMap id="mapItem" type="com.lec.spring.domain.CartPurchaseItem">
+        <result column="id" property="id"/>
+        <result column="name" property="goodsName"/>
+        <result column="price" property="price"/>
+        <result column="amount" property="count"/>
+    </resultMap>
+
+    <select id="findById" resultMap="mapItem">
+        SELECT
+            pi.id,
+            g.name,
+            g.price,
+            pi.amount
+        FROM
+            purchase_item pi
+                JOIN
+            goods g ON pi.goods_id = g.goods_no
+        WHERE pi.id = #{id};
+    </select>
+
+    <delete id="deletePurchaseItems" parameterType="java.util.List">
+        DELETE FROM purchase_item WHERE id IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
+
+    <select id="selectPurchaseItems" parameterType="java.util.List" resultType="com.lec.spring.domain.CartPurchaseItem"
+            resultMap="mapPurchase">
+        SELECT
+        pi.id,
+        g.name,
+        g.price,
+        g.image_1,
+        pi.amount,
+        pi.user_id
+        FROM
+        purchase_item pi
+        JOIN
+        goods g ON pi.goods_id = g.goods_no
+        WHERE pi.id IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
+
+
 </mapper>
+

@@ -1,21 +1,20 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.CartPurchaseItem;
 import com.lec.spring.domain.User;
-import com.lec.spring.domain.PurchaseItem;
 import com.lec.spring.service.CartService;
 import com.lec.spring.service.PayService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -27,7 +26,7 @@ public class PayController {
     @Autowired
     private CartService cartService;
 
-
+    List<CartPurchaseItem> selectedItems = new ArrayList<>();
 
 
     @GetMapping("/cart")
@@ -48,12 +47,12 @@ public class PayController {
 
     @PostMapping("/cart")
     public String cartOk(@Valid CartPurchaseItem cartPurchaseItem
-            , @RequestParam("delitem") Integer[] delitem
-            , @RequestParam("selectitem") Integer[] selectItem
+            , @RequestParam(name="delitem", required = false) Integer[] delitem
+            , @RequestParam(name="selectitem", required = false) Integer[] selectItem
             , @RequestParam("userId") Integer userId
             , Model model
     ) {
-
+        selectedItems.clear();
         if (delitem == null) {
             System.out.println("No items to delete");
             model.addAttribute("result", 0);
@@ -68,9 +67,11 @@ public class PayController {
             model.addAttribute("result1", 0);
         } else {
             System.out.println("Selecting items: " + Arrays.toString(selectItem));
-            int result1 = cartService.selectitem(selectItem);
-            model.addAttribute("result1", result1);
+            selectedItems = cartService.selectitem(selectItem);
 
+            System.out.println(selectedItems);
+            model.addAttribute("result1", selectedItems);
+            model.addAttribute("resultSize", selectedItems.size());
         }
 
         model.addAttribute("userId", userId);
@@ -78,36 +79,32 @@ public class PayController {
         return "cartOk";
     }
 
-//    @PostMapping("/check")
-//    public String check(@Valid CartPurchaseItem cartPurchaseItem
-//            , @RequestParam("selectitem") Integer[] selectItem
-//            , @RequestParam("userId") Integer userId
-//            , Model model
-//    ) {
-//
-//        if (selectItem == null) {
-//            System.out.println("No items to select");
-//            model.addAttribute("result1", 0);
-//        } else {
-//            System.out.println("Selecting items: " + Arrays.toString(selectItem));
-//            int result1 = cartService.selectitem(selectItem);
-//            model.addAttribute("result1", result1);
-//
-//        }
-//
-//        model.addAttribute("userId", userId);
-//
-//        return "check";
-//    }
-
     @GetMapping("/pay")
-    public String payment(@RequestParam("userId") Integer userId, Model model){
-        User user = payService.getUserInfo(userId);
+    public String payment(@RequestParam("userId") Integer user_Id, Model model){
+        User user = payService.getUserInfo(user_Id);
+        Address address = payService.defaultAddr(user_Id);
+
+        int totalPrice = 0;
+
+        for (CartPurchaseItem item : selectedItems) {
+            totalPrice += item.getCount() * item.getPrice();
+        }
+
+        // 특정 유저의 기본 배송지 정보
+        model.addAttribute("streetAddr", address.getStreet_addr());
+        model.addAttribute("detailAddr",address.getDetail_addr());
+
+        // 특정 유저의 정보
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("username", user.getUsername());
         model.addAttribute("phone", user.getPhone());
-
+        model.addAttribute("result1", selectedItems);
+        model.addAttribute("resultSize", selectedItems.size());
         return "pay";
     }
 
 
 }
+
+
+

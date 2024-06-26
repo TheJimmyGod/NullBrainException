@@ -1,26 +1,16 @@
 package com.lec.spring.service;
 
-import java.util.List;
-
-import com.lec.spring.domain.CartPurchaseItem;
-import com.lec.spring.domain.Purchase;
-import com.lec.spring.domain.PurchaseItem;
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.User;
 
 public interface PayService {
 
-
+    // 특정 유저 정보
     User getUserInfo(Integer id);
 
-//    List<CartPurchaseItem> getSelectedCartItems(List<Integer> selectedItems);
+    // 기본배송지 정보
+    Address defaultAddr(Integer user_Id);
 
-    // 구매할 상품 목록 불러오기
-    List<Purchase> listPurchases();
-
-    // 구매할 상품 갯수 불러오기
-    List<PurchaseItem> listPurchaseItems();
-
-    // 특정 유저 정보
 
 
 

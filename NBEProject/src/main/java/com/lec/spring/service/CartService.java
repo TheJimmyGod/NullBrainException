@@ -4,7 +4,6 @@ import com.lec.spring.domain.CartPurchaseItem;
 
 import java.util.List;
 
-
 public interface CartService {
 
 
@@ -12,6 +11,6 @@ public interface CartService {
 
     int deleteitem(Integer[] delitem);
 
-    int selectitem(Integer[] selectitem);
+    List<CartPurchaseItem> selectitem(Integer[] selectitem);
 
 }
