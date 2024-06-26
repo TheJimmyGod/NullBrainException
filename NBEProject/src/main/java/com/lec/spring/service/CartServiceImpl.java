@@ -26,13 +26,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int selectitem(Integer[] selectitem){
+    public List<CartPurchaseItem> selectitem(Integer[] selectitem){
         List<Integer> ids = Arrays.asList(selectitem);
-        int result1 = cartRepository.selectPurchaseItems(ids);
-        return result1;
+        List<CartPurchaseItem> cartPurchaseItems = cartRepository.selectPurchaseItems(ids);
+        return cartPurchaseItems;
     }
-
-
-
 
 }

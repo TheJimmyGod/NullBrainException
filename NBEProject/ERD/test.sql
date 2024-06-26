@@ -22,7 +22,7 @@ create table opt (
     name varchar(10),
     value varchar(10)
 );
-
+SELECT * FROM goods;
 
 alter table goods modify contents LONGTEXT;
 alter table goods modify keywords LONGTEXT;

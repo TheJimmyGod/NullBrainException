@@ -15,7 +15,7 @@ public interface CartRepository {
     int deletePurchaseItems(@Param("list") List<Integer> ids);
 
     @Transactional
-    int selectPurchaseItems(@Param("list") List<Integer> ids);
+    List<CartPurchaseItem> selectPurchaseItems(@Param("list") List<Integer> ids);
 
     CartPurchaseItem findById(@Param("id") Integer id);
 
