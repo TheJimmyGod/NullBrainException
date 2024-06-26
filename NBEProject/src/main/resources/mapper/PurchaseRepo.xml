@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
-    <insert id="insert" parameterType="com.lec.spring.domain.shop.Purchase"
+    <insert id="insert" parameterType="com.lec.spring.domain.Purchase"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into purchase (nbe_db.purchase.user_id, nbe_db.purchase.item_id, nbe_db.purchase.street_addr, nbe_db.purchase.detail_address, nbe_db.purchase.phone, nbe_db.purchase.request)
         value (#{user_id}, #{item_id}, #{street_addr}, #{detail_address}, #{phone}, #{request})

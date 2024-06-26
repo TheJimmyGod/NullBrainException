@@ -24,7 +24,7 @@
         WHERE
             p.user_id = u.id
     </sql>
-    <resultMap id="mapUser" type="com.lec.spring.domain.shop.User">
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
         <result column="u_password" property="password"/>
