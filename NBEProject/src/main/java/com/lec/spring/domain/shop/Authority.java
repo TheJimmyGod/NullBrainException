@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class Authority {
     private Integer id;
-    private String auth;
+    private String auth;  // 권한명 ex) "USER" "ADMIN"
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block>
+    <!-- not login -->
+    <div sec:authorize="isAnonymous()">
+        <a href="javascript:void(0)">status:not login</a>
+    </div>
+    <!-- login -->
+    <div sec:authorize="isAuthenticated()">
+        <a href="javascript:void(0)">status: login</a>
+    </div>
+    <!-- login with Admin -->
+    <div sec:authorize="hasRole('ADMIN')">
+        <a href="javascript:void(0)">status: login:Admin</a>
+    </div>
+    <!--  login -->
+    <div sec:authorize="hasAnyRole('USER','ADMIN')">
+        <a href="javascript:void(0)">status: login:user,admin</a>
+    </div>
+
+    <a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/user/login}">Login</a>
+
+    <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
+        <span class="d-flex">
+                    <span class="text-light p-2"><span>[[${user.username}]]([[${user.name}]])</span> 님 환영합니다</span>
+                    <span><button class="btn btn-danger" type="submit">Logout</button></span>
+                </span>
+    </form>
+
+    <div sec:authorize="isAnonymous()" class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        로그인하지 않은 상태입니다 <br>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="alert alert-info alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div sec:authentication="principal.authorities"></div>
+        로그인 하셨습니다 <br>
+    </div>
+
+</th:block>
+</html>

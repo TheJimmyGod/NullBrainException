@@ -2,12 +2,14 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Authority;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.User;
+import com.lec.spring.domain.shop.UserAuthorities;
 import com.lec.spring.dto.UserDto;
 import com.lec.spring.repository.AuthorityRepo;
 import com.lec.spring.repository.UserRepo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private UserRepo userRepo;
 
     private  AuthorityRepo authorityRepo;
+
 
     @Autowired
     private SqlSession sqlSession;
@@ -26,6 +31,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(SqlSession sqlSession){
         userRepo=sqlSession.getMapper(UserRepo.class);
         authorityRepo=sqlSession.getMapper(AuthorityRepo.class);
+
     }
 
     @Override
@@ -43,6 +49,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(UserDto userDto) {
 
+        userDto.setUsername(userDto.getUsername().toUpperCase()); //중복방지
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
         sqlSession.insert("com.lec.spring.repository.UserRepo.saveUser", userDto);
 
         Integer userId = sqlSession.selectOne("com.lec.spring.repository.UserRepo.getLastInsertedUserId");
@@ -56,6 +65,8 @@ public class UserServiceImpl implements UserService {
 
         sqlSession.insert("com.lec.spring.repository.UserRepo.saveAddr", address);
 
+        authorityRepo.addAuthority(userId, 2);
+
         return 1;
     }
 
@@ -66,8 +77,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<Authority> selectAuthoritiesById(Long id) {
-        return null;
+    public List<Authority> selectAuthoritiesById(int id) {
+        User user = userRepo.selectById(id);
+        List<Authority> byUser = authorityRepo.findByUser(user.getId());
+        return byUser;
     }
 
     @Override

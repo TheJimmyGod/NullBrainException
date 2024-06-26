@@ -48,4 +48,8 @@ public class UserDto {
     private String detail_addr;
     @NotBlank(message = "주소지명을 입력해주세요")
     private String addressName;
+
+    //Authority 부분
+    private String auth;
+
 }

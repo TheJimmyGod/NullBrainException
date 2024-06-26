@@ -16,5 +16,5 @@ public interface AuthorityRepo {
     List<Authority> findByUser(int user_id);
 
     // 특정 사용자(user_id) 에 권한(auth_id) 추가 (INSERT)
-    int addAuthority(Long user_id, Long auth_id);
+    int addAuthority(int user_id, int auth_id);
 }

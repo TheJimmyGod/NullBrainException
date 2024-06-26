@@ -11,8 +11,10 @@
         where id=#{param1}
     </delete>
 
-    <select id="findByUser" flushCache="true" parameterType="com.lec.spring.domain.shop.Authority">
-        select  auth
+    <select id="findByUser" resultType="com.lec.spring.domain.shop.Authority">
+        select
+            id "id",
+            auth "auth"
         from authority
         where id in
         (
@@ -22,6 +24,6 @@
     </select>
 
     <insert id="addAuthority" flushCache="true">
-        insert into user_authorities (user_id, authority_id) VALUE (#{param1}, #{#param2})
+        insert into user_authorities (user_id, authority_id) VALUE (#{param1}, #{param2})
     </insert>
 </mapper>
