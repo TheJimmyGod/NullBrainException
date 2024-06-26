@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -1.4861,
-    "scrollLeft": -88,
+    "scrollTop": -1325,
+    "scrollLeft": -458,
     "zoomLevel": 0.8,
     "show": 511,
     "database": 4,
@@ -42,7 +42,6 @@
       "FkQn-MJT0_hk2LYiPUOez",
       "70hutK-dxLbNys3zwXGRz",
       "bS6OmVJh44539iPC6LlzS",
-      "osNZAdmh770FAo69sLAwl",
       "ovDLl4BkLXbKsMUsKDuIh",
       "LrkvglZ7CKoeBuOQyMNAJ",
       "tG1Gi-AI9PPaAgucEW6Su",
@@ -74,7 +73,6 @@
       "3s7lZXIkKyYZ8xWIDwoPy",
       "UBsZnZmO_25cFT8f7e_tR",
       "qc9qxEwXKf8SvUXTCKVDH",
-      "j-T4F_1dc-dvdmoAWkKPj",
       "Th9J4lBDLaDe7T8ooYj1p",
       "kyVJLV-J8y69WkC4qASn1",
       "73Lr82H15jn7Be8EW1j_T",
@@ -813,36 +811,6 @@
         "meta": {
           "updateAt": 1718589751485,
           "createAt": 1718589550312
-        }
-      },
-      "AYbGTena9IYGIjuJUwClF": {
-        "id": "AYbGTena9IYGIjuJUwClF",
-        "name": "opt",
-        "comment": "",
-        "columnIds": [
-          "GlRjRhIdpiT3i9c0UEydy",
-          "_Y58TEaVxevwfv2jVscZH",
-          "IM508CLcxkqPmUUcfExff",
-          "CZFkmhqyB81FBQ6CYxcVF"
-        ],
-        "seqColumnIds": [
-          "GlRjRhIdpiT3i9c0UEydy",
-          "9gCBG0uvboGAP0lygZiMs",
-          "_Y58TEaVxevwfv2jVscZH",
-          "IM508CLcxkqPmUUcfExff",
-          "CZFkmhqyB81FBQ6CYxcVF"
-        ],
-        "ui": {
-          "x": 552.2223,
-          "y": 826.302,
-          "zIndex": 2467,
-          "widthName": 60,
-          "widthComment": 60,
-          "color": ""
-        },
-        "meta": {
-          "updateAt": 1718895329060,
-          "createAt": 1718895211280
         }
       }
     },
@@ -4877,7 +4845,7 @@
             "bosszmsk4rXTqUafxZYfC"
           ],
           "x": 533.6595,
-          "y": 1518.1046,
+          "y": 1494.1046,
           "direction": 1
         },
         "meta": {
@@ -5119,8 +5087,8 @@
           "columnIds": [
             "gsrdEqJus92Rn23B47X1b"
           ],
-          "x": 952.6595,
-          "y": 1576.7712666666669,
+          "x": 966.6595,
+          "y": 1536.7712666666669,
           "direction": 2
         },
         "end": {
@@ -5261,8 +5229,8 @@
           "columnIds": [
             "gsrdEqJus92Rn23B47X1b"
           ],
-          "x": 952.6595,
-          "y": 1459.4379333333334,
+          "x": 966.6595,
+          "y": 1451.4379333333334,
           "direction": 2
         },
         "end": {
@@ -5289,8 +5257,8 @@
           "columnIds": [
             "gsrdEqJus92Rn23B47X1b"
           ],
-          "x": 952.6595,
-          "y": 1518.1046000000001,
+          "x": 966.6595,
+          "y": 1494.1046000000001,
           "direction": 2
         },
         "end": {
