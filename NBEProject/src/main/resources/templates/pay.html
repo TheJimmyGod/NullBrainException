@@ -7,87 +7,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <title>주문/결제</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/pay.css}">
     <script src="/js/pay.js" defer></script>
 
 </head>
 <body>
 <h1 class="title">주문/결제</h1><br>
-<div class="container">
-    <h1 id="orderProduct">주문 상품 총 4개</h1>
+<div class="container"> <!-- list: ${purchaselist}-->
+    <h1 id="orderProduct" th:text="'주문 상품 총 ' + ${amount} + '개'">주문 상품 총 0개</h1>
     <i class="fa-sharp fa-solid fa-chevron-down" name="downicon"></i>
     <i class="fa-sharp fa-solid fa-chevron-up" id="icon" name="upicon" style="display:none;"></i>
 </div>
 <div class="delivery">
-    <h2 class="delivery-title">@@@배송상품 1개</h2>
-    <div class="delivery-content">
+    <!--    <h2 class="delivery-title" th:text="'@@@배송상품 ' + ${count} + '개'">@@@배송상품 1개</h2>-->
+    <div class="delivery-content" th:each="item : ${selectedCartItems}">
         <div class="row" style="width: 500px;">
             <div class="col-auto">
-                <img src="" class="productImage" alt="Product Image">
+                <img th:src="${item.goodsImage}" class="productImage" alt="Product Image">
             </div>
             <div name="productInfo" class="col">
                 <br>
-                <a id="shopname1" class="productInfo">@@@</a>
-                <a class="productInfo1">상품이름상품이름상품이름상품이름상품이름</a>
-                <a class="productInfo1">12345원 1개</a><br><br>
+                <!--                <a id="shopname1" class="productInfo">@@@</a>-->
+                <a class="productInfo1" th:text="${item.goodsName}">상품이름상품이름상품이름상품이름상품이름</a>
+                <a class="productInfo1" th:text="${item.price} + '원 ' + ${item.count} + '개'">12345원 1개</a><br><br>
+
             </div>
         </div>
         <div class="box">그레이/free</div>
     </div>
 </div><br>
 
-<div class="delivery">
-    <h2 class="delivery-title">###배송상품 3개</h2>
-    <div class="delivery-content">
-        <div class="row" style="width: 500px;">
-            <div class="col-auto">
-                <img src="" class="productImage" alt="Product Image">
-            </div>
-            <div name="productInfo" class="col">
-                <br>
-                <a id="shopname2" class="productInfo">###</a>
-                <a class="productInfo1">상품이름상품이름상품이름상품이름상품이름</a>
-                <a class="productInfo1">12345원 2개</a><br><br>
-            </div>
-        </div>
-        <div class="box">블랙/free</div>
-    </div>
-</div>
-
-<div class="delivery">
-    <h2 class="delivery-title">###배송상품 1개</h2>
-    <div class="delivery-content">
-        <div class="row" style="width: 500px;">
-            <div class="col-auto">
-                <img src="" class="productImage" alt="Product Image">
-            </div>
-            <div name="productInfo" class="col">
-                <br>
-                <a id="shopname3" class="productInfo">###</a>
-                <a class="productInfo1">상품이름상품이름상품이름상품이름상품이름</a>
-                <a class="productInfo1">12345원 1개</a><br><br>
-            </div>
-        </div>
-        <div class="box">화이트/2XL</div>
-    </div>
-</div>
-
 <br><br><hr><br>
 
 <a class="adressInfo">배송지 정보</a>
 <!-- <a href="이동할 위치" >변경하기</a> -->
-<a href="#pop1" class="btn" onclick="openPopup()">팝업열기</a>
+<a href="#pop1" class="btn" onclick="openPopup()">변경하기</a>
 <div class="popup" id="pop1">
     <a href="#a" onclick="closePopup()">닫기</a>
     <div class="transformChange" id="transformChange">
         <h1>배송지 변경</h1>
         <div class="addressInfo" id="address-container">
             <div class="addressInfo2">
-                <h2>이가영 <span style="color: #00f;">(기본배송지)</span></h2>
-                <p>주소주소주소주소주소주소주소주소주소주소주소<br>
-                    상세주소상세주소상세주소상세주소<br>
-                    010-1234-5678
-                </p>
+                <h2 th:text="${username}">이가영 <span style="color: #00f;">(기본배송지)</span></h2>
+                <p>주소주소주소주소주소주소주소주소주소주소주소</p>
+                <p>상세주소상세주소상세주소상세주소</p>
+                <p th:text="${phone}">010-1234-5678</p>
+
                 <button class="btn2 btn-secondary" onclick="showForm('form1')">수정</button>
                 <div id="form1" class="input-form">
                     <input type="text" placeholder="새 주소를 입력해주세요">
@@ -124,7 +90,7 @@
 <div class="dim"></div>
 
 <div id="cutomerInfo">
-    <a>이가영 010-1234-5678</a><br>
+    <a th:text="${username} + ' ' + ${phone}">이가영 010-1234-5678</a><br>
     <a>주소주소주소주소주소주소주소</a><br>
     <a>상세주소상세주소상세주소상세주소</a><br><br>
     <select class="minimal">
@@ -160,7 +126,7 @@
 </div>
 <br><br><hr><br>
 <a class="adressInfo">총 결제금액</a>
-<a id="moneysum">12,345원</a>
+<a id="moneysum" th:text="${totalPrice} +'원'">12,345원</a>
 <br><br><hr><br>
 <a class="adressInfo">결제방법</a><br><br><br>
 <div id="payoption">

@@ -1,6 +1,6 @@
 package com.lec.spring.repository;
 
-import com.lec.spring.domain.shop.Purchase;
+import com.lec.spring.domain.Purchase;
 
 public interface PurchaseRepo {
     // 주문하기
