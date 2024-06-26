@@ -1,0 +1,117 @@
+/* 기본 모바일 스타일 */
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+/* .product 스타일 */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product {
+    width: calc(33.333% - 20px);
+    margin: 10px;
+}
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* 이미지의 최대 높이 설정 */
+    object-fit: cover; /* 이미지 비율을 유지하면서 잘라내기 */
+}
+
+.info {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+
+}
+
+/* 태블릿 이상 화면을 위한 스타일 */
+@media (min-width: 600px) {
+    header .logo h1 {
+        font-size: 24px;
+    }
+
+    header .menu ul li a {
+        font-size: 16px;
+    }
+
+    .category1 button {
+        margin-right: 15px;
+    }
+
+    .category2-man .item,
+    .category2-woman .item {
+        padding: 5px;
+        margin: 2px;
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+
+    .product {
+        margin: 15px 0;
+    }
+
+    .product img {
+        width: 100%;
+        height: auto;
+        max-height: 300px; /* 이미지의 최대 높이 설정 */
+        object-fit: cover; /* 이미지 비율을 유지하면서 잘라내기 */
+    }
+
+    .info {
+        width: 100%;
+        margin-top: 10px;
+        text-align: left;
+
+    }
+}
+
+/* 데스크탑 이상 화면을 위한 스타일 */
+@media (min-width: 1024px) {
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .category2-man .item,
+    .category2-woman .item {
+        padding: 5px;
+        margin: 2px;
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product {
+        width: calc(33.333% - 20px);
+        margin: 10px;
+    }
+
+    .product img {
+        width: 100%;
+        height: auto;
+        max-height: 300px; /* 이미지의 최대 높이 설정 */
+        object-fit: cover; /* 이미지 비율을 유지하면서 잘라내기 */
+    }
+
+    .info {
+        width: 100%;
+        margin-top: 10%;
+        text-align: left;
+
+    }
+}

@@ -1,13 +1,14 @@
 package com.lec.spring.controller;
-import com.lec.spring.domain.shop.Goods;
+import com.lec.spring.domain.shop.Result;
 import com.lec.spring.domain.shop.Opt;
-import com.lec.spring.repository.ItemRepo;
+import com.lec.spring.repository.GoodsRepo;
 import com.lec.spring.repository.OptRepo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /*
  * query   String   Y  검색어.UTF-8 로 인코딩되어야됨
@@ -40,12 +40,14 @@ import java.util.Map;
 @RequestMapping("/shop")
 @Controller
 public class HomeController {
-    ItemRepo goodsRepo;
+//    GoodsRepo goodsRepo;
     OptRepo optRepo;
+
+
     @Autowired
     public HomeController(SqlSession sqlSession){
 
-        goodsRepo = sqlSession.getMapper(ItemRepo.class);
+//        goodsRepo = sqlSession.getMapper(GoodsRepo.class);
         optRepo = sqlSession.getMapper(OptRepo.class);
     }
     RestTemplate rt = new RestTemplate();
@@ -55,43 +57,100 @@ public class HomeController {
     public String getInfo(){
         List<String> man = new ArrayList<>();
         List<String> woman = new ArrayList<>();
-        man.add("570501010");
-        man.add("570501020");
-        man.add("570501030");
-        man.add("570501040");
-        man.add("570501050");
-        man.add("570502010");
-        man.add("570502020");
-        man.add("570502030");
-        man.add("570502040");
-        man.add("570502050");
-        man.add("570502060");
-        man.add("570502070");
-        man.add("570502080");
-        man.add("570503010");
-        man.add("570503020");
-        man.add("570504010");
-        man.add("570504020");
-        man.add("570504030");
-        man.add("570504040");
-        man.add("570504050");
-        man.add("570505010");
-        man.add("570505020");
-        man.add("570505030");
-        man.add("570505040");
-        man.add("570505050");
-        man.add("570505060");
-        man.add("570505070");
-        man.add("570505080");
-        man.add("570506010");
-        man.add("570506030");
-        man.add("570506040");
-        man.add("570506050");
-        man.add("570506060");
-        man.add("570507010");
-        man.add("570507020");
-        man.add("570507030");
-        man.add("570507040");
+        man.add("522501010");
+        man.add("522501020");
+        man.add("522501030");
+        man.add("522501040");
+        man.add("522502010");
+        man.add("522502020");
+        man.add("522502030");
+        man.add("522502040");
+        man.add("522502050");
+        man.add("522502060");
+        man.add("522503010");
+        man.add("522503020");
+        man.add("522503030");
+        man.add("522503040");
+        man.add("522503050");
+        man.add("522503060");
+        man.add("522503070");
+        man.add("522504010");
+        man.add("522504020");
+        man.add("522504030");
+        man.add("522504040");
+        man.add("522504050");
+        man.add("522504060");
+        man.add("522504070");
+        man.add("522504080");
+        man.add("522504090");
+        man.add("522504100");
+        man.add("522504110");
+        man.add("522505010");
+        man.add("522505020");
+        man.add("522505030");
+        man.add("522505040");
+        man.add("522505050");
+        man.add("522506010");
+        man.add("522506020");
+        man.add("522507010");
+        man.add("522507020");
+        man.add("522507030");
+        man.add("522507040");
+        man.add("522508010");
+        man.add("522508020");
+        man.add("522508030");
+        man.add("522508040");
+        man.add("522508050");
+        man.add("522509010");
+        man.add("522509020");
+        man.add("522509030");
+        man.add("522509040");
+        man.add("522509050");
+        man.add("522510010");
+        man.add("522510020");
+        man.add("522510030");
+        man.add("522510040");
+        man.add("522510050");
+        man.add("522510060");
+        man.add("522511010");
+        man.add("522511020");
+        man.add("522511030");
+        man.add("522511040");
+        man.add("522511050");
+        man.add("522511060");
+        man.add("522511070");
+        man.add("522511080");
+        man.add("522511090");
+        man.add("522512010");
+        man.add("522512020");
+        man.add("522512030");
+        man.add("522512040");
+        man.add("522513010");
+        man.add("522513020");
+        man.add("522513030");
+        man.add("522513040");
+        man.add("522513050");
+        man.add("522513060");
+        man.add("522514010");
+        man.add("522514020");
+        man.add("522514030");
+        man.add("522514040");
+        man.add("522515010");
+        man.add("522515020");
+        man.add("522516010");
+        man.add("522516020");
+        man.add("522516030");
+        man.add("522516040");
+        man.add("522516050");
+        man.add("522516060");
+        man.add("522516070");
+        man.add("522516080");
+        man.add("522517010");
+        man.add("522517020");
+        man.add("522517030");
+        man.add("522517040");
+        man.add("522517050");
+
 
         woman.add("543501010");
         woman.add("543501020");
@@ -257,33 +316,22 @@ public class HomeController {
                     .toUri();
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<Goods> response = rt.exchange(url.toString(), HttpMethod.GET, entity, Goods.class);
-            Goods responseBody = response.getBody();
+            ResponseEntity<Result> response = rt.exchange(url.toString(), HttpMethod.GET, entity, Result.class);
+            Result responseBody = response.getBody();
             responseBody.getData().forEach(e -> {
-                //상품정보 입력
+            //데이터주입
 //                goodsRepo.insert(e);
 
-
-                // 옵션정보 입력
-                List<Opt> options = e.getOption_values();
-                List<String> titles = e.getOption_titles();
-                int len = titles.size();
-                if (len == 2){
-                    options.forEach(item ->{
-                        List<Map<String, String>> x = new ArrayList<>();
-
-                        x.add(Map.of("color", item.getValues().get(0), "size", item.getValues().get(1)));
-                        optRepo.insert(x, e.getGoods_no());
-                    });
-                } else if(len ==1){
-                    options.forEach(item ->{
-                        List<Map<String, String>> x = new ArrayList<>();
-
-                        x.add(Map.of("color", item.getValues().get(0)));
-                        optRepo.insert(x, e.getGoods_no());
-                    });
+                if(e.getOption_titles() != null && e.getOption_values() != null){
+                    for(Opt o : e.getOption_values()){
+                        List<String> value = o.getValues();
+                        List<String> v = new ArrayList<>();
+                        value.forEach(x -> v.add(x));
+                        String k = String.join("+", value);
+                        optRepo.insert(e.getGoods_no(), k);
+                    }
                 }
-
+                // end
             });
         }
 
@@ -296,14 +344,21 @@ public class HomeController {
                     .toUri();
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<Goods> response = rt.exchange(url.toString(), HttpMethod.GET, entity, Goods.class);
-            Goods responseBody = response.getBody();
+            ResponseEntity<Result> response = rt.exchange(url.toString(), HttpMethod.GET, entity, Result.class);
+            Result responseBody = response.getBody();
             responseBody.getData().forEach(e -> {
-                goodsRepo.insert(e);
-//                List<Map<String, String>> opt = new ArrayList<>();
-//                List<String> titles = e.getOption_titles();
-//                List<Opt> options = e.getOption_values();
+//                  데이터 주입
+//                goodsRepo.insert(e);
 
+                if(e.getOption_titles() != null && e.getOption_values() != null){
+                    for(Opt o : e.getOption_values()){
+                        List<String> value = o.getValues();
+                        List<String> v = new ArrayList<>();
+                        value.forEach(x -> v.add(x));
+                        String k = String.join("+", value);
+                        optRepo.insert(e.getGoods_no(), k);
+                    }
+                }
             });
         }
         return "success";

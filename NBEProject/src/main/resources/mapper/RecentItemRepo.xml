@@ -3,9 +3,26 @@
 <mapper namespace="com.lec.spring.repository.RecentItemRepo">
     <insert id="insert" flushCache="true" parameterType="arraylist">
         insert into recent_item (user_id, goods_id)
-        values
-            <foreach collection="list" separator="," item="e">
-                (#{e.user_id}, #{e.goods_id})
-            </foreach>
+        value (#{param1}, #{param2})
     </insert>
+
+    <select id="selectOne" flushCache="true">
+        select count(*) from recent_item
+        where user_id=#{param1}
+        and goods_id=#{param2}
+    </select>
+
+    <select id="selectAll" flushCache="true" resultType="com.lec.spring.domain.shop.RecentItem">
+        select * from recent_item
+        where user_id=#{param1}
+        order by regdate DESC
+        limit 100
+        ;
+    </select>
+
+    <delete id="delete" flushCache="true">
+        delete from recent_item
+        where user_id=#{param1}
+        and goods_id=#{param2}
+    </delete>
 </mapper>
