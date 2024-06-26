@@ -1,0 +1,391 @@
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
+}
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* 검은색 배경 투명도 */
+}
+
+.modal-content {
+    position: absolute;
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 20%;
+    height: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-btn {
+    display: flex;
+    height: 20%;
+    gap: 5%;
+    margin-top: 40%
+}
+
+.modal-btn button {
+    display: flex;
+    font-size: 0.8em;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-image {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.image-section, .info-section, .reviews-section {
+    margin-bottom: 20px;
+}
+
+.image-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    background-color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5%;
+}
+
+.thumbnail-images {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.thumbnail {
+    width: 48%;
+    height: auto;
+    background-color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.info form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.product-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.price {
+    font-size: 20px;
+    color: #e60000;
+    font-weight: bold;
+}
+
+.options, .quantity {
+    word-break: break-all;
+    font-size: 18px;
+    color: #555;
+}
+.option-box {
+    display: flex;
+    gap: 5%;
+    margin-top: 10%;
+}
+
+.opt-quan {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+    margin-top: 10%;
+}
+
+
+
+.counter-form {
+    display: flex;
+}
+
+.counter-form button, .counter-form input {
+    font-size: 1.2em;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.counter-form input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cart, .btn-buy {
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cart {
+    background-color: #333;
+}
+
+.btn-cart:hover {
+    background-color: #555;
+}
+
+.btn-buy {
+    background-color: #e60000;
+}
+
+.btn-buy:hover {
+    background-color: #ff0000;
+}
+
+.reviews-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.rating, .review-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.stars {
+    color: yellow;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.star {
+    margin-right: 2px;
+}
+
+.score {
+    font-size: 16px;
+}
+
+.review-count {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.review-list {
+    background-color: #ffffff;
+    padding: 20px;
+    border-top: 1px solid #eaeaea;
+}
+
+.review-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 20px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+}
+
+.review-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.review-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-user {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.review-date, .review-report {
+    font-size: 14px;
+    color: #888;
+}
+
+.review-report {
+    cursor: pointer;
+}
+
+.review-rating {
+    color: #ffc107;
+    font-size: 16px;
+}
+
+.review-body {
+    margin-top: 10px;
+    position: relative;
+}
+
+.review-text {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    max-height: 100px; /* 설정된 높이 */
+    position: relative;
+    overflow: hidden;
+}
+.more-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+}
+.review-details {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.review-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .section {
+        flex-direction: row;
+        gap: 10%;
+    }
+
+    .image-section {
+        width: 60%;
+    }
+
+    .thumbnail-images {
+        width: 100%;
+    }
+
+    .thumbnail {
+        width: 28%;
+    }
+
+    .info-section {
+        width: 40%;
+    }
+
+    .reviews-section {
+        flex-direction: row;
+    }
+
+    .rating, .review-summary {
+        flex-direction: row;
+    }
+}

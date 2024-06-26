@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class PurchaseItem {
     private Integer id;
-    private Integer goods_id;
     private Integer amount;
+    private Goods goods;
 }
