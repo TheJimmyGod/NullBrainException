@@ -13,12 +13,12 @@
 
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.shop.ContactImage">
-        INSERT INTO contact_image(contact_id, file_name)
+        INSERT INTO contact_image(contact_id, filen_ame)
         VALUES (#{file_name}, #{param2})
     </insert>
 
     <sql id="SELECTFILE">
-        SELECT id, contact_id, file_name
+        SELECT id, contact_id, filen_ame
         FROM contact_image
         WHERE 1=1
     </sql>

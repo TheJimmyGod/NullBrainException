@@ -1,55 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반품 관리 페이지</title>
-<link rel="stylesheet" href="/css/returnpage.css">
+    <link rel="stylesheet" th:href="@{/css/returnpage.css}">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="menu-item admin-menu" onclick="location.href='main'">관리자 메뉴</div>
-        <div class="menu-item order-list">반품 목록</div>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='/admin/main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-        <div class="search-bar">
-            <input type="text" placeholder="고객 이름을 입력">
-            <button>검색</button>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>반품번호</th>
-                        <th>고객 이름</th>
-                        <th>주문 일시</th>
-                        <th>상품명</th>
-                        <th>상품 가격</th>
-                        <th>구매 수량</th>
-                        <th>상태</th>
-                        <th>문의 내용</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>홍길동</td>
-                        <td>2024/06/01</td>
-                        <td>셔츠</td>
-                        <td>30,000</td>
-                        <td>3</td>
-                        <td>반품 접수</td>
-                        <td><button class="details-button" onclick="window.location.href='returnDetailPage'">상세보기</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">&raquo;</a>
-        </div>
+    <div class="header-right">
+        <span>관리자</span>
+        <span>eces92@gmail.com</span>
+        <a href="/logout">로그아웃</a>
     </div>
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='/admin/returnpage'">반품 목록</li>
+        <li>취소 목록</li>
+        <li>교환 목록</li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>반품 관리 페이지</h1> <br>
+
+    <h3>총 OO 개의 반품 요청이 있습니다.</h3>
+    <div class="search-bar">
+        <input type="text" placeholder="고객 이름을 입력">
+        <button>검색</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>반품번호</th>
+                <th>고객 이름</th>
+                <th>주문 일시</th>
+                <th>상품명</th>
+                <th>상품 가격</th>
+                <th>구매 수량</th>
+                <th>상태</th>
+                <th>문의 내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>홍길동</td>
+                <td>2024/06/01</td>
+                <td>셔츠</td>
+                <td>30,000</td>
+                <td>3</td>
+                <td>반품 접수</td>
+                <td><button class="details-button" onclick="window.location.href='returnDetailPage'">상세보기</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">&raquo;</a>
+    </div>
+</div>
 </body>
 </html>

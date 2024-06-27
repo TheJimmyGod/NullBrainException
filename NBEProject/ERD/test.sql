@@ -33,6 +33,11 @@ alter table goods modify image_4 LONGTEXT;
 alter table goods modify image_5 LONGTEXT;
 alter table goods modify image_6 LONGTEXT;
 alter table goods modify name TEXT;
+
+alter table contact ADD COLUMN type VARCHAR(20);
+
+alter table user ADD COLUMN status boolean default true;
+
 delete from goods;
 select * from goods;
 

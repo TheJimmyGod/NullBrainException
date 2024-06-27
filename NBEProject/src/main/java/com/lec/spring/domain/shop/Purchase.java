@@ -1,5 +1,6 @@
 package com.lec.spring.domain.shop;
 
+import com.lec.spring.domain.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,4 +17,15 @@ public class Purchase {
     private String detailAddress;  // 상세주소
     private String phone;
     private String request;
+
+    // 유저의 객체 정보
+    private User user;
+
+    // 상품의 정보
+    private Goods goods;
+
+    private Integer price;
+    private String goodsName;
+    private Integer count;
+    private String goodsImage;
 }
