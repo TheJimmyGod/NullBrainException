@@ -86,5 +86,20 @@
             name LIKE CONCAT('%', #{name}, '%')
     </select>
 
+    <!--  유저의 권한 업데이트(활성, 비활성)  -->
+    <update id="updateAuthority">
+        UPDATE user_authorities
+        SET authority_id = #{authorityId}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!--  status 변경 기능  -->
+    <update id="updateStatus" parameterType="map">
+        UPDATE user
+        SET status = #{status}
+        where id = #{userId}
+
+    </update>
+
     
 </mapper>

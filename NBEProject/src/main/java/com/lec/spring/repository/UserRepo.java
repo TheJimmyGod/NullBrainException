@@ -39,4 +39,7 @@ public interface UserRepo {
     int  getLastInsertedUserId();
 
     void saveAddr(Address address);
+
+    // 유저 상태 변경
+    int updateStatus(int userId, boolean status);
 }

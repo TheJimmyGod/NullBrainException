@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -79,9 +80,9 @@ public class UserController {
 
     @RequestMapping("/contact")
     public String contact(Model model){
-       List<Contact> contact = contactService.allContacts();
+        List<Contact> contact = contactService.allContacts();
 
-       model.addAttribute("contact", contact);
+        model.addAttribute("contact", contact);
 
         return "/user/contact";
     }
@@ -92,7 +93,8 @@ public class UserController {
                             @RequestParam("content") String content,
                             @RequestParam("file1") MultipartFile file1,
                             @RequestParam("file2") MultipartFile file2
-                           ) throws IOException {
+    ) throws IOException {
+
         Contact contact = Contact.builder()
                 .user_id(2)
                 .goods_id(1)
@@ -102,6 +104,9 @@ public class UserController {
                 .build();
 
         contactService.addContact(contact);
+
+        saveFile(contact.getId(), file1);
+        saveFile(contact.getId(), file2);
 
         return "redirect:/user/contact";
     }
@@ -114,13 +119,16 @@ public class UserController {
                 String uuid = UUID.randomUUID().toString();
                 String savedFilename = uuid + ext;
 
-                Path uploadDir = Paths.get(uploadPath);
-                if (!uploadDir.toFile().exists()) {
-                    uploadDir.toFile().mkdirs();
+                // 상대 경로를 절대 경로로 변환
+                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                    System.out.println("Created directories: " + uploadDir.toString());
                 }
 
-                File targetFile = new File(uploadPath, savedFilename);
-                file.transferTo(targetFile);
+                Path targetPath = uploadDir.resolve(savedFilename).normalize();
+                file.transferTo(targetPath.toFile());
+                System.out.println("Saved file to: " + targetPath.toString());
 
                 ContactImage contactImage = ContactImage.builder()
                         .contact_id(contactId)
