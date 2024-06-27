@@ -80,7 +80,7 @@ public class PostController {
         return "post/writeOk";
     }
     @GetMapping("/list")
-    public void list(Integer page, Model model){
+    public void list(@RequestParam(name = "page", required = false) Integer page, Model model){
         postService.list(page, model);
         //model.addAttribute("list", postService.list());
     }

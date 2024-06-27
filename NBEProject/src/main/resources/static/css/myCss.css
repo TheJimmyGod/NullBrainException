@@ -57,3 +57,7 @@
 #grade{
     opacity: 0;
 }
+
+.selected {
+    background-color: lightgray; /* 원하는 배경색 지정 */
+}
