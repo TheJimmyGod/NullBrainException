@@ -35,4 +35,18 @@ public interface ContactService {
     // 미 답변 카운트 기능
     Long countUnAnswer();
 
+    // 유저의 문의 유형 확인
+    String type();
+
+    // 문의사항 페이징 조회
+    List<Contact> findAllContacts(int offset, int limit);
+
+    // 상태별 문의사항 조회
+    List<Contact> findContactsByStatus(String status, int offset, int limit);
+
+    // 상태별 문의사항 카운트
+    Long countContactsByStatus(String status);
+
+    // 취소주문 카운트
+    Long cancelOrder();
 }

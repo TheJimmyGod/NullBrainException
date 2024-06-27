@@ -55,6 +55,8 @@ public class AdminController {
         Long userCnt = userService.cntUser();
         Long countAll = contactService.countAll();
         Long countUnAnswer = contactService.countUnAnswer();
+        Long cancel = contactService.cancelOrder();
+
 
         // 우측 상단 유저의 닉네임 표시(임시)
         String username = "테스트용ID";
@@ -63,6 +65,7 @@ public class AdminController {
         model.addAttribute("cntcontact", countAll);
         model.addAttribute("username", username);
         model.addAttribute("cntunanswer", countUnAnswer);
+        model.addAttribute("cancel", cancel);
 
 
         return "admin/main";
@@ -234,42 +237,43 @@ public class AdminController {
     // 문의사항 목록 페이지
     @RequestMapping("/inquirylist")
     public String inquiryList(
-                            @RequestParam(value = "page" ,defaultValue= "1") int page,
-                            @RequestParam(value = "username", required = false) String username,
-                              Model model) {
+            @RequestParam(value = "page" ,defaultValue= "1") int page,
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "status", required = false) String status,
+            Model model) {
         List<Contact> contacts;
-        Long countAll = contactService.countAll();
-//        String type = contactService.type();
-
+        Long countAll;
         int limit = 10;
         int offset = (page - 1) * limit;
-
 
         if (username != null && !username.isEmpty()) {
             contacts = contactService.findContactsByUsername(username);
             countAll = (long) contacts.size();
+        } else if (status != null && !status.isEmpty()) {
+            contacts = contactService.findContactsByStatus(status, offset, limit);
+            countAll = contactService.countContactsByStatus(status);
         } else {
-            contacts = contactService.allContacts();
+            contacts = contactService.findAllContacts(offset, limit);
             countAll = contactService.countAll();
         }
 
         int totalPages = (int) Math.ceil((double) countAll / limit);
 
-
-//        model.addAttribute("contactType", type);
         model.addAttribute("contacts", contacts);
         model.addAttribute("cntcontact", countAll);
         model.addAttribute("username", username);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("status", status);
+
         return "admin/inquirylist";
     }
 
     // 문의사항 상세보기 페이지
     @RequestMapping("/inquirydetail")
     public String inquiryDetail(@RequestParam("id") int id,
-            Model model){
-        
+                                Model model){
+
         // 문의사항 id를 가져온다
         Contact contact = contactService.getContactById(id);
         if (contact != null) {
@@ -284,7 +288,9 @@ public class AdminController {
 
     // 답변 버튼 클릭 시
     @RequestMapping("/inquiryAnswerOk")
-    public String inquiryAnswer(@RequestParam("id") int id, @RequestParam("answer") String answer, RedirectAttributes redirectAttributes){
+    public String inquiryAnswer(@RequestParam("id") int id,
+                                @RequestParam("answer") String answer,
+                                RedirectAttributes redirectAttributes){
         Contact contact = contactService.getContactById(id);
         if(contact != null){
             contact.setAnswer(answer);
