@@ -112,7 +112,7 @@
         <result property="phone" column="phone"/>
         <result property="request" column="request"/>
 
-        <association property="user" javaType="com.lec.spring.domain.shop.User">
+        <association property="user" javaType="com.lec.spring.domain.User">
             <id property="id" column="user_id"/>
             <result property="name" column="username"/>
         </association>
