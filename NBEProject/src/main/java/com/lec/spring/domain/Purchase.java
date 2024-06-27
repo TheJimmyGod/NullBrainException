@@ -22,5 +22,8 @@ public class Purchase {
     private String phone;
     private String request; // 문의사항
 
-
+    private Integer price;
+    private String goodsName;
+    private Integer count;
+    private String goodsImage;
 }
