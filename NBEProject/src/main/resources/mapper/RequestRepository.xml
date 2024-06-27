@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.RequestRepository">
+
+    <resultMap id="mapStatus" type="com.lec.spring.domain.Purchase">
+        <result column="user_id" property="userId"/>
+        <result column="regdate" property="regdate"/>
+        <result column="status" property="status"/>
+        <result column="price" property="price"/>
+        <result column="name" property="goodsName"/>
+        <result column="amount" property="count"/>
+        <result column="image_1" property="goodsImage"/>
+    </resultMap>
+
+    <select id="findByUserId" parameterType="int" resultMap="mapStatus">
+        SELECT p.user_id, p.regdate, p.status, g.price, g.name, pi.amount, g.image_1
+        FROM purchase p
+                 JOIN purchase_item pi ON p.item_id = pi.id
+                 JOIN goods g ON g.goods_no = pi.goods_id
+        WHERE p.user_id = #{userId}
+    </select>
+
+</mapper>
