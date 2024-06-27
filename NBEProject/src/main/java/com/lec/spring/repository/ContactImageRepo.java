@@ -1,7 +1,6 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.shop.ContactImage;
-import com.lec.spring.domain.shop.PostImage;
 
 import java.util.List;
 import java.util.Map;

@@ -69,7 +69,7 @@ public class ContactServiceImpl implements ContactService {
     // 모든 문의글 리스트
     @Override
     public List<Contact> allContacts() {
-        List<Contact> contacts = contactRepo.findAllContacts();
+        List<Contact> contacts = contactRepo.allContacts();
 
         for (Contact contact : contacts){
             User user = userRepo.selectById(contact.getUser_id());
@@ -81,8 +81,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> findContactsByUsername(String name) {
-        List<User> users = userRepo.allUser(name);
+    public List<Contact> findContactsByUsername(String username) {
+        List<User> users = (List<User>) userRepo.selectByUsername(username);
         List<Contact> contacts = new ArrayList<>();
         for(User user : users){
             List<Contact> userContacts = contactRepo.showMyContact(user.getId());
@@ -91,7 +91,7 @@ public class ContactServiceImpl implements ContactService {
                 contacts.add(contact);
             }
         }
-            return contacts;
+        return contacts;
     }
 
 
@@ -103,5 +103,41 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Long countUnAnswer() {
         return contactRepo.countUnanswered();
+    }
+
+    @Override
+    public String type() {
+        return contactRepo.type();
+    }
+
+    @Override
+    public List<Contact> findAllContacts(int offset, int limit) {
+        List<Contact> contacts = contactRepo.findAllContacts(offset, limit);
+        for (Contact contact : contacts){
+            User user = userRepo.selectById(contact.getUser_id());
+            contact.setUser(user);
+        }
+        return contacts;
+    }
+
+
+    @Override
+    public List<Contact> findContactsByStatus(String status, int offset, int limit) {
+        List<Contact> contacts = contactRepo.findContactsByStatus(status, offset, limit);
+        for (Contact contact : contacts) {
+            User user = userRepo.selectById(contact.getUser_id());
+            contact.setUser(user);
+        }
+        return contacts;
+    }
+
+    @Override
+    public Long countContactsByStatus(String status) {
+        return contactRepo.countContactsByStatus(status);
+    }
+
+    @Override
+    public Long cancelOrder() {
+        return contactRepo.cancel();
     }
 }

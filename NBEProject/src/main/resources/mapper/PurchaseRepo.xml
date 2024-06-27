@@ -64,4 +64,79 @@
 <!--        where p.id = #{param2}-->
 <!--          and p.user_id = #{param1}-->
 <!--    </select>-->
+
+
+
+    <select id="cntOrder" resultType="Long">
+        SELECT COUNT(*) FROM purchase
+    </select>
+
+    <select id="cntPurchaseItem" resultType="Long">
+        SELECT COUNT(*) FROM purchase_item
+    </select>
+
+    <!--  유저 이름 검색 기능  -->
+    <select id="username" flushCache="true" resultMap="PurchaseResultMap">
+        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
+               u.id as user_id, u.name AS username,
+               pi.id as item_id, pi.goods_id, pi.amount,
+               g.productId as goods_id, g.content AS goods_content
+        FROM purchase p
+                 LEFT JOIN user u ON p.user_id = u.id
+                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
+                 LEFT JOIN goods g ON pi.goods_id = g.productId
+        WHERE u.name LIKE CONCAT('%', #{username}, '%')
+    </select>
+
+    <select id="pagination" resultMap="PurchaseResultMap" parameterType="map">
+        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
+               u.id as user_id, u.name AS username,
+               pi.id as item_id, pi.goods_id, pi.amount,
+               g.productId as goods_id, g.content AS goods_content
+        FROM purchase p
+                 LEFT JOIN user u ON p.user_id = u.id
+                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
+                 LEFT JOIN goods g ON pi.goods_id = g.productId
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!--  한승욱 코드  -->
+
+    <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">
+        <id property="id" column="id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="item_id" column="item_id"/>
+        <result property="regdate" column="regdate"/>
+        <result property="street_addr" column="street_addr"/>
+        <result property="detail_address" column="detail_address"/>
+        <result property="phone" column="phone"/>
+        <result property="request" column="request"/>
+
+        <association property="user" javaType="com.lec.spring.domain.shop.User">
+            <id property="id" column="user_id"/>
+            <result property="name" column="username"/>
+        </association>
+
+        <association property="purchaseItem" javaType="com.lec.spring.domain.shop.PurchaseItem">
+            <id property="id" column="item_id"/>
+            <result property="goods_id" column="goods_id"/>
+            <result property="amount" column="amount"/>
+        </association>
+
+        <association property="goods" javaType="com.lec.spring.domain.shop.Goods">
+            <id property="id" column="goods_id"/>
+            <result property="content" column="goods_content"/>
+        </association>
+    </resultMap>
+
+    <select id="listOrder" resultMap="PurchaseResultMap">
+        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
+               u.id as user_id, u.name AS username,
+               pi.id as item_id, pi.goods_id, pi.amount,
+               g.productId as goods_id, g.content AS goods_content
+        FROM purchase p
+                 LEFT JOIN user u ON p.user_id = u.id
+                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
+                 LEFT JOIN goods g ON pi.goods_id = g.productId
+    </select>
 </mapper>

@@ -3,8 +3,8 @@
 <mapper namespace="com.lec.spring.repository.ContactRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Contact"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into nbe_db.contact (user_id, goods_id, title, content)
-        VALUE (#{user_id}, #{goods_id}, #{title}, #{content})
+        insert into contact (user_id, goods_id, title, content, type)
+            VALUE (#{user_id}, #{goods_id}, #{title}, #{content} ,#{type})
     </insert>
 
     <delete id="delete" flushCache="true">
@@ -16,6 +16,13 @@
         update contact
         set title=#{title}, content=#{content}
         where id=#{id}
+    </update>
+
+    <!-- 관리자가 답변한 문의사항 업데이트 -->
+    <update id="answerupdate" parameterType="com.lec.spring.domain.shop.Contact">
+        UPDATE contact
+        SET status = #{status}, answer = #{answer}
+        WHERE id = #{id}
     </update>
 
     <select id="showById" resultType="com.lec.spring.domain.shop.Contact" flushCache="true">
@@ -33,6 +40,17 @@
         where id=#{id}
     </update>
 
+    <select id="findAllContacts" resultType="com.lec.spring.domain.shop.Contact">
+        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+        FROM contact
+        ORDER BY regdate DESC
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="allContacts" resultType="com.lec.spring.domain.shop.Contact">
+        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+        FROM contact
+    </select>
 
     <select id="countAllContacts" resultType="long">
         SELECT count(*) FROM contact
@@ -41,4 +59,27 @@
     <select id="countUnanswered" resultType="Long">
         SELECT COUNT(*) from contact WHERE status = '대기 중'
     </select>
+
+    <select id="cancel" resultType="Long">
+        SELECT COUNT(*) from contact WHERE type = '취소문의'
+    </select>
+
+    <select id="type" resultType="String">
+        SELECT type FROM contact WHERE user_id = #{user_id} LIMIT 1
+    </select>
+
+    <select id="findContactsByStatus" resultType="com.lec.spring.domain.shop.Contact">
+        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+        FROM contact
+        WHERE status = #{status}
+        ORDER BY regdate DESC
+        LIMIT #{limit} OFFSET #{offset}
+
+    </select>
+
+    <select id="countContactsByStatus" resultType="long">
+        SELECT count(*) FROM contact WHERE status = #{status}
+    </select>
+
+
 </mapper>
