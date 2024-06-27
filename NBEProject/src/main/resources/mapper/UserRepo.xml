@@ -68,7 +68,7 @@
     </select>
 
     <!--  페이지네이션 기능  -->
-    <select id="pagination" resultType="com.lec.spring.domain.shop.User">
+    <select id="pagination" resultType="com.lec.spring.domain.User">
         <include refid="SELECT_BASE"/>
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -80,7 +80,7 @@
         WHERE id = #{userId}
     </update>
 
-    <select id="allUser" flushCache="true" resultType="com.lec.spring.domain.shop.User">
+    <select id="allUser" flushCache="true" resultType="com.lec.spring.domain.User">
         <include refid="SELECT_BASE"/>
             AND
             name LIKE CONCAT('%', #{name}, '%')

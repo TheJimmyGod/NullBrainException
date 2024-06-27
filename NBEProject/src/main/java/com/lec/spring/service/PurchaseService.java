@@ -18,9 +18,5 @@ public interface PurchaseService {
 
     List<Purchase> pagination(int offset, int limit);
 
-
-
-
-
-
+    List<Purchase> getPurchaseInfo(int userId, int itemId);
 }

@@ -81,43 +81,43 @@ public class GoodsServiceImpl implements GoodsService {
     // 특정 상품의 리뷰들을 가져온다. (paging 기능)
     @Override
     public void getReviews(String good_no, Integer page, Model model) {
-        List<String> options = optRepo.selectByGoods(good_no);
-        Goods goods = goodsRepo.selectById(good_no);
-        if(page == null || page < 1) page=1;
-        HttpSession session = U.getSession();
-        session.setAttribute("review_page", page);
-        long cnt = reviewRepo.countReview(good_no);
-        int totalPages = (int) Math.ceil(cnt/(double)PAGE_ROWS);
-
-        int startPage;
-        int endPage;
-        long totalRate = 0;
-        List<Review> reviews = null;
-
-        model.addAttribute("url", U.getRequest().getRequestURI());
-        model.addAttribute("goods", goods);
-        model.addAttribute("reviewCnt", cnt);
-        model.addAttribute("options", options);
-        if(cnt > 0){
-            if(page > totalPages)   page = totalPages;
-            int fromRow = (page - 1) * PAGE_ROWS;
-
-            startPage = ((page-1) / WRITE_PAGES) * WRITE_PAGES + 1;
-            endPage = startPage + WRITE_PAGES -1;
-            if(endPage >= totalPages) endPage = totalPages;
-            reviews = reviewRepo.selectReviewByGoods(good_no, fromRow, PAGE_ROWS);
-            for (int i = 0; i < reviews.size(); i++) {
-                totalRate += reviews.get(i).getRate();
-            }
-            totalRate /= reviews.size();
-            model.addAttribute("reviews", reviews);
-            model.addAttribute("page", page);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("totalPage", totalPages);
-            model.addAttribute("totalRate", totalRate);
-            model.addAttribute("userRepo", userRepo);
-        }
+//        List<String> options = optRepo.selectByGoods(good_no);
+//        Goods goods = goodsRepo.selectById(good_no);
+//        if(page == null || page < 1) page=1;
+//        HttpSession session = U.getSession();
+//        session.setAttribute("review_page", page);
+//        long cnt = reviewRepo.countReview(good_no);
+//        int totalPages = (int) Math.ceil(cnt/(double)PAGE_ROWS);
+//
+//        int startPage;
+//        int endPage;
+//        long totalRate = 0;
+//        List<Review> reviews = null;
+//
+//        model.addAttribute("url", U.getRequest().getRequestURI());
+//        model.addAttribute("goods", goods);
+//        model.addAttribute("reviewCnt", cnt);
+//        model.addAttribute("options", options);
+//        if(cnt > 0){
+//            if(page > totalPages)   page = totalPages;
+//            int fromRow = (page - 1) * PAGE_ROWS;
+//
+//            startPage = ((page-1) / WRITE_PAGES) * WRITE_PAGES + 1;
+//            endPage = startPage + WRITE_PAGES -1;
+//            if(endPage >= totalPages) endPage = totalPages;
+//            reviews = reviewRepo.selectReviewByGoods(good_no, fromRow, PAGE_ROWS);
+//            for (int i = 0; i < reviews.size(); i++) {
+//                totalRate += reviews.get(i).getRate();
+//            }
+//            totalRate /= reviews.size();
+//            model.addAttribute("reviews", reviews);
+//            model.addAttribute("page", page);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//            model.addAttribute("totalPage", totalPages);
+//            model.addAttribute("totalRate", totalRate);
+//            model.addAttribute("userRepo", userRepo);
+//        }
     }
 
 
