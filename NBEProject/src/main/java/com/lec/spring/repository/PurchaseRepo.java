@@ -1,10 +1,6 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.shop.Purchase;
-import lombok.Data;
-
-import java.util.List;
-
 import java.util.List;
 
 public interface PurchaseRepo {
@@ -12,8 +8,6 @@ public interface PurchaseRepo {
     int insert(Purchase purchase);
     // 주문내용 수정
     int update(Purchase purchase);
-
-
     // 주문 내역 카운트
     Long cntOrder();
 

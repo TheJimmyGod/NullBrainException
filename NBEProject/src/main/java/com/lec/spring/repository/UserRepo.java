@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.dto.UserDto;
 
 import java.util.List;
@@ -8,6 +9,10 @@ import java.util.List;
 public interface UserRepo {
     // 유저 생성
     public int insert(User user);
+
+    // 유저 생성 다른 버전
+    public int saveUser(UserDto userDto);
+
     // 유저 정보 업데이트
     public int update(User user);
     // 유저 삭제
@@ -30,4 +35,8 @@ public interface UserRepo {
 
     // 유저의 "이름"으로 전체 조회
     List<User> allUser(String name);
+
+    int  getLastInsertedUserId();
+
+    void saveAddr(Address address);
 }

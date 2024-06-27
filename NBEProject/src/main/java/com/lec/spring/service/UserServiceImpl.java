@@ -20,18 +20,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     private UserRepo userRepo;
-
     private  AuthorityRepo authorityRepo;
-
-
-    @Autowired
-    private SqlSession sqlSession;
 
     @Autowired
     public UserServiceImpl(SqlSession sqlSession){
         userRepo=sqlSession.getMapper(UserRepo.class);
         authorityRepo=sqlSession.getMapper(AuthorityRepo.class);
-
     }
 
     @Override
@@ -42,7 +36,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isExist(String username) {
         User user = userRepo.selectByUsername(username.toUpperCase());
-
         return user != null;
     }
 
@@ -52,9 +45,9 @@ public class UserServiceImpl implements UserService {
         userDto.setUsername(userDto.getUsername().toUpperCase()); //중복방지
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        sqlSession.insert("com.lec.spring.repository.UserRepo.saveUser", userDto);
+        userRepo.saveUser(userDto);
 
-        Integer userId = sqlSession.selectOne("com.lec.spring.repository.UserRepo.getLastInsertedUserId");
+        Integer userId = userRepo.getLastInsertedUserId();
 
         Address address = new Address();
         address.setUser_id(userId);
@@ -63,7 +56,7 @@ public class UserServiceImpl implements UserService {
         address.setName(userDto.getAddressName());
         address.setIsDefault(userDto.getIs_default());
 
-        sqlSession.insert("com.lec.spring.repository.UserRepo.saveAddr", address);
+        userRepo.saveAddr(address);
 
         authorityRepo.addAuthority(userId, 2);
 
@@ -111,7 +104,4 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllName(String name) {
         return userRepo.allUser(name);
     }
-
-
-    // 한승욱 코드
 }

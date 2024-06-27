@@ -46,4 +46,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     public List<Purchase> pagination(int offset, int limit) {
         return purchaseRepo.pagination(offset, limit);
     }
+    @Override
+    public List<Purchase> getPurchaseInfo(int userId, int itemId) {
+        return purchaseRepo.selectById(userId, itemId);
+    }
+
 }
