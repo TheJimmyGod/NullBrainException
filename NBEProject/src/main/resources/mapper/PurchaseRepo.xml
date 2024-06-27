@@ -80,11 +80,11 @@
         SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
                u.id as user_id, u.name AS username,
                pi.id as item_id, pi.goods_id, pi.amount,
-               g.productId as goods_id, g.content AS goods_content
+               g.goods_no as goods_id, g.name AS goods_content
         FROM purchase p
                  LEFT JOIN user u ON p.user_id = u.id
                  LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.productId
+                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
         WHERE u.name LIKE CONCAT('%', #{username}, '%')
     </select>
 
@@ -92,11 +92,11 @@
         SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
                u.id as user_id, u.name AS username,
                pi.id as item_id, pi.goods_id, pi.amount,
-               g.productId as goods_id, g.content AS goods_content
+               g.goods_no as goods_id, g.name AS goods_content
         FROM purchase p
                  LEFT JOIN user u ON p.user_id = u.id
                  LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.productId
+                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
@@ -133,10 +133,10 @@
         SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
                u.id as user_id, u.name AS username,
                pi.id as item_id, pi.goods_id, pi.amount,
-               g.productId as goods_id, g.content AS goods_content
+               g.goods_no as goods_id, g.name AS goods_content
         FROM purchase p
                  LEFT JOIN user u ON p.user_id = u.id
                  LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.productId
+                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
     </select>
 </mapper>

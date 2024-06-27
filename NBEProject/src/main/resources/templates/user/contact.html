@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 문의 요청</title>
+    <link rel="stylesheet" href="/user/contact.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        상품 문의 요청
+    </div>
+    <form th:action="@{/user/contactOk}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" value="">
+        </div>
+        <div class="form-group">
+            <label for="type">문의 유형</label>
+            <select id="type" name="type">
+                <option value="상품문의">상품 문의</option>
+                <option value="취소문의">취소 문의</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">작성자</label>
+            <input type="text" id="name" name="name" value="테스트용" readonly>
+        </div>
+        <div class="form-group">
+            <label for="date">요청날짜</label>
+            <input type="text" id="date" name="date" readonly>
+        </div>
+        <div class="form-group">
+            <label for="content">요청사유</label>
+            <textarea id="content" name="content" placeholder="최대 300글자 입력가능"></textarea>
+        </div>
+        <div class="form-group">
+            <label>파일첨부</label>
+            <div class="file-inputs">
+                <input type="file" name="file1" id="file1">
+                <input type="file" name="file2" id="file2">
+            </div>
+            <div id="fileList" class="file-list"></div>
+        </div>
+        <button type="submit" class="submit-btn">작성완료</button>
+    </form>
+</div>
+
+<script th:src="@{/js/userContact.js}"></script>
+</body>
+</html>

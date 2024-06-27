@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 목록 페이지</title>
     <link rel="stylesheet" th:href="@{/css/userlist.css}">
+    <script th:src="@{/js/userlist.js}"></script>
 </head>
 <body>
 <div class="header">
@@ -28,7 +29,7 @@
     <h3>총 <span th:text="${userCnt}"></span> 명의 회원이 있습니다.</h3>
     <div class="search-bar">
         <form th:action="@{/admin/userlist}" method="get">
-            <input type="text" class="name" name="name" placeholder="회원 이름을 입력" th:value="${param.name}">
+            <input type="text" class="username" name="username" placeholder="회원 이름을 입력" th:value="${param.username}">
             <button type="submit">검색</button>
         </form>
     </div>
@@ -52,23 +53,27 @@
                 <td th:text="${user.email}">abc@mail.com</td>
                 <td th:text="${user.phone}">010-1234-5678</td>
                 <td th:text="${#temporals.format(user.regdate)}">2024-01-01</td>
-                <td>
-                    <select class="status-select">
-                        <option>활성</option>
-                        <option>비활성</option>
-                    </select>
-                </td>
-                <td><button class="apply-button">적용</button></td>
+                <td th:text="${user.status == true ? '활성' : '비활성'}"></td>
+                <form id="statusForm-[[${user.id}]]" th:action="@{/admin/updateStatus}" method="post">
+                    <td>
+                        <input type="hidden" name="userId" th:value="${user.id}" />
+                        <select class="status-select" name="status">
+                            <option value="true" th:selected="${user.status}">활성</option>
+                            <option value="false" th:selected="${!user.status}">비활성</option>
+                        </select>
+                    <button type="submit" class="apply-button">적용</button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="pagination">
-        <a th:href="@{/admin/userlist(page=${currentPage - 1}, name=${param.name})}" th:if="${currentPage > 1}">&laquo;</a>
+        <a th:href="@{/admin/userlist(page=${currentPage - 1}, username=${param.username})}" th:if="${currentPage > 1}">&laquo;</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-        <a th:href="@{/admin/userlist(page=${i}, name=${param.name})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
-    </span>
-        <a th:href="@{/admin/userlist(page=${currentPage + 1}, name=${param.name})}" th:if="${currentPage < totalPages}">&raquo;</a>
+            <a th:href="@{/admin/userlist(page=${i}, username=${param.username})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
+        </span>
+        <a th:href="@{/admin/userlist(page=${currentPage + 1}, username=${param.username})}" th:if="${currentPage < totalPages}">&raquo;</a>
     </div>
 </div>
 </body>

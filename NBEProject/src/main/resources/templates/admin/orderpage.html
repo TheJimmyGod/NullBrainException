@@ -1,67 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주문 관리 페이지</title>
-    <link rel="stylesheet" href="/css/orderpage.css">
+    <link rel="stylesheet" th:href="@{/css/orderpage.css}">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="menu-item admin-menu" onclick="location.href='main'">관리자 메뉴</div>
-        <div class="menu-item order-list">주문 목록</div>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='/admin/main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-        <div class="search-bar">
-            <input type="text" placeholder="고객 이름을 입력">
-            <button>검색</button>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="select-all"></th>
-                        <th>주문번호</th>
-                        <th>고객 이름</th>
-                        <th>주문 일시</th>
-                        <th>상품명</th>
-                        <th>상품 가격</th>
-                        <th>구매 수량</th>
-                        <th>상태</th>
-                        <th>상태 변경</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="order-checkbox"></td>
-                        <td>1</td>
-                        <td>홍길동</td>
-                        <td>2024/06/05</td>
-                        <td>셔츠</td>
-                        <td>30,000</td>
-                        <td>3</td>
-                        <td>
-                            <select class="status-select">
-                                <option>결제 완료</option>
-                                <option>상품 준비</option>
-                                <option>배송 중</option>
-                                <option>배송 완료</option>
-                            </select>
-                        </td>
-                        <td><button class="apply-button">적용</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">&raquo;</a>
-        </div>
+    <div class="header-right">
+        <span>관리자</span>
+        <span>eces92@gmail.com</span>
+        <a href="/logout">로그아웃</a>
     </div>
-    <script>
-
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='/admin/orderpage'">주문 관리</li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>주문 관리 페이지</h1> <br>
+    <h3>총 <span th:text="${orderCnt}"></span>개의 주문 요청이 있습니다.</h3>
+    <div class="search-bar">
+        <form th:action="@{/admin/orderpage}" method="get">
+            <input type="text" name="username" placeholder="고객 이름을 입력" th:value="${param.username}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>주문번호</th>
+                <th>고객 이름</th>
+                <th>휴대 번호</th>
+                <th>주문 일시</th>
+                <th>상품명</th>
+                <th>상품 가격</th>
+                <th>구매 수량</th>
+                <th>상태</th>
+                <th>상태 변경</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orderList}">
+                <td><input type="checkbox" class="order-checkbox"></td>
+                <td th:text="${order.id}">1</td>
+                <td th:text="${order.user.name}">홍길동</td>
+                <td th:text="${order.phone}"></td>
+                <td th:text="${#temporals.format(order.regdate, 'yyyy/MM/dd HH:mm:ss')}">2024/06/05</td>
+                <td th:text="${order.goods.content}">셔츠</td>
+                <td th:text="${order.purchaseItem.amount}">30,000</td>
+                <td th:text="${order.item_id}"></td>
+                <td>
+                    <select class="status-select">
+                        <option>결제 완료</option>
+                        <option>상품 준비</option>
+                        <option>배송 중</option>
+                        <option>배송 완료</option>
+                    </select>
+                </td>
+                <td><button class="apply-button">적용</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <a th:href="@{/admin/orderpage(page=${currentPage - 1}, username=${param.username})}" th:if="${currentPage > 1}">&laquo;</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/admin/orderpage(page=${i}, username=${param.username})}" th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
+        </span>
+        <a th:href="@{/admin/orderpage(page=${currentPage + 1}, username=${param.username})}" th:if="${currentPage < totalPages}">&raquo;</a>
+    </div>
+</div>
+<script>
     document.getElementById('select-all').onclick = function() {
         var checkboxes = document.querySelectorAll('.order-checkbox');
         for (var checkbox of checkboxes) {
@@ -75,7 +92,6 @@
             alert('적용되었습니다.');
         });
     });
-
-    </script>
+</script>
 </body>
 </html>

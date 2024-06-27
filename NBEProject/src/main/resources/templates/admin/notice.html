@@ -1,46 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 목록 페이지</title>
-<link rel="stylesheet" href="/css/notice.css">
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
 </head>
 <body>
-    <div class="sidebar">
-      <div class="menu-item" onclick="location.href='main'">관리자 메뉴</div>
-      <div class="menu-item" onclick="location.href='notice'">공지사항 목록</div>
+<div class="header">
+    <div class="header-left">
+        <h1 onclick="location.href='/admin/main'">관리자 메뉴</h1>
     </div>
-    <div class="main-content">
-        <div class="search-bar">
-            <input type="text" placeholder="글 제목 입력">
-            <button>검색</button>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                        <th>작성 내용</th>
-                    </tr>
-                </thead>
-                <tbody id="notice-list">
-                    <!-- 공지사항 리스트가 여기에 표시됩니다. -->
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">&raquo;</a>
-        </div>
-        <button class="write-button" onclick="location.href='writenotice'">글 작성</button>
+    <div class="header-right">
+        <span>관리자</span>
+        <span>eces92@gmail.com</span>
+        <a href="/logout">로그아웃</a>
     </div>
-</body>
+</div>
+<div class="sidebar">
+    <ul>
+        <li onclick="location.href='/admin/notice'">공지사항 목록</li>
+        <li onclick="location.href='/admin/writenotice'">글 작성</li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>공지사항 목록 페이지</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="글 제목 입력">
+        <button>검색</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>작성 내용</th>
+            </tr>
+            </thead>
+            <tbody id="notice-list">
+            <!-- 공지사항 리스트가 여기에 표시됩니다. -->
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">&raquo;</a>
+    </div>
+</div>
 <script>
     // 로컬 스토리지에서 공지사항 데이터를 불러와서 리스트에 추가하는 함수
     function loadNotices() {
@@ -63,4 +74,5 @@
     // 페이지 로드 시 공지사항 데이터를 불러와서 리스트에 표시
     window.onload = loadNotices;
 </script>
+</body>
 </html>

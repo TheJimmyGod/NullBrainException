@@ -6,8 +6,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function submitForm(userId) {
-    const form = document.getElementById(`gradeForm-${userId}`);
-    form.submit();
-}
+
+
+    // 적용 버튼을 눌렀을 때 alert 적용 완료 팝업창 기능
+document.addEventListener('DOMContentLoaded', function () {
+    const applyButtons = document.querySelectorAll('.apply-button');
+    applyButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            alert("적용 완료");
+        });
+    });
+});
+
+
 

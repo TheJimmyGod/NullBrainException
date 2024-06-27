@@ -22,7 +22,9 @@
 </div>
 <div class="sidebar">
     <ul>
-        <li onclick="location.href='/admin/inquirylist'">문의사항 목록</li>
+        <li><a th:href="@{/admin/inquirylist}">문의사항 목록</a></li>
+        <li><a th:href="@{/admin/inquirylist(status='답변 완료')}">답변 목록</a></li>
+        <li><a th:href="@{/admin/inquirylist(status='대기 중')}">미답변 목록</a></li>
     </ul>
 </div>
 <div class="main-content">
@@ -38,7 +40,7 @@
         <table>
             <thead>
             <tr>
-                <th>문의 ID</th>
+                <th>문의 유형</th>
                 <th>이름</th>
                 <th>이메일</th>
                 <th>문의 제목</th>
@@ -48,8 +50,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="contact : ${contacts}">
-                <td th:text="${contact.id}"></td>
+            <tr th:each="contact : ${contacts}" th:if="${contact.type == '상품문의'}">
+                <td th:text="${contact.type}"></td>
                 <td th:text="${contact.user.name}">홍길동</td>
                 <td th:text="${contact.user.email}">abc@mail.com</td>
                 <td th:text="${contact.title}">상품 문의</td>
@@ -61,11 +63,11 @@
         </table>
     </div>
     <div class="pagination">
-        <a th:href="@{/admin/inquirylist(page=${currentPage - 1})}" th:if="${currentPage > 1}">&laquo;</a>
+        <a th:href="@{/admin/inquirylist(page=${currentPage - 1}, status=${status}, username=${username})}" th:if="${currentPage > 1}">&laquo;</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:href="@{/admin/inquirylist(page=${i})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
+            <a th:href="@{/admin/inquirylist(page=${i}, status=${status}, username=${username})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
         </span>
-        <a th:href="@{/admin/inquirylist(page=${currentPage + 1})}" th:if="${currentPage < totalPages}">&raquo;</a>
+        <a th:href="@{/admin/inquirylist(page=${currentPage + 1}, status=${status}, username=${username})}" th:if="${currentPage < totalPages}">&raquo;</a>
     </div>
 </div>
 </body>
