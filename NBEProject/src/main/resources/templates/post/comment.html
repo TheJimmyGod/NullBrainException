@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="logged_user=2">
-    <!--<th:block th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +17,10 @@
 <body>
     <div class="container border rounded">
         <div class="p-5 text-left">
-            <a th:href="@{/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
-            <a class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-user-circle fa-3x"></i></a>
-            <b class="col-1 col-sm-1" th:text="${post.user.username}"></b>
+            <a th:href="@{/post/list(page=${session.page})}" class="col-lg-1 col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
+            <img class="col-lg-1 col-1 col-sm-1" style="width: 50px; height: 50px;" th:if="${post.user.profileimage}" th:src="@{'/upload/' + ${post.user.profileimage}}" th:alt="'none'"/>
+            <i class="col-lg-1 col-1 col-sm-1 fas fa-user-circle fa-3x" th:unless="${post.user.profileimage}"></i>
+            <b class="col-lg-1 col-1 col-sm-1" th:text="${post.user.name}"></b>
 
             <div class="container mt-5 col-8 col-sm-8">
                 <table class="table table-hover ml-3" id="cmt_table">

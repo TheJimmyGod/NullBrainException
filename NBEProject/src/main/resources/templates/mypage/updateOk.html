@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <script th:unless="${result > 0}">
-    alert("등록실패");
+    alert("등록 W실패");
     history.back();
 </script>
 <script th:if="${result > 0}" th:inline="javascript">

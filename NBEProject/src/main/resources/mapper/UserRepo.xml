@@ -31,6 +31,7 @@
         SET
             username=#{username},
             password=#{password},
+            name=#{name},
             phone=#{phone},
             email=#{email},
             profileimage=#{profileimage},

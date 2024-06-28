@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
     <form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
         <div class="my-3">
             <label>작성자:</label>
-            <span class="form-control" >Tommy</span>
+            <span class="form-control" >[[${logged_user.name}]]</span>
         </div>
         <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
 
@@ -50,4 +50,5 @@
 </body>
 
 <script th:src="@{/js/writeCode.js}" type="text/javascript"></script>
+</th:block>
 </html>

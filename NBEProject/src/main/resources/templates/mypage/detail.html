@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="logged_user=2">
-    <!--<th:block th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,29 +21,29 @@
 </div>
     <div class="container w-75 p-5">
         <div class="border-0 px-5 col-sm-12">
-            <span class="col-12 col-sm-12 parent" th:if="${user}">
-                <img style="width: 200px; height: 200px; float: left" th:if="${user.profileimage}" th:src="@{'/upload/' + ${user.profileimage}}" th:alt="'none'"/>
-                <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;" th:unless="${user.profileimage}"></i>
+            <span class="col-12 col-sm-12 parent" th:if="${logged_user}">
+                <img class="rounded" style="width: 200px; height: 200px; float: left" th:if="${currentPic}" th:src="@{'/upload/' + ${currentPic}}" th:alt="'none'"/>
+                <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;" th:unless="${currentPic}"></i>
                 <div class="child">
                     <i class="fas fa-star fa-3x child " th:id="'grade'"></i>
                 </div>
             </span>
-            <span class="col-12 col-sm-12 parent" th:unless="${user}">
+            <span class="col-12 col-sm-12 parent" th:unless="${logged_user}">
                 <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;"></i>
                    <div class="child">
                     <i class="fas fa-star fa-3x child " th:id="'grade'"></i>
                 </div>
             </span>
             <span class="col-12 col-sm-12 mt-5">
-                <p class="nanum-gothic-coding-regular" th:if="${user}" th:text="${user.username}" style="font-size: 22px;">닉네임<a href="#"><i class="far fa-edit fa-1x"></i></a></p>
-                <p>&nbsp;<b><a class="nanum-gothic-coding-regular" th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${user}" th:text="'정보 수정'"></a></b></p>
+                &nbsp;&nbsp;<strong class="nanum-gothic-coding-regular" th:if="${logged_user}" th:text="${nickName}" style="font-size: 50px;">닉네임</strong><small th:text="${logged_user.username}"></small><br>
+                <p>&nbsp;&nbsp;<b><a class="nanum-gothic-coding-regular" th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${logged_user}" th:text="'정보 수정'"></a></b></p>
             </span>
             <br><br>
             <div class="clear"></div>
         </div>
 
-        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:if="${user}" th:text="'로그아웃'"></a></b>
-        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:unless="${user}" th:text=""></a></b>
+        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:if="${logged_user}" th:text="'로그아웃'"></a></b>
+        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:unless="${logged_user}" th:text=""></a></b>
         <div class="clear"></div>
         <br><br>
         <div class="container commentTable rounded text-center" style="height: 250px;">
@@ -52,8 +51,8 @@
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="fas fa-file-invoice-dollar fa-5x"></i><br><br><br>
                 <b class="nanum-gothic-coding-regular">포인트</b>
-                <p th:if="${user}" th:text="${user.point}"></p>
-                <p th:unless="${user}" th:text="'0'"></p>
+                <p th:if="${logged_user}" th:text="${logged_user.point}"></p>
+                <p th:unless="${logged_user}" th:text="'0'"></p>
             </span>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="far fa-money-bill-alt fa-5x"></i><br><br><br>
@@ -98,26 +97,27 @@
         }
         let $grade = $("[id*='grade']");
         $(window).on('load',function (){
-           let user = [[${user}]];
+           let user = [[${logged_user}]];
            $grade.removeClass("bronze");
            $grade.removeClass("sliver");
            $grade.removeClass("gold");
            $grade.removeClass("diamond");
            if(user === null)
                return;
-           if(user.grade === "Bronze")
+           console.log(user.grade);
+           if(user.grade === "Bronze" || user.grade ==="bronze")
            {
                $grade.addClass('bronze');
            }
-           else if(user.grade === "Sliver")
+           else if(user.grade === "Sliver" || user.grade ==="sliver")
            {
                $grade.addClass('sliver');
            }
-           else if(user.grade ==="Gold")
+           else if(user.grade ==="Gold"|| user.grade ==="gold")
            {
                $grade.addClass('gold');
            }
-           else if(user.grade ==="Diamond")
+           else if(user.grade ==="Diamond" || user.grade ==="diamond")
            {
                $grade.addClass('diamond');
            }
