@@ -6,7 +6,7 @@ let $street = $("#path");
 let $basicAdd = $("#basic");
 let $streetSelector = $("#pathName");
 let regex = /^[가-힣a-zA-Z]+$/;
-let new_regex = /^[a-zA-Zㄱ-힣0-9]*$/;
+let new_regex = /^[가-힣0-9\s]*$/;
 let streetRegex = /(([가-힣]+(d|d(,|.)d|)+(읍|면|동|가|리))(^구|)((d(~|-)d|d)(가|리|)|))([ ](산(d(~|-)d|d))|)|(([가-힣]|(d(~|-)d)|d)+(로|길))/;
 let previous = "";
 const dataArr = new Set();
@@ -168,7 +168,7 @@ function readData(jsonObj){
         }
     }
     sortArr(dataArr);
-    $streetSelector.append($('<option>').text("<도로명주소 선택란>").attr('value', ""));
+    $streetSelector.append($('<option>').text("<도로명주소 확인하십시오>").attr('value', ""));
     for (let data of dataArr) {
         var $data = $('<option>').text(data).attr('value', data);
         $streetSelector.append($data);

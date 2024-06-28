@@ -13,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -92,34 +90,13 @@ public class MyServiceImpl implements MyService {
 
         if(profile.getProfileImage() != null)
         {
-            if(IsImage(profile.getProfileImage().getOriginalFilename()))
-            {
-                String fileName = imageInput(profile.getProfileImage(), user_id);
-                user.setProfileimage((fileName == null || fileName.isEmpty()) ?
-                        user.getProfileimage() : fileName);
-            }
+            String fileName = imageInput(profile.getProfileImage(), user_id);
+            user.setProfileimage((fileName == null || fileName.isEmpty()) ?
+                    user.getProfileimage() : fileName);
         }
         else
             user.setProfileimage((user.getProfileimage() != null) ? user.getProfileimage() : null);
         return userRepository.update(user);
-    }
-
-    private boolean IsImage(String imageDir){
-        String realPath = new File(uploadDir).getAbsolutePath();
-        BufferedImage imgData = null;
-        File f = new File(realPath, imageDir);
-        try{
-            imgData = ImageIO.read(f);
-            if(imgData == null)
-                throw new NullPointerException();
-            else
-                return true;
-        }catch (IOException e){
-            System.out.println("파일 존재 안함: " + f.getAbsolutePath() + "["+e.getMessage()+"]");
-        }catch (NullPointerException e){
-            System.out.println("해당 파일은 이미지가 아님: " + f.getAbsolutePath() + "["+e.getMessage()+"]");
-        }
-        return false;
     }
 
     private String imageInput(MultipartFile file, Integer id){

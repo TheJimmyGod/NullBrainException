@@ -16,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -113,35 +112,13 @@ public class PostServiceImpl implements PostService {
         return image;
     }
 
-    private boolean IsImage(List<PostImage> imageList){
-        String realPath = new File(uploadDir).getAbsolutePath();
-        for(PostImage a : imageList){
-            BufferedImage imgData = null;
-            File f = new File(realPath, a.getFile_name());
-            try{
-                imgData = ImageIO.read(f);
-                if(imgData == null){
-                    throw new NullPointerException();
-                }
-                else
-                    return true;
-            }catch (IOException e){
-                System.out.println("파일 존재 안함: " + f.getAbsolutePath() + "["+e.getMessage()+"]");
-            }catch (NullPointerException e){
-                System.out.println("해당 파일은 이미지가 아님: " + f.getAbsolutePath() + "["+e.getMessage()+"]");
-            }
-        }
-        return false;
-    }
-
     @Override
     public List<Post> list() {
 
         List<Post> list = postRepository.findAll();
         for(int i = 0; i < list.size(); ++i){
             List<PostImage> imageList = postImageRepository.findByPost(list.get(i).getId());
-            if(IsImage(imageList))
-                list.get(i).setImageList(imageList);
+            list.get(i).setImageList(imageList);
         }
 
         return list;
@@ -180,8 +157,7 @@ public class PostServiceImpl implements PostService {
             model.addAttribute("likedList", likedList);
             for(int i = 0; i < list.size(); ++i){
                 List<PostImage> imageList = postImageRepository.findByPost(list.get(i).getId());
-                if(IsImage(imageList))
-                    list.get(i).setImageList(imageList);
+                list.get(i).setImageList(imageList);
             }
         }
         else{
@@ -206,10 +182,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id);
         if(post != null){
             List<PostImage> imageList = postImageRepository.findByPost(post.getId());
-            if(IsImage(imageList))
-            {
-                post.setImageList(imageList);
-            }
+            post.setImageList(imageList);
         }
 
         return post;
