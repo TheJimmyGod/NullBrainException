@@ -28,12 +28,14 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         });
         System.out.println("권한: " + roleNames);
 
-        if(roleNames.contains("ROLE_ADMIN")){
-            response.sendRedirect("/admin/main");
-        }
-
         LocalDateTime loginTime = LocalDateTime.now();
         request.getSession().setAttribute("loginTime", loginTime);
+
+        if(roleNames.contains("ROLE_ADMIN")){
+            response.sendRedirect("/admin/main");
+            return;
+        }
+
 
         super.onAuthenticationSuccess(request, response, authentication);
         
