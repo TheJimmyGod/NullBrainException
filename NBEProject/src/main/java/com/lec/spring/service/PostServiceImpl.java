@@ -54,10 +54,11 @@ public class PostServiceImpl implements PostService {
             return 0;
         }
         // 현재 로그인 한 작성자 정보
-        //User user = U.getLoggedUser();
-
+        User user = U.getLoggedUser();
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다.
-        User user = userRepository.selectById(2);
+        user = userRepository.selectById(user.getId());
+        if(user == null)
+            return -1;
         post.setUser(user);   // 글 작성자 세팅
 
         int cnt = postRepository.save(post); // 글 먼저 저장 (그래야 AI된 PK값(id) 받아온다)
@@ -128,6 +129,10 @@ public class PostServiceImpl implements PostService {
     public List<Post> list(Integer page, Model model) {
         if(page == null || page < 1) page = 1;
 
+        User user = U.getLoggedUser();
+        user = userRepository.selectById(user.getId());
+        int number = (user == null) ? 1 : user.getId();
+
         HttpSession session = U.getSession();
         Integer writePages = (Integer)session.getAttribute("writePages");
         if(writePages == null) writePages = WRITE_PAGES;
@@ -143,7 +148,7 @@ public class PostServiceImpl implements PostService {
 
         List<Post> list = null;
 
-        List<Post> likedList = getPostsByUser(2);
+        List<Post> likedList = getPostsByUser(number);
 
         if(cnt > 0){
             if(page > totalPage) page = totalPage;

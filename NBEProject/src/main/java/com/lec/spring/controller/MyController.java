@@ -37,7 +37,7 @@ public class MyController {
 
     @GetMapping("/update")
     public void update(Model model){
-        myService.updateMyPage(model, 2);
+        myService.updateMyPage(model);
     }
 
     @ResponseBody
@@ -57,7 +57,7 @@ public class MyController {
             return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
-        model.addAttribute("result", myService.updateProfile(2, profile));
+        model.addAttribute("result", myService.updateProfile(profile));
         return "mypage/update";
     }
 
@@ -69,15 +69,14 @@ public class MyController {
     public void updateAddress(Model model){
     }
 
-    @GetMapping("/createReview")
-    public void createReview(Model model){
-        Item testItem = new Item();
-        testItem.setName("옷");
-
-        model.addAttribute("Goods", testItem);
-        model.addAttribute("GoodsCount", 1);
-        model.addAttribute("GoodsSize", "XL");
-        model.addAttribute("GoodsColor", "Red");
-    }
-
+//    @GetMapping("/createReview")
+//    public void createReview(Model model){
+//        Item testItem = new Item();
+//        testItem.setName("옷");
+//
+//        model.addAttribute("Goods", testItem);
+//        model.addAttribute("GoodsCount", 1);
+//        model.addAttribute("GoodsSize", "XL");
+//        model.addAttribute("GoodsColor", "Red");
+//    }
 }

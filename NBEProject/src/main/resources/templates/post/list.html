@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="logged_user=2">
-<!--<th:block th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,13 +68,6 @@
     $(window).on('load', function () {
         loadLikes();
     });
-    function back(){
-        //window.location.href = "Introduction.html";
-    }
-
-    function write(){
-        //window.location.href =
-    }
 
     function loadLikes()
     {

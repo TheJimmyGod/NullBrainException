@@ -11,6 +11,7 @@
         <result column="u_email" property="email"/>
         <result column="u_phone" property="phone"/>
         <result column="u_regdate" property="regdate"/>
+        <result column="u_profileimage" property="profileimage" />
     </resultMap>
 
     <resultMap id="mapComment" type="com.lec.spring.domain.shop.Comment">
@@ -31,7 +32,8 @@
             u.password "u_password",
             u.name "u_name",
             u.email "u_email",
-            u.regdate "u_regdate"
+            u.regdate "u_regdate",
+            u.profileimage "u_profileimage"
             FROM comment c, user u
         WHERE c.user_id = u.id AND c.post_id = #{post_id}
         ORDER BY c.id DESC
