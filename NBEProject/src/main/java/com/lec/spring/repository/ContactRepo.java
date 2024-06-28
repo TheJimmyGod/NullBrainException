@@ -49,4 +49,17 @@ public interface ContactRepo {
 
     // 상태
     String status();
+
+
+    // 타입별 문의사항 조회
+    List<Contact> findContactsByType(String type, int offset , int limit);
+
+    // 타입별 문의사항 카운트
+    Long countContactsByType(String type);
+
+    // 상태와 타입별 문의사항 조회
+    List<Contact> findContactsByStatusAndType(String status, String type, int offset , int limit);
+
+    // 상태와 타입별 문의사항 카운트
+    Long countContactsByStatusAndType(String status, String type);
 }

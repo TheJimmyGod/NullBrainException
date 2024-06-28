@@ -34,7 +34,6 @@ public class ContactServiceImpl implements ContactService {
         return contactRepo.insert(contact);
     }
 
-
     // 문의사항 수정
     @Override
     public int updateContact(Contact contact) {
@@ -47,11 +46,11 @@ public class ContactServiceImpl implements ContactService {
         return contactRepo.delete(id);
     }
 
+    // 문의사항 답변 업데이트
     @Override
     public int updateanswer(Contact contact) {
         return contactRepo.answerupdate(contact);
     }
-
 
     // 문의 글 id로 찾기
     @Override
@@ -65,24 +64,21 @@ public class ContactServiceImpl implements ContactService {
         return contactRepo.showMyContact(userId);
     }
 
-
     // 모든 문의글 리스트
     @Override
     public List<Contact> allContacts() {
         List<Contact> contacts = contactRepo.allContacts();
-
         for (Contact contact : contacts){
             User user = userRepo.selectById(contact.getUser_id());
             contact.setUser(user);
         }
-
-
         return contacts;
     }
 
+    // 유저 이름으로 문의글 찾기
     @Override
     public List<Contact> findContactsByUsername(String username) {
-        List<User> users = (List<User>) userRepo.selectByUsername(username);
+        List<User> users = userRepo.allUser(username);
         List<Contact> contacts = new ArrayList<>();
         for(User user : users){
             List<Contact> userContacts = contactRepo.showMyContact(user.getId());
@@ -94,33 +90,27 @@ public class ContactServiceImpl implements ContactService {
         return contacts;
     }
 
-
+    // 전체 문의사항 카운트
     @Override
     public Long countAll() {
         return contactRepo.countAllContacts();
     }
 
+    // 미답변 문의사항 카운트
     @Override
     public Long countUnAnswer() {
         return contactRepo.countUnanswered();
     }
 
+    // 유저의 문의 유형 확인
     @Override
     public String type() {
         return contactRepo.type();
     }
 
-    @Override
-    public List<Contact> findAllContacts(int offset, int limit) {
-        List<Contact> contacts = contactRepo.findAllContacts(offset, limit);
-        for (Contact contact : contacts){
-            User user = userRepo.selectById(contact.getUser_id());
-            contact.setUser(user);
-        }
-        return contacts;
-    }
 
 
+    // 상태별 문의사항 리스트 조회 (페이징 포함)
     @Override
     public List<Contact> findContactsByStatus(String status, int offset, int limit) {
         List<Contact> contacts = contactRepo.findContactsByStatus(status, offset, limit);
@@ -131,13 +121,56 @@ public class ContactServiceImpl implements ContactService {
         return contacts;
     }
 
+    // 상태별 문의사항 카운트
     @Override
     public Long countContactsByStatus(String status) {
         return contactRepo.countContactsByStatus(status);
     }
 
     @Override
+    public String status() {
+        return null;
+    }
+
+    // 취소문의 카운트
+    @Override
     public Long cancelOrder() {
         return contactRepo.cancel();
     }
+
+    // 타입별 문의사항 리스트 조회 (페이징 포함)
+    @Override
+    public List<Contact> findContactsByType(String type, int offset, int limit) {
+        List<Contact> contacts = contactRepo.findContactsByType(type, offset, limit);
+        for (Contact contact : contacts) {
+            User user = userRepo.selectById(contact.getUser_id());
+            contact.setUser(user);
+        }
+        return contacts;
+    }
+
+    // 타입별 문의사항 카운트
+    @Override
+    public Long countContactsByType(String type) {
+        return contactRepo.countContactsByType(type);
+    }
+
+    // 상태와 타입별 문의사항 리스트 조회 (페이징 포함)
+    @Override
+    public List<Contact> findContactsByStatusAndType(String status, String type, int offset, int limit) {
+        List<Contact> contacts = contactRepo.findContactsByStatusAndType(status, type, offset, limit);
+        for (Contact contact : contacts) {
+            User user = userRepo.selectById(contact.getUser_id());
+            contact.setUser(user);
+        }
+        return contacts;
+    }
+
+    // 상태와 타입별 문의사항 카운트
+    @Override
+    public Long countContactsByStatusAndType(String status, String type) {
+        return contactRepo.countContactsByStatusAndType(status, type);
+    }
+
+
 }

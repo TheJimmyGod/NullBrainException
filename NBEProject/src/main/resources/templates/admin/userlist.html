@@ -52,7 +52,7 @@
             <tbody>
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}">abc</td>
-                <td th:text="${user.name}">홍길동</td>
+                <td th:text="${user.username}">홍길동</td>
                 <td th:text="${user.email}">abc@mail.com</td>
                 <td th:text="${user.phone}">010-1234-5678</td>
                 <td th:text="${#temporals.format(user.regdate)}">2024-01-01</td>

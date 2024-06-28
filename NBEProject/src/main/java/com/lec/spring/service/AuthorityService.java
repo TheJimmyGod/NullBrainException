@@ -18,7 +18,7 @@ public interface AuthorityService {
     // 특정 사용자(userId)의 권한(authorityId) 업데이트
     int updateAuthority(int userId, int authorityId);
 
-//    int getUserIdByUsername(String username);
+    int getUserIdByUsername(String username);
 
 }
 
