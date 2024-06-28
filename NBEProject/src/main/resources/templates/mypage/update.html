@@ -30,12 +30,12 @@
                             </td>
                             <td class="col-8 col-sm-8 col-lg-8 rounded commentTable" style="width: 150px; height: 150px;">
                                 <div>
-                                    <span th:if="${user}" th:id="'profile'">
-                                        <img class="ms-4 mt-3 col-lg-4 col-sm-6 col-12" th:id="'dummyProfile'" style="width: 120px; height: 120px; float: left; margin-right: 10%" th:if="${user.profileimage}" th:src="@{'/upload/' + ${user.profileimage}}" th:alt="'none'"/>
-                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12" th:id="'dummyProfile'" style="color: lightgray; float: left;" th:unless="${user.profileimage}"></i>
+                                    <span th:if="${user}" th:id="'profile'" >
+                                        <img class="ms-4 mt-3 col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="width: 120px; height: 120px; float: left; margin-right: 10%" th:if="${user.profileimage}" th:src="@{'/upload/' + ${user.profileimage}}" th:alt="'none'"/>
+                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="color: lightgray; float: left;" th:unless="${user.profileimage}"></i>
                                     </span>
                                     <span th:unless="${user}" th:id="'profile'">
-                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12" th:id="'dummyProfile'" style="color: lightgray; float: left;" ></i>
+                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="color: lightgray; float: left;" ></i>
                                     </span>
                                     <br><br><br>
                                     <span>

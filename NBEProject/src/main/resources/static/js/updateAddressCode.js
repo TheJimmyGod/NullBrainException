@@ -8,7 +8,7 @@ let $street = $("#path");
 let $basicAdd = $("#basic");
 let $streetSelector = $("#pathName");
 let regex = /^[가-힣a-zA-Z]+$/;
-let new_regex = /^[a-zA-Zㄱ-힣0-9]*$/;
+let new_regex = /^[가-힣0-9\s]*$/;
 let streetRegex = /(([가-힣]+(d|d(,|.)d|)+(읍|면|동|가|리))(^구|)((d(~|-)d|d)(가|리|)|))([ ](산(d(~|-)d|d))|)|(([가-힣]|(d(~|-)d)|d)+(로|길))/;
 let previous = "";
 const dataArr = new Set();
@@ -152,8 +152,18 @@ function ReceiveDataFromParent(data)
     $street.val(currentData["streetAdd"]);
     $subName.val(subNameStr);
     $basicAdd.attr("checked", currentData["isDefault"]);
-    pathSearch($street.val().trim().substring(0,2));
 
+    let s = "";
+    let strstr = $street.val().trim();
+    for(let i = 0; i < strstr.length; ++i)
+    {
+        if(/\s/.test(strstr[i]) === false)
+            s += strstr[i];
+        else
+            break;
+    }
+
+    pathSearch(s);
 }
 
 function pathSearch(street){
@@ -187,8 +197,6 @@ function pathSearch(street){
             cache: false,
             success: function(data, status){
                 readData(data);
-                if(isInitialize === false)
-                    addressInitialize();
             },
             error: function (error){
                 console.log("Error: " + error);
@@ -210,46 +218,56 @@ function readData(jsonObj){
 
     }
 
-    sortArr(allDataArr);
     for (let data of allDataArr) {
         if(data.includes($street.val().trim()))
         {
             if(!dataArr.has(data))
-            {
                 dataArr.add(data);
-            }
         }
     }
     sortArr(dataArr);
-    $streetSelector.append($('<option>').text("<도로명주소 선택란>").attr('value', ""));
+    $streetSelector.append($('<option>').text("<도로명주소 확인하십시오>").attr('value', ""));
     for (let data of dataArr) {
         var $data = $('<option>').text(data).attr('value', data);
         $streetSelector.append($data);
     }
+
+    if(isInitialize === false)
+        addressInitialize();
 }
 
 function addressInitialize()
 {
-    if(addAddressDataArr.find(x=>x.key.includes($street.val().trim())) === null)
+    if(isInitialize)
         return;
-    let str = addAddressDataArr.find(x=>x.key.includes($street.val().trim())).value;
-    let add = currentData["detailAdd"].trim();
-    const minLength = Math.min(str.length, add.length);
-    let detail_add = "";
-    for(let i=0; i < minLength; i++)
+    let streetPrevious = addAddressDataArr.find(x=>x.key.includes($street.val().trim()));
+    if(streetPrevious === null)
+        return;
+    else if(streetPrevious === undefined)
+        return;
+    else
     {
-        if(str[i] === add[i])
+        let str = streetPrevious.value;
+        let add = currentData["detailAdd"].trim();
+        const minLength = Math.min(str.length, add.length);
+        let detail_add = "";
+        for(let i=0; i < minLength; i++)
+        {
+            if(str[i] === add[i])
+                detail_add += add[i];
+            else
+                break;
+        }
+        $address.val(detail_add);
+        detail_add = "";
+        for(let i=minLength; i < add.length; i++)
+        {
             detail_add += add[i];
-        else
-            break;
+        }
+        $address2.val(detail_add);
     }
-    $address.val(detail_add);
-    detail_add = "";
-    for(let i=minLength; i < add.length; i++)
-    {
-        detail_add += add[i];
-    }
-    $address2.val(detail_add);
+
+
     isInitialize = true;
 }
 

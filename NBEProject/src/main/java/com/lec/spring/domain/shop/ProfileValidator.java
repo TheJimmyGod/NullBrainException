@@ -20,14 +20,14 @@ public class ProfileValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Profile profile = (Profile) target;
-        var phoneRegex = "^01(0|1|6|7|8|9)?([0-9]{3,4})?([0-9]{4})$";
+        var phoneRegex = "^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$";
         var regex = "^[가-힣a-zA-Z]+$";
 
         if(Objects.equals(profile.getNickName(), ""))
         {
             errors.rejectValue("name", "닉네임이 비어있습니다.");
         }
-        
+
         if(profile.getNickName() != null && Pattern.matches(regex, profile.getNickName())){
             errors.rejectValue("name", "올바르지 않은 형식의 닉네임입니다.");
         }
@@ -69,5 +69,6 @@ public class ProfileValidator implements Validator {
         }
 
         System.out.println("Profile Validator Complete");
+
     }
 }

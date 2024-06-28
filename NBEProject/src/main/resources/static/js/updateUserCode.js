@@ -1,6 +1,6 @@
 let i = 0;
 let dataArr = [];
-
+var popup = null;
 $(document).ready(function (){
     $('[id*="addressUpdate"]').each(function (index, element){
         $(element).click(activate);
@@ -12,12 +12,9 @@ $(function (){
 
         if(i < 3)
         {
-            var popup = window.open("createAddress", "주소 추가", "width=700, height=800, left=100, top=50");
+            if(popup === null || popup.closed)
+                popup = window.open("createAddress", "주소 추가", "width=700, height=800, left=100, top=50");
 
-            if(popup)
-                popup.focus();
-            else
-                alert("팝업이 차단되어 있습니다.");
         }
         else
         {
@@ -30,7 +27,7 @@ $(function (){
         let $phoneNum = $("#phoneNum");
         let $imageFile = $("#file");
 
-        let phoneRegex = /^01(0|1|6|7|8|9)?([0-9]{3,4})?([0-9]{4})$/;
+        let phoneRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         let regex = /^[가-힣a-zA-Z]+$/;
 
         if($nickName.val().trim() === "")
@@ -105,17 +102,12 @@ function activate(){
         "streetAdd": data["street_addr"],
         "isDefault": data["isDefault"]
     };
-    var popup = window.open("updateAddress", "주소 수정", "width=700, height=800, left=100, top=50");
-    popup.onload = function() {
-        popup.ReceiveDataFromParent(dataToSend);
-    };
-    if(popup)
+    if(popup === null || popup.closed)
     {
-        popup.focus();
-    }
-    else
-    {
-        alert("팝업이 차단되어 있습니다.");
+        popup = window.open("updateAddress", "주소 수정", "width=700, height=800, left=100, top=50");
+        popup.onload = function() {
+            popup.ReceiveDataFromParent(dataToSend);
+        };
     }
 }
 
