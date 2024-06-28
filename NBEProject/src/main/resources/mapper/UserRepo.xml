@@ -42,7 +42,8 @@
 
     </update>
     <sql id="SELECT_BASE">
-        SELECT id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point
+        SELECT id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point,
+               IF(status = 1, true, false) AS status
         FROM user
         WHERE 1=1
     </sql>
