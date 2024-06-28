@@ -11,17 +11,17 @@ spring:
     cache: false
     prefix: classpath:templates/
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/show_table
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: abc111
-    password: 1234
-
 #  datasource:
-#    url: jdbc:mysql://192.168.0.81:3306/nbe_db
+#    url: jdbc:mysql://localhost:3306/show_table
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: Admin
+#    username: abc111
 #    password: 1234
+
+  datasource:
+    url: jdbc:mysql://192.168.0.81:3306/nbe_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: Admin
+    password: 1234
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
