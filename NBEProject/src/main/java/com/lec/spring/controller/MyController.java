@@ -79,4 +79,5 @@ public class MyController {
         model.addAttribute("GoodsSize", "XL");
         model.addAttribute("GoodsColor", "Red");
     }
+
 }

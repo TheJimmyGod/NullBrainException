@@ -47,8 +47,8 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityRepo.updateAuthority(userId, authorityId);
     }
 
-//    @Override
-//    public int getUserIdByUsername(String username) {
-//        return userRepo.selectByUsername(username).get(0).getId();
-//    }
+    @Override
+    public int getUserIdByUsername(String username) {
+        return userRepo.allUser(username).get(0).getId();
+    }
 }
