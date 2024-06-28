@@ -42,4 +42,6 @@ public interface UserService {
 
     List<User> findAllName(String name);
 
+    void setStatus(int userId, boolean status);
+
 }

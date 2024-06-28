@@ -84,7 +84,7 @@
                 <p class="nanum-gothic-coding-regular"><i class="far fa-clock fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시</p>
                 <a class="col-sm-4 nanum-gothic-coding-regular" style="text-decoration: none; color: black;"><i class="far fa-comment fa-1x"></i> 1:1 문의 내역 </a>
                 <br><br>
-                <button type="button" class="btn me-5" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none;">문의하기</a></button>
+                <button type="button" class="btn me-5" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none;" onclick="openPopup()">문의하기</a></button>
                 <br><br><br>
             </div>
         </div>
@@ -127,6 +127,11 @@
            }
             $grade.animate({ 'opacity': 1 }, 1000);
         });
+
+        function openPopup() {
+            // 팝업창을 띄우는 JavaScript 함수
+            window.open("contact", "PopupWindow", "width=722,height=800,scrollbars=yes");
+        }
     </script>
 </th:block>
 </html>

@@ -23,7 +23,20 @@
         )
     </select>
 
+    <select id="findByName" parameterType="string" resultType="com.lec.spring.domain.shop.Authority">
+        select id, auth
+        from authority
+        where auth = #{name}
+    </select>
+
     <insert id="addAuthority" flushCache="true">
         insert into user_authorities (user_id, authority_id) VALUE (#{param1}, #{param2})
     </insert>
+
+    <!--  특정 사용자에 권한 업데이트  -->
+    <update id="updateAuthority" parameterType="map">
+        UPDATE user_authorities
+        SET authority_id = #{auth_id}
+        WHERE user_id = #{user_id}
+    </update>
 </mapper>

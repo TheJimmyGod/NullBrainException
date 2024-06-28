@@ -48,8 +48,8 @@
     </select>
 
     <select id="allContacts" resultType="com.lec.spring.domain.shop.Contact">
-        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
-        FROM contact
+    SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+    FROM contact
     </select>
 
     <select id="countAllContacts" resultType="long">
@@ -79,6 +79,28 @@
 
     <select id="countContactsByStatus" resultType="long">
         SELECT count(*) FROM contact WHERE status = #{status}
+    </select>
+
+    <!--  타입  -->
+    <select id="findContactsByType" resultType="com.lec.spring.domain.shop.Contact">
+        SELECT * FROM contact WHERE type = #{type} ORDER BY id DESC LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 타입   -->
+    <select id="countContactsByType" resultType="Long">
+        SELECT COUNT(*) FROM contact WHERE type = #{type}
+    </select>
+
+    <select id="findContactsByStatusAndType" resultType="com.lec.spring.domain.shop.Contact">
+        SELECT * FROM contact
+        WHERE status = #{status} AND type = #{type}
+        ORDER BY regdate DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countContactsByStatusAndType" resultType="long">
+        SELECT count(*) FROM contact
+        WHERE status = #{status} AND type = #{type}
     </select>
 
 
