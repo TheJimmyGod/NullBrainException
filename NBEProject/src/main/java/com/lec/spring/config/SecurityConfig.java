@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")  //loadUserBy.. 필요
-                        .defaultSuccessUrl("/user/test")
+                        //.defaultSuccessUrl("/user/test")
                         .successHandler(new CustomLoginSuccessHandler("/user/test"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
