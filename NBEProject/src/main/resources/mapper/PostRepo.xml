@@ -18,7 +18,8 @@
             u.username "u_username",
             u.name "u_name",
             u.email "u_email",
-            u.regdate "u_regdate"
+            u.regdate "u_regDate",
+            u.profileimage "u_profileimage"
         FROM
             post p, user u
         WHERE
@@ -32,6 +33,7 @@
         <result column="u_email" property="email"/>
         <result column="u_phone" property="phone"/>
         <result column="u_regdate" property="regdate"/>
+        <result column="u_profileimage" property="profileimage" />
     </resultMap>
     <resultMap id="mapPost" type="com.lec.spring.domain.shop.Post">
         <result column="p_id" property="id"/>

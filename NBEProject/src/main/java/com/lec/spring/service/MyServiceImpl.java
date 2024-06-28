@@ -5,10 +5,12 @@ import com.lec.spring.domain.shop.Profile;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AddressRepo;
 import com.lec.spring.repository.UserRepo;
+import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,23 +39,31 @@ public class MyServiceImpl implements MyService {
 
     @Override
     public void showMyPage(Model model) {
-        User user = userRepository.selectById(2);
-        model.addAttribute("user", user);
+        User user = U.getLoggedUser();
+        user = userRepository.selectById(user.getId());
+        model.addAttribute("nickName", user.getName());
+        model.addAttribute("currentPic", user.getProfileimage());
     }
 
     @Override
-    public void updateMyPage(Model model, Integer user_id) {
-        User user = userRepository.selectById(user_id);
-        var addresses = addressRepository.selectAll(user_id);
-        model.addAttribute("user", user);
+    public void updateMyPage(Model model) {
+        User user = U.getLoggedUser();
+        user = userRepository.selectById(user.getId());
+        var addresses = addressRepository.selectAll(user.getId());
+        model.addAttribute("nickName", user.getName());
+        model.addAttribute("phone", user.getPhone());
+        model.addAttribute("currentPic", user.getProfileimage());
         model.addAttribute("addresses", addresses);
     }
-
+    @Transactional
     @Override
-    public int updateProfile(Integer user_id, Profile profile) {
-        User user = userRepository.selectById(user_id);
+    public int updateProfile(Profile profile) {
+        User user = U.getLoggedUser();
+        user = userRepository.selectById(user.getId());
         if(user == null)
             return -1;
+
+        var id = user.getId();
         for (Address address : profile.getAddresses()) {
             Address exist = addressRepository.selectById(address.getId());
             if(exist != null)
@@ -64,7 +74,7 @@ public class MyServiceImpl implements MyService {
 
             if(address.getIsDefault())
             {
-                for(var item : addressRepository.selectAll(user_id))
+                for(var item : addressRepository.selectAll(id))
                 {
                     if(item.getIsDefault())
                     {
@@ -78,10 +88,9 @@ public class MyServiceImpl implements MyService {
                     name(address.getName())
                     .street_addr(address.getStreet_addr())
                     .detail_addr(address.getDetail_addr())
-                    .user_id(user_id)
+                    .user_id(id)
                     .isDefault(address.getIsDefault())
                     .build();
-
             addressRepository.insert(newAddress);
         }
         System.out.println(profile.getNickName());
@@ -90,7 +99,7 @@ public class MyServiceImpl implements MyService {
 
         if(profile.getProfileImage() != null)
         {
-            String fileName = imageInput(profile.getProfileImage(), user_id);
+            String fileName = imageInput(profile.getProfileImage(), id);
             user.setProfileimage((fileName == null || fileName.isEmpty()) ?
                     user.getProfileimage() : fileName);
         }
