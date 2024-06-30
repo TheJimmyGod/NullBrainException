@@ -2,17 +2,27 @@ package com.lec.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lec.spring.domain.shop.Address;
-import com.lec.spring.domain.shop.Item;
-import com.lec.spring.domain.shop.Profile;
-import com.lec.spring.domain.shop.ProfileValidator;
+import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.*;
+import com.lec.spring.service.ContactImageService;
+import com.lec.spring.service.ContactService;
 import com.lec.spring.service.MyService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/mypage")
@@ -24,6 +34,16 @@ public class MyController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ContactImageService contactImageService;
+
+    @Autowired
+    private ContactService contactService;
+
+
+    @Value("${app.upload.path}")
+    private String uploadPath;
 
     public MyController() {
         System.out.println("MyController() 생성");
@@ -68,6 +88,90 @@ public class MyController {
     @GetMapping("/updateAddress")
     public void updateAddress(Model model){
     }
+
+    @RequestMapping("/contact")
+    public String contact(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = userService.findByUsername(username);
+        String userName = user.getUsername();
+
+        List<Contact> contact = contactService.allContacts();
+
+        model.addAttribute("contact", contact);
+        model.addAttribute("username", userName);
+
+        return "/mypage/contact";
+    }
+
+    @RequestMapping("/contactOk")
+    public String contactOk(
+                            @RequestParam(value = "goods_id", required = false) int goods_id,
+                            @RequestParam("title") String title,
+                            @RequestParam("type") String type,
+                            @RequestParam("content") String content,
+                            @RequestParam("file1") MultipartFile file1,
+                            @RequestParam("file2") MultipartFile file2
+    ) throws IOException {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = userService.findByUsername(username);
+        int userId = user.getId();
+
+
+        Contact contact = Contact.builder()
+                .user_id(userId)
+                .goods_id(100073)
+                .title(title)
+                .type(type)
+                .content(content)
+                .build();
+
+        contactService.addContact(contact);
+
+        saveFile(contact.getId(), file1);
+        saveFile(contact.getId(), file2);
+
+        return "redirect:/mypage/contact";
+    }
+
+    private void saveFile(int contactId, MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                String originalFilename = file.getOriginalFilename();
+                String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                String uuid = UUID.randomUUID().toString();
+                String savedFilename = uuid + ext;
+
+                // 상대 경로를 절대 경로로 변환
+                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                    System.out.println("Created directories: " + uploadDir.toString());
+                }
+
+                Path targetPath = uploadDir.resolve(savedFilename).normalize();
+                file.transferTo(targetPath.toFile());
+                System.out.println("Saved file to: " + targetPath.toString());
+
+                ContactImage contactImage = ContactImage.builder()
+                        .contact_id(contactId)
+                        .file_name(savedFilename)
+                        .build();
+
+                contactImageService.addImage(contactImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
+
 
 //    @GetMapping("/createReview")
 //    public void createReview(Model model){
