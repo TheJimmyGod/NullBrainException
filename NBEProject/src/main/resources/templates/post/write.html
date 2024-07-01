@@ -17,10 +17,10 @@
 <body style="margin-bottom: 200px">
 <!--<div class="container mt-3" th:with="user=${#authentication.getPrincipal().getUser()}">-->
 <div class="p-5 text-left">
-    <a th:href="@{/nbe/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
+    <a th:href="@{/templates/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
 </div>
 <div class="container mt-3">
-    <form th:action="@{/nbe/post/write}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
         <div class="my-3">
             <label>작성자:</label>
             <span class="form-control" >[[${logged_user.name}]]</span>

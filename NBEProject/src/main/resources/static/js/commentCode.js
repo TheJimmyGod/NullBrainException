@@ -26,7 +26,7 @@ $(function(){
         };
 
         $.ajax({
-            url: "/nbe/post/comment/write/" + id,
+            url: "/post/comment/write/" + id,
             type: "POST",
             data: data,
             cache: false,
@@ -48,7 +48,7 @@ $(function(){
 // 특정 글(post_id) 의 댓글 목록 읽어오기
 function loadComment(post_id){
     $.ajax({
-        url: "/nbe/post/comment/list/" + post_id,
+        url: "/post/comment/list/" + post_id,
         type: "POST",
         data: {},
         cache: false,
@@ -116,7 +116,7 @@ function addDelete(){
         const comment_id = $(this).attr("data-cmtdel-id");
 
         $.ajax({
-            url: "/nbe/post/comment/delete/" + id,
+            url: "/post/comment/delete/" + id,
             type: "POST",
             cache: false,
             data: {"id": comment_id},
