@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/nbe/mypage")
+@RequestMapping("/mypage")
 public class MyController {
     @Autowired
     private MyService myService;
@@ -73,7 +73,7 @@ public class MyController {
         try {
             addresses = objectMapper.readValue(addressesJson, Address[].class); // JSON 문자열을 Address 배열로 변환
         } catch (JsonProcessingException e) {
-            return "redirect:/nbe/mypage/update";
+            return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
         model.addAttribute("result", myService.updateProfile(profile));
@@ -98,7 +98,7 @@ public class MyController {
         model.addAttribute("contact", contact);
         model.addAttribute("username", user.getUsername());
 
-        return "/nbe/mypage/contact";
+        return "/mypage/contact";
     }
 
     @PostMapping("/contactOk")
@@ -128,7 +128,7 @@ public class MyController {
         saveFile(contact.getId(), file1);
         saveFile(contact.getId(), file2);
 
-        return "/nbe/mypage/contactOk";
+        return "/mypage/contactOk";
     }
 
     private void saveFile(int contactId, MultipartFile file) {

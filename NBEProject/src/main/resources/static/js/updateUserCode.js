@@ -78,7 +78,7 @@ $(function (){
 
         $.ajax({
             type: 'POST',
-            url: '/nbe/mypage/update',
+            url: '/mypage/update',
             contentType: false,
             processData: false,
             data: formData,
