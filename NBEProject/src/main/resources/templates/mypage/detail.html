@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="logged_user=2">
-    <!--<th:block th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/myCss.css}">
-    <title>게시글</title>
+    <link rel="stylesheet" th:href="@{/css/JimmyCss.css}">
+    <title>마이페이지</title>
 </head>
     <!--<th:block th:insert="~{common/header::header}"></th:block>-->
 <body>
@@ -19,74 +21,72 @@
 </div>
     <div class="container w-75 p-5">
         <div class="border-0 px-5 col-sm-12">
-            <span class="col-12 col-sm-12 parent" th:if="${user}">
-                <img style="width: 200px; height: 200px; float: left" th:if="${user.profileimage}" th:src="@{'/upload/' + ${user.profileimage}}" th:alt="'none'"/>
-                <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;" th:unless="${user.profileimage}"></i>
+            <span class="col-12 col-sm-12 parent" th:if="${logged_user}">
+                <img class="rounded" style="width: 200px; height: 200px; float: left" th:if="${currentPic}" th:src="@{'/upload/' + ${currentPic}}" th:alt="'none'"/>
+                <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;" th:unless="${currentPic}"></i>
                 <div class="child">
                     <i class="fas fa-star fa-3x child " th:id="'grade'"></i>
                 </div>
             </span>
-            <span class="col-12 col-sm-12 parent" th:unless="${user}">
+            <span class="col-12 col-sm-12 parent" th:unless="${logged_user}">
                 <i class="fas fa-user-circle fa-10x" style="color: lightgray; float: left;"></i>
                    <div class="child">
                     <i class="fas fa-star fa-3x child " th:id="'grade'"></i>
                 </div>
             </span>
             <span class="col-12 col-sm-12 mt-5">
-                <p th:if="${user}" th:text="${user.username}" style="font-size: 22px;">닉네임<a href="#"><i class="far fa-edit fa-1x"></i></a></p>
-                <p>&nbsp;<b><a th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${user}" th:text="'정보 수정'"></a></b></p>
+                &nbsp;&nbsp;<strong class="nanum-gothic-coding-regular" th:if="${logged_user}" th:text="${nickName}" style="font-size: 50px;">닉네임</strong><small th:text="${logged_user.username}"></small><br>
+                <p>&nbsp;&nbsp;<b><a class="nanum-gothic-coding-regular" th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${logged_user}" th:text="'정보 수정'"></a></b></p>
             </span>
             <br><br>
             <div class="clear"></div>
         </div>
 
-        <b><a class="text-right" href="#" style="float: right; text-decoration: none;" th:if="${user}" th:text="'로그아웃'"></a></b>
-        <b><a class="text-right" href="#" style="float: right; text-decoration: none;" th:unless="${user}" th:text=""></a></b>
+        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:if="${logged_user}" th:text="'로그아웃'"></a></b>
+        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:unless="${logged_user}" th:text=""></a></b>
         <div class="clear"></div>
         <br><br>
         <div class="container commentTable rounded text-center" style="height: 250px;">
             <br><br>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="fas fa-file-invoice-dollar fa-5x"></i><br><br><br>
-                <b>포인트</b>
-                <p th:if="${user}" th:text="${user.point}"></p>
-                <p th:unless="${user}" th:text="'0'"></p>
+                <b class="nanum-gothic-coding-regular">포인트</b>
+                <p th:if="${logged_user}" th:text="${logged_user.point}"></p>
+                <p th:unless="${logged_user}" th:text="'0'"></p>
             </span>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="far fa-money-bill-alt fa-5x"></i><br><br><br>
-                <b>쿠폰</b>
+                <b class="nanum-gothic-coding-regular">쿠폰</b>
                 <p>0</p>
             </span>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="far fa-file-alt fa-5x"></i><br><br><br>
-                <b>후기</b>
-                <p>0</p>
+                <b class="nanum-gothic-coding-regular">후기</b>
+                <p class="nanum-gothic-coding-regular">0</p>
             </span>
             <div class="clear"></div>
         </div>
         <br><br>
         <div class="border-bottom commentTable rounded" style="height: 150px;">
             <br>
-            <b class="p-5"><i class="fas fa-shopping-cart fa-2x"></i> 쇼핑 정보</b>
+            <b class="p-5 nanum-gothic-coding-regular"><i class="fas fa-shopping-cart fa-2x"></i> 쇼핑 정보</b>
             <br>
             <span class="col-6 col-sm-6 text-center">
                 <br>
-                <a href="#" class="ps-5"><b>주문/배송/픽업 조회</b></a>
+                <a href="#" class="ps-5"><b class="nanum-gothic-coding-regular">주문/배송/픽업 조회</b></a>
             </span>
         </div>
         <br>
-        <div class="border-bottom commentTable rounded" style="height: 300px;">
+        <div class="border-bottom commentTable rounded" style="height: auto;">
             <div class="ps-5 pt-4">
-                <p><i class="fas fa-comments-dollar fa-2x"></i><b> 고객 서비스</b></p><br>
-                <p>궁금한 점 있나요? 언제든지 문의하세요!</p>
-                <p><i class="far fa-clock fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시</p>
+                <p><i class="fas fa-comments-dollar fa-2x"></i><b class="nanum-gothic-coding-regular"> 고객 서비스</b></p><br>
+                <p class="nanum-gothic-coding-regular">궁금한 점 있나요? 언제든지 문의하세요!</p>
+                <p class="nanum-gothic-coding-regular"><i class="far fa-clock fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시</p>
+                <a class="col-sm-4 nanum-gothic-coding-regular" style="text-decoration: none; color: black;"><i class="far fa-comment fa-1x"></i> 1:1 문의 내역 </a>
                 <br><br>
-                <a class="col-sm-4" style="text-decoration: none; color: black;"><i class="far fa-comment fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시 </a>
-                <br>
-                <a class="col-sm-4" style="text-decoration: none; color: black;"><i class="fa fa-phone fa-1x"></i> <b>상담 연락처</b>: 000-0000-0000 </a>
-                <br>
+                <button type="button" class="btn me-5" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none;" onclick="openPopup()">문의하기</a></button>
+                <br><br><br>
             </div>
-
         </div>
     </div>
     <br><br><br><br><br><br>
@@ -97,26 +97,27 @@
         }
         let $grade = $("[id*='grade']");
         $(window).on('load',function (){
-           let user = [[${user}]];
+           let user = [[${logged_user}]];
            $grade.removeClass("bronze");
            $grade.removeClass("sliver");
            $grade.removeClass("gold");
            $grade.removeClass("diamond");
            if(user === null)
                return;
-           if(user.grade === "Bronze")
+           console.log(user.grade);
+           if(user.grade === "Bronze" || user.grade ==="bronze")
            {
                $grade.addClass('bronze');
            }
-           else if(user.grade === "Sliver")
+           else if(user.grade === "Sliver" || user.grade ==="sliver")
            {
                $grade.addClass('sliver');
            }
-           else if(user.grade ==="Gold")
+           else if(user.grade ==="Gold"|| user.grade ==="gold")
            {
                $grade.addClass('gold');
            }
-           else if(user.grade ==="Diamond")
+           else if(user.grade ==="Diamond" || user.grade ==="diamond")
            {
                $grade.addClass('diamond');
            }
@@ -126,6 +127,11 @@
            }
             $grade.animate({ 'opacity': 1 }, 1000);
         });
+
+        function openPopup() {
+            // 팝업창을 띄우는 JavaScript 함수
+            window.open("contact", "PopupWindow", "width=722,height=800,scrollbars=yes");
+        }
     </script>
 </th:block>
 </html>

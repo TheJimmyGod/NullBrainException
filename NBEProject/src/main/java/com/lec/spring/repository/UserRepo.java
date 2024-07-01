@@ -42,4 +42,5 @@ public interface UserRepo {
 
     // 유저 상태 변경
     int updateStatus(int userId, boolean status);
+
 }

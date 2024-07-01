@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>취소 문의 상세 페이지</title>
+    <link rel="stylesheet" href="/css/cancelDetail.css">
+</head>
+<body>
+<div class="content">
+    <h2>취소 문의 상세 페이지</h2>
+    <div class="section">
+        <div class="section-header">회원 정보</div>
+        <div class="section-content">
+            <div>
+                <label>회원 ID</label>
+                <input type="text" th:value="${contact.user_id}" readonly>
+            </div>
+            <div>
+                <label>이름</label>
+                <input type="text" th:value="${contact.user.name}" readonly>
+            </div>
+            <div>
+                <label>이메일</label>
+                <input type="text" th:value="${contact.user.email}" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-header">문의 정보</div>
+        <div class="section-content">
+            <div>
+                <label>상품명</label>
+                <input type="text" readonly value="테스트제품">
+            </div>
+            <div>
+                <label>문의 제목</label>
+                <input type="text" th:value="${contact.title}" readonly>
+            </div>
+            <div>
+                <label>문의 날짜</label>
+                <input type="text" th:value="${#temporals.format(contact.regdate, 'yyyy-MM-dd일 HH:mm:ss')}" readonly>
+            </div>
+            <div>
+                <label>상태</label>
+                <input type="text" th:value="${contact.status}" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-header">문의 내용</div>
+        <div class="section-content">
+            <p th:text="${contact.content}"></p>
+            <span th:each="image : ${images}">
+                <img th:src="@{'/upload/' + ${image.file_name}}" alt="첨부 이미지" style="max-width: 100%; height: auto;">
+            </span>
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-content">
+            <div th:if="${contact.status != '취소 완료' && contact.status != '취소 거절'}">
+                <form id="cancelForm" method="post" th:action="@{/admin/cancelProcess}">
+                    <input type="hidden" name="id" th:value="${contact.id}">
+                    <div class="buttons">
+                        <button type="submit" class="cancel-process-button">취소 처리</button>
+                    </div>
+                </form>
+                <form id="cancelRejectForm" method="post" th:action="@{/admin/cancelReject}">
+                    <input type="hidden" name="id" th:value="${contact.id}">
+                    <div class="buttons">
+                        <button type="submit" class="cancel-reject-button">취소 거절</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="back-button" onclick="location.href='/admin/cancel'">목록으로 돌아가기</button>
+    </div>
+</div>
+
+<script>
+
+</script>
+</body>
+</html>

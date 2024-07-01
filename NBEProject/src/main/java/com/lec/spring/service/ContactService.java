@@ -11,9 +11,10 @@ public interface ContactService {
     // 문의사항 수정
     int updateContact(Contact contact);
 
+    Long cancelOrder();
+
     // 문의사항 삭제
     int deleteContact(int id);
-
 
     // 관리자가 답변한 문의 업데이트
     int updateanswer(Contact contact);
@@ -38,15 +39,27 @@ public interface ContactService {
     // 유저의 문의 유형 확인
     String type();
 
-    // 문의사항 페이징 조회
-    List<Contact> findAllContacts(int offset, int limit);
-
     // 상태별 문의사항 조회
     List<Contact> findContactsByStatus(String status, int offset, int limit);
 
     // 상태별 문의사항 카운트
     Long countContactsByStatus(String status);
 
-    // 취소주문 카운트
-    Long cancelOrder();
+    // 상태
+    String status();
+
+    // 타입별 문의사항 조회
+    List<Contact> findContactsByType(String type, int offset, int limit);
+
+    // 타입별 문의사항 카운트
+    Long countContactsByType(String type);
+
+    // 상태와 타입별 문의사항 조회
+    List<Contact> findContactsByStatusAndType(String status, String type, int offset, int limit);
+
+    // 상태와 타입별 문의사항 카운트
+    Long countContactsByStatusAndType(String status, String type);
+
+
+
 }

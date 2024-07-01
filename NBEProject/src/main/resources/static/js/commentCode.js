@@ -8,10 +8,6 @@ $(function(){
     // 현재 글의 댓글들을 불러온다
     loadComment(id);
 
-    // 댓글 작성 버튼 누르면 댓글 등록 하기.
-    // 1. 어느글에 대한 댓글인지? --> 위에 id 변수에 담겨있다
-    // 2. 어느 사용자가 작성한 댓글인지? --> logged_id 값
-    // 3. 댓글 내용은 무엇인지?  --> 아래 content
     $("#btn_comment").click(function(){
         const content = $("#input_comment").val().trim();
 
@@ -25,7 +21,7 @@ $(function(){
         // 전달할 parameter 준비 (POST)
         const data = {
             "post_id": id,
-            "user_id": logged_id,
+            "user_id": logged_id.id,
             "content": content,
         };
 
@@ -84,21 +80,24 @@ function buildComment(result){
         let regdate = comment.regdate;
 
         let user_id = parseInt(comment.user.id);
-        let username = comment.user.username;
         let name = comment.user.name;
 
+        let profile = '/upload/' + comment.user.profileimage;
+        let img = new Image();
+        img.src = profile;
+
         // 삭제버튼 여부
-        const delBtn = (logged_id !== user_id) ? '' : `
-            <i class="btn fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip" data-cmtdel-id="${id}"  title="삭제"></i>
+        const delBtn = (logged_id.id !== user_id) ? '' : `
+            <i class="btn fa-solid fa-delete-left text-danger" style="float: right" data-bs-toggle="tooltip" data-cmtdel-id="${id}"  title="삭제"></i>
         `;
 
         const row = `
             <tr>
-                <td><span><strong>${username}</strong><br><small class="text-secondary">(${name})</small></span></td>
-                <td>
-                    <span>${content}</span>${delBtn}                    
-                </td>
-                <td><span><small class="text-secondary">${regdate}</small></span></td>
+                <td><span><img class="col-lg-1 col-sm-1 col-1" style="height: 24px; width: 24px;" th:if="${comment.user.profileimage}" src="${profile}" th:alt="'None"/>
+                <strong>${name}</strong><br></span></td>
+                <td><span>${content}</span></td>
+                <td><span><small class="text-secondary" style="float: right">${regdate}</small></span></td>
+                <td><span>${delBtn}</span></td>
             </tr>
         `;
         out.push(row);
@@ -115,7 +114,7 @@ function addDelete(){
 
         // 삭제할 댓글의 id
         const comment_id = $(this).attr("data-cmtdel-id");
-        console.log(comment_id);
+
         $.ajax({
             url: "/post/comment/delete/" + id,
             type: "POST",

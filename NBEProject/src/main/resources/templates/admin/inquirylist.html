@@ -22,7 +22,7 @@
 </div>
 <div class="sidebar">
     <ul>
-        <li><a th:href="@{/admin/inquirylist}">문의사항 목록</a></li>
+        <li><a th:href="@{/admin/inquirylist(type='상품문의')}">상품 문의 목록</a></li>
         <li><a th:href="@{/admin/inquirylist(status='답변 완료')}">답변 목록</a></li>
         <li><a th:href="@{/admin/inquirylist(status='대기 중')}">미답변 목록</a></li>
     </ul>
@@ -32,8 +32,8 @@
     <h3>총 <span th:text="${cntcontact}"></span>건의 문의가 있습니다.</h3>
     <div class="search-bar">
         <form th:action="@{/admin/inquirylist}" method="get">
-        <input type="text" class="username" name="username" placeholder="회원 이름 입력" th:value="${username}">
-        <button type="submit">검색</button>
+            <input type="text" class="username" name="username" placeholder="회원 이름 입력" th:value="${username}">
+            <button type="submit">검색</button>
         </form>
     </div>
     <div class="table-container">
@@ -50,24 +50,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="contact : ${contacts}" th:if="${contact.type == '상품문의'}">
+            <tr th:each="contact : ${contacts}">
                 <td th:text="${contact.type}"></td>
-                <td th:text="${contact.user.name}">홍길동</td>
-                <td th:text="${contact.user.email}">abc@mail.com</td>
+                <td th:text="${contact.user != null ? contact.user.name : '알 수 없음'}">홍길동</td>
+                <td th:text="${contact.user != null ? contact.user.email : '알 수 없음'}">abc@mail.com</td>
                 <td th:text="${contact.title}">상품 문의</td>
                 <td th:text="${#temporals.format(contact.regdate)}">2024-01-01</td>
                 <td th:text="${contact.status}">답변 대기</td>
-                <td><a  class="btn btn-primary" th:href="@{/admin/inquirydetail(id=${contact.id})}">상세 보기</a></td>
+                <td><a class="btn btn-primary" th:href="@{/admin/inquirydetail(id=${contact.id})}">상세 보기</a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="pagination">
-        <a th:href="@{/admin/inquirylist(page=${currentPage - 1}, status=${status}, username=${username})}" th:if="${currentPage > 1}">&laquo;</a>
+        <a th:href="@{/admin/inquirylist(page=${currentPage - 1}, status=${status}, type=${type}, username=${username})}" th:if="${currentPage > 1}">&laquo;</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:href="@{/admin/inquirylist(page=${i}, status=${status}, username=${username})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
+            <a th:href="@{/admin/inquirylist(page=${i}, status=${status}, type=${type}, username=${username})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
         </span>
-        <a th:href="@{/admin/inquirylist(page=${currentPage + 1}, status=${status}, username=${username})}" th:if="${currentPage < totalPages}">&raquo;</a>
+        <a th:href="@{/admin/inquirylist(page=${currentPage + 1}, status=${status}, type=${type}, username=${username})}" th:if="${currentPage < totalPages}">&raquo;</a>
     </div>
 </div>
 </body>

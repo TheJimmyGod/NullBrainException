@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <title>상품 문의 요청</title>
     <link rel="stylesheet" href="/user/contact.css">
 </head>
@@ -25,7 +28,7 @@
         </div>
         <div class="form-group">
             <label for="name">작성자</label>
-            <input type="text" id="name" name="name" value="테스트용" readonly>
+            <input type="text" id="name" name="name" th:value="${username}" readonly>
         </div>
         <div class="form-group">
             <label for="date">요청날짜</label>

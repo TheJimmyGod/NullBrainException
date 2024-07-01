@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <title>관리자 메인 페이지</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
@@ -14,7 +17,7 @@
     </div>
     <div class="header-right">
         <span>관리자</span>
-        <span th:text="${username}"></span>
+        <span th:text="${user.username}">테스트용</span>
         <a th:href="@{/user/login}">로그아웃</a>
     </div>
 </div>
@@ -22,6 +25,7 @@
     <ul>
         <li onclick="location.href='orderpage'">주문 관리</li>
         <li onclick="location.href='userlist'">회원 관리</li>
+        <li onclick="location.href='cancel'">취소 관리</li>
         <li onclick="location.href='notice'">공지사항 관리</li>
     </ul>
 </div>
