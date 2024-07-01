@@ -16,10 +16,4 @@ $(function (){
             alert("5개까지 넣을 수 있습니다.");
         }
     });
-    //
-    // // Summernote 추가
-    // $("#content").summernote({
-    //     height: 300
-    // });
-
 });
