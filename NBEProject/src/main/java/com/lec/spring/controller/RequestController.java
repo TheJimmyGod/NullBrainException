@@ -1,6 +1,6 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.Purchase;
+import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

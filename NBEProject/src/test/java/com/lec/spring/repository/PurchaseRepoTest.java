@@ -18,10 +18,10 @@ class PurchaseRepoTest {
 
     @Test
     void selectById() {
-        purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
-        List<Purchase> p = purchaseRepo.selectById(5, 15);
-        if(p != null){
-            System.out.println("success");
-        }else System.out.println("failed");
+//        purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
+//        List<Purchase> p = purchaseRepo.selectById(5, 15);
+//        if(p != null){
+//            System.out.println("success");
+//        }else System.out.println("failed");
     }
 }

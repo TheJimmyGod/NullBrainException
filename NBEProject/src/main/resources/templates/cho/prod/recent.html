@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최근 본 상품</title>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/recent.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/cho/js/prod/head.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{/cho/prod/header :: head}"></div>
+
+    <h2>최근 본 상품</h2>
+    <div class="product-list" >
+        <div class="product-item" th:each="e : ${items}">
+            <div class="product-image">
+                <a th:href="@{'/nbe/detail/'+${e.goods_no}}">
+                    <img th:src="${e.getImage_1()}">
+                </a>
+            </div>
+            <div class="product-details">
+                <div class="info">
+                    <h3 th:text="${e.name}">@@@상품</h3>
+                    <p class="price" th:text="${e.price}+'원'">12314원</p>
+                </div>
+                <p th:text="${e.keywords}">상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

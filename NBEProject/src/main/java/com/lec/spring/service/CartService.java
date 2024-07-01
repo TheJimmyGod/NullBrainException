@@ -1,16 +1,21 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.CartPurchaseItem;
+
+
+import com.lec.spring.domain.shop.Cart;
 
 import java.util.List;
 
 public interface CartService {
 
 
-    List<CartPurchaseItem> listPurchaseItems(Integer userId);
+    List<Cart> listUserItems(Integer userId);
 
-    int deleteitem(Integer[] delitem);
+    List<Cart> selectItems(Integer[] selectitem);
+    int deleteItems(Integer[] delitem);
 
-    List<CartPurchaseItem> selectitem(Integer[] selectitem);
+    int insert(Cart cart);
+
+    Cart getByUserIdGoodsId(int userId, String goodsId);
 
 }

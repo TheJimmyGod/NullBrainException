@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.PayRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Pay"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into pay (Status, payment_uid, price) VALUES (#{status}, #{paymentUid}, #{price})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Pay">
+        update pay
+        set Status=#{status}, payment_uid=#{paymentUid}
+        where id=#{id}
+    </update>
+
+    <select id="findByPayId" flushCache="true" resultType="com.lec.spring.domain.shop.Pay">
+        select * from pay where id=#{param1}
+    </select>
+</mapper>

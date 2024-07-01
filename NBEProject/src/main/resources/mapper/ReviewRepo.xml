@@ -3,8 +3,8 @@
 <mapper namespace="com.lec.spring.repository.ReviewRepo">
     <insert id="insert" parameterType="com.lec.spring.domain.shop.Review" flushCache="true"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into review (user_id, goods_id, regdate, title, content, rate)
-        value (#{user_id}, #{goods_id}, #{regdate}, #{title}, #{content}, #{rate})
+        insert into review (user_id, goods_no, regdate, title, content, rate)
+        value (#{user_id}, #{goodsId}, #{regdate}, #{title}, #{content}, #{rate})
     </insert>
 
     <delete id="delete" flushCache="true">
@@ -22,13 +22,60 @@
 
     </update>
 
-    <select id="allReview" flushCache="true" resultType="com.lec.spring.domain.shop.Review">
-        select * from review
-        where user_id=#{param1}
+    <resultMap id="U" type="com.lec.spring.domain.User">
+        <result property="id" column="u_pwd"/>
+        <result property="username" column="u_username"/>
+        <result property="password" column="u_pwd"/>
+        <result property="regdate" column="u_reg"/>
+        <result property="name" column="u_name"/>
+        <result property="phone" column="u_phone"/>
+        <result property="birth" column="u_birth"/>
+        <result property="email" column="u_email"/>
+        <result property="gender" column="u_gender"/>
+        <result property="profileimage" column="u_profile"/>
+        <result property="grade" column="u_grade"/>
+        <result property="total_price" column="totalPrice"/>
+        <result property="point" column="u_point"/>
+    </resultMap>
+
+    <resultMap id="REVIEW" type="com.lec.spring.domain.shop.Review">
+        <result property="id" column="r_id"/>
+        <result property="goodsId" column="r_gid"/>
+        <result property="regdate" column="r_reg"/>
+        <result property="title" column="r_title"/>
+        <result property="content" column="r_content"/>
+        <result property="rate" column="r_rate"/>
+        <collection property="user" resultMap="U"/>
+    </resultMap>
+    <select id="selectReviewByGoods" flushCache="true" resultMap="REVIEW">
+        select
+            r.id "r_id",
+            r.goods_no "r_gid",
+            r.regdate "r_reg",
+            r.title "r_title",
+            r.content "r_content",
+            r.rate "r_rate",
+            u.id "u_id",
+            u.username "u_username",
+            u.password "u_pwd",
+            u.regdate "u_reg",
+            u.name "u_name",
+            u.phone "u_phone",
+            u.birth "u_birth",
+            u.email "u_email",
+            u.gender "u_gender",
+            u.profileimage "u_profile",
+            u.grade "u_grade",
+            u.total_price "totalPrice",
+            u.point "u_point"
+        from review r, user u
+        where r.user_id=u.id
+            and r.goods_no=#{param1}
+        limit #{param2}, #{param3}
     </select>
 
-    <select id="showReview" flushCache="true" resultType="com.lec.spring.domain.shop.Review">
-        select * from review
-        where id=#{param1}
+    <select id="countReview" flushCache="true">
+        select count(*) from review
+        where goods_no=#{param1}
     </select>
 </mapper>

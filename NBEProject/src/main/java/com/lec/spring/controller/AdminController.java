@@ -83,39 +83,39 @@ public class AdminController {
     }
 
     // 주문 관리 페이지
-    @RequestMapping("/orderpage")
-    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "username", required = false) String username
-                            ,Model model){
-       Long orderCnt = purchaseService.orderCnt();
-       List<Purchase> orderList;
-
-        int limit = 10;
-        int offset = (page - 1) * limit;
-
-        if (username != null && !username.isEmpty()) {
-            orderList = purchaseService.orderUsername(username);
-            orderCnt = (long) orderList.size();
-        } else {
-            orderList = purchaseService.pagination(offset,limit);
-            orderCnt = userService.cntUser();
-        }
-
-        int totalPages = (int) Math.ceil((double) orderCnt / limit);
-
-
-       model.addAttribute("orderCnt", orderCnt);
-       model.addAttribute("totalPages", totalPages);
-       model.addAttribute("currentPage", page);
-       model.addAttribute("orderList", orderList);
-
-       if(username != null && !username.isEmpty()){
-           List<Purchase> usernameList = purchaseService.orderUsername(username);
-           model.addAttribute("username", username);
-
-       }
-        return "admin/orderpage";
-    }
+//    @RequestMapping("/orderpage")
+//    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
+//                            @RequestParam(value = "username", required = false) String username
+//                            ,Model model){
+//       Long orderCnt = purchaseService.orderCnt();
+//       List<Purchase> orderList;
+//
+//        int limit = 10;
+//        int offset = (page - 1) * limit;
+//
+//        if (username != null && !username.isEmpty()) {
+//            orderList = purchaseService.orderUsername(username);
+//            orderCnt = (long) orderList.size();
+//        } else {
+//            orderList = purchaseService.pagination(offset,limit);
+//            orderCnt = userService.cntUser();
+//        }
+//
+//        int totalPages = (int) Math.ceil((double) orderCnt / limit);
+//
+//
+//       model.addAttribute("orderCnt", orderCnt);
+//       model.addAttribute("totalPages", totalPages);
+//       model.addAttribute("currentPage", page);
+//       model.addAttribute("orderList", orderList);
+//
+//       if(username != null && !username.isEmpty()){
+//           List<Purchase> usernameList = purchaseService.orderUsername(username);
+//           model.addAttribute("username", username);
+//
+//       }
+//        return "admin/orderpage";
+//    }
 
 
 

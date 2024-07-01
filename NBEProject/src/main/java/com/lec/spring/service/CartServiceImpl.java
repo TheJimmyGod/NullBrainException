@@ -1,35 +1,47 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.CartPurchaseItem;
-import com.lec.spring.repository.CartRepository;
+
+
+import com.lec.spring.domain.shop.Cart;
+import com.lec.spring.repository.CartRepo;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 @Service
 public class CartServiceImpl implements CartService {
 
+    private final CartRepo cartRepo;
     @Autowired
-    private CartRepository cartRepository;
-
-    @Override
-    public List<CartPurchaseItem> listPurchaseItems(Integer userId) {
-        return cartRepository.findPurchaseItem(userId);
+    public CartServiceImpl(SqlSession sqlSession) {
+        cartRepo = sqlSession.getMapper(CartRepo.class);
     }
 
     @Override
-    public int deleteitem(Integer[] delitem) {
-        List<Integer> ids = Arrays.asList(delitem);
-        int result = cartRepository.deletePurchaseItems(ids);
-        return result;
+    public List<Cart> listUserItems(Integer userId) {
+        return cartRepo.findUserCart(userId);
     }
 
     @Override
-    public List<CartPurchaseItem> selectitem(Integer[] selectitem){
-        List<Integer> ids = Arrays.asList(selectitem);
-        List<CartPurchaseItem> cartPurchaseItems = cartRepository.selectPurchaseItems(ids);
-        return cartPurchaseItems;
+    public List<Cart> selectItems(Integer[] selectitem) {
+
+        List<Cart> itemList = cartRepo.getItemList(selectitem);
+        return itemList;
     }
 
+    @Override
+    public Cart getByUserIdGoodsId(int userId, String goodsId) {
+        return cartRepo.getItem(userId, goodsId);
+    }
+
+    @Override
+    public int deleteItems(Integer[] delitem) {
+        return cartRepo.deleteItemList(delitem);
+    }
+
+    @Override
+    public int insert(Cart cart) {
+        return cartRepo.insert(cart);
+    }
 }

@@ -1,9 +1,9 @@
 package com.lec.spring.domain.shop;
 
+import com.lec.spring.dto.OrderGoods;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 @Data
 @Builder
 public class Goods {
@@ -13,8 +13,6 @@ public class Goods {
     private String keywords;
     private String brand_name;
     private String maker;
-    private List<String> option_titles;
-    private List<Opt> option_values;
     private String price;
 
     private String image_1;
@@ -24,4 +22,13 @@ public class Goods {
     private String image_5;
     private String image_6;
     private String contents;
+
+    public OrderGoods orderGoods(){
+        return OrderGoods.builder()
+                .goodsNo(this.goods_no)
+                .name(this.name)
+                .price(this.price)
+                .image(this.image_1)
+                .build();
+    }
 }

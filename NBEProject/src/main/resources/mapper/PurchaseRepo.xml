@@ -1,142 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
-    <insert id="insert" parameterType="com.lec.spring.domain.Purchase"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into purchase (user_id, item_id, street_addr, detail_address, phone, request)
-        value (#{userId}, #{purchaseItem}, #{streetAddr}, #{detailAddress}, #{phone}, #{request})
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Purchase" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into  purchase (merchant_id, amount, opt, goods_id, user_id, pay_id)
+        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{payId} )
     </insert>
 
-    <update id="update" flushCache="true">
-        update purchase
-        set street_addr=#{streetAddr},
-            detail_address=#{detailAddress},
-            phone=#{phone},
-            request=#{request}
-        where id=#{id}
-    </update>
-    <select id="selectById" resultType="com.lec.spring.domain.shop.Purchase">
-            select * from purchase
-            where user_id=#{param1}
-            and item_id=#{param2};
-    </select>
-<!--    <resultMap id="goods" type="com.lec.spring.domain.shop.Goods">-->
-<!--        <result property="goods_no" column="goods_no"/>-->
-<!--        <result property="name" column="goods_name"/>-->
-<!--        <result property="price" column="goods_price"/>-->
-<!--        <result property="image_1" column="goods_image_1"/>-->
-<!--    </resultMap>-->
-
-<!--    <resultMap id="purItem" type="com.lec.spring.domain.shop.PurchaseItem">-->
-<!--        <result property="id" column="iId"/>-->
-<!--        <result property="amount" column="amount"/>-->
-<!--        <collection property="goods" resultMap="goods"/>-->
-<!--    </resultMap>-->
-
-<!--    <resultMap id="purchase" type="com.lec.spring.domain.shop.Purchase">-->
-<!--        <result property="id" column="id"/>-->
-<!--        <result property="userId" column="uId"/>-->
-<!--        <result property="regdate" column="reg"/>-->
-<!--        <result property="streetAddress" column="sAddr"/>-->
-<!--        <result property="detailAddress" column="dAddr"/>-->
-<!--        <result property="phone" column="phoneNum"/>-->
-<!--        <result property="request" column="req"/>-->
-<!--        <collection property="purchaseItem" resultMap="purItem"/>-->
-<!--    </resultMap>-->
-<!--    <select id="selectById" resultMap="purchase">-->
-<!--        select-->
-<!--            p.id as "id",-->
-<!--            p.user_id as "uId",-->
-<!--            p.regdate as "reg",-->
-<!--            p.street_addr as "sAddr",-->
-<!--            p.detail_address as "dAddr",-->
-<!--            p.phone as "phoneNum",-->
-<!--            p.request as "req",-->
-<!--            i.id as "iId",-->
-<!--            i.amount as "amount",-->
-<!--            g.goods_no as "goods_no",-->
-<!--            g.name as "goods_name",-->
-<!--            g.price as "goods_price",-->
-<!--            g.image_1 as "goods_image_1"-->
-<!--        from purchase p-->
-<!--                 join purchase_item i on p.purchase_item_id = i.id-->
-<!--                 join goods g on i.goods_id = g.goods_no-->
-<!--        where p.id = #{param2}-->
-<!--          and p.user_id = #{param1}-->
-<!--    </select>-->
-
-
-
-    <select id="cntOrder" resultType="Long">
-        SELECT COUNT(*) FROM purchase
-    </select>
-
-    <select id="cntPurchaseItem" resultType="Long">
-        SELECT COUNT(*) FROM purchase_item
-    </select>
-
-    <!--  유저 이름 검색 기능  -->
-    <select id="username" flushCache="true" resultMap="PurchaseResultMap">
-        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
-               u.id as user_id, u.name AS username,
-               pi.id as item_id, pi.goods_id, pi.amount,
-               g.goods_no as goods_id, g.name AS goods_content
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
-        WHERE u.name LIKE CONCAT('%', #{username}, '%')
-    </select>
-
-    <select id="pagination" resultMap="PurchaseResultMap" parameterType="map">
-        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
-               u.id as user_id, u.name AS username,
-               pi.id as item_id, pi.goods_id, pi.amount,
-               g.goods_no as goods_id, g.name AS goods_content
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
-        LIMIT #{limit} OFFSET #{offset}
-    </select>
-
-    <!--  한승욱 코드  -->
-
-    <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">
-        <id property="id" column="id"/>
-        <result property="user_id" column="user_id"/>
-        <result property="item_id" column="item_id"/>
-        <result property="regdate" column="regdate"/>
-        <result property="street_addr" column="street_addr"/>
-        <result property="detail_address" column="detail_address"/>
-        <result property="phone" column="phone"/>
-        <result property="request" column="request"/>
-
-        <association property="user" javaType="com.lec.spring.domain.User">
-            <id property="id" column="user_id"/>
-            <result property="name" column="username"/>
-        </association>
-
-        <association property="purchaseItem" javaType="com.lec.spring.domain.shop.PurchaseItem">
-            <id property="id" column="item_id"/>
-            <result property="goods_id" column="goods_id"/>
-            <result property="amount" column="amount"/>
-        </association>
-
-        <association property="goods" javaType="com.lec.spring.domain.shop.Goods">
-            <id property="id" column="goods_id"/>
-            <result property="content" column="goods_content"/>
-        </association>
+    <delete id="delete">
+        delete from purchase
+    </delete>
+    <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
+        <result column="p_id" property="id"/>
+        <result column="m_id" property="merchantId"/>
+        <result column="p_id" property="payId"/>
+        <result column="p_amount" property="amount"/>
+        <result column="p_opt" property="opt"/>
+        <collection property="goods" resultMap="mapGoods"/>
+        <collection property="user" resultMap="mapUser"/>
     </resultMap>
 
-    <select id="listOrder" resultMap="PurchaseResultMap">
-        SELECT p.id, p.user_id, p.item_id, p.regdate, p.street_addr, p.detail_address, p.phone, p.request,
-               u.id as user_id, u.name AS username,
-               pi.id as item_id, pi.goods_id, pi.amount,
-               g.goods_no as goods_id, g.name AS goods_content
+    <resultMap id="mapGoods" type="com.lec.spring.dto.OrderGoods">
+        <result column="goodsNo" property="goodsNo"/>
+        <result column="g_name" property="name"/>
+        <result column="g_price" property="price"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <resultMap id="mapUser" type="com.lec.spring.dto.OrderUser">
+        <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_birth" property="birth"/>
+        <result column="u_email" property="email"/>
+        <result column="u_streetAddr" property="streetAddr"/>
+        <result column="u_detailAddr" property="detailAddr"/>
+    </resultMap>
+
+    <sql id="selectPurchase">
+        select
+            p.id "",
+            p.merchant_id "",
+            p.pay_id "",
+            p.amount "",
+            p.opt "",
+            g.goods_no as "goodsNo",
+            g.name as "g_name",
+            g.price as "g_price",
+            g.image_1 as "image",
+            u.username as "u_username",
+            u.name as "u_name",
+            u.phone as "u_phone",
+            u.birth as "u_birth",
+            u.email as "u_email",
+            u.street_address as "u_street_address",
+            u.detail_address as "u_detail_address"
         FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN purchase_item pi ON p.item_id = pi.id
-                 LEFT JOIN goods g ON pi.goods_id = g.goods_no
+                 join goods g
+                      on g.goods_no=p.goods_id
+                 join user u
+                      on p.user_id=u.id
+        WHERE 1=1
+    </sql>
+
+    <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and merchant_id=#{param1}
     </select>
 </mapper>
