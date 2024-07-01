@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/nbe/post/comment")
+@RequestMapping("/post/comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
