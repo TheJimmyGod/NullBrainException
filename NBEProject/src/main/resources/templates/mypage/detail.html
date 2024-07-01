@@ -11,6 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/category.css">
     <link rel="stylesheet" th:href="@{/css/JimmyCss.css}">
     <title>마이페이지</title>
 </head>
@@ -19,6 +21,9 @@
 <div class="p-5 text-left">
     <a th:onclick="Back()" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
 </div>
+<div class="container">
+    <div th:replace="~{/cho/prod/header :: head}"></div>
+    <div th:replace="~{/cho/prod/category :: category}"></div>
     <div class="container w-75 p-5">
         <div class="border-0 px-5 col-sm-12">
             <span class="col-12 col-sm-12 parent" th:if="${logged_user}">
@@ -35,65 +40,67 @@
                 </div>
             </span>
             <span class="col-12 col-sm-12 mt-5">
-                &nbsp;&nbsp;<strong class="nanum-gothic-coding-regular" th:if="${logged_user}" th:text="${nickName}" style="font-size: 50px;">닉네임</strong><small th:text="${logged_user.username}"></small><br>
-                <p>&nbsp;&nbsp;<b><a class="nanum-gothic-coding-regular" th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${logged_user}" th:text="'정보 수정'"></a></b></p>
+                &nbsp;&nbsp;<strong th:if="${logged_user}" th:text="${nickName}" style="font-size: 50px;">닉네임</strong><small th:text="${logged_user.username}"></small><br>
+                <p>&nbsp;&nbsp;<b><a th:href="@{/mypage/update}" style="text-decoration: none;" th:if="${logged_user}" th:text="'정보 수정'"></a></b></p>
             </span>
             <br><br>
             <div class="clear"></div>
         </div>
 
-        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:if="${logged_user}" th:text="'로그아웃'"></a></b>
-        <b><a class="text-right nanum-gothic-coding-regular" href="#" style="float: right; text-decoration: none;" th:unless="${logged_user}" th:text=""></a></b>
+        <b><a class="text-right " th:href="@{/user/logout}" style="float: right; text-decoration: none;" th:if="${logged_user}" th:text="'로그아웃'"></a></b>
+        <b><a class="text-right " href="#" style="float: right; text-decoration: none;" th:unless="${logged_user}" th:text=""></a></b>
         <div class="clear"></div>
         <br><br>
         <div class="container commentTable rounded text-center" style="height: 250px;">
             <br><br>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="fas fa-file-invoice-dollar fa-5x"></i><br><br><br>
-                <b class="nanum-gothic-coding-regular">포인트</b>
+                <strong>포인트</strong>
                 <p th:if="${logged_user}" th:text="${logged_user.point}"></p>
                 <p th:unless="${logged_user}" th:text="'0'"></p>
             </span>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="far fa-money-bill-alt fa-5x"></i><br><br><br>
-                <b class="nanum-gothic-coding-regular">쿠폰</b>
+                <strong>쿠폰</strong>
                 <p>0</p>
             </span>
             <span class="col-4 col-sm-4 col-lg-4" style="float:left;">
                 <i class="far fa-file-alt fa-5x"></i><br><br><br>
-                <b class="nanum-gothic-coding-regular">후기</b>
-                <p class="nanum-gothic-coding-regular">0</p>
+                <strong>후기</strong>
+                <p>0</p>
             </span>
             <div class="clear"></div>
         </div>
         <br><br>
         <div class="border-bottom commentTable rounded" style="height: 150px;">
             <br>
-            <b class="p-5 nanum-gothic-coding-regular"><i class="fas fa-shopping-cart fa-2x"></i> 쇼핑 정보</b>
+            <b class="p-5"><i class="fas fa-shopping-cart fa-2x"></i> 쇼핑 정보</b>
             <br>
             <span class="col-6 col-sm-6 text-center">
                 <br>
-                <a href="#" class="ps-5"><b class="nanum-gothic-coding-regular">주문/배송/픽업 조회</b></a>
+                <a href="#" class="ps-5"><b>주문/배송/픽업 조회</b></a>
             </span>
         </div>
         <br>
         <div class="border-bottom commentTable rounded" style="height: auto;">
             <div class="ps-5 pt-4">
-                <p><i class="fas fa-comments-dollar fa-2x"></i><b class="nanum-gothic-coding-regular"> 고객 서비스</b></p><br>
-                <p class="nanum-gothic-coding-regular">궁금한 점 있나요? 언제든지 문의하세요!</p>
-                <p class="nanum-gothic-coding-regular"><i class="far fa-clock fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시</p>
-                <a class="col-sm-4 nanum-gothic-coding-regular" style="text-decoration: none; color: black;"><i class="far fa-comment fa-1x"></i> 1:1 문의 내역 </a>
+                <p><i class="fas fa-comments-dollar fa-2x"></i><b> 고객 서비스</b></p><br>
+                <p>궁금한 점 있나요? 언제든지 문의하세요!</p>
+                <p><i class="far fa-clock fa-1x"></i> <b>상담 시간</b>: 평일 9시-6시</p>
+                <a class="col-sm-4" style="text-decoration: none; color: black;"><i class="far fa-comment fa-1x"></i> 1:1 문의 내역 </a>
                 <br><br>
-                <button type="button" class="btn me-5" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none;" onclick="openPopup()">문의하기</a></button>
+                <button type="button" class="btn me-5" style="float: right; width: 100px;"><a th:id="'btnColor'" style="text-decoration: none;" onclick="openPopup()">문의하기</a></button>
                 <br><br><br>
             </div>
         </div>
     </div>
+</div>
+
     <br><br><br><br><br><br>
 </body>
     <script th:inline="javascript">
         function Back(){
-            history.back();
+            location.href = "/nbe/home";
         }
         let $grade = $("[id*='grade']");
         $(window).on('load',function (){

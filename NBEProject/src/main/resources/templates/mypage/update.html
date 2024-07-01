@@ -11,10 +11,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/category.css">
     <link rel="stylesheet" th:href="@{/css/JimmyCss.css}">
     <title>정보 수정</title>
 </head>
 <body>
+<div class="container">
+    <div th:replace="~{/cho/prod/header :: head}"></div>
+    <div th:replace="~{/cho/prod/category :: category}"></div>
     <div class="container border rounded">
         <div class="p-5 text-left">
             <a th:onclick="Back()" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
@@ -26,7 +31,7 @@
                         <tbody>
                         <tr>
                             <td class="col-4 col-sm-4 col-lg-4 ml-3" style="width: 16.66%">
-                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 nanum-gothic-coding-regular" style="height: 200px;">
+                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 " style="height: 200px;">
                                     사용자 정보
                                 </p>
                             </td>
@@ -41,19 +46,19 @@
                                     </span>
                                     <br><br><br>
                                     <span>
-                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'nickname'"><b class="nanum-gothic-coding-regular">닉네임: </b></label> <input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'nickname'" type="text" style="float: right; width: 200px;" th:placeholder="'닉네임을 입력해주세요.'" th:value="${nickName}"><br>
+                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'nickname'"><b>닉네임: </b></label> <input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'nickname'" type="text" style="float: right; width: 200px;" th:placeholder="'닉네임을 입력해주세요.'" th:value="${nickName}"><br>
                                     <br>
-                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'phone'"><b class="nanum-gothic-coding-regular">전화번호: </b></label><input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'phoneNum'" type="text" style="float: right; width: 200px;" th:placeholder="'전화번호를 입력해주세요.'" th:value="${phone}">
+                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'phone'"><b>전화번호: </b></label><input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'phoneNum'" type="text" style="float: right; width: 200px;" th:placeholder="'전화번호를 입력해주세요.'" th:value="${phone}">
                                     </span>
                                 </div>
                                 <br>
-                                <label class="input-file-button ms-4 col-lg-12 nanum-gothic-coding-regular" th:for="'file'">사진변경</label>
+                                <label class="input-file-button ms-4 col-lg-12 " th:for="'file'">사진변경</label>
                                 <input type="file" class="ms-5" th:id="'file'" th:name="'file'" style="display: none;" accept="image/jpeg, image/png, image/jpg" th:onchange="'loadImage(this)'"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-8 col-sm-8 ml-3" style="width: 16.66%">
-                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 nanum-gothic-coding-regular" style="height: 250px;">
+                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 " style="height: 250px;">
                                     배송지 관리
                                 </p>
                             </td>
@@ -69,14 +74,15 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn" th:id="'addAddress'" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none">주소추가</a></button>
+                    <button type="button" class="btn" th:id="'addAddress'" style="float: right; width: 100px;"><a th:id="'btnColor'" style="text-decoration: none">주소추가</a></button>
                     <br>
                     <br>
-                    <button type="button" class="btn" th:id="'submitUpdate'" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none">변경완료</a></button>
+                    <button type="button" class="btn" th:id="'submitUpdate'" style="float: right; width: 100px;"><a th:id="'btnColor'" style="text-decoration: none">변경완료</a></button>
                 </div>
             </div>
         </form>
     </div>
+</div>
     <br><br>
     <br><br>
     <br><br>
