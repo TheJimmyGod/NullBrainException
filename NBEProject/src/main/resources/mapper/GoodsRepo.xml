@@ -24,8 +24,6 @@
         and c.category2=#{param2}
     </select>
 
-    
-
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Goods">
         insert into goods (goods_no, category_code, name, keywords, brand_name, maker, price, image_1, image_2, image_3, image_4, image_5, image_6, contents)
         value (#{goods_no}, #{category_code}, #{name}, #{keywords}, #{brand_name}, #{maker}, #{price}, #{image_1}, #{image_2}, #{image_3}, #{image_4}, #{image_5}, #{image_6},

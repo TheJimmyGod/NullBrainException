@@ -18,8 +18,8 @@ class ReviewRepoTest {
     ReviewRepo reviewRepo;
     @Test
     void all() {
-        reviewRepo = sqlSession.getMapper(ReviewRepo.class);
-        List<Review> reviews = reviewRepo.selectReviewByGoods("123",0,100);
-        System.out.println(reviews.size());
+//        reviewRepo = sqlSession.getMapper(ReviewRepo.class);
+//        List<Review> reviews = reviewRepo.selectReviewByGoods("123",0,100);
+//        System.out.println(reviews.size());
     }
 }

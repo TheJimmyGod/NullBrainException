@@ -1,6 +1,6 @@
 package com.lec.spring.repository;
 
-import com.lec.spring.domain.Purchase;
+import com.lec.spring.domain.shop.Purchase;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 

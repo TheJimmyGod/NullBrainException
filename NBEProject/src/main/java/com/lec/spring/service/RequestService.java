@@ -1,6 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Purchase;
+import com.lec.spring.domain.shop.Purchase;
 
 import java.util.List;
 

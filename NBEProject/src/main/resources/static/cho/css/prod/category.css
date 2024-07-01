@@ -1,0 +1,43 @@
+
+/*.category {*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px;*/
+/*    background-color: #f8f9fa;*/
+/*}*/
+
+
+.btn {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
+    padding: 10px;
+    margin-top: 5px;
+    border-top: 1px solid #ccc;
+    background-color: #e9ecef;
+}
+
+.category2-man .item,
+.category2-woman .item {
+    padding: 5px;
+    margin: 2px;
+    background-color: white;
+    border: 1px solid #ddd;
+}

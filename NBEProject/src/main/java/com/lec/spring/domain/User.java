@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Authority;
+import com.lec.spring.dto.OrderUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class User {
     private String grade;
     private Integer total_price;
     private Integer point;
+    private String streetAddr;
+    private String detailAddr;
 
     private Address address;
 
@@ -36,4 +39,18 @@ public class User {
 
     // 활성/비활성 상태를 나타내는 필드
     private boolean status = true;
+
+    public OrderUser oderUser(){
+        return OrderUser.builder()
+                .userId(this.id)
+                .username(this.username)
+                .name(this.name)
+                .phone(this.phone)
+                .birth(this.birth)
+                .email(this.email)
+                .streetAddr(this.streetAddr)
+                .detailAddr(this.detailAddr)
+                .build();
+
+    }
 }
