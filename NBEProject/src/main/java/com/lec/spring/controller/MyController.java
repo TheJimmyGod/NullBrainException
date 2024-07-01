@@ -8,6 +8,7 @@ import com.lec.spring.service.ContactImageService;
 import com.lec.spring.service.ContactService;
 import com.lec.spring.service.MyService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -25,10 +26,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/mypage")
+@RequestMapping("/nbe/mypage")
 public class MyController {
-    @Autowired
-    private ProfileValidator profileValidator;
     @Autowired
     private MyService myService;
 
@@ -74,7 +73,7 @@ public class MyController {
         try {
             addresses = objectMapper.readValue(addressesJson, Address[].class); // JSON 문자열을 Address 배열로 변환
         } catch (JsonProcessingException e) {
-            return "redirect:/mypage/update";
+            return "redirect:/nbe/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
         model.addAttribute("result", myService.updateProfile(profile));
@@ -91,22 +90,20 @@ public class MyController {
 
     @RequestMapping("/contact")
     public String contact(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = userService.findByUsername(username);
-        String userName = user.getUsername();
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
 
         List<Contact> contact = contactService.allContacts();
 
         model.addAttribute("contact", contact);
-        model.addAttribute("username", userName);
+        model.addAttribute("username", user.getUsername());
 
-        return "/mypage/contact";
+        return "/nbe/mypage/contact";
     }
 
-    @RequestMapping("/contactOk")
+    @PostMapping("/contactOk")
     public String contactOk(
-                            @RequestParam(value = "goods_id", required = false) int goods_id,
+                            @RequestParam(value = "goods_id", required = false) Integer goods_id,
                             @RequestParam("title") String title,
                             @RequestParam("type") String type,
                             @RequestParam("content") String content,
@@ -114,15 +111,13 @@ public class MyController {
                             @RequestParam("file2") MultipartFile file2
     ) throws IOException {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = userService.findByUsername(username);
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
         int userId = user.getId();
-
 
         Contact contact = Contact.builder()
                 .user_id(userId)
-                .goods_id(100073)
+                .goods_id((goods_id == null) ? 100073 : goods_id)
                 .title(title)
                 .type(type)
                 .content(content)
@@ -133,7 +128,7 @@ public class MyController {
         saveFile(contact.getId(), file1);
         saveFile(contact.getId(), file2);
 
-        return "redirect:/mypage/contact";
+        return "/nbe/mypage/contactOk";
     }
 
     private void saveFile(int contactId, MultipartFile file) {
@@ -166,21 +161,4 @@ public class MyController {
             }
         }
     }
-
-
-
-
-
-
-
-//    @GetMapping("/createReview")
-//    public void createReview(Model model){
-//        Item testItem = new Item();
-//        testItem.setName("옷");
-//
-//        model.addAttribute("Goods", testItem);
-//        model.addAttribute("GoodsCount", 1);
-//        model.addAttribute("GoodsSize", "XL");
-//        model.addAttribute("GoodsColor", "Red");
-//    }
 }

@@ -17,7 +17,7 @@
 <body>
     <div class="container border rounded">
         <div class="p-5 text-left">
-            <a th:href="@{/post/list(page=${session.page})}" class="col-lg-1 col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
+            <a th:href="@{/nbe/post/list(page=${session.page})}" class="col-lg-1 col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
             <img class="col-lg-1 col-1 col-sm-1" style="width: 50px; height: 50px;" th:if="${post.user.profileimage}" th:src="@{'/upload/' + ${post.user.profileimage}}" th:alt="'none'"/>
             <i class="col-lg-1 col-1 col-sm-1 fas fa-user-circle fa-3x" th:unless="${post.user.profileimage}"></i>
             <b class="col-lg-1 col-1 col-sm-1" th:text="${post.user.name}"></b>
