@@ -6,7 +6,7 @@ $(function(){
     //alert($(this).val());  // 확인용
     $("[name='frmPageRows']").attr({
       "method": "POST",
-      "action": "/post/pageRows",
+      "action": "/nbe/post/pageRows",
     }).submit();
 
   });
@@ -32,7 +32,7 @@ $(document).ready(function (){
       let $func=$(this);
 
       $.ajax({
-        url: '/post/list/'+ $postID,
+        url: '/nbe/post/list/'+ $postID,
         type: "POST",
         data: data,
         cache: false,

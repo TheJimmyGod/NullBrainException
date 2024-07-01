@@ -7,14 +7,14 @@
         INSERT INTO contact_image(contact_id, file_name)
         VALUES
         <foreach collection="list" item="e" separator=",">
-            (#{param2}, #{e.filename})
+            (#{e.contact_id}, #{e.filename})
         </foreach>
     </insert>
 
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.shop.ContactImage">
         INSERT INTO contact_image(contact_id, filen_ame)
-        VALUES (#{file_name}, #{param2})
+        VALUES (#{contact_id},#{file_name})
     </insert>
 
     <sql id="SELECTFILE">

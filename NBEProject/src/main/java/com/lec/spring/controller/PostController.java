@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/nbe/post")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -60,7 +60,7 @@ public class PostController {
             for(FieldError err : errList){
                 redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
             }
-            return "redirect:/post/write";
+            return "redirect:/nbe/post/write";
         }
 
         imageFileValidator.validate(files, filesResult);
@@ -73,16 +73,15 @@ public class PostController {
             for(FieldError err : errList){
                 redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
             }
-            return "redirect:/post/write";
+            return "redirect:/nbe/post/write";
         }
 
         model.addAttribute("result", postService.write(post, files));
-        return "post/writeOk";
+        return "/nbe/post/writeOk";
     }
     @GetMapping("/list")
     public void list(@RequestParam(name = "page", required = false) Integer page, Model model){
         postService.list(page, model);
-        //model.addAttribute("list", postService.list());
     }
 
     @GetMapping("/update/{id}")
@@ -106,7 +105,7 @@ public class PostController {
             for(FieldError err : errList){
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
-            return "redirect:/post/update/" + post.getId();
+            return "redirect:/nbe/post/update/" + post.getId();
         }
 
         model.addAttribute("result", postService.update(post, files, delfile));
@@ -123,18 +122,18 @@ public class PostController {
     @ResponseBody
     public String likePost(@PathVariable Integer post_id, @RequestParam Integer user_id) {
         likeService.likePost(post_id, user_id);
-        return "redirect:/post/list";
+        return "redirect:/nbe/post/list";
     }
     @GetMapping("/comment/{post_id}")
     public String commentDetail(@PathVariable Integer post_id, Model model){
         Post post = postService.detail(post_id);
         model.addAttribute("post", post);
-        return "post/comment";
+        return "/nbe/post/comment";
     }
 
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows",pageRows);
-        return "redirect:/post/list?page=" + page;
+        return "redirect:/nbe/post/list?page=" + page;
     }
 }
