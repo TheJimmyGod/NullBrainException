@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<a th:href="@{'/post/write'}" class="col-1 col-sm-1" style="bottom: 20%; right: 5%; position: fixed; text-decoration: none; color: lightpink;"><i class="fas fa-images fa-4x"></i></a>
+<a th:href="@{'/nbe/post/write'}" class="col-1 col-sm-1" style="bottom: 20%; right: 5%; position: fixed; text-decoration: none; color: lightpink;"><i class="fas fa-images fa-4x"></i></a>
     <div class="container">
         <div class="p-5 text-left">
             <a th:onclick="Back()" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
@@ -50,7 +50,7 @@
                 <br>
                 <div>
                     <button th:data-post-id="${post.id}" th:id="${'like-' + post.id}" class="col-1 col-sm-1" style="text-decoration: none; color: black; border: none; background-color: white; outline: none; box-shadow: none; width: 32px;"><i id="heart" class="far fa-heart fa-2x"></i></button>
-                    &nbsp;<a th:href="@{'/post/comment/' + ${post.id}}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="far fa-comment-dots fa-2x"></i></a>
+                    &nbsp;<a th:href="@{'/nbe/post/comment/' + ${post.id}}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="far fa-comment-dots fa-2x"></i></a>
                 </div>
                 <br><br><br>
             </tr>
@@ -59,7 +59,7 @@
 
     </div>
     <!-- pagination -->
-    <th:block th:insert="~{post/listPagination::pagination}"></th:block>
+    <th:block th:insert="~{nbe/post/listPagination::pagination}"></th:block>
     <!-- pagination -->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
