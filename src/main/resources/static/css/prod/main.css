@@ -1,0 +1,81 @@
+/* 모바일 우선 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.shop-now {
+    background-color: #a0522d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.images {
+    display: flex;
+    flex-direction: row;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+}
+
+.image button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* 태블릿 이상 화면 스타일 */
+@media (min-width: 600px) {
+    .images {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .image {
+        width: 48%;
+    }
+}
+
+/* 데스크탑 이상 화면 스타일 */
+@media (min-width: 1024px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    .shop-now {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+
+    .image button {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+}

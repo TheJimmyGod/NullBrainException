@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 80%;
+    margin: auto; /* Center the content */
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 5px 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+}
+
+.icons img {
+    width: 20px;
+    margin-left: 10px;
+}
+
+main {
+    padding: 20px;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-item {
+    flex: 0 1 calc(33.333% - 20px);
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-info {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.product-info .tag {
+    display: inline-block;
+    padding: 2px 4px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.product-info .tag.new {
+    background-color: #ff6600;
+}
+
+.product-info .tag.sale {
+    background-color: #ff3300;
+}
+
+.product-info .brand {
+    font-size: 14px;
+    color: #555;
+}
+
+.product-info .name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+}
+
+.product-info .price {
+    font-size: 14px;
+    color: #333;
+}
+
+.product-info .current-price {
+    font-weight: bold;
+    color: #e60012;
+}
+
+.product-info .original-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-left: 5px;
+}
+
+.product-info .discount {
+    color: #e60012;
+    margin-left: 5px;
+}
+
+.product-info .likes {
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+}
+
+/* Tablet view */
+@media (min-width: 600px) {
+    .product-item {
+        flex: 0 1 calc(50% - 20px);
+    }
+}
+
+/* Desktop view */
+@media (min-width: 768px) {
+    nav ul {
+        flex-direction: row;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    .product-item {
+        flex: 0 1 calc(33.333% - 20px);
+    }
+}

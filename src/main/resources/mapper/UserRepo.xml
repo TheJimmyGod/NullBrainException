@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.shop.repository.UserRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.shop.domain.User"
+            useGeneratedKeys="true" keyColumn="true" keyProperty="true">
+        insert into user (username, password, name, phone, birth, email, profileimage, street_address, detail_address)
+        VALUE (#{username}, #{password},#{name},#{phone},#{birth},#{email},#{profileimage},#{street_address},#{detail_address})
+    </insert>
+
+    <select id="selectById" flushCache="true" resultType="com.lec.spring.shop.domain.User">
+        select * from user
+        where id=#{param1}
+    </select>
+</mapper>

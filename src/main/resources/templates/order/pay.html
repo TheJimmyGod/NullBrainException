@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>주문/결제</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/pay.css}">
+    <script src="/js/pay.js" defer></script>
+
+</head>
+<body>
+<h1 class="title">주문/결제</h1><br>
+<div class="container"> <!-- list: ${purchaselist}-->
+    <h1 id="orderProduct" th:text="'주문 상품 총 ' + ${amount} + '개'">주문 상품 총 0개</h1>
+    <i class="fa-sharp fa-solid fa-chevron-down" name="downicon"></i>
+    <i class="fa-sharp fa-solid fa-chevron-up" id="icon" name="upicon" style="display:none;"></i>
+</div>
+<div class="delivery">
+    <!--    <h2 class="delivery-title" th:text="'@@@배송상품 ' + ${count} + '개'">@@@배송상품 1개</h2>-->
+    <div class="delivery-content" th:each="item : ${selectedCartItems}">
+        <div class="row" style="width: 500px;">
+            <div class="col-auto">
+                <img th:src="${item.goodsImage}" class="productImage" alt="Product Image">
+            </div>
+            <div name="productInfo" class="col">
+                <br>
+                <!--                <a id="shopname1" class="productInfo">@@@</a>-->
+                <a class="productInfo1" th:text="${item.goodsName}">상품이름상품이름상품이름상품이름상품이름</a>
+                <a class="productInfo1" th:text="${item.price} + '원 ' + ${item.count} + '개'">12345원 1개</a><br><br>
+
+            </div>
+        </div>
+        <div class="box">그레이/free</div>
+    </div>
+</div><br>
+
+<br><br><hr><br>
+
+<a class="adressInfo">배송지 정보</a>
+<!-- <a href="이동할 위치" >변경하기</a> -->
+<a href="#pop1" class="btn" onclick="openPopup()">변경하기</a>
+<div class="popup" id="pop1">
+    <a href="#a" onclick="closePopup()">닫기</a>
+    <div class="transformChange" id="transformChange">
+        <h1>배송지 변경</h1>
+        <div class="addressInfo" id="address-container">
+            <div class="addressInfo2">
+                <h2 th:text="${username}">이가영 <span style="color: #00f;">(기본배송지)</span></h2>
+                <p>주소주소주소주소주소주소주소주소주소주소주소</p>
+                <p>상세주소상세주소상세주소상세주소</p>
+                <p th:text="${phone}">010-1234-5678</p>
+
+                <button class="btn2 btn-secondary" onclick="showForm('form1')">수정</button>
+                <div id="form1" class="input-form">
+                    <input type="text" placeholder="새 주소를 입력해주세요">
+                    <input type="text" placeholder="새 상세주소를 입력해주세요">
+                    <input type="text" placeholder="새 전화번호를 입력해주세요">
+                    <button class="btn2">저장</button>
+                </div>
+            </div>
+        </div>
+        <div class="addressInfo" id="address-container-template" style="display:none;">
+            <div class="addressInfo2">
+                <h2>이름:</h2>
+                <p>주소를 입력해주세요:<br>
+                    상세주소를 입력해주세요:<br>
+                    전화번호를 입력해주세요:
+                </p>
+                <button class="btn2 btn-secondary" onclick="showForm('form2')">수정</button>
+                <div id="form2" class="input-form">
+                    <input type="text" placeholder="새 이름을 입력해주세요">
+                    <input type="text" placeholder="새 주소를 입력해주세요">
+                    <input type="text" placeholder="새 상세주소를 입력해주세요">
+                    <input type="text" placeholder="새 전화번호를 입력해주세요">
+                    <button class="btn2">저장</button>
+                </div>
+                <button class="btn2 btn-secondary" onclick="deleteAddress(this)">삭제</button>
+            </div>
+        </div>
+    </div>
+    <div class="transformChangeButton">
+        <button class="btn2">배송지 변경 완료</button>
+        <button class="btn2 btn-secondary" onclick="addAddress()">배송지 추가</button>
+    </div>
+</div>
+<div class="dim"></div>
+
+<div id="cutomerInfo">
+    <a th:text="${username} + ' ' + ${phone}">이가영 010-1234-5678</a><br>
+    <a>주소주소주소주소주소주소주소</a><br>
+    <a>상세주소상세주소상세주소상세주소</a><br><br>
+    <select class="minimal">
+        <option disabled selected hidden>배송 시 요청사항을 입력해주세요.</option>
+        <option>부재시 경비실에 맡겨주세요.</option>
+        <option>집앞에 놔주세요</option>
+        <option>배송전에 꼭 연락주세요</option>
+        <option>기타</option>
+    </select>
+</div><br><br>
+<div id="gate">
+    <div id="gate1">
+        <a id="gateway">출입방법</a>
+    </div>
+    <div id="gate2">
+            <span class="password-placeholder"><input type="radio" name="entry" id="passwordRadio">
+            공동현관문:비밀번호를 입력하세요.</span><br>
+        <input type="text" id="passwordField" placeholder="공동현관 비밀번호를 입력하세요">
+        <input type="radio" name="entry" id="freeEntryRadio"> 자유 출입가능
+    </div>
+</div>
+
+<br><br><hr><br>
+<a class="adressInfo">쿠폰/포인트</a><br><br>
+<div id="couponInfo">
+    <a class="coupontext">쿠폰</a><a id="couponad">적용가능 쿠폰 x장&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    <button class="couponbutton">쿠폰 선택</button>
+    <hr class="hrTag">
+    <a class="coupontext">포인트</a><a id="couponad1">0p&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    <button class="couponbutton">모두 사용</button>
+    <hr class="hrTag">
+    <a id="point">잔여 포인트 : x원</a>
+</div>
+<br><br><hr><br>
+<a class="adressInfo">총 결제금액</a>
+<a id="moneysum" th:text="${totalPrice} +'원'">12,345원</a>
+<br><br><hr><br>
+<a class="adressInfo">결제방법</a><br><br><br>
+<div id="payoption">
+    <button id="easyPayButton" class="paybutton">간편결제</button>&nbsp;&nbsp;&nbsp;
+    <button id="cardPayButton" class="paybutton">카드결제</button>
+    <hr width="92%">
+
+    <div id="easyPayOptions" class="pay-options">
+        <input type="radio" name="payradio"><span class="payname">토스페이</span><br>
+        <hr width="92%">
+        <input type="radio" name="payradio"><span class="payname">네이버페이</span><br>
+        <hr width="92%">
+        <input type="radio" name="payradio"><span class="payname">카카오페이</span>
+        <hr width="92%">
+    </div>
+
+    <div id="cardPayOption" class="pay-options" style="display:none;">
+        <input type="radio" name="payradio" id="cardPay"><span class="payname">카드결제</span>
+        <hr width="92%">
+    </div>
+</div>
+
+
+<br><br><br>
+
+<footer>
+    <div class="row" id="legislation">
+        <a href="" class="col">만 14세 이상 이용자</a>
+        <a href="" class="col">개인정보 제공 동의</a>
+        <a href="" class="col">전자결제대행 이용동의</a><br>
+    </div>
+    <div id="agree">
+        <input type="checkbox"> 위 내용을 확인하였으며 결제에 동의합니다.
+    </div><br><br>
+    <div>
+        <button class="agreebutton">결제 진행하기</button>
+    </div>
+</footer>
+
+
+<br>
+<br><br><br><br><br>
+</body>
+</html>

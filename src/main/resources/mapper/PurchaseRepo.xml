@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.shop.repository.PurchaseRepo">
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.shop.domain.Purchase" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into  purchase (merchant_id, amount, opt, goods_id, user_id, pay_id)
+        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{payId} )
+    </insert>
+
+    <delete id="delete">
+        delete from purchase
+    </delete>
+    <resultMap id="mapPurchase" type="com.lec.spring.shop.domain.Cart">
+        <result column="p_id" property="id"/>
+        <result column="m_id" property="merchantId"/>
+        <result column="p_id" property="payId"/>
+        <result column="p_amount" property="amount"/>
+        <result column="p_opt" property="opt"/>
+        <collection property="goods" resultMap="mapGoods"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <resultMap id="mapGoods" type="com.lec.spring.shop.dto.OrderGoods">
+        <result column="goodsNo" property="goodsNo"/>
+        <result column="g_name" property="name"/>
+        <result column="g_price" property="price"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <resultMap id="mapUser" type="com.lec.spring.shop.dto.OrderUser">
+        <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_birth" property="birth"/>
+        <result column="u_email" property="email"/>
+        <result column="u_streetAddr" property="streetAddr"/>
+        <result column="u_detailAddr" property="detailAddr"/>
+    </resultMap>
+
+    <sql id="selectPurchase">
+        select
+            p.id "",
+            p.merchant_id "",
+            p.pay_id "",
+            p.amount "",
+            p.opt "",
+            g.goods_no as "goodsNo",
+            g.name as "g_name",
+            g.price as "g_price",
+            g.image_1 as "image",
+            u.username as "u_username",
+            u.name as "u_name",
+            u.phone as "u_phone",
+            u.birth as "u_birth",
+            u.email as "u_email",
+            u.street_address as "u_street_address",
+            u.detail_address as "u_detail_address"
+        FROM purchase p
+                 join goods g
+                      on g.goods_no=p.goods_id
+                 join user u
+                      on p.user_id=u.id
+        WHERE 1=1
+    </sql>
+
+    <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and merchant_id=#{param1}
+    </select>
+</mapper>

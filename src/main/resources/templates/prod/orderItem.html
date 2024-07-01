@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="order">
+    <div class="current-status" th:each="order : ${itemList}">
+        <div class="prod">
+            <div class="image-container">
+                <img th:src="${order.goods.image}" alt="제품 이미지">
+            </div>
+            <div class="order-info">
+                <div class="status">
+                    <h2 class="info">현재상태</h2>
+                    <p class="info">제품이름</p>
+                    <p class="info">제품가격</p>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button>취소요청</button>
+            <button>배송지변경</button>
+            <button>주문 상세</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
