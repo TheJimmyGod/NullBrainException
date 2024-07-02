@@ -10,6 +10,11 @@
         SELECT COUNT(*) FROM likes
         WHERE user_id = #{user_id} AND post_id = #{post_id}
     </select>
+    <select id="selectAllLikesCount" resultType="java.util.Map">
+        SELECT post_id, COUNT(*) AS likeCount
+        FROM likes
+        GROUP BY post_id
+    </select>
     <delete id="deleteLike" parameterType="map">
         DELETE FROM likes
         WHERE user_id = #{user_id} AND post_id = #{post_id}
