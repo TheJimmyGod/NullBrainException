@@ -6,10 +6,9 @@
         value (#{param1}, #{param2})
     </insert>
 
-    <select id="selectOne" flushCache="true">
+    <select id="count" flushCache="true">
         select count(*) from recent_item
         where user_id=#{param1}
-        and goods_no=#{param2}
     </select>
 
 
@@ -17,7 +16,8 @@
         select * from recent_item
         where user_id=#{param1}
         order by regdate DESC
-        limit 100
+        limit #{param2}, #{param3}
+
         ;
     </select>
 
