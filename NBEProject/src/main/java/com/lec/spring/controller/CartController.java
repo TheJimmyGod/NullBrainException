@@ -45,4 +45,30 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/cart/buy")
+    public ResponseEntity<Integer> buy(@RequestBody Cart cart){
+        try{
+
+            if(cartService.getByUserIdGoodsId(cart.getUser().getUserId()
+                    , cart.getGoods().getGoodsNo()) != null){
+                System.out.println("이미 존재하는 제품입니다.");
+                return ResponseEntity.ok((cartService
+                        .getByUserIdGoodsId(cart.getUser().getUserId(), cart.getGoods().getGoodsNo()).getId()));
+            }
+            Cart item = Cart.builder()
+                    .user(cart.getUser())
+                    .opt(cart.getOpt())
+                    .amount(cart.getAmount())
+                    .goods(cart.getGoods())
+                    .build();
+
+            cartService.insert(item);
+            return ResponseEntity.ok(item.getId());
+
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

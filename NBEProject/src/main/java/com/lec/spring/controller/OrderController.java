@@ -40,7 +40,9 @@ public class OrderController {
 
 
     @GetMapping("/cart")
-    public String cart(@RequestParam("userId") Integer userId, Model model) {
+    public String cart(@RequestParam("userId") Integer userId
+            ,@RequestParam(required = false) Integer cartId
+            , Model model) {
         List<Cart> cartList = cartService.listUserItems(userId);
         int totalPrice = 0;
 
@@ -49,6 +51,7 @@ public class OrderController {
         }
 
         model.addAttribute("cartItem", cartList);
+        model.addAttribute("purchase", cartId);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("userId", userId);
 

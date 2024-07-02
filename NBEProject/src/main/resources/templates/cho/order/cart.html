@@ -54,7 +54,7 @@
 </div>
 
 <div class="cart-item" th:each="item : ${cartItem}" th:data-id="${item.id}">
-    <input type="checkbox" name="chk" class="checkbox" th:value="${item.id}" style="margin-right: 20px;">&nbsp;&nbsp;
+    <input type="checkbox" name="chk" class="checkbox" th:value="${item.id}"  th:checked="${item.id == purchase}" style="margin-right: 20px;">&nbsp;&nbsp;
     <img th:src="${item.goods.getImage()}" alt="item image">
     <div class="cart-item-details">
         <div th:text="${item.goods.goodsNo}">상품명</div>

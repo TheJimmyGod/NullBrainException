@@ -23,17 +23,14 @@ $(document).ready(function() {
     });
     // 수량 옵션 end
 
-    // 구매, 장바구니 정보 전송
-    $('.buy-now').click(function(){
-        $('.order_frm').submit()
-    });
+
     // 장바구니 모달창
     var modal = $(".cont");
     var shop = $(".shopping");
     var cart = $(".carting");
 
     shop.click(function (){
-        modal.toggleClass('show');
+        modal.removeClass('show');
     })
 
     cart.click(function (){
@@ -79,8 +76,7 @@ $(document).ready(function() {
                     $('.exist').toggleClass('show');
                 }
             },
-        });
-
+        })
 
     });
 
@@ -110,19 +106,13 @@ $(document).ready(function() {
             user:   user,
         }
         $.ajax({
-            type: 'GET',
-            url: '/cart/plus',
+            type: 'POST',
+            url: '/cart/buy',
             data: JSON.stringify(data),
             dataType: "text",
             contentType: 'application/json',
             success: function(data, status) {
-                if(status == "success" && data == "goCart"){
-                    $('.add').toggleClass('show');
-                }
-
-                if(status == "success" && data == "exist"){
-                    $('.exist').toggleClass('show');
-                }
+                (status == "success") && (location.href=`/cart?userId=${user.userId}&cartId=${data}`);
             },
         });
 
