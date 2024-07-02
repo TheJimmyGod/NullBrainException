@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class Purchase {
     private Integer id;
     private String merchantId;
+    private LocalDateTime regdate;
     // Pay 참조키
     private Integer payId;
     private Integer amount;

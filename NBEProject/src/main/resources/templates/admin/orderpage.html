@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <title>주문 관리 페이지</title>
     <link rel="stylesheet" th:href="@{/css/orderpage.css}">
 </head>
@@ -16,7 +13,7 @@
     </div>
     <div class="header-right">
         <span>관리자</span>
-        <span>eces92@gmail.com</span>
+        <span>ADMIN</span>
         <a href="/logout">로그아웃</a>
     </div>
 </div>
@@ -38,13 +35,12 @@
         <table>
             <thead>
             <tr>
-                <th><input type="checkbox" id="select-all"></th>
-                <th>주문번호</th>
-                <th>고객 이름</th>
-                <th>휴대 번호</th>
+                <th>주문 번호</th>
+                <th>회원 ID</th>
+                <th>전화 번호</th>
                 <th>주문 일시</th>
                 <th>상품명</th>
-                <th>상품 가격</th>
+                <th>상품 총 가격</th>
                 <th>구매 수량</th>
                 <th>상태</th>
                 <th>상태 변경</th>
@@ -52,23 +48,33 @@
             </thead>
             <tbody>
             <tr th:each="order : ${orderList}">
-                <td><input type="checkbox" class="order-checkbox"></td>
-                <td th:text="${order.id}">1</td>
-                <td th:text="${order.user.name}">홍길동</td>
-                <td th:text="${order.phone}"></td>
-                <td th:text="${#temporals.format(order.regdate, 'yyyy/MM/dd HH:mm:ss')}">2024/06/05</td>
-                <td th:text="${order.goods.content}">셔츠</td>
-                <td th:text="${order.purchaseItem.amount}">30,000</td>
-                <td th:text="${order.item_id}"></td>
+                <td th:text="${order.pay.id}">1</td>
+                <td th:text="${order.users.username}">홍길동</td>
+                <td th:text="${order.users.phone}">010-1234-5678</td>
+                <td th:text="${#temporals.format(order.regdate)}"></td>
+                <td th:text="${order.good.name}">셔츠</td>
+                <td th:text="${order.totalPrice}">30,000</td>
+                <td th:text="${order.amount}"></td>
                 <td>
-                    <select class="status-select">
-                        <option>결제 완료</option>
-                        <option>상품 준비</option>
-                        <option>배송 중</option>
-                        <option>배송 완료</option>
-                    </select>
+                    <span th:switch="${order.pay.status.name()}">
+                        <span th:case="'OK'">결제 완료</span>
+                        <span th:case="'READY'">결제 대기</span>
+                        <span th:case="'CANCEL'">결제 취소</span>
+                        <span th:case="*">알 수 없음</span>
+                    </span>
                 </td>
-                <td><button class="apply-button">적용</button></td>
+
+                <td>
+                    <form th:action="@{/admin/updatePayStatus}" method="post">
+                        <input type="hidden" name="purchaseId" th:value="${order.pay.id}">
+                        <select name="status" class="status-select">
+                            <option value="OK" th:selected="${order.pay.status.name() == 'OK'}">결제 완료</option>
+                            <option value="READY" th:selected="${order.pay.status.name() == 'READY'}">결제 대기</option>
+                            <option value="CANCEL" th:selected="${order.pay.status.name() == 'CANCEL'}">결제 취소</option>
+                        </select>
+                        <button class="apply-button" type="submit">적용</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

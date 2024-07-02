@@ -103,5 +103,13 @@
         WHERE status = #{status} AND type = #{type}
     </select>
 
+    <select id="countProductInquiries" resultType="Long">
+        SELECT COUNT(*) FROM contact WHERE type = '상품문의'
+    </select>
+
+    <select id="countProductAndType" resultType="Long">
+        SELECT COUNT(*) FROM contact WHERE type = '상품문의' AND status = '답변 대기'
+    </select>
+
 
 </mapper>
