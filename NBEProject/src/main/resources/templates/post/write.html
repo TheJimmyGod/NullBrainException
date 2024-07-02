@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,13 +17,13 @@
 <body style="margin-bottom: 200px">
 <!--<div class="container mt-3" th:with="user=${#authentication.getPrincipal().getUser()}">-->
 <div class="p-5 text-left">
-    <a th:href="@{/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
+    <a th:href="@{/templates/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
 </div>
 <div class="container mt-3">
     <form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
         <div class="my-3">
             <label>작성자:</label>
-            <span class="form-control" >Tommy</span>
+            <span class="form-control" >[[${logged_user.name}]]</span>
         </div>
         <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
 
@@ -50,4 +50,5 @@
 </body>
 
 <script th:src="@{/js/writeCode.js}" type="text/javascript"></script>
+</th:block>
 </html>

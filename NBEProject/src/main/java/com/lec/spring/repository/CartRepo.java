@@ -1,0 +1,22 @@
+package com.lec.spring.repository;
+
+
+
+
+import com.lec.spring.domain.shop.Cart;
+
+import java.util.List;
+
+public interface CartRepo {
+    // 옵션과 결합된 아이템
+    int insert(Cart cart);
+    List<Cart> findUserCart(int userId);
+
+    List<Cart> getItemList(Integer[] ids);
+    Cart getItem(int userId, String goodsNo);
+
+    int deleteItemList(Integer[] ids);
+
+    int deleteItem(int id);
+
+}

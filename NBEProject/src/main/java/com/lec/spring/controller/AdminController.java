@@ -10,6 +10,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +51,8 @@ public class AdminController {
 
     // 관리자 메인 페이지
     @RequestMapping("/main")
-    public String adminpage(Model model){
+    public String adminpage(
+            Model model){
         System.out.println("main 페이지 들어옴");
 
 
@@ -57,13 +61,20 @@ public class AdminController {
         Long countUnAnswer = contactService.countUnAnswer();
         Long cancel = contactService.cancelOrder();
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = null;
+        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            username = userDetails.getUsername();
+        }
+      User user = userService.findByUsername(username);
+
 
         // 우측 상단 유저의 닉네임 표시(임시)
-        String username = "테스트용ID";
 
         model.addAttribute("userCnt", userCnt);
         model.addAttribute("cntcontact", countAll);
-        model.addAttribute("username", username);
+        model.addAttribute("user", user);
         model.addAttribute("cntunanswer", countUnAnswer);
         model.addAttribute("cancel", cancel);
 
@@ -72,39 +83,39 @@ public class AdminController {
     }
 
     // 주문 관리 페이지
-    @RequestMapping("/orderpage")
-    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "username", required = false) String username
-                            ,Model model){
-       Long orderCnt = purchaseService.orderCnt();
-       List<Purchase> orderList;
-
-        int limit = 10;
-        int offset = (page - 1) * limit;
-
-        if (username != null && !username.isEmpty()) {
-            orderList = purchaseService.orderUsername(username);
-            orderCnt = (long) orderList.size();
-        } else {
-            orderList = purchaseService.pagination(offset,limit);
-            orderCnt = userService.cntUser();
-        }
-
-        int totalPages = (int) Math.ceil((double) orderCnt / limit);
-
-
-       model.addAttribute("orderCnt", orderCnt);
-       model.addAttribute("totalPages", totalPages);
-       model.addAttribute("currentPage", page);
-       model.addAttribute("orderList", orderList);
-
-       if(username != null && !username.isEmpty()){
-           List<Purchase> usernameList = purchaseService.orderUsername(username);
-           model.addAttribute("username", username);
-
-       }
-        return "admin/orderpage";
-    }
+//    @RequestMapping("/orderpage")
+//    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
+//                            @RequestParam(value = "username", required = false) String username
+//                            ,Model model){
+//       Long orderCnt = purchaseService.orderCnt();
+//       List<Purchase> orderList;
+//
+//        int limit = 10;
+//        int offset = (page - 1) * limit;
+//
+//        if (username != null && !username.isEmpty()) {
+//            orderList = purchaseService.orderUsername(username);
+//            orderCnt = (long) orderList.size();
+//        } else {
+//            orderList = purchaseService.pagination(offset,limit);
+//            orderCnt = userService.cntUser();
+//        }
+//
+//        int totalPages = (int) Math.ceil((double) orderCnt / limit);
+//
+//
+//       model.addAttribute("orderCnt", orderCnt);
+//       model.addAttribute("totalPages", totalPages);
+//       model.addAttribute("currentPage", page);
+//       model.addAttribute("orderList", orderList);
+//
+//       if(username != null && !username.isEmpty()){
+//           List<Purchase> usernameList = purchaseService.orderUsername(username);
+//           model.addAttribute("username", username);
+//
+//       }
+//        return "admin/orderpage";
+//    }
 
 
 
@@ -140,8 +151,8 @@ public class AdminController {
         Long userCnt = userService.cntUser();
 
         if (username != null && !username.isEmpty()) {
-//            users = userService.findByUserName(username);
-//            userCnt = (long) users.size();
+            users = userService.findAllName(username);
+            userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
             userCnt = userService.cntUser();
@@ -149,7 +160,7 @@ public class AdminController {
 
         int totalPages = (int) Math.ceil((double) userCnt / limit);
 
-//        model.addAttribute("users", users);
+        model.addAttribute("users", users);
         model.addAttribute("userCnt", userCnt);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
@@ -164,7 +175,7 @@ public class AdminController {
     public String updateStatus(@RequestParam("userId") int userId, @RequestParam("status") boolean status
                                 ,RedirectAttributes redirectAttributes, Model model) {
 
-//        userService.setStatus(userId, status);
+        userService.setStatus(userId, status);
 
         model.addAttribute("status", status);
 
@@ -234,12 +245,102 @@ public class AdminController {
     }
 
 
+    // 취소 문의 페이지
+    @RequestMapping("/cancel")
+    public String cancel(@RequestParam(value = "page", defaultValue = "1") int page,
+                         @RequestParam(value = "username", required = false) String username,
+                         @RequestParam(value = "status", required = false) String status,
+                         @RequestParam(value = "type", required = false, defaultValue = "취소문의") String type,
+                         Model model) {
+
+
+        List<Contact> contacts;
+        Long countAll;
+
+        int limit = 10;
+        int offset = (page - 1) * limit;
+
+        if (username != null && !username.isEmpty()) {
+            contacts = contactService.findContactsByUsername(username);
+            countAll = (long) contacts.size();
+        } else if (status != null && !status.isEmpty()) {
+            contacts = contactService.findContactsByStatusAndType(status, type, offset, limit);
+            countAll = contactService.countContactsByStatusAndType(status, type);
+        } else {
+            contacts = contactService.findContactsByType(type, offset, limit);
+            countAll = contactService.countContactsByType(type);
+        }
+
+        int totalPages = (int) Math.ceil((double) countAll / limit);
+
+        model.addAttribute("contacts", contacts);
+        model.addAttribute("cntcontact", countAll);
+        model.addAttribute("username", username);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("status", status);
+        model.addAttribute("type", type);
+
+
+
+        return "admin/cancel";
+    }
+
+    // 취소 문의 상세보기 페이지
+    @RequestMapping("/cancelDetail")
+    public String cancelDetail(@RequestParam("id") int id, Model model) {
+        Contact contact = contactService.getContactById(id);
+        if (contact != null) {
+            User user = userService.findById(contact.getUser_id());
+            contact.setUser(user);
+            List<ContactImage> images = contactImageService.getImagesByContactId(id);
+            model.addAttribute("images", images);
+        }
+        model.addAttribute("contact", contact);
+        return "admin/cancelDetail";
+    }
+
+    // 취소 처리 버튼 클릭 시
+    @RequestMapping("/cancelProcess")
+    public String cancelProcess(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        Contact contact = contactService.getContactById(id);
+        if (contact != null) {
+            contact.setStatus("취소 완료");
+            contactService.updateanswer(contact);
+            redirectAttributes.addFlashAttribute("message", "취소가 처리되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "취소를 처리할 수 없습니다.");
+        }
+        return "redirect:/admin/cancel";
+    }
+
+    // 취소 거절 버튼 클릭 시
+    @RequestMapping("/cancelReject")
+    public String cancelReject(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        Contact contact = contactService.getContactById(id);
+        if (contact != null) {
+            contact.setStatus("취소 거절");
+            contactService.updateanswer(contact);
+            redirectAttributes.addFlashAttribute("message", "취소가 거절되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "취소를 거절할 수 없습니다.");
+        }
+        return "redirect:/admin/cancel";
+    }
+
+
+
+
+
+
+
     // 문의사항 목록 페이지
     @RequestMapping("/inquirylist")
     public String inquiryList(
             @RequestParam(value = "page" ,defaultValue= "1") int page,
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "type", required = false, defaultValue = "상품문의") String type,
             Model model) {
         List<Contact> contacts;
         Long countAll;
@@ -250,11 +351,11 @@ public class AdminController {
             contacts = contactService.findContactsByUsername(username);
             countAll = (long) contacts.size();
         } else if (status != null && !status.isEmpty()) {
-            contacts = contactService.findContactsByStatus(status, offset, limit);
-            countAll = contactService.countContactsByStatus(status);
+            contacts = contactService.findContactsByStatusAndType(status, type, offset, limit);
+            countAll = contactService.countContactsByStatusAndType(status, type);
         } else {
-            contacts = contactService.findAllContacts(offset, limit);
-            countAll = contactService.countAll();
+            contacts = contactService.findContactsByType(type, offset, limit);
+            countAll = contactService.countContactsByType(type);
         }
 
         int totalPages = (int) Math.ceil((double) countAll / limit);
@@ -342,6 +443,10 @@ public class AdminController {
             throw new RuntimeException("Could not read file: " + filename, e);
         }
     }
+
+
+
+    // 취소 문의 페이지
 
 
 

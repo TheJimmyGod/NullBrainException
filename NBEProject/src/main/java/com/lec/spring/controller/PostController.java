@@ -77,12 +77,11 @@ public class PostController {
         }
 
         model.addAttribute("result", postService.write(post, files));
-        return "post/writeOk";
+        return "/post/writeOk";
     }
     @GetMapping("/list")
     public void list(@RequestParam(name = "page", required = false) Integer page, Model model){
         postService.list(page, model);
-        //model.addAttribute("list", postService.list());
     }
 
     @GetMapping("/update/{id}")
@@ -129,7 +128,7 @@ public class PostController {
     public String commentDetail(@PathVariable Integer post_id, Model model){
         Post post = postService.detail(post_id);
         model.addAttribute("post", post);
-        return "post/comment";
+        return "/post/comment";
     }
 
     @PostMapping("/pageRows")

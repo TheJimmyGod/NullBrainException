@@ -1,0 +1,222 @@
+.header{
+    height: 130px;
+    /* border: 4px solid; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu{
+    height: 80px;
+    /* border: 4px solid red; */
+    display: flex;
+    align-items: center;
+    width: 800px;
+    margin-left: 90px;
+}
+
+.logoButton{
+    height: 70px;
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
+    /* padding-top: 0px; */
+    text-decoration: none;
+}
+
+.HOMEButton{
+    border: none;
+    background-color: white;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.container{
+    /* border: 4px solid yellow; */
+    width: 500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.container-1{
+    /* border: 4px solid yellow; */
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.container-1 input#search{
+    width: 300px;
+    height: 50px;
+    /* background: #2b303b; */
+    /* border: none; */
+    font-size: 10pt;
+    float: left;
+    color: #63717f;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.container-1 .icon{
+    position: absolute;
+    left: 20px;
+    color: #4f5b66;
+}
+
+[name="menuIcon"]{
+    font-size: 30px;
+}
+
+.container-2{
+    width: 200px;
+    /* border: 4px solid yellow; */
+    padding-right: 40px;
+    /* 다시 그냥 왼쪽 정렬하기. 아니면 right 사용하기 */
+}
+
+.title-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.title{
+    /* border: 4px solid; */
+    width: 400px;
+    text-align: center;
+}
+
+.select-container{
+    /* border: 4px solid; */
+    height: 50px;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.select-container .left,
+.select-container .right {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    width: 700px;
+    height: 150px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    /* border: 2px solid; */
+    margin: auto;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-price {
+    /* width: 150px;
+    text-align: right; */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-container {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: flex-start;
+    align-items: center;
+    width: 1000px;
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 2px solid #000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.checkout-button {
+    background-color: #5D5D5D;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 450px;
+    width: 180px;
+}
+
+.totalPay{
+    padding-left: 20px;
+    font-size: 30px;
+}
+
+[name="deleteButton"]{
+    border: none;
+    font-weight: bold;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.fakeRadio {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    margin-right: 5px;
+    position: relative;
+}
+
+.fakeRadio:checked::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+
+#checkAll {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    margin-right: 5px;
+    position: relative;
+}
+
+#checkAll:checked::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:with="logged_user=2">
-    <!--<th:block th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +11,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/category.css">
     <link rel="stylesheet" th:href="@{/css/JimmyCss.css}">
     <title>정보 수정</title>
 </head>
 <body>
+<div class="container">
+    <div th:replace="~{/cho/prod/header :: head}"></div>
+    <div th:replace="~{/cho/prod/category :: category}"></div>
     <div class="container border rounded">
         <div class="p-5 text-left">
             <a th:onclick="Back()" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
@@ -27,34 +31,34 @@
                         <tbody>
                         <tr>
                             <td class="col-4 col-sm-4 col-lg-4 ml-3" style="width: 16.66%">
-                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 nanum-gothic-coding-regular" style="height: 200px;">
+                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 " style="height: 200px;">
                                     사용자 정보
                                 </p>
                             </td>
                             <td class="col-8 col-sm-8 col-lg-8 rounded commentTable" style="width: 150px; height: 150px;">
                                 <div>
-                                    <span th:if="${user}" th:id="'profile'" >
-                                        <img class="ms-4 mt-3 col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="width: 120px; height: 120px; float: left; margin-right: 10%" th:if="${user.profileimage}" th:src="@{'/upload/' + ${user.profileimage}}" th:alt="'none'"/>
-                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="color: lightgray; float: left;" th:unless="${user.profileimage}"></i>
+                                    <span th:if="${logged_user}" th:id="'profile'" >
+                                        <img class="ms-4 mt-3 col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="width: 120px; height: 120px; float: left; margin-right: 10%" th:if="${currentPic}" th:src="@{'/upload/' + ${currentPic}}" th:alt="'none'"/>
+                                        <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="color: lightgray; float: left;" th:unless="${currentPic}"></i>
                                     </span>
-                                    <span th:unless="${user}" th:id="'profile'">
+                                    <span th:unless="${logged_user}" th:id="'profile'">
                                         <i class="ms-4 mt-3 fas fa-user-circle fa-8x col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="color: lightgray; float: left;" ></i>
                                     </span>
                                     <br><br><br>
                                     <span>
-                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'nickname'"><b class="nanum-gothic-coding-regular">닉네임: </b></label> <input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'nickname'" type="text" style="float: right; width: 200px;" th:placeholder="'닉네임을 입력해주세요.'" th:value="${user.name}"><br>
+                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'nickname'"><b>닉네임: </b></label> <input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'nickname'" type="text" style="float: right; width: 200px;" th:placeholder="'닉네임을 입력해주세요.'" th:value="${nickName}"><br>
                                     <br>
-                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'phone'"><b class="nanum-gothic-coding-regular">전화번호: </b></label><input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'phoneNum'" type="text" style="float: right; width: 200px;" th:placeholder="'전화번호를 입력해주세요.'" th:value="${user.phone}">
+                                        <label class="col-lg-2 col-sm-2 col-2" th:for="'phone'"><b>전화번호: </b></label><input class="col-lg-4 col-sm-4 col-4 me-5" th:id="'phoneNum'" type="text" style="float: right; width: 200px;" th:placeholder="'전화번호를 입력해주세요.'" th:value="${phone}">
                                     </span>
                                 </div>
                                 <br>
-                                <label class="input-file-button ms-4 col-lg-12 nanum-gothic-coding-regular" th:for="'file'">사진변경</label>
+                                <label class="input-file-button ms-4 col-lg-12 " th:for="'file'">사진변경</label>
                                 <input type="file" class="ms-5" th:id="'file'" th:name="'file'" style="display: none;" accept="image/jpeg, image/png, image/jpg" th:onchange="'loadImage(this)'"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-8 col-sm-8 ml-3" style="width: 16.66%">
-                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 nanum-gothic-coding-regular" style="height: 250px;">
+                                <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 " style="height: 250px;">
                                     배송지 관리
                                 </p>
                             </td>
@@ -70,21 +74,22 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn" th:id="'addAddress'" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none">주소추가</a></button>
+                    <button type="button" class="btn" th:id="'addAddress'" style="float: right; width: 100px;"><a th:id="'btnColor'" style="text-decoration: none">주소추가</a></button>
                     <br>
                     <br>
-                    <button type="button" class="btn" th:id="'submitUpdate'" style="float: right; width: 100px;"><a th:id="'btnColor'" class="nanum-gothic-coding-regular" style="text-decoration: none">변경완료</a></button>
+                    <button type="button" class="btn" th:id="'submitUpdate'" style="float: right; width: 100px;"><a th:id="'btnColor'" style="text-decoration: none">변경완료</a></button>
                 </div>
             </div>
         </form>
     </div>
+</div>
     <br><br>
     <br><br>
     <br><br>
     <br><br>
 </body>
     <script th:inline="javascript">
-        const logged_id = [[${logged_user}]];
+        const logged_user = [[${logged_user}]];
         var addresses = [[${addresses}]];
         function Back(){
             history.back();
@@ -92,12 +97,15 @@
         $(document).ready(function (){
             if(dataArr.length === 0)
             {
+                console.log(logged_user);
+                if(logged_user === null)
+                    return;
                 for(var item of addresses)
                 {
                     let isSame = false;
                     if(item["user_id"] != null)
                     {
-                        if(item["user_id"] !== logged_id)
+                        if(item["user_id"] !== logged_user.id)
                             continue;
                     }
                     console.log(item["isDefault"]);

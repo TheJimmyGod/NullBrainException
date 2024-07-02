@@ -18,6 +18,7 @@ public class Contact {
     private Integer goods_id;
 
     private LocalDateTime regdate;
+    private String type;
     private String title;
     private String content;
     private String status;

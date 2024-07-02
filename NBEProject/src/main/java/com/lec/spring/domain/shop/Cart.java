@@ -1,14 +1,20 @@
 package com.lec.spring.domain.shop;
 
+import com.lec.spring.dto.OrderGoods;
+import com.lec.spring.dto.OrderUser;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cart {
-    private Integer user_id;
-    private Integer item_id;
-    private LocalDateTime regdate;
+    private Integer id;
+    private Integer amount;
+    private String opt;
+    private OrderGoods goods;
+    private OrderUser user;
 }

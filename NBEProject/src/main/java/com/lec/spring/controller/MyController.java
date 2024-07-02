@@ -2,28 +2,47 @@ package com.lec.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lec.spring.domain.shop.Address;
-import com.lec.spring.domain.shop.Item;
-import com.lec.spring.domain.shop.Profile;
-import com.lec.spring.domain.shop.ProfileValidator;
+import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.*;
+import com.lec.spring.service.ContactImageService;
+import com.lec.spring.service.ContactService;
 import com.lec.spring.service.MyService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/mypage")
 public class MyController {
-    @Autowired
-    private ProfileValidator profileValidator;
     @Autowired
     private MyService myService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ContactImageService contactImageService;
+
+    @Autowired
+    private ContactService contactService;
+
+
+    @Value("${app.upload.path}")
+    private String uploadPath;
 
     public MyController() {
         System.out.println("MyController() 생성");
@@ -37,7 +56,7 @@ public class MyController {
 
     @GetMapping("/update")
     public void update(Model model){
-        myService.updateMyPage(model, 2);
+        myService.updateMyPage(model);
     }
 
     @ResponseBody
@@ -57,7 +76,7 @@ public class MyController {
             return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
-        model.addAttribute("result", myService.updateProfile(2, profile));
+        model.addAttribute("result", myService.updateProfile(profile));
         return "mypage/update";
     }
 
@@ -69,14 +88,77 @@ public class MyController {
     public void updateAddress(Model model){
     }
 
-    @GetMapping("/createReview")
-    public void createReview(Model model){
-        Item testItem = new Item();
-        testItem.setName("옷");
+    @RequestMapping("/contact")
+    public String contact(Model model){
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
 
-        model.addAttribute("Goods", testItem);
-        model.addAttribute("GoodsCount", 1);
-        model.addAttribute("GoodsSize", "XL");
-        model.addAttribute("GoodsColor", "Red");
+        List<Contact> contact = contactService.allContacts();
+
+        model.addAttribute("contact", contact);
+        model.addAttribute("username", user.getUsername());
+
+        return "/mypage/contact";
+    }
+
+    @PostMapping("/contactOk")
+    public String contactOk(
+                            @RequestParam(value = "goods_id", required = false) Integer goods_id,
+                            @RequestParam("title") String title,
+                            @RequestParam("type") String type,
+                            @RequestParam("content") String content,
+                            @RequestParam("file1") MultipartFile file1,
+                            @RequestParam("file2") MultipartFile file2
+    ) throws IOException {
+
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
+        int userId = user.getId();
+
+        Contact contact = Contact.builder()
+                .user_id(userId)
+                .goods_id((goods_id == null) ? 100073 : goods_id)
+                .title(title)
+                .type(type)
+                .content(content)
+                .build();
+
+        contactService.addContact(contact);
+
+        saveFile(contact.getId(), file1);
+        saveFile(contact.getId(), file2);
+
+        return "/mypage/contactOk";
+    }
+
+    private void saveFile(int contactId, MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                String originalFilename = file.getOriginalFilename();
+                String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                String uuid = UUID.randomUUID().toString();
+                String savedFilename = uuid + ext;
+
+                // 상대 경로를 절대 경로로 변환
+                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                    System.out.println("Created directories: " + uploadDir.toString());
+                }
+
+                Path targetPath = uploadDir.resolve(savedFilename).normalize();
+                file.transferTo(targetPath.toFile());
+                System.out.println("Saved file to: " + targetPath.toString());
+
+                ContactImage contactImage = ContactImage.builder()
+                        .contact_id(contactId)
+                        .file_name(savedFilename)
+                        .build();
+
+                contactImageService.addImage(contactImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

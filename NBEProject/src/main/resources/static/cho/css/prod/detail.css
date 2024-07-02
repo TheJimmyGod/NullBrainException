@@ -1,0 +1,292 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+.content {
+    min-width: 700px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.product-detail div {
+    white-space: nowrap;
+}
+
+
+main {
+    padding: 20px;
+}
+
+.product-detail {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+
+}
+
+
+.image-gallery {
+    text-align: center;
+}
+
+.image-gallery img {
+    width: 100%;
+    max-width: 400px;
+}
+
+
+
+.product-info {
+    display: flex;
+    flex-direction: column ;
+    padding-top: 20px;
+}
+
+.product-info form{
+    width: 60%;
+}
+.product-info h2 {
+    margin-top: 0;
+    text-align: right;
+}
+
+.product-info .price {
+    color: #007bff;
+    display: flex;
+    font-size: 24px;
+    margin-left: 0;
+}
+
+.product-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.req {
+    display: flex;
+    gap: 5%;
+    padding: 0;
+    margin: 0;
+}
+.option {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+/*.product-info .quantity label {*/
+/*    margin-right: 10px;*/
+/*}*/
+
+.product-info .quantity input {
+    width: 50px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.actions button {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.actions .buy-now {
+    background: #28a745;
+    margin-bottom: 2%;
+}
+
+.actions .wishlist {
+    background: #6c757d;
+}
+
+.reviews {
+    margin-top: 40px;
+}
+
+.reviews h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.review {
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.user-details {
+    color: #777;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating span {
+    color: #ff5e5e;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.review-body {
+    margin-top: 10px;
+}
+
+.review-body p {
+    margin: 10px 0;
+    white-space: pre-wrap;
+}
+
+.review-image {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.detail-image{
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+.detail-image img {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cont{
+    display: none; /* 처음에는 숨겨진 상태로 설정 */
+    position: fixed; /* 화면에 고정되도록 설정 */
+    top: 50%; /* 수직 가운데 정렬을 위해 top을 50%로 설정 */
+    left: 50%; /* 수평 가운데 정렬을 위해 left을 50%로 설정 */
+    transform: translate(-50%, -50%); /* 수직 및 수평 정렬을 위한 변환(transform) */
+    background-color: white; /* 배경색은 필요에 따라 설정 */
+    padding: 20px; /* 내부 여백 설정 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    z-index: 1000; /* 다른 요소 위에 나타나도록 z-index 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
+.cont button
+{
+    margin: 5px; /* 버튼 간격 설정 */
+    padding: 10px 20px; /* 버튼 내부 여백 설정 */
+    cursor: pointer; /* 포인터 커서로 변경 */
+    background-color: #007bff; /* 배경색 설정 */
+    color: white; /* 글자색 설정 */
+    border: none; /* 테두리 없애기 */
+    border-radius: 5px; /* 버튼 모서리를 둥글게 만듦 */
+}
+.cont button:hover
+{
+    background-color: #0056b3; /* 마우스를 올렸을 때 배경색 변경 */
+}
+
+.show {
+    display: block;
+}
+
+/* Desktop view */
+@media (min-width: 768px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    .product-detail {
+        flex-direction: row;
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 20px;
+    }
+    .product-info p {
+        margin-left: auto;
+        margin-bottom: 50%;
+        text-align: left;
+    }
+    .req {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .actions {
+        display: flex;
+
+        flex-direction: row;
+    }
+
+    .actions button {
+        margin-bottom: 0;
+    }
+
+    .actions .buy-now{
+        margin-bottom: 0;
+    }
+
+    .product-info form{
+
+        width: 100%;
+        margin-left: auto;
+    }
+
+    #amount{
+        height: 90%;
+        width: 20%;
+        align-items: center;
+    }
+
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="head">
+    <div class="container-2">
+        <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;&nbsp;
+        <i name="menuIcon" class="fa-solid fa-cart-plus"></i>
+    </div>
+    <header class="header">
+        <div class="logo">
+            <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <div class="menu">
+            <button class="HOMEButton home" onclick="goHome()">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="HOMEButton post">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="HOMEButton" id="recent" onclick="recent()">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="HOMEButton" id="accButton" onclick="category()">ACC</button>
+        </div>
+
+    </header>
+</th:block>
+</html>

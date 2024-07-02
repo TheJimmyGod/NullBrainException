@@ -56,11 +56,11 @@ $(function (){
         for (let dataArrElement of dataArr) {
             if(dataArrElement["isDefault"] === true)
             {
-                isDefault = true;
-                dataArrElement["isDefault"] = 1;
+                console.log(dataArrElement["name"]);
+                isDefault = dataArrElement["isDefault"] = true;
             }
             else
-                dataArrElement["isDefault"] = 0;
+                dataArrElement["isDefault"] = false;
         }
         
         if(isDefault === false)
@@ -78,7 +78,7 @@ $(function (){
 
         $.ajax({
             type: 'POST',
-            url: 'update',
+            url: '/mypage/update',
             contentType: false,
             processData: false,
             data: formData,
@@ -300,7 +300,6 @@ function loadImage(input){
     else
     {
         var $dummy = $('#dummyProfile');
-        console.log($dummy);
         $dummy.remove();
 
         var $newProfile = $('<img>');

@@ -12,8 +12,8 @@ public interface ReviewRepo {
     // 리뷰수정
     int update(Review review);
     // 사용자 모든리뷰 조회
-    List<Review> allReview(int user_id);
+    List<Review> selectReviewByGoods(String goodNo, int fromRow, int pageRow);
 
     // 특정 리뷰 조회
-    Review showReview(int id);
+    int countReview(String goodNo);
 }

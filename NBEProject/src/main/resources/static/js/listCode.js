@@ -25,7 +25,7 @@ $(document).ready(function (){
 
       const data = {
         "post_id": suffix,
-        "user_id": logged_id
+        "user_id": logged_id.id
       };
 
       let $postID = $(this).attr("data-post-id");

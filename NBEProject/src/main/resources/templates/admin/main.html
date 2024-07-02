@@ -17,7 +17,7 @@
     </div>
     <div class="header-right">
         <span>관리자</span>
-        <span th:text="${username}"></span>
+        <span th:text="${user.username}">테스트용</span>
         <a th:href="@{/user/login}">로그아웃</a>
     </div>
 </div>
@@ -25,6 +25,7 @@
     <ul>
         <li onclick="location.href='orderpage'">주문 관리</li>
         <li onclick="location.href='userlist'">회원 관리</li>
+        <li onclick="location.href='cancel'">취소 관리</li>
         <li onclick="location.href='notice'">공지사항 관리</li>
     </ul>
 </div>
