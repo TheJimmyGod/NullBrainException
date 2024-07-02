@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.shop.Post;
 import com.lec.spring.domain.shop.PostImage;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.LikeRepo;
 import com.lec.spring.repository.PostImageRepo;
 import com.lec.spring.repository.PostRepo;
 import com.lec.spring.repository.UserRepo;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +40,13 @@ public class PostServiceImpl implements PostService {
     private PostRepo postRepository;
     private UserRepo userRepository;
     private PostImageRepo postImageRepository;
+    private LikeRepo likeRepository;
     @Autowired
     public PostServiceImpl(SqlSession sqlSession) {
         postRepository = sqlSession.getMapper(PostRepo.class);
         userRepository = sqlSession.getMapper(UserRepo.class);
         postImageRepository = sqlSession.getMapper(PostImageRepo.class);
+        likeRepository = sqlSession.getMapper(LikeRepo.class);
         System.out.println("PostService() 생성");
     }
 
@@ -148,7 +152,27 @@ public class PostServiceImpl implements PostService {
 
         List<Post> list = null;
 
-        List<Post> likedList = getPostsByUser(number);
+        List<Post> likedList = postRepository.collectPostsByUser(number);
+        List<Map<String, Object>> likes = likeRepository.selectAllLikesCount();
+
+        Map<Integer, Long> likedIndex = new HashMap<>();
+        Integer _id = 0;
+        Long _count = 0L;
+        for (var s : likes)
+        {
+            for(var z : s.entrySet())
+            {
+                if(z.getKey().contains("post"))
+                {
+                    _id = (Integer) z.getValue();
+                }
+                else
+                {
+                    _count = (Long) z.getValue();
+                }
+            }
+            likedIndex.put(_id, _count);
+        }
 
         if(cnt > 0){
             if(page > totalPage) page = totalPage;
@@ -160,6 +184,7 @@ public class PostServiceImpl implements PostService {
             list = postRepository.selectRow(fromRow, pageRows);
             model.addAttribute("list", list);
             model.addAttribute("likedList", likedList);
+            model.addAttribute("likedMap", likedIndex);
             for(int i = 0; i < list.size(); ++i){
                 List<PostImage> imageList = postImageRepository.findByPost(list.get(i).getId());
                 list.get(i).setImageList(imageList);
@@ -241,11 +266,6 @@ public class PostServiceImpl implements PostService {
             result = postRepository.delete(post);
         }
         return result;
-    }
-
-    @Override
-    public List<Post> getPostsByUser(Integer user_id) {
-        return postRepository.collectPostsByUser(user_id);
     }
 
     @Override
