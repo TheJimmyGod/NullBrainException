@@ -36,4 +36,8 @@ public class User {
 
     // 활성/비활성 상태를 나타내는 필드
     private boolean status = true;
+
+    //OAuth2
+    private String provider;
+    private String providerId;
 }

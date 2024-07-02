@@ -64,6 +64,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int register(User user) {
+        user.setUsername(user.getUsername().toUpperCase());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepo.insertOAuth(user);
+
+        Integer userId = userRepo.getLastInsertedUserId();
+
+        authorityRepo.addAuthority(userId, 2);
+
+        return 1;
+    }
+
+    @Override
     public List<User> findAllUser() {
         return userRepo.selectAll();
     }

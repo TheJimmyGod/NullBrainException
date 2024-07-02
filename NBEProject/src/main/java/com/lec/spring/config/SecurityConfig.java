@@ -1,7 +1,11 @@
 package com.lec.spring.config;
 
+import com.lec.spring.config.oauth.PrincipalOauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -14,6 +18,10 @@ public class SecurityConfig {
 //    public WebSecurityCustomizer webSecurityCustomizer(){
 //        return web -> web.ignoring().anyRequest();
 //    }
+
+    // oAuth2 Client
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
 
     @Bean
@@ -44,7 +52,27 @@ public class SecurityConfig {
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                         .accessDeniedHandler(new CustomAccessDeniedHandler()))
 
+                .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
+                        .loginPage("/user/login") //로그인 페이지 url
+
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(principalOauth2UserService) // userService(OAuth2UserService)
+                        )
+                        .successHandler(new CustomOAuth2LoginSuccessHandler("/user/test"))
+
+
+                )
+
                 .build();
+    }//end filterChain()
+
+    //oAuth2 로그인
+    //AuthenticationManager Bean 생성
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
+        return authenticationConfiguration.getAuthenticationManager();
+
     }
 
 

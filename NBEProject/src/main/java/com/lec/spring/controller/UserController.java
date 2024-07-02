@@ -43,6 +43,11 @@ public class UserController {
     @Autowired
     private ContactImageService contactImageService;
 
+    @RequestMapping("/enterAddress")
+    private String enterAddress(){
+        return "/enterAddress";
+    }
+
     @RequestMapping("/login")
     public void login(){}
 

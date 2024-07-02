@@ -10,6 +10,8 @@ public interface UserRepo {
     // 유저 생성
     public int insert(User user);
 
+    public int insertOAuth(User user);
+
     // 유저 생성 다른 버전
     public int saveUser(UserDto userDto);
 

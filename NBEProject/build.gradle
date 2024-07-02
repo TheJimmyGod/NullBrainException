@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.17.2'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.21.0'
