@@ -16,10 +16,7 @@ import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +70,16 @@ public class ProductPageController {
         return "/cho/prod/detail";
     }
 
-// 상세페이지에서 구매혹은 장바구니로 이동
+    // 제품 최근 목록
+    @GetMapping("/recent")
+    public String recent(Integer page, Model model){
+//        User user = U.getLoggedUser();
+        recentService.getRecentItem(1, page, model);
+
+        return "prod/recent";
+    }
+
+    // 상세페이지에서 구매혹은 장바구니로 이동
     @PostMapping("/prod/cart")
     public String addCart(String goodsNo, String option, Integer amount){
         User user = userService.findById(1);
@@ -95,21 +101,6 @@ public class ProductPageController {
                 .build();
         cartService.insert(item);
         return "redirect:/cart?userId=1";
-    }
-
-
-    // 제품 최근 목록
-    @GetMapping("/recent")
-    public String recent(Model model){
-//        User user = U.getLoggedUser();
-        List<Goods> recentGoods = new ArrayList<>();
-        List<RecentItem> recentItems = recentService.getRecentItem(1);
-        for(RecentItem r : recentItems){
-            Goods goods = goodsService.getProd(r.getGoods_no());
-            recentGoods.add(goods);
-        }
-        model.addAttribute("items", recentGoods);
-        return "prod/recent";
     }
 
 

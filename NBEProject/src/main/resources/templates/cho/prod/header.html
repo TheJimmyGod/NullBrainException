@@ -3,7 +3,10 @@
 <th:block th:fragment="head">
     <div class="container-2">
         <i name="menuIcon" class="fa-regular fa-user user"></i>&nbsp;&nbsp;&nbsp;
-        <i name="menuIcon" class="fa-solid fa-cart-plus cart" onclick="goCart()"></i>
+        <div class="cart-icon">
+            <i name="menuIcon" class="fa-solid fa-cart-plus cart" onclick="goCart()"></i>
+            <span class="cart-badge">3</span>
+        </div>
     </div>
     <header class="header">
         <div class="logo">

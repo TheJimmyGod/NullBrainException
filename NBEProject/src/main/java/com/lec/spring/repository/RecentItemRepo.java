@@ -9,11 +9,10 @@ public interface RecentItemRepo {
     // 클릭시 최근 목록에 담김
     int insert(Integer userId, String goodNo);
 
-    // 담겨있는지 비교하기위해 갯수 확인
-    int selectOne(Integer userId, String goodsNo);
+    int count(Integer userId);
 
     // 유저의 최근 목록 불러오기
-    List<RecentItem> selectAll(Integer userId);
+    List<RecentItem> selectAll(Integer userId, Integer from, Integer row);
 
     int delete(Integer userId, String goodsNo);
 }
