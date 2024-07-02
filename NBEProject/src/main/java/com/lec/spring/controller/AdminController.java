@@ -12,6 +12,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,8 +67,6 @@ public class AdminController {
         Long cntCom = purchaseService.cntCompleted();
         Long cntPend = purchaseService.cntPending();
         Long cntFail = purchaseService.cntFailed();
-        Long productInquiryCount = contactService.countProductInquiries();
-        Long productType = contactService.countProductAndType();
 
 
         // 우측 상단 유저의 닉네임 표시(임시)
@@ -79,8 +80,6 @@ public class AdminController {
         model.addAttribute("comp", cntCom);
         model.addAttribute("pend", cntPend);
         model.addAttribute("fail", cntFail);
-        model.addAttribute("cntPro", productInquiryCount);
-        model.addAttribute("cntProType", productType);
 
 
         return "admin/main";
@@ -118,7 +117,7 @@ public class AdminController {
 
         // 총 가격 계산
         for (Purchase order : orderList) {
-            int price = Integer.parseInt(order.getGood().getPrice().replaceAll(",", ""));
+            int price = Integer.parseInt(order.getGoods().getPrice().replaceAll(",", ""));
             order.setTotalPrice(price * order.getAmount());
         }
 
@@ -272,6 +271,8 @@ public class AdminController {
 
     }
 
+
+    // 취소 문의 페이지
     @RequestMapping("/cancel")
     public String cancel(@RequestParam(value = "page", defaultValue = "1") int page,
                          @RequestParam(value = "username", required = false) String username,
@@ -397,7 +398,7 @@ public class AdminController {
     @RequestMapping("/inquirydetail")
     public String inquiryDetail(@RequestParam("id") int id,
             Model model){
-        
+
         // 문의사항 id를 가져온다
         Contact contact = contactService.getContactById(id);
         if (contact != null) {
