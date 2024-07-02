@@ -82,24 +82,41 @@ function buildComment(result){
         let user_id = parseInt(comment.user.id);
         let name = comment.user.name;
 
-        let profile = '/upload/' + comment.user.profileimage;
-        let img = new Image();
-        img.src = profile;
-
         // 삭제버튼 여부
         const delBtn = (logged_id.id !== user_id) ? '' : `
             <i class="btn fa-solid fa-delete-left text-danger" style="float: right" data-bs-toggle="tooltip" data-cmtdel-id="${id}"  title="삭제"></i>
         `;
+        let row = "";
+        if(comment.user.profileimage != null)
+        {
+            let profile = '/upload/' + comment.user.profileimage;
+            let img = new Image();
+            img.src = profile;
 
-        const row = `
+            row = `
             <tr>
-                <td><span><img class="col-lg-1 col-sm-1 col-1" style="height: 24px; width: 24px;" th:if="${comment.user.profileimage}" src="${profile}" th:alt="'None"/>
+                <td><span><img class="col-lg-1 col-sm-1 col-1" style="height: 24px; width: 24px;" src="${img.src}" th:alt="'None'"/>
                 <strong>${name}</strong><br></span></td>
                 <td><span>${content}</span></td>
                 <td><span><small class="text-secondary" style="float: right">${regdate}</small></span></td>
                 <td><span>${delBtn}</span></td>
             </tr>
         `;
+        }
+        else
+        {
+            row = `
+            <tr>
+                <td><span><i class="col-lg-1 col-sm-1 col-1 fas fa-user-circle fa-1x" style="height: 24px; width: 24px;" th:unless="${comment.user.profileimage  != null}"></i>
+                <strong>${name}</strong><br></span></td>
+                <td><span>${content}</span></td>
+                <td><span><small class="text-secondary" style="float: right">${regdate}</small></span></td>
+                <td><span>${delBtn}</span></td>
+            </tr>
+        `;
+        }
+
+
         out.push(row);
     });
 
