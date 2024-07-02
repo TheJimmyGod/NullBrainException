@@ -67,6 +67,8 @@ public class AdminController {
         Long cntCom = purchaseService.cntCompleted();
         Long cntPend = purchaseService.cntPending();
         Long cntFail = purchaseService.cntFailed();
+        Long productInquiryCount = contactService.countProductInquiries();
+        Long productType = contactService.countProductAndType();
 
 
         // 우측 상단 유저의 닉네임 표시(임시)
@@ -80,6 +82,8 @@ public class AdminController {
         model.addAttribute("comp", cntCom);
         model.addAttribute("pend", cntPend);
         model.addAttribute("fail", cntFail);
+        model.addAttribute("cntPro", productInquiryCount);
+        model.addAttribute("cntProType", productType);
 
 
         return "admin/main";
@@ -117,7 +121,7 @@ public class AdminController {
 
         // 총 가격 계산
         for (Purchase order : orderList) {
-            int price = Integer.parseInt(order.getGoods().getPrice().replaceAll(",", ""));
+            int price = Integer.parseInt(order.getGood().getPrice().replaceAll(",", ""));
             order.setTotalPrice(price * order.getAmount());
         }
 
