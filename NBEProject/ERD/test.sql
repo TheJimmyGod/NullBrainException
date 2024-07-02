@@ -42,3 +42,13 @@ delete from goods;
 select * from goods;
 
 desc goods;
+
+select * from user;
+select * from contact;
+select * from contact_image;
+delete from contact;
+delete from contact_image;
+
+delete from post;
+delete from comment;
+delete from post_image;

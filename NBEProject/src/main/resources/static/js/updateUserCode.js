@@ -78,7 +78,7 @@ $(function (){
 
         $.ajax({
             type: 'POST',
-            url: '/mypage/update',
+            url: '/nbe/mypage/update',
             contentType: false,
             processData: false,
             data: formData,
@@ -300,7 +300,6 @@ function loadImage(input){
     else
     {
         var $dummy = $('#dummyProfile');
-        console.log($dummy);
         $dummy.remove();
 
         var $newProfile = $('<img>');
