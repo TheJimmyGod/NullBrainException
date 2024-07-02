@@ -5,15 +5,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserDto {
     //User 부분
 
@@ -51,5 +49,9 @@ public class UserDto {
 
     //Authority 부분
     private String auth;
+
+    //oAuth
+    private String provider;
+    private String providerId;
 
 }
