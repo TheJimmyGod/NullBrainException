@@ -1,18 +1,17 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.Contact;
 import com.lec.spring.domain.shop.ContactImage;
+import com.lec.spring.domain.shop.Pay;
 import com.lec.spring.domain.shop.Purchase;
-import com.lec.spring.domain.User;
+import com.lec.spring.dto.PayStatus;
 import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +41,10 @@ public class AdminController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    private PayService payService;
+
+
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -51,71 +54,86 @@ public class AdminController {
 
     // 관리자 메인 페이지
     @RequestMapping("/main")
-    public String adminpage(
-            Model model){
+    public String adminpage(Model model){
         System.out.println("main 페이지 들어옴");
 
-
+        Long cancel = contactService.cancelOrder();
         Long userCnt = userService.cntUser();
         Long countAll = contactService.countAll();
         Long countUnAnswer = contactService.countUnAnswer();
-        Long cancel = contactService.cancelOrder();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = null;
-        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) auth.getPrincipal();
-            username = userDetails.getUsername();
-        }
-      User user = userService.findByUsername(username);
+        Long cntCom = purchaseService.cntCompleted();
+        Long cntPend = purchaseService.cntPending();
+        Long cntFail = purchaseService.cntFailed();
 
 
         // 우측 상단 유저의 닉네임 표시(임시)
+        String username = "테스트용ID";
 
         model.addAttribute("userCnt", userCnt);
         model.addAttribute("cntcontact", countAll);
-        model.addAttribute("user", user);
+        model.addAttribute("username", username);
         model.addAttribute("cntunanswer", countUnAnswer);
         model.addAttribute("cancel", cancel);
+        model.addAttribute("comp", cntCom);
+        model.addAttribute("pend", cntPend);
+        model.addAttribute("fail", cntFail);
 
 
         return "admin/main";
     }
 
     // 주문 관리 페이지
-//    @RequestMapping("/orderpage")
-//    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
-//                            @RequestParam(value = "username", required = false) String username
-//                            ,Model model){
-//       Long orderCnt = purchaseService.orderCnt();
-//       List<Purchase> orderList;
-//
-//        int limit = 10;
-//        int offset = (page - 1) * limit;
-//
-//        if (username != null && !username.isEmpty()) {
-//            orderList = purchaseService.orderUsername(username);
-//            orderCnt = (long) orderList.size();
-//        } else {
-//            orderList = purchaseService.pagination(offset,limit);
-//            orderCnt = userService.cntUser();
-//        }
-//
-//        int totalPages = (int) Math.ceil((double) orderCnt / limit);
-//
-//
-//       model.addAttribute("orderCnt", orderCnt);
-//       model.addAttribute("totalPages", totalPages);
-//       model.addAttribute("currentPage", page);
-//       model.addAttribute("orderList", orderList);
-//
-//       if(username != null && !username.isEmpty()){
-//           List<Purchase> usernameList = purchaseService.orderUsername(username);
-//           model.addAttribute("username", username);
-//
-//       }
-//        return "admin/orderpage";
-//    }
+    @RequestMapping("/orderpage")
+    public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
+                            @RequestParam(value = "username", required = false) String name,
+                            @RequestParam(value = "orderId", required = false) Integer orderId,
+                            @RequestParam(value = "status", required = false) PayStatus status
+                            ,Model model){
+
+        if(orderId != null && status != null){
+            payService.updatePayStatus(orderId, status);
+        }
+
+       Long orderCnt;
+       List<Purchase> orderList;
+       List<Pay> pay;
+
+        int limit = 10;
+        int offset = (page - 1) * limit;
+
+        if (name != null && !name.isEmpty()) {
+            orderList = purchaseService.orderUsername(name);
+            orderCnt = (long) orderList.size();
+        } else {
+            orderList = purchaseService.pagination(offset,limit);
+            orderCnt = purchaseService.orderCnt();
+        }
+
+
+        int totalPages = (int) Math.ceil((double) orderCnt / limit);
+
+        // 총 가격 계산
+        for (Purchase order : orderList) {
+            int price = Integer.parseInt(order.getGoods().getPrice().replaceAll(",", ""));
+            order.setTotalPrice(price * order.getAmount());
+        }
+
+
+       model.addAttribute("orderCnt", orderCnt);
+       model.addAttribute("totalPages", totalPages);
+       model.addAttribute("currentPage", page);
+       model.addAttribute("orderList", orderList);
+       model.addAttribute("OK", PayStatus.OK);
+       model.addAttribute("CANCEL", PayStatus.CANCEL);
+       model.addAttribute("READY", PayStatus.READY);
+
+       if(name != null && !name.isEmpty()){
+           List<Purchase> usernameList = purchaseService.orderUsername(name);
+           model.addAttribute("username", name);
+
+       }
+        return "admin/orderpage";
+    }
 
 
 
@@ -182,6 +200,12 @@ public class AdminController {
         return "redirect:/admin/userlist";
     }
 
+    @PostMapping("/updatePayStatus")
+    public String updatePayStatus(@RequestParam("purchaseId") int purchaseId, @RequestParam("status")PayStatus status){
+        purchaseService.updatePayStatus(purchaseId, status);
+        return "redirect:/admin/orderpage";
+    }
+
     // 회원 등급관리 페이지
     @RequestMapping("/usergrade")
     public String userGrade(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -195,7 +219,7 @@ public class AdminController {
         Long userCnt = userService.cntUser();
 
         if (username != null && !username.isEmpty()) {
-//            users = userService.findByUserName(username);
+            users = userService.findAllName(username);
             userCnt = (long) users.size();
         } else {
             users = userService.pagination(offset, limit);
@@ -244,8 +268,6 @@ public class AdminController {
 
     }
 
-
-    // 취소 문의 페이지
     @RequestMapping("/cancel")
     public String cancel(@RequestParam(value = "page", defaultValue = "1") int page,
                          @RequestParam(value = "username", required = false) String username,
@@ -329,19 +351,15 @@ public class AdminController {
     }
 
 
-
-
-
-
-
-    // 문의사항 목록 페이지
+    // 상품문의 관련 문의사항 목록 페이지
     @RequestMapping("/inquirylist")
     public String inquiryList(
-            @RequestParam(value = "page" ,defaultValue= "1") int page,
+            @RequestParam(value = "page", defaultValue= "1") int page,
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "type", required = false, defaultValue = "상품문의") String type,
+            @RequestParam(value = "type", required = false, defaultValue= "상품문의") String type,
             Model model) {
+
         List<Contact> contacts;
         Long countAll;
         int limit = 10;
@@ -366,6 +384,7 @@ public class AdminController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("status", status);
+        model.addAttribute("type", type);
 
         return "admin/inquirylist";
     }
@@ -373,8 +392,8 @@ public class AdminController {
     // 문의사항 상세보기 페이지
     @RequestMapping("/inquirydetail")
     public String inquiryDetail(@RequestParam("id") int id,
-                                Model model){
-
+            Model model){
+        
         // 문의사항 id를 가져온다
         Contact contact = contactService.getContactById(id);
         if (contact != null) {
@@ -443,10 +462,6 @@ public class AdminController {
             throw new RuntimeException("Could not read file: " + filename, e);
         }
     }
-
-
-
-    // 취소 문의 페이지
 
 
 
