@@ -70,4 +70,6 @@
         <include refid="selectPurchase"/>
         and merchant_id=#{param1}
     </select>
+
+
 </mapper>

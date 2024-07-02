@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 
+import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.domain.shop.Pay;
@@ -85,5 +86,72 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public int delete() {
         return purchaseRepo.delete();
+    }
+
+    // 전체 주문 내역 조회
+    @Override
+    public List<Purchase> orderList() {
+        List<Purchase> purchases = purchaseRepo.listOrder();
+        for (Purchase purchase : purchases) {
+            if (purchase.getUser() != null) {
+                User user = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(user);
+            }
+        }
+        return purchases;
+    }
+
+    @Override
+    public Long orderCnt() {
+        return purchaseRepo.cntOrder();
+    }
+
+    @Override
+    public List<Purchase> orderUsername(String name) {
+        List<Purchase> purchases = purchaseRepo.username(name);
+        for (Purchase purchase : purchases) {
+            if (purchase.getUser() != null) {
+                User user = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(user);
+            }
+        }
+        return purchases;
+    }
+
+    @Override
+    public Long cntPurchaseItem() {
+        return purchaseRepo.cntPurchaseItem();
+    }
+
+    @Override
+    public List<Purchase> pagination(int offset, int limit) {
+        List<Purchase> purchases = purchaseRepo.pagination(offset, limit);
+        for (Purchase purchase : purchases) {
+            if (purchase.getUser() != null) {
+                User user = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(user);
+            }
+        }
+        return purchases;
+    }
+
+    @Override
+    public void updatePayStatus(Integer purchaseId, com.lec.spring.dto.PayStatus status) {
+        purchaseRepo.updatePayStatus(purchaseId, status);
+    }
+
+    @Override
+    public Long cntCompleted() {
+        return purchaseRepo.cntStatusOK();
+    }
+
+    @Override
+    public Long cntPending() {
+        return purchaseRepo.cntStatusREADY();
+    }
+
+    @Override
+    public Long cntFailed() {
+        return purchaseRepo.cntStatusCANCEL();
     }
 }
