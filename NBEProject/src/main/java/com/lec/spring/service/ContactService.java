@@ -60,6 +60,10 @@ public interface ContactService {
     // 상태와 타입별 문의사항 카운트
     Long countContactsByStatusAndType(String status, String type);
 
+    Long countProductInquiries();
+
+    Long countProductAndType();
+
 
 
 }
