@@ -52,3 +52,8 @@ delete from contact_image;
 delete from post;
 delete from comment;
 delete from post_image;
+
+select * from contact;
+
+ALTER TABLE contact
+    MODIFY COLUMN status VARCHAR(50) DEFAULT '대기 중';

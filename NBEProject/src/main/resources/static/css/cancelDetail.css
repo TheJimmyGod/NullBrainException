@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    overflow: auto;
+}
+
+.content {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.content h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #495057;
+    text-align: center;
+    font-weight: 700;
+}
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.section-content div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.section-content label {
+    font-weight: 500;
+    color: #495057;
+    width: 35%;
+    align-self: center;
+}
+
+.section-content input {
+    width: 60%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #f1f3f5;
+}
+
+.section-content p {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #f1f3f5;
+    margin-bottom: 15px;
+}
+
+.section-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.buttons button {
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+.buttons .cancel-process-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.buttons .cancel-process-button:hover {
+    background-color: #218838;
+}
+
+.buttons .cancel-reject-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.buttons .cancel-reject-button:hover {
+    background-color: #c82333;
+}
+
+.buttons .back-button {
+    background-color: #6c757d;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.buttons .back-button:hover {
+    background-color: #5a6268;
+}

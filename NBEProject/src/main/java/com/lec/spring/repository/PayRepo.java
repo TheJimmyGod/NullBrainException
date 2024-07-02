@@ -8,4 +8,6 @@ public interface PayRepo {
     int update(Pay pay);
 
     Pay findById(Integer id);
+
+    void updateStatus(Pay pay);
 }
