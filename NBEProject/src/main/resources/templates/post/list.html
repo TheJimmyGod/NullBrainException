@@ -51,7 +51,7 @@
                 </div>
                 <br>
                 <div>
-                    <button th:data-post-id="${post.id}" th:id="${'like-' + post.id}" class="col-1 col-sm-1" style="text-decoration: none; color: black; border: none; background-color: white; outline: none; box-shadow: none; width: 32px;"><i id="heart" class="far fa-heart fa-2x"></i></button>
+                    <button th:data-post-id="${post.id}" th:id="${'like-' + post.id}" class="col-1 col-sm-1" style="text-decoration: none; color: black; border: none; background-color: white; outline: none; box-shadow: none; width: 32px;"><small th:id="'likeCount'+ ${post.id}" th:text="''"></small><i id="heart" class="far fa-heart fa-2x"></i></button>
                     &nbsp;<a th:href="@{'/post/comment/' + ${post.id}}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="far fa-comment-dots fa-2x"></i></a>
                 </div>
                 <br><br><br>
@@ -64,21 +64,28 @@
     <th:block th:insert="~{post/listPagination::pagination}"></th:block>
     <!-- pagination -->
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
 <script th:inline="javascript">
-    const logged_id = [[${logged_user}]]
+    const logged_id = [[${logged_user}]];
+    let likedMap = [[${likedMap}]];
+    let likedList = [[${likedList}]];
+    const list = [[${list}]];
+
+    let likeArr = new Map();
+
     $(window).on('load', function () {
+
+        initialize();
         loadLikes();
     });
 
     function loadLikes()
     {
-        let $list = [[${likedList}]];
-        if($list != null)
+        if(likedList != null)
         {
-            $("[id*='like-']").get().forEach(function ($object){
+            $("[id*='like-']").each(function (index, $object){
                 var id =parseInt($object.id.match(/\d+/));
-                $list.forEach(function (element){
+                $(likedList).each(function (index, element){
                     if(id === element.id)
                     {
                         var $obj = $("[id*=like-" + id + "]");
