@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-    <link rel="stylesheet" href="css/order/cart.css">
-    <script src="/js/order/cart.js" defer></script>
+    <link rel="stylesheet" href="/cho/css/order/cart.css">
+    <script src="/cho/js/order/cart.js" defer></script>
     <title>Document</title>
 
 </head>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="cart-item" th:each="item : ${cartItem}" th:data-id="${item.id}">
-    <input type="checkbox" name="chk" class="checkbox" th:value="${item.id}" style="margin-right: 20px;">&nbsp;&nbsp;
+    <input type="checkbox" name="chk" class="checkbox" th:value="${item.id}"  th:checked="${item.id == purchase}" style="margin-right: 20px;">&nbsp;&nbsp;
     <img th:src="${item.goods.getImage()}" alt="item image">
     <div class="cart-item-details">
         <div th:text="${item.goods.goodsNo}">상품명</div>

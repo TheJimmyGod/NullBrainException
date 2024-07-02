@@ -108,5 +108,11 @@
 
     </update>
 
-    
+<!--   유저 기본배송지 정보 가져오기 -->
+    <select id="getDefaultAddr" resultType="com.lec.spring.domain.shop.Address">
+        select *
+            from address
+        where user_id=#{param1}
+        and isDefault=true
+    </select>
 </mapper>

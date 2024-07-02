@@ -13,3 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function goPay(){
+
+}

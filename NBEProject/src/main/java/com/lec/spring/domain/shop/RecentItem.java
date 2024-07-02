@@ -9,7 +9,7 @@ public class RecentItem {
 
     private Integer id;
     private Integer user_id;
-    private String goods_id;
+    private String goods_no;
     private LocalDateTime regdate;
 
 

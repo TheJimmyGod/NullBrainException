@@ -7,15 +7,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <title>최근 본 상품</title>
-    <link rel="stylesheet" href="/css/head.css">
-    <link rel="stylesheet" href="/css/recent.css">
-    <script type="text/javascript" src="/js/head.js"></script>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/recent.css">
+    <script type="text/javascript" src="/cho/js/prod/head.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <th:block th:replace="~{/prod/header::head}"></th:block>
 <div class="container">
-    <h2>최근 본 상품</h2>
+    <h2 class="title">최근 본 상품</h2>
     <div class="product-list" th:each="e : ${items}">
         <div class="product-item">
             <div class="product-image">
@@ -28,6 +28,7 @@
                     <h3 th:text="${e.name}">@@@상품</h3>
                     <p class="price" th:text="${e.price}+'원'">12314원</p>
                 </div>
+                <p th:text="${e.maker}"></p>
                 <p th:text="${e.keywords}">상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름상품이름</p>
             </div>
         </div>

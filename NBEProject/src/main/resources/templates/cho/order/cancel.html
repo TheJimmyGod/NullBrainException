@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <title>a</title>
+</head>
+<body>
+<button type="button">취소</button>
+</body>
+<script>
+    function aa(){
+        $.ajax({
+            url: `http://localhost:8080/payment/cancel/${} `,
+            method: "POST",
+        })
+    }
+</script>
+</html>

@@ -28,9 +28,10 @@
         <result column="u_phone" property="phone"/>
         <result column="u_birth" property="birth"/>
         <result column="u_email" property="email"/>
-        <result column="u_streetAddr" property="streetAddr"/>
-        <result column="u_detailAddr" property="detailAddr"/>
+        <result column="street_addr" property="streetAddr"/>
+        <result column="detail_addr" property="detailAddr"/>
     </resultMap>
+
     <sql id="selectCart">
         SELECT
             c.id as "p_id",
@@ -46,20 +47,24 @@
             u.phone as "u_phone",
             u.birth as "u_birth",
             u.email as "u_email",
-            u.street_address as "u_street_address",
-            u.detail_address as "u_detail_address"
+            a.street_addr as "street_addr",
+            a.detail_addr as "detail_adddr"
         FROM cart c
                  join goods g
                       on g.goods_no=c.goods_id
                  join user u
                       on c.user_id=u.id
+                join address a
+                    on a.user_id=c.user_id
         WHERE 1=1
+        and a.isDefault=true
     </sql>
 
     <select id="findUserCart" parameterType="int" resultMap="mapItem">
         <include refid="selectCart"/>
         and
-        c.user_id = #{param1};
+        c.user_id = #{param1}
+        ;
     </select>
 
     <select id="getItemList" parameterType="java.util.List" resultMap="mapItem">
@@ -84,6 +89,11 @@
                 #{e}
             </foreach>
             )
+    </delete>
+
+    <delete id="deleteItemByGoodsNo" flushCache="true">
+        delete from cart
+        where cart.goods_id=#{param1}
     </delete>
 
     <delete id="deleteItem" flushCache="true">

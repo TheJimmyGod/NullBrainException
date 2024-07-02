@@ -1,16 +1,18 @@
 $(function(){
     let item;
     // 여성의류 버튼 클릭 이벤트
-    $('.woman').click(function() {
-        $('.category2-woman').toggleClass('show');
-        $('.category2-man').removeClass('show');
-    });
+    // $('.woman').click(function() {
+    //     $('.category2-woman').toggleClass('show');
+    //     $('.category2-man').removeClass('show');
+    // });
+
+
 
     // 남성의류 버튼 클릭 이벤트
-    $('.man').click(function() {
-        $('.category2-man').toggleClass('show');
-        $('.category2-woman').removeClass('show');
-    });
+    // $('.man').click(function() {
+    //     $('.category2-man').toggleClass('show');
+    //     $('.category2-woman').removeClass('show');
+    // });
 
     // 다른 영역 클릭 시 드롭다운 숨김 처리
     $(document).click(function(event) {
@@ -34,10 +36,20 @@ $(function(){
             category2=item;
         }
 
-        url = `http://localhost:8080/nbe/list?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
+        url = `http://localhost:8080/nbe/prodList?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
         location.href=url;
 
     });
 
 
 });
+
+function showWomen(){
+    $('.category2-woman').toggleClass('show');
+    $('.category2-man').removeClass('show');
+}
+
+function showMen(){
+    $('.category2-man').toggleClass('show');
+    $('.category2-woman').removeClass('show');
+}

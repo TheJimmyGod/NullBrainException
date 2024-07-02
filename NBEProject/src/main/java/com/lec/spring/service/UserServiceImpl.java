@@ -134,4 +134,9 @@ public class UserServiceImpl implements UserService {
             userRepo.updateStatus(userId, user.isStatus()); // DB에 변경
         }
     }
+
+    @Override
+    public Address getDefaultAddr(int userId) {
+        return userRepo.getDefaultAddr(userId);
+    }
 }

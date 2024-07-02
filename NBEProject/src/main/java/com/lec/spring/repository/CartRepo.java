@@ -17,6 +17,8 @@ public interface CartRepo {
 
     int deleteItemList(Integer[] ids);
 
+    int deleteItemByGoodsNo(String goodsId);
+
     int deleteItem(int id);
 
 }

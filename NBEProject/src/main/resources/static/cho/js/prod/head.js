@@ -20,3 +20,7 @@ function goHome(){
 function category(){
     $('.category1').toggleClass('hidden');
 }
+
+function goCart(){
+    location.href = `http://localhost:8080/cart?userId=1`;
+}

@@ -13,9 +13,10 @@ public interface CartService {
 
     List<Cart> selectItems(Integer[] selectitem);
     int deleteItems(Integer[] delitem);
-
+    int deleteBYGoodsNo(String goodsId);
     int insert(Cart cart);
 
     Cart getByUserIdGoodsId(int userId, String goodsId);
+
 
 }

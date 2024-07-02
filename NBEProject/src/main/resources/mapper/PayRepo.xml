@@ -12,7 +12,7 @@
         where id=#{id}
     </update>
 
-    <select id="findByPayId" flushCache="true" resultType="com.lec.spring.domain.shop.Pay">
+    <select id="findById" flushCache="true" resultType="com.lec.spring.domain.shop.Pay">
         select * from pay where id=#{param1}
     </select>
 </mapper>
