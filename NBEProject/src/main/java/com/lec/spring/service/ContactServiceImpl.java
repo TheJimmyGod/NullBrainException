@@ -172,5 +172,15 @@ public class ContactServiceImpl implements ContactService {
         return contactRepo.countContactsByStatusAndType(status, type);
     }
 
+    @Override
+    public Long countProductInquiries() {
+        return contactRepo.countProductInquiries();
+    }
+
+    @Override
+    public Long countProductAndType() {
+        return contactRepo.countProductAndType();
+    }
+
 
 }

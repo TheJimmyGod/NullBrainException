@@ -62,4 +62,9 @@ public interface ContactRepo {
 
     // 상태와 타입별 문의사항 카운트
     Long countContactsByStatusAndType(String status, String type);
+
+    // 상품문의 카운트
+    Long countProductInquiries();
+
+    Long countProductAndType();
 }

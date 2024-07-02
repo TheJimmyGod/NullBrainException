@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <title>관리자 메인 페이지</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/adminmain.css">
 </head>
 <body>
 <div class="header">
@@ -17,7 +17,7 @@
     </div>
     <div class="header-right">
         <span>관리자</span>
-        <span th:text="${user.username}">테스트용</span>
+        <span th:text="${username}">테스트용</span>
         <a th:href="@{/user/login}">로그아웃</a>
     </div>
 </div>
@@ -39,10 +39,9 @@
     <div class="card">
         <h3>판매현황</h3>
         <br>
-        <p>결제 완료: 0</p> <br>
-        <p>상품 준비: 0</p> <br>
-        <p>배송 중: 0</p> <br>
-        <p>배송 완료: 0</p>
+        <p>결제 완료 : <span th:text="${comp}"></span></p> <br>
+        <p>결제 대기 : <span th:text="${pend}"></span></p> <br>
+        <p>결제 취소 : <span th:text="${fail}"></span></p>
     </div>
     <div class="card">
         <h3>취소 현황</h3>
@@ -53,9 +52,9 @@
     <div class="card">
         <h3>상품 문의</h3>
         <br>
-        <p>전체 문의 내역: <span th:text="${cntcontact}"></span></p>
+        <p>전체 문의 내역: <span th:text="${cntPro}"></span></p>
         <br>
-        <p>미 답변 문의: <span th:text="${cntunanswer}"></span></p>
+        <p>미 답변 문의: <span th:text="${cntProType}"></span></p>
         <br><br>
         <button class="more-btn" onclick="location.href='inquirylist'">더 보기</button>
     </div>
