@@ -17,6 +17,8 @@ public interface UserService {
     //회원가입
     int register(UserDto userDto);
 
+    int register(User user);
+
 
     // 전체 회원 조회
     List<User> findAllUser();

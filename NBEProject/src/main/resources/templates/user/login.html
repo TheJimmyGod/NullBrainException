@@ -45,9 +45,7 @@
 
         <div class= "container_box01">
             <a class="authbtn" id="kakaobtn"
-               th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'},
-                    client_id=${@environment.getProperty('app.oauth2.kakao.client-id')},
-                    redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+               th:href="@{/oauth2/authorization/kakao}">
                 <img th:src="@{/image/kakao.png}" width="100" height="100">
             </a>
             <a class="authbtn" th:href="@{/oauth2/authorization/google}">
