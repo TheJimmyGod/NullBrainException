@@ -1,6 +1,7 @@
 let slideIndex = 0;
 
 $(function(){
+
   // 페이징 헤더
   $("[name='pageRows']").change(function(){
     //alert($(this).val());  // 확인용
@@ -14,6 +15,7 @@ $(function(){
 $(document).ready(function (){
   var $arr = $('[id*=' + 'slideshow-' + ']').get();
   var $likeArr = $('[id*=' + 'like-' + ']').get();
+
   $arr.forEach(function (element){
     var suffix = element.id.match(/\d+/);
     showSlides(slideIndex, suffix);
@@ -40,16 +42,17 @@ $(document).ready(function (){
           if(status == "success"){
             if($func.find("#heart").css("color")==="rgb(0, 0, 0)")
             {
-
               $func.find("#heart").css("color", "rgb(255, 0, 0)");
               $func.find("#heart").removeClass("far fa-heart");
               $func.find("#heart").addClass("fas fa-heart");
+              increase($postID);
             }
             else
             {
               $func.find("#heart").css("color", "rgb(0, 0, 0)");
               $func.find("#heart").removeClass("fas fa-heart");
               $func.find("#heart").addClass("far fa-heart");
+              decrease($postID);
             }
           }
         },
@@ -84,4 +87,29 @@ function showSlides(n, id) {
   }
   $slides.eq(slideIndex-1).css("display","block");
   $dots.eq(slideIndex-1).addClass(" active");
+}
+
+function initialize()
+{
+  $(list).each(function (index, element){
+    likeArr[element.id] = 0;
+    $("#likeCount" + element.id).text(0);
+  });
+
+  $.each(likedMap, function (key,value){
+    likeArr[key] = value;
+    $("#likeCount" + key).text(likeArr[key]);
+  });
+}
+
+function increase(id)
+{
+  likeArr[id]++;
+  $("#likeCount" + id).text(likeArr[id]);
+}
+
+function decrease(id)
+{
+  likeArr[id]--;
+  $("#likeCount" + id).text(likeArr[id]);
 }
