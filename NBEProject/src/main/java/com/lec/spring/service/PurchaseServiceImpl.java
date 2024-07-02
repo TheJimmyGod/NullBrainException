@@ -94,8 +94,8 @@ public class PurchaseServiceImpl implements PurchaseService {
         List<Purchase> purchases = purchaseRepo.listOrder();
         for (Purchase purchase : purchases) {
             if (purchase.getUser() != null) {
-                User user = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(user);
+                User users = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(users);
             }
         }
         return purchases;
@@ -110,9 +110,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     public List<Purchase> orderUsername(String name) {
         List<Purchase> purchases = purchaseRepo.username(name);
         for (Purchase purchase : purchases) {
-            if (purchase.getUser() != null) {
-                User user = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(user);
+            if (purchase.getUsers() != null) {
+                User users = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(users);
             }
         }
         return purchases;
@@ -127,9 +127,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     public List<Purchase> pagination(int offset, int limit) {
         List<Purchase> purchases = purchaseRepo.pagination(offset, limit);
         for (Purchase purchase : purchases) {
-            if (purchase.getUser() != null) {
-                User user = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(user);
+            if (purchase.getUsers() != null) {
+                User users = userRepo.selectById(purchase.getUsers().getId());
+                purchase.setUsers(users);
             }
         }
         return purchases;
