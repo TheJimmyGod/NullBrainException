@@ -43,4 +43,7 @@ public interface UserRepo {
     // 유저 상태 변경
     int updateStatus(int userId, boolean status);
 
+    // 유저 기본배송지 가져오기
+    Address getDefaultAddr(int userId);
+
 }

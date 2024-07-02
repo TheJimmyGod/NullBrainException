@@ -6,6 +6,7 @@ import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.dto.PayStatus;
 import com.lec.spring.dto.PaymentRequest;
+import com.lec.spring.repository.CartRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import com.siot.IamportRestClient.IamportClient;
@@ -21,33 +22,37 @@ public class PayServiceImpl implements PayService {
 
     private final PurchaseRepo purchaseRepo;
     private final PayRepo payRepo;
-
-    @Autowired
-    private IamportClient iamportClient;
+    private final CartRepo cartRepo;
 
     public PayServiceImpl(SqlSession sqlSession) {
         this.purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
         this.payRepo = sqlSession.getMapper(PayRepo.class);
+        this.cartRepo = sqlSession.getMapper(CartRepo.class);
     }
 
-    @Override
-    public OrderForm findRequest(String merchantId) {
-//        List<Purchase> purchases = purchaseRepo.findByRequest(merchantId);
-//        if(purchases == null) throw new IllegalArgumentException("주문 내역이 없습니다.");
-//        for(Purchase p : purchases){
-//
-//        }
-//        return new OrderForm(orderUser, merchantId, name.toString(), totalPrice);
-        return null;
-    }
+
     @Override
     public void creatPay(PaymentRequest request){
         List<Purchase> purchaseList = purchaseRepo.findByRequest(request.getMerchant_uid());
-        // TODO
-        // 해당 정보가 없을 떄 처리해주어야한다.
+        // 해당 주문 정보가 없을 떄
+        if(purchaseRepo.findByRequest(request.getMerchant_uid()) == null){
+            throw new IllegalArgumentException("해당주문 정보가 없습니다.");
+        }
 
+        List<Purchase> purchases = purchaseRepo.findByRequest(request.getMerchant_uid());
+        int totalPrice = 0;
+        for(Purchase p : purchases){
+            totalPrice += p.getAmount() * Integer.parseInt(p.getGoods().getPrice());
+            cartRepo.deleteItemByGoodsNo(p.getGoods().getGoodsNo());
+        }
+//        if(totalPrice != request.getAmount()){
+//            throw new IllegalArgumentException("주문 결제금액이 일치하지 않습니다.");
+//        }
         Pay pay = payRepo.findById(purchaseList.get(0).getPayId());
         pay.changePaymentBySuccess(PayStatus.OK, request.getImp_uid());
+
+
+        payRepo.update(pay);
     }
 
 }

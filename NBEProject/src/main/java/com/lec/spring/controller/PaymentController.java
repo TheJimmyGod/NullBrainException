@@ -2,19 +2,23 @@ package com.lec.spring.controller;
 
 
 import com.lec.spring.dto.PaymentRequest;
+import com.lec.spring.dto.Token;
 import com.lec.spring.service.PayService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 
 @Controller
 public class PaymentController {
@@ -34,12 +38,47 @@ public class PaymentController {
         return iamportClient.paymentByImpUid(paymentRequest.getImp_uid());
     }
 
-    @PostMapping("/payment/cancel")
-    public void createPayment(@RequestBody PaymentRequest paymentRequest) throws IamportResponseException, IOException {
-        IamportResponse<Payment> response = iamportClient.paymentByImpUid(paymentRequest.getImp_uid());
-        CancelData cancelData = new CancelData(response.getResponse().getCustomerUid(), true);
-        iamportClient.cancelPaymentByImpUid(cancelData);
+    @PostMapping("/request/cancel/{imp_uid}")
+    public void cancelRequest(@PathVariable String imp_uid) throws IamportResponseException, IOException {
+        URI uri = UriComponentsBuilder.fromUriString("https://api.iamport.kr/payments/cancel")
+                .build()
+                .toUri();
+        String token = getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setBearerAuth("token");
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("imp_uid", imp_uid);
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
     }
+
+
+public String getToken()
+        throws IamportResponseException, IOException {
+    URI uri = UriComponentsBuilder.fromUriString("https://api.iamport.kr/users/getToken")
+            .build()
+            .toUri();
+
+    HttpHeaders headers = new HttpHeaders();
+
+
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("imp_key", "0001678527508551");
+    params.add("imp_secret", "1ymb4aRRM6XB9KYg5TF2gTwLFDDSKajZInO4JIeiLckVVa2shVpA85PDxgYmOTIHImoHoRqxbMnqRN8M");
+
+    HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
+    ResponseEntity<Token> result = new RestTemplate().exchange(
+        uri,
+        HttpMethod.POST,
+        httpEntity,
+        Token.class
+    );
+    String body = result.getBody().getResponse().getAccess_token();
+    return body;
+}
 
 
 }

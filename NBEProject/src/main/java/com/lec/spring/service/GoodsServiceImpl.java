@@ -3,6 +3,7 @@ package com.lec.spring.service;
 
 
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Goods;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.repository.GoodsRepo;
@@ -86,7 +87,12 @@ public class GoodsServiceImpl implements GoodsService {
     public void getReviews(String good_no, Integer page, Model model) {
         List<String> options = optRepo.selectByGoods(good_no);
         Goods goods = goodsRepo.selectById(good_no);
+
+        // 로그인한 유저정보로 변환필요
         User user = userRepo.selectById(1);
+        Address addr = userRepo.getDefaultAddr(1);
+
+
         if(page == null || page < 1) page=1;
         HttpSession session = U.getSession();
         session.setAttribute("review_page", page);
@@ -102,7 +108,7 @@ public class GoodsServiceImpl implements GoodsService {
         model.addAttribute("goods", goods);
         model.addAttribute("reviewCnt", cnt);
         model.addAttribute("options", options);
-        model.addAttribute("user", user);
+        model.addAttribute("user", user.oderUser(addr.getStreet_addr(), addr.getDetail_addr()));
         if(cnt > 0){
             if(page > totalPages)   page = totalPages;
             int fromRow = (page - 1) * PAGE_ROWS;

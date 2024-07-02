@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.domain.shop.Pay;
 import com.lec.spring.domain.shop.Purchase;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final PurchaseRepo purchaseRepo;
     private final PayRepo payRepo;
     private final UserRepo userRepo;
+
     @Autowired
     public PurchaseServiceImpl(SqlSession sqlSession){
         purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
@@ -40,14 +43,12 @@ public class PurchaseServiceImpl implements PurchaseService {
         if(itemList == null){
             return null;
         }
-
+        Address addr = userRepo.getDefaultAddr(1);
         String uuid = UUID.randomUUID().toString();
         uuid = uuid.replaceAll("-","");
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-        String dateTime = dateFormat.format(new Date());
-        String merchantId = uuid + "-" + dateTime;
+        String merchantId = uuid;
         int totalPrice = 0;
-        OrderUser orderUser = userRepo.selectById(userId).oderUser();
+        OrderUser orderUser = userRepo.selectById(userId).oderUser(addr.getStreet_addr(), addr.getDetail_addr());
         StringBuilder name = new StringBuilder();
 
         Pay pay = Pay.builder()
@@ -61,7 +62,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             Purchase purchase = Purchase.builder()
                     .merchantId(merchantId)
                     .payId(pay.getId())
-                    .amount(item.getAmount())
+                    .amount((item.getAmount() * Integer.parseInt(item.getGoods().getPrice())))
                     .opt(item.getOpt())
                     .goods(item.getGoods())
                     .user(orderUser)

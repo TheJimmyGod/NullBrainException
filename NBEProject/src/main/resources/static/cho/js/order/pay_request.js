@@ -23,11 +23,11 @@ function requestPay() {
         buyer_email: email,
         buyer_name: buyer_name,
         buyer_tel: tel,
-        buyer_addr: addr,
+        buyer_addr: "whckdtjd456@naver.com",
     }, function (rsp) { // callback
        if(rsp.success) {
            $.ajax({   // 결제 성공시 호출
-               url: "/verify/" + rsp.imp_uid,
+               url: "/payment",
                method: "POST",
                headers: {"Content-Type" : "application/json"},
                data: JSON.stringify({
@@ -36,7 +36,8 @@ function requestPay() {
                     amount: rsp.amount
                }),
            }).done(function(data){
-               // 서버 결제 API 성공시
+               // const response = data.merchant_uid;
+
            })
        } else {alert("결제에 실패 하였습니다.")}
     });

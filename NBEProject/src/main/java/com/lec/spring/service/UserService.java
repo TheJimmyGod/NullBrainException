@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.dto.UserDto;
@@ -43,5 +44,8 @@ public interface UserService {
     List<User> findAllName(String name);
 
     void setStatus(int userId, boolean status);
+
+    // 유저 기본배송정보 가져오기
+    Address getDefaultAddr(int userId);
 
 }

@@ -29,8 +29,7 @@ public class User {
     private String grade;
     private Integer total_price;
     private Integer point;
-    private String streetAddr;
-    private String detailAddr;
+
 
     private Address address;
 
@@ -40,7 +39,7 @@ public class User {
     // 활성/비활성 상태를 나타내는 필드
     private boolean status = true;
 
-    public OrderUser oderUser(){
+    public OrderUser oderUser(String streetAddr, String detailAddr){
         return OrderUser.builder()
                 .userId(this.id)
                 .username(this.username)
@@ -48,8 +47,8 @@ public class User {
                 .phone(this.phone)
                 .birth(this.birth)
                 .email(this.email)
-                .streetAddr(this.streetAddr)
-                .detailAddr(this.detailAddr)
+                .streetAddr(streetAddr)
+                .detailAddr(detailAddr)
                 .build();
 
     }

@@ -24,7 +24,9 @@ public class RecentServiceImpl implements RecentService {
     @Override
     public List<RecentItem> getRecentItem(Integer userId) {
 
-        return recentItemRepo.selectAll(userId);
+
+        List<RecentItem> recentItems = recentItemRepo.selectAll(userId);
+        return recentItems;
     }
 
     @Override

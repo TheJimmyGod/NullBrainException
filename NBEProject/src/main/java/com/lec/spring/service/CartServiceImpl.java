@@ -32,12 +32,19 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart getByUserIdGoodsId(int userId, String goodsId) {
-        return cartRepo.getItem(userId, goodsId);
+
+        Cart item = cartRepo.getItem(userId, goodsId);
+        return item;
     }
 
     @Override
     public int deleteItems(Integer[] delitem) {
         return cartRepo.deleteItemList(delitem);
+    }
+
+    @Override
+    public int deleteBYGoodsNo(String goodsId) {
+        return cartRepo.deleteItemByGoodsNo(goodsId);
     }
 
     @Override
