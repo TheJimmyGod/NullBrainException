@@ -18,5 +18,7 @@ public interface CartService {
 
     Cart getByUserIdGoodsId(int userId, String goodsId);
 
+    int update(Cart cart);
+
 
 }

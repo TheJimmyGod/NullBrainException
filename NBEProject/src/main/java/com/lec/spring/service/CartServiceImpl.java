@@ -38,6 +38,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public int update(Cart cart) {
+        return cartRepo.update(cart);
+    }
+
+    @Override
     public int deleteItems(Integer[] delitem) {
         return cartRepo.deleteItemList(delitem);
     }
