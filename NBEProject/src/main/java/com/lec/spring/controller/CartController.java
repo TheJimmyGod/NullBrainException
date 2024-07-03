@@ -54,8 +54,11 @@ public class CartController {
             if(cartService.getByUserIdGoodsId(cart.getUser().getUserId()
                     , cart.getGoods().getGoodsNo()) != null){
                 System.out.println("이미 존재하는 제품입니다.");
-                return ResponseEntity.ok((cartService
-                        .getByUserIdGoodsId(cart.getUser().getUserId(), cart.getGoods().getGoodsNo()).getId()));
+                Cart c = cartService.getByUserIdGoodsId(cart.getUser().getUserId()
+                        , cart.getGoods().getGoodsNo());
+                c.setOpt(cart.getOpt());
+                cartService.update(c);
+                return ResponseEntity.ok(c.getId());
             }
             Cart item = Cart.builder()
                     .user(cart.getUser())

@@ -12,8 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <link rel="stylesheet" href="/cho/css/prod/head.css">
     <link rel="stylesheet" href="/cho/css/order/cart.css">
-    <script src="/cho/js/order/cart.js" defer></script>
-    <script src="/cho/js/prod/head.js" defer></script>
+    <script src="/cho/js/order/cart.js"></script>
+    <script src="/cho/js/prod/head.js"></script>
     <title>쇼핑 카트</title>
 
 </head>
@@ -62,9 +62,9 @@
     <input type="checkbox" name="chk" class="fakeRadio" th:value="${item.id}" th:checked="${item.id == cartId}" style="margin-right: 20px;" onclick="updateDelItems(this)">&nbsp;&nbsp;
     <img src="https://via.placeholder.com/100" alt="item image">
     <div class="cart-item-details">
-        <div th:text="${item.goodsName}">상품명</div>
-        <div>옵션명옵션명옵션명</div>
-        <div class="cart-item-price" th:text="${item.price} + '원  ' + ${item.count} + '개'">123,456원  3개</div>
+        <div th:text="${item.goods.name}">상품명</div>
+        <div th:text="${item.opt}" th:if="${item.opt}"></div>
+        <div class="cart-item-price" th:text="${item.goods.price} + '원  ' + ${item.amount} + '개'">123,456원  3개</div>
     </div>
 </div>
 

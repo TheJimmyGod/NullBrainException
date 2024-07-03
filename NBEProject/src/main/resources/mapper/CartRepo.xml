@@ -64,6 +64,7 @@
         <include refid="selectCart"/>
         and
         c.user_id = #{param1}
+        order by c.id desc
         ;
     </select>
 
@@ -100,6 +101,12 @@
         delete from cart
         where id=#{param1}
     </delete>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Cart">
+        update cart
+        set opt=#{opt}
+        where id=#{id}
+    </update>
 </mapper>
 
 

@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.dto.CancelResponse;
 import com.lec.spring.dto.PaymentRequest;
 import com.lec.spring.dto.Token;
 import com.lec.spring.service.PayService;
@@ -46,11 +47,18 @@ public class PaymentController {
         String token = getToken();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.setBearerAuth("token");
+        headers.setBearerAuth(token);
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("imp_uid", imp_uid);
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
+        ResponseEntity<CancelResponse> response = new RestTemplate().exchange(
+                uri,
+                HttpMethod.POST,
+                entity,
+                CancelResponse.class
+                );
+        System.out.println(response);
     }
 
 
