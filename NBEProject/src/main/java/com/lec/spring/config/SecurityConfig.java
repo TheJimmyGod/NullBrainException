@@ -59,6 +59,9 @@ public class SecurityConfig {
                                 .userService(principalOauth2UserService) // userService(OAuth2UserService)
                         )
                         .successHandler(new CustomOAuth2LoginSuccessHandler("/user/test"))
+                        .failureHandler((request, response, exception) -> {
+                            exception.printStackTrace();
+                        })
 
 
                 )
