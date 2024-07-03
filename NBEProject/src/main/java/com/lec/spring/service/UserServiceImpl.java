@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
                 user.setStatus(true);
 
             } else {
-                authorityRepo.updateAuthority(userId, 3); // 비활성 상태로 설정 시 권한 3으로 업데이트
+                authorityRepo.delete(userId); // 비활성 상태로 설정 시 권한 3으로 업데이트
                 user.setStatus(false);
             }
             userRepo.updateStatus(userId, user.isStatus()); // DB에 변경

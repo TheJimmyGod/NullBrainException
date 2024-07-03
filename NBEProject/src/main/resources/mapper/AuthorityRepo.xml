@@ -39,4 +39,6 @@
         SET authority_id = #{auth_id}
         WHERE user_id = #{user_id}
     </update>
+
+
 </mapper>
