@@ -19,4 +19,5 @@ public interface AuthorityRepo {
     int addAuthority(Integer user_id, Integer auth_id);
 
     int updateAuthority(Integer user_id, Integer auth_id);
+
 }

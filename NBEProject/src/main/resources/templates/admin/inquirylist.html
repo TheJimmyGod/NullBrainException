@@ -17,7 +17,7 @@
     <div class="header-right">
         <span>관리자</span>
         <span>eces92@gmail.com</span>
-        <a href="/logout">로그아웃</a>
+        <a th:href="@{/user/login}">로그아웃</a>
     </div>
 </div>
 <div class="sidebar">
@@ -41,7 +41,7 @@
             <thead>
             <tr>
                 <th>문의 유형</th>
-                <th>이름</th>
+                <th>회원 ID</th>
                 <th>이메일</th>
                 <th>문의 제목</th>
                 <th>문의 날짜</th>
@@ -52,7 +52,7 @@
             <tbody>
             <tr th:each="contact : ${contacts}">
                 <td th:text="${contact.type}"></td>
-                <td th:text="${contact.user != null ? contact.user.name : '알 수 없음'}">홍길동</td>
+                <td th:text="${contact.user != null ? contact.user.username : '알 수 없음'}">홍길동</td>
                 <td th:text="${contact.user != null ? contact.user.email : '알 수 없음'}">abc@mail.com</td>
                 <td th:text="${contact.title}">상품 문의</td>
                 <td th:text="${#temporals.format(contact.regdate)}">2024-01-01</td>
