@@ -38,7 +38,7 @@
                 <div class="slideshow-container container pt-5 col-6 col-sm-6 text-center" th:id="${'slideshow-' + post.id}" style="height: 450px; max-height:450px; overflow: hidden;">
                     <div th:each="image : ${post.imageList}">
                         <div class="mySlides">
-                            <img th:src="@{'/upload/' + ${image.file_name}}" style="width:100%; max-height:450px;" alt="none">
+                            <img th:src="@{'/upload/' + ${image.file_name}}" style="width:100%; max-width: 450px; max-height:450px;" alt="none">
                         </div>
                     </div>
                 </div>
