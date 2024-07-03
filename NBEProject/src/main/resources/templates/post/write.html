@@ -14,6 +14,7 @@
     <title>게시글 개제</title>
 </head>
 <body style="margin-bottom: 200px">
+<div th:replace="~{background::body}"></div>
 <div class="p-5 text-left">
     <a th:href="@{/post/list(page=${session.page})}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
 </div>
@@ -41,8 +42,11 @@
             </div>
             <div><span class="text-danger" th:if="${error_imageList}" th:utext="${error_imageList}"></span></div>
         </div>
+        <div class="container" id="shortcutGroup">
+
+        </div>
         <!-- 첨부파일 -->
-        <button type="submit" class="btn btn-outline-dark" style="float: right">작성완료</button>
+        <button type="submit" class="btn btn-secondary" style="float: right; margin-top: 20%">작성완료</button>
     </form>
 </div>
 </body>

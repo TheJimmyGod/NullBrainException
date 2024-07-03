@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="body">
+<style>
+    .aniImg{
+        position: fixed;
+        opacity: 75%;
+        pointer-events: none;
+        z-index: -1;
+    }
+</style>
+    <div class="container">
+        <img class="aniImg cloud" th:src="@{/image/circles2.png}" style="top: 30%; right: 90%; width: 500px;" alt="None">
+        <img class="aniImg cloud" th:src="@{/image/circles.png}" style="top: 90%; right: 90%; width: 600px;" alt="None">
+        <img class="aniImg cloud" th:src="@{/image/circles.png}" style="top: 65%; right: 90%; width: 350px;" alt="None">
+        <img class="aniImg cloud" th:src="@{/image/circles.png}" style="top: 35%; right: 90%; width: 250px;" alt="None">
+        <img class="aniImg cloud" th:src="@{/image/circles.png}" style="top: 20%; right: 90%; width: 120px;" alt="None">
+
+        <img class="aniImg cloud2" th:src="@{/image/circles2.png}" style="top: 41%; left: 90%; width: 500px;" alt="None">
+        <img class="aniImg cloud2" th:src="@{/image/circles2.png}" style="top: 75%; left: 90%; width: 600px;" alt="None">
+        <img class="aniImg cloud2" th:src="@{/image/circles.png}" style="top: 65%; left: 90%; width: 350px;" alt="None">
+        <img class="aniImg cloud2" th:src="@{/image/circles.png}" style="top: 35%; left: 90%; width: 250px;" alt="None">
+        <img class="aniImg cloud2" th:src="@{/image/circles.png}" style="top: 20%; left: 90%; width: 120px;" alt="None">
+
+        <img class="aniImg jeans" th:src="@{/image/Jeans.png}" style="top: 65%; right: 90%; width: 250px; rotate: -30deg;" alt="None">
+        <img class="aniImg shirt" th:src="@{/image/shirts.png}" style="top: 19%; right: 90%; width: 250px; rotate: 30deg;" alt="None">
+        <img class="aniImg clothes" th:src="@{/image/cloths.png}" style="bottom: 65%; left: 92%; width: 250px;  rotate: -30deg;" alt="None">
+        <img class="aniImg dress" th:src="@{/image/dress.png}" style="top: 70%; left: 90%; width: 300px;  rotate: -45deg;" alt="None">
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    let $jeans = $(".jeans");
+    let $shirt = $(".shirt");
+    let $clothes = $(".clothes");
+    let $dress = $(".dress");
+    let $clouds = $(".cloud");
+    let $clouds2 = $(".cloud2");
+
+
+    (function loop() {
+        $jeans
+            .animate({ 'top': '65%', 'rotate': '-30deg' }, 1500)
+            .animate({ 'top': '64.5%', 'rotate': '-28deg'}, 1500);
+        $shirt
+            .animate({ 'top': '20.5%', 'rotate': '25deg'}, 1500)
+            .animate({ 'top': '21%', 'rotate': '35deg'}, 1500);
+        $clothes
+            .animate({ 'bottom': '65%', 'rotate': '-31deg' }, 1500)
+            .animate({ 'bottom': '64.5%' , 'rotate': '-28deg'}, 1500);
+        $dress
+            .animate({ 'top': '68.5%'}, 1500)
+            .animate({ 'top': '68%'}, 1500);
+        $.when($shirt, $clothes, $dress,  $jeans).done(loop);
+    })();
+    (function loopClouds() {
+        let randomNumber = 0;
+        $clouds.each(function(index, element) {
+            randomNumber = Math.random();
+
+            if(randomNumber > 0.5){
+                $(element)
+                    .animate({ 'right': '86%' }, 3000)
+                    .animate({ 'right': '88%' }, 3000);
+            }
+            else
+            {
+                $(element)
+                    .animate({ 'right': '88%' }, 3000)
+                    .animate({ 'right': '86%' }, 3000);
+            }
+        });
+        $clouds2.each(function(index, element) {
+            randomNumber = Math.random();
+
+            if(randomNumber > 0.5){
+                $(element)
+                    .animate({ 'left': '88%' }, 3000)
+                    .animate({ 'left': '90%' }, 3000);
+            }
+            else
+            {
+                $(element)
+                    .animate({ 'left': '90%' }, 3000)
+                    .animate({ 'left': '88%' }, 3000);
+            }
+        });
+        setTimeout(loopClouds, 4500);
+    })();
+</script>
+</th:block>
+</html>

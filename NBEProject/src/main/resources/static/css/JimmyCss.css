@@ -161,3 +161,17 @@
 .selected {
     background-color: lightgray; /* 원하는 배경색 지정 */
 }
+
+.selectImage{
+    transition: filter 1s ease; /* 변화 효과를 주기 위한 CSS transition */
+}
+
+.selectImage:hover{
+    filter: grayscale(100%);
+}
+
+.selectInput{
+    background-color: yellow;
+
+    transition: background-color 3s ease; /* 변화 효과를 주기 위한 CSS transition */
+}
