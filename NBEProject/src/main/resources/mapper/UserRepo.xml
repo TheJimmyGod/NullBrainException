@@ -9,7 +9,7 @@
 
     <insert id="insertOAuth" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO user (id, username, password, regdate, name, email, provider, providerId, phone, birth)
-        VALUE (#{id}, #{username}, #{password}, #{regdate}, #{name}, #{email}, #{provider}, #{provider}, #{phone}, #{birth})
+        VALUE (#{id}, #{username}, #{password}, #{regdate}, #{name}, #{email}, #{provider}, #{providerId}, #{phone}, #{birth})
     </insert>
 
     <insert id="saveUser" parameterType="com.lec.spring.dto.UserDto">

@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import java.io.IOException;
@@ -42,6 +43,18 @@ public class CustomOAuth2LoginSuccessHandler extends SavedRequestAwareAuthentica
 
         Integer id = userDetails.getUser().getId();
         System.out.println(id);
+        System.out.println(userDetails.getUser());
+
+//        String prov = userDetails.getUser().getProviderId();
+
+//        System.out.println(prov);
+//        if(prov.equals("naver") || prov.equals("facebook") || prov.equals("google") ) {
+//
+//            System.out.println("naver/facebook/google 로그인성공");
+//
+//
+//
+//        }
 
 
 
