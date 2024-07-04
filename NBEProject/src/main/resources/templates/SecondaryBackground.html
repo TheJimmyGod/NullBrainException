@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="body">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+<style>
+    .im, .im2{
+        position: fixed;
+        z-index: -5;
+        pointer-events: none;
+        opacity: 30%;
+        color: #035599;
+    }
+</style>
+<body>
+    <i class="im fas fa-tshirt fa-5x"></i>
+    <i class="im fas fa-tshirt fa-spin fa-5x"></i>
+    <i class="im fas fa-tshirt fa-spin fa-5x"></i>
+    <i class="im fas fa-tshirt fa-5x"></i>
+
+    <i class="im2 fas fa-socks fa-spin fa-5x"></i>
+    <i class="im2 fas fa-socks fa-spin fa-5x"></i>
+    <i class="im2 fas fa-socks fa-5x"></i>
+    <i class="im2 fas fa-socks fa-5x"></i>
+</body>
+<script th:inline="javascript">
+    let $rainClothes = $(".im");
+    let $rainClothes2 = $(".im2");
+    let imArr = new Map();
+    let imArr2 = new Map();
+    let r_time = 6000;
+    let r_time2 = 4000;
+
+    let last_x = 0;
+    let last_x2 = 0;
+
+    $(document).ready(function(){
+        for(let index = 0; index < $rainClothes.length; ++index)
+        {
+            let rand = parseInt(Math.floor(Math.random() * 10 + 1) / 2);
+            $rainClothes.eq(index).removeClass("fa-5x");
+            imArr.set(index, `fa-${rand}x`);
+            $rainClothes.eq(index).addClass(imArr.get(index));
+       
+        }
+        for(let index = 0; index < $rainClothes2.length; ++index)
+        {
+            let rand = parseInt(Math.floor(Math.random() * 10 + 1) / 2);
+            $rainClothes2.eq(index).removeClass("fa-5x");
+            imArr2.set(index, `fa-${rand}x`);
+            $rainClothes2.eq(index).addClass(imArr2.get(index));
+        }
+    });
+
+    (function loop() {
+
+        $rainClothes.each(function(index, element) {
+        let randomNumber = 0;
+        randomNumber = Math.random();
+        randomNumber = (randomNumber == 0) ? 1 : randomNumber;
+        let x = (100 * randomNumber);
+        let t = 5000 + x * 100;
+        r_time = Math.max(r_time, t);
+        $(element).css("right", `${x + ((last_x) ? last_x / 10 * ((Math.random() >= 0.5) ? -1 : 1) : 2 * ((Math.random() >= 0.5) ? -1 : 1))}%`);
+        
+        $(element).css("top", (randomNumber >= 0.5) ? `100%` : `-10%`);
+        $(element).css("opacity", `30%`);
+        $(element).animate({ 'top': (randomNumber >= 0.5) ? '0%' : '100%', 'opacity':'0%' }, t);
+        $.when($(element)).done(changeSize($(element), index));
+        last_x = x;
+    });
+    $.when($rainClothes).done(loop);
+})();
+
+    (function loop2(){
+        $rainClothes2.each(function(index, element) {
+        let randomNumber2 = 0;
+        randomNumber2 = Math.random();
+        randomNumber2 = (randomNumber2 == 0) ? 1 : randomNumber2;
+        let x = (100 * randomNumber2);
+        let t = 4000 + x * 100;
+        r_time2 = Math.max(r_time, t);
+        $(element).css("right", `${x + ((last_x2) ? last_x2 / 10 * ((Math.random() >= 0.5) ? -1 : 1) : 2 * ((Math.random() >= 0.5) ? -1 : 1))}%`);
+        $(element).css("top", (randomNumber2 >= 0.5) ? `100%` : `-10%`);
+        $(element).css("opacity", `30%`);
+        $(element).animate({ 'top': (randomNumber2 >= 0.5) ? '0%' : '100%', 'opacity':'0%' }, t);
+        $.when($(element)).done(changeSize2($(element), index));
+        last_x2 = x;
+    });
+    $.when($rainClothes2).done(loop2);
+})();
+function changeSize(element,index)
+    {
+        let rand = parseInt(Math.floor(Math.random() * 10 + 1) / 2);
+        $(element).removeClass(imArr.get(index));
+        $(element).addClass(`fa-${rand}x`);
+        imArr.set(index, `fa-${rand}x`);
+    }
+    function changeSize2(element,index)
+    {
+        let rand = parseInt(Math.floor(Math.random() * 10 + 1) / 2);
+        $(element).removeClass(imArr2.get(index));
+        $(element).addClass(`fa-${rand}x`);
+        imArr2.set(index, `fa-${rand}x`);
+    }
+</script>
+</th:block>
+</html>

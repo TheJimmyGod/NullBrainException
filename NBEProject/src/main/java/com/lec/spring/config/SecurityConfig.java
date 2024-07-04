@@ -30,7 +30,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/post/**").authenticated()
+                        .requestMatchers("/post/**", "/mypage/**", "/nbe/**").authenticated()
 //                        .requestMatchers("/post/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
 //                        .requestMatchers("/**").hasAnyRole("!USER_BAN")
@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(principalOauth2UserService) // userService(OAuth2UserService)
                         )
-                        .successHandler(new CustomOAuth2LoginSuccessHandler("/user/test"))
+                        .successHandler(new CustomOAuth2LoginSuccessHandler("/nbe/home"))
                         .failureHandler((request, response, exception) -> {
                             exception.printStackTrace();
                         })

@@ -11,8 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class U {
     public static User getLoggedUser(){
         PrincipalDetails userDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userDetails.getUser();
-        return user;
+        return userDetails.getUser();
     }
 
     public static HttpServletRequest getRequest() {

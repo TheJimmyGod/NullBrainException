@@ -84,8 +84,8 @@ public class MyServiceImpl implements MyService {
                 }
             }
 
-            Address newAddress = Address.builder().
-                    name(address.getName())
+            Address newAddress = Address.builder()
+                    .name(address.getName())
                     .street_addr(address.getStreet_addr())
                     .detail_addr(address.getDetail_addr())
                     .user_id(id)
