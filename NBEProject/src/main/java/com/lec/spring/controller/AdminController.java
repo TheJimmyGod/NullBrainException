@@ -12,9 +12,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -275,8 +272,6 @@ public class AdminController {
 
     }
 
-
-    // 취소 문의 페이지
     @RequestMapping("/cancel")
     public String cancel(@RequestParam(value = "page", defaultValue = "1") int page,
                          @RequestParam(value = "username", required = false) String username,
@@ -402,7 +397,7 @@ public class AdminController {
     @RequestMapping("/inquirydetail")
     public String inquiryDetail(@RequestParam("id") int id,
             Model model){
-
+        
         // 문의사항 id를 가져온다
         Contact contact = contactService.getContactById(id);
         if (contact != null) {
