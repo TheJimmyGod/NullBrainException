@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="head">
-    <div class="container-2">
-        <i name="menuIcon" class="fa-regular fa-user user"></i>&nbsp;&nbsp;&nbsp;
-        <div class="cart-icon">
-            <i name="menuIcon" class="fa-solid fa-cart-plus cart"></i>
-            <span class="cart-badge" th:text="${cartNum}">3</span>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <link rel="stylesheet" href="shopping.css">
+    <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <header class="py-4 mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="">
+                <a href="/nbe/home"><div class="text-3xl font-bold">LOGO</div>
+                </a>
+            </div>
+            <div class="flex space-x-4 items-center">
+                <a href="/user/login" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-sign-in-alt text-2xl"></i><br>
+                    <span style="font-size: 9px">로그인</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-user-plus text-2xl"></i><br>
+                    <span style="font-size: 9px">회원가입</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-user text-2xl"></i><br>
+                    <span style="font-size: 9px; text-align: center;">마이페이지</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-gray-800 relative">
+                    <i class="fas fa-shopping-cart text-2xl"></i><br>
+                    <span style="font-size: 9px">장바구니</span>
+                </a>
+            </div>
         </div>
-    </div>
-    <header class="header">
-        <div class="logo">
-            <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-
-        <div class="menu">
-            <button class="HOMEButton home">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="HOMEButton post">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="HOMEButton recent">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="HOMEButton accButton" onclick="category()">ACC</button>
-        </div>
-
+        <nav class="mt-4">
+            <ul class="flex justify-center space-x-6">
+                <li><a href="#" class="text-gray-800 font-bold">HOME</a></li>
+                <li><a href="#" class="text-gray-800 font-bold">NOTICE</a></li>
+                <li><a href="#" class="text-gray-800 font-bold">RECENT</a></li>
+                <li><a href="/nbe/pr" class="text-gray-800 font-bold">CATEGORY</a></li>
+            </ul>
+        </nav>
     </header>
-    <script th:src="@{/cho/js/prod/head.js}" type="text/javascript"></script>
 </th:block>
 </html>
