@@ -105,7 +105,7 @@ public class UserController {
 
         Contact contact = Contact.builder()
                 .user_id(2)
-                .goods_id(1)
+                .goods_no(1)
                 .title(title)
 //                .type(type)
                 .content(content)

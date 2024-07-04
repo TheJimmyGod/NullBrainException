@@ -62,7 +62,7 @@
 
     <insert id="save" parameterType="com.lec.spring.domain.shop.Review"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO review (user_id, goods_id, title, content, rate)
+        INSERT INTO review (user_id, goods_no, title, content, rate)
         VALUES (#{user_id}, #{goodsId}, #{title}, #{content}, #{rate})
     </insert>
 

@@ -18,8 +18,27 @@
 </head>
 <body>
 
+<header class="header">
+    <div class="menu">
+        <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton home">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton post">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton recent">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton accButton" onclick="category()">ACC</button><!-- TODO -->
+    </div>
+    <div class="container">
+        <div class="container-1">
+            <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>&nbsp;
+            <input type="search" id="search" placeholder="Search..." />
+        </div>
+        <div class="container-2">
+            <i name="menuIcon" class="fa-regular fa-user"></i>
+            <i name="menuIcon" class="fa-solid fa-cart-plus"></i>
+            <span class="cart-badge" th:text="${cartNum}">3</span>
+        </div>
+    </div><!-- TODO -->
+</header><br><br>
 <div class="title-container">
-    <div th:replace="~{prod/header :: head}"></div>
     <div class="title">
         <hr>
         <h2>SHOPPING CART</h2>

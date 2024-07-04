@@ -17,7 +17,13 @@
 <body>
 <th:block th:replace="~{/prod/header::head}"></th:block>
 <div class="container">
-    <h2 class="title">최근 본 상품</h2>
+    <div class="title-container">
+        <div class="title">
+            <hr><br>
+            <h2>최근 본 상품</h2><br>
+            <hr>
+        </div>
+    </div>
     <div class="product-list" th:each="e : ${items}">
         <div class="product-item">
             <div class="product-image">
