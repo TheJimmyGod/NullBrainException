@@ -1,0 +1,147 @@
+.header{
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu{
+    height: 80px;
+    display: flex;
+    align-items: center;
+    width: 800px;
+    margin-left: 90px;
+}
+
+.logoButton{
+    height: 70px;
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
+    /* padding-top: 0px; */
+    text-decoration: none;
+}
+
+.HOMEButton{
+    border: none;
+    background-color: white;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.container{
+    width: 500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.container-1{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.container-1 input#search{
+    width: 300px;
+    height: 50px;
+    font-size: 10pt;
+    float: left;
+    color: #63717f;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.container-1 .icon{
+    position: absolute;
+    left: 20px;
+    color: #4f5b66;
+}
+
+[name="menuIcon"]{
+    font-size: 30px;
+}
+
+.container-2{
+    width: 200px;
+    padding-right: 40px;
+}
+
+.transInfo{
+    border: 1px solid #8C8C8C;
+    width: 800px;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.transInfo2{
+    /* border: 2px solid; */
+    width: 750px;
+    height: 240px;
+}
+
+.status{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.productImage{
+    /* border: 1px solid #4f5b66; */
+    height: 100px;
+    width: 100px;
+}
+
+
+
+/* Pagination links */
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+/* Add a grey background color on mouse-over */
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.pagination2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.productInfo{
+    text-decoration: none;
+    color: black;
+}
+
+.btnDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 버튼 사이의 간격을 조정 */
+    margin-top: 10px;
+}
+
+.btnDiv a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 10px;
+    border: 1px solid #8C8C8C;
+    background-color: #A6A6A6;
+    padding: 0 20px; /* 좌우 패딩을 추가하여 버튼 너비 조정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
