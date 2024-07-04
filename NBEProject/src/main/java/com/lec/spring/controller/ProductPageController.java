@@ -50,14 +50,14 @@ public class ProductPageController {
     public String home(Model model){
         int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
         model.addAttribute("cartCnt", cartCnt);
-        return "/cho/prod/main";
+        return "cho/prod/main";
     }
 
     // 메인 페이지에서 카테고리 클릭시 제품 리스트 이동
     @GetMapping("/prodList")
     public String list(String category1, String category2, Integer page, Model model){
         goodsService.getProds(category1, category2, page, model);
-        return "/cho/prod/list";
+        return "cho/prod/list";
     }
     // 제품 상세 페이지
     @GetMapping("/detail/{good_no}")
@@ -76,7 +76,7 @@ public class ProductPageController {
             recentService.delete(user.getId(), good_no);
             recentService.addRecent(user.getId(), good_no);
         }
-        return "/cho/prod/detail";
+        return "cho/prod/detail";
     }
 
     // 제품 최근 목록
@@ -109,7 +109,7 @@ public class ProductPageController {
                 .user(orderUser)
                 .build();
         cartService.insert(item);
-        return "redirect:/cart?userId=1";
+        return "redirect:/cart";
     }
 
 

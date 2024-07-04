@@ -80,7 +80,7 @@ public class ReviewController {
         saveFile(review.getId(), file2);
 //        System.out.println(title);
 
-        return "redirect:/request?userId=" + user_id;
+        return "redirect:/request";
     }
 
     private void saveFile(int reviewId, MultipartFile file) {

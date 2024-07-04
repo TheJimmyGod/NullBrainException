@@ -55,7 +55,7 @@ $(document).ready(function() {
     })
 
     cart.click(function (){
-        location.href = "http://localhost:8080/cart?userId=1";
+        location.href = "../../cart";
     })
 
     $('.cart').click(function(){

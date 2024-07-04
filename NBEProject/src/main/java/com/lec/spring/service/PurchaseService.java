@@ -14,6 +14,8 @@ public interface PurchaseService {
     OrderForm createPurchase(List<Cart> items, Integer userId);
     int delete();
 
+    List<Purchase> myPurchase(Integer userId);
+
     // 전체 주문 수 목록
     List<Purchase> orderList();
 
@@ -22,6 +24,9 @@ public interface PurchaseService {
 
     // 사용자의 이름으로 확인하기
     List<Purchase> orderUsername(String name);
+
+    // 사용자가 구매한 물건확인
+    List<Purchase> getUserPayed(String username);
 
     Long cntPurchaseItem();
 

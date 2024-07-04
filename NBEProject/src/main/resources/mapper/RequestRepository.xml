@@ -60,6 +60,7 @@
 
     <resultMap id="mapStatus" type="com.lec.spring.domain.reviewGoods">
         <result column="user_id" property="user_id"/>
+        <result column="merchant_id" property="m_id"/>
         <result column="status" property="status"/>
         <result column="amount" property="amount"/>
         <result column="opt" property="opt"/>
@@ -69,7 +70,7 @@
     </resultMap>
 
     <select id="findByUserId" parameterType="int" resultMap="mapStatus">
-        SELECT p.id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name
+        SELECT p.id, p.merchant_id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name
         FROM purchase p JOIN pay a ON p.pay_id = a.id
                         JOIN goods g ON p.goods_id = g.goods_no
         WHERE p.user_id = #{userId}

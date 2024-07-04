@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+import com.lec.spring.domain.shop.Pay;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class reviewGoods {
 
     private Integer id;
+    private String m_id;
     private Integer user_id;
     private String amount;
     private String opt;

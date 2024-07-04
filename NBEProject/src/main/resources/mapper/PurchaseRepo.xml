@@ -62,14 +62,20 @@
                 join address a
                     on a.user_id=p.user_id
         WHERE 1=1
-        and merchant_id=#{param1}
         and a.isDefault=true
+
     </sql>
 
     <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
         <include refid="selectPurchase"/>
-        and merchant_id=#{param1}
+        and p.merchant_id=#{param1}
     </select>
+
+    <select id="findByUser" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and p.user_id=#{param1}
+    </select>
+
 
     <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">
         <id property="id" column="id"/>
