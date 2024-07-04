@@ -68,7 +68,7 @@ public class ProductPageController {
 
         goodsService.getReviews(good_no, page, model);
         String url = U.getRequest().getRequestURI();
-        String currentUrl = "/nbe/detail/" + good_no;
+        String currentUrl = "nbe/detail/" + good_no;
 
 
 

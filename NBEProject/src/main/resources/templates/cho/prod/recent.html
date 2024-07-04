@@ -17,7 +17,14 @@
 <div class="container">
     <div th:replace="~{/cho/prod/header :: head}"></div>
 
-    <h2>최근 본 상품</h2>
+    <div class="title-container">
+        <div class="title">
+            <hr>
+            <h2>SHOPPING CART</h2>
+            <hr>
+        </div>
+    </div>
+
     <div class="product-list" >
         <div class="product-item" th:each="e : ${recentGoods}">
             <div class="product-image">

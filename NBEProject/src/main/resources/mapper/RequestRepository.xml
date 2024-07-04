@@ -58,21 +58,23 @@
 <!--        and user_id=#{userId}-->
 <!--    </select>-->
 
-    <resultMap id="mapStatus" type="com.lec.spring.domain.reviewGoods">
+    <resultMap id="mapStatus" type="com.lec.spring.domain.ReviewGoods">
         <result column="user_id" property="user_id"/>
-        <result column="merchant_id" property="m_id"/>
         <result column="status" property="status"/>
         <result column="amount" property="amount"/>
         <result column="opt" property="opt"/>
         <result column="price" property="price"/>
         <result column="image_1" property="image"/>
         <result column="name" property="goodsName"/>
+        <result column="regdate" property="regdate"/>
     </resultMap>
 
     <select id="findByUserId" parameterType="int" resultMap="mapStatus">
-        SELECT p.id, p.merchant_id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name
+        SELECT p.id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name, p.regdate
         FROM purchase p JOIN pay a ON p.pay_id = a.id
                         JOIN goods g ON p.goods_id = g.goods_no
         WHERE p.user_id = #{userId}
     </select>
+
+
 </mapper>

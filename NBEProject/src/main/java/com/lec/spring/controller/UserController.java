@@ -47,7 +47,7 @@ public class UserController {
 
     @RequestMapping("/enterAddress")
     private String enterAddress(){
-        return "/enterAddress";
+        return "enterAddress";
     }
 
     @RequestMapping("/login")
@@ -92,7 +92,7 @@ public class UserController {
 
         model.addAttribute("contact", contact);
 
-        return "/user/contact";
+        return "user/contact";
     }
 
     @RequestMapping("/contactOk")
@@ -105,7 +105,7 @@ public class UserController {
 
         Contact contact = Contact.builder()
                 .user_id(2)
-                .goods_id(1)
+                .goods_no(1)
                 .title(title)
 //                .type(type)
                 .content(content)
