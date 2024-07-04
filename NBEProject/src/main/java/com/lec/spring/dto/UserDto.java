@@ -40,11 +40,8 @@ public class UserDto {
 
     private Integer id;
     final private Boolean is_default = true;
-    @NotBlank(message = "주소를 입력해주세요")
     private String street_addr;
-    @NotBlank(message = "상세 주소를 입력해주세요")
     private String detail_addr;
-    @NotBlank(message = "주소지명을 입력해주세요")
     private String addressName;
 
     //Authority 부분

@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.RegisterValidator;
 import com.lec.spring.domain.shop.Contact;
 import com.lec.spring.domain.shop.ContactImage;
 import com.lec.spring.dto.UserDto;
@@ -41,6 +42,9 @@ public class UserController {
     @Autowired
     private ContactImageService contactImageService;
 
+    @Autowired
+    private RegisterValidator registerValidator;
+
     @RequestMapping("/enterAddress")
     private String enterAddress(){
         return "/enterAddress";
@@ -58,6 +62,7 @@ public class UserController {
     @PostMapping("/register")
     public String registerOk(@Valid @ModelAttribute UserDto userDto, BindingResult result,
                              Model model, RedirectAttributes redirectAttributes) {
+        registerValidator.validate(userDto, result);
         if(result.hasErrors()){
             redirectAttributes.addFlashAttribute("username", userDto.getUsername());
             redirectAttributes.addFlashAttribute("name", userDto.getName());
@@ -70,7 +75,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("addressname", userDto.getAddressName());
             List<FieldError> errList = result.getFieldErrors();
             for(FieldError err : errList) {
-                redirectAttributes.addFlashAttribute("error", err.getCode());
+                redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
                 break;
             }
             return "redirect:/user/register";
