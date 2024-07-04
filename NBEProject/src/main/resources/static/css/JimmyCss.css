@@ -15,7 +15,8 @@
     display: none;
 }
 
-* {box-sizing:border-box;} 
+* {box-sizing:border-box;}
+
 .prev, .next {
     cursor: pointer;
     position: absolute;

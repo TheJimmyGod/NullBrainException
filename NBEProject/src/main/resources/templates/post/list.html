@@ -13,8 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/JimmyCss.css}">
-    <link rel="stylesheet" href="/cho/css/prod/head.css">
-    <link rel="stylesheet" href="/cho/css/prod/category.css">
     <title>게시글</title>
 </head>
 
@@ -22,8 +20,8 @@
 <a th:href="@{'/post/write'}" class="col-1 col-sm-1" style="bottom: 20%; right: 5%; position: fixed; text-decoration: none; color: lightpink;"><i class="btn btn-secondary fas fa-images fa-4x"></i></a>
 <div th:replace="~{background::body}"></div>
 <div th:replace="~{SecondaryBackground::body}"></div>
-    <div class="container">
         <div th:replace="~{/cho/prod/header :: head}"></div>
+    <div class="container">
         <div th:replace="~{/cho/prod/category :: category}"></div>
 
         <table>
@@ -38,7 +36,7 @@
                 <div class="slideshow-container container pt-5 col-6 col-sm-6 text-center" th:id="${'slideshow-' + post.id}" style="height: 450px; max-height:450px; overflow: hidden;">
                     <div th:each="image : ${post.imageList}">
                         <div class="mySlides">
-                            <img th:src="@{'/upload/' + ${image.file_name}}" style="width:100%; max-width: 450px; max-height:450px;" alt="none">
+                            <img th:src="@{'/upload/' + ${image.file_name}}" style="width:100%; max-width: 450px; max-height:450px;margin-left: auto;margin-right: auto" alt="none">
                         </div>
                     </div>
                 </div>
@@ -54,7 +52,7 @@
                 </div>
                 <br>
                 <div>
-                    <button th:data-post-id="${post.id}" th:id="${'like-' + post.id}" class="col-1 col-sm-1" style="text-decoration: none; color: black; border: none; background-color: white; outline: none; box-shadow: none; width: 32px;"><small th:id="'likeCount'+ ${post.id}" th:text="''"></small><i id="heart" class="far fa-heart fa-2x"></i></button>
+                    <button th:data-post-id="${post.id}" th:id="${'like-' + post.id}" class="col-1 col-sm-1" style="text-decoration: none; color: black; border: none; outline: none; box-shadow: none; width: 32px;"><small th:id="'likeCount'+ ${post.id}" th:text="''"></small><i id="heart" class="far fa-heart fa-2x"></i></button>
                     &nbsp;<a th:href="@{'/post/comment/' + ${post.id}}" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="far fa-comment-dots fa-2x"></i></a>
                 </div>
                 <br><br><br>
