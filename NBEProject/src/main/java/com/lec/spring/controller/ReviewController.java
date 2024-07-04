@@ -7,7 +7,6 @@ import com.lec.spring.domain.shop.ReviewImage;
 import com.lec.spring.service.RequestService;
 import com.lec.spring.service.ReviewImageService;
 import com.lec.spring.service.ReviewService;
-import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -69,10 +68,10 @@ public class ReviewController {
                 .goodsId("65")
                 .title(title)
 //                .type(type)
-                .user(U.getLoggedUser())
+                .user_id(user_id)
                 .content(content)
                 .goodsId(goodsId)
-                .rate((int)rate)
+                .rate(rate)
                 .build();
 
         reviewService.writeReview(review);
