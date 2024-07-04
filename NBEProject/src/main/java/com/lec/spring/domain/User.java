@@ -38,6 +38,7 @@ public class User {
     private List<Authority> authorities;
 
     // 활성/비활성 상태를 나타내는 필드
+    @Builder.Default
     private boolean status = true;
 
     //OAuth2

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class reviewGoods {
+public class ReviewGoods {
 
     private Integer id;
     private Integer user_id;
