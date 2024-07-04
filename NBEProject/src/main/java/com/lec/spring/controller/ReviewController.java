@@ -1,12 +1,15 @@
 package com.lec.spring.controller;
 
 
-import com.lec.spring.domain.ReviewGoods;
+import com.lec.spring.domain.User;
+import com.lec.spring.domain.reviewGoods;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.domain.shop.ReviewImage;
 import com.lec.spring.service.RequestService;
 import com.lec.spring.service.ReviewImageService;
 import com.lec.spring.service.ReviewService;
+import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -34,11 +37,14 @@ public class ReviewController {
     private RequestService requestService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ReviewImageService reviewImageService;
 
     @RequestMapping("/review")
     public String review(@RequestParam("id") Integer id, Model model){
-        ReviewGoods purchase = reviewService.getPurchaseInfo(id);
+        reviewGoods purchase = reviewService.getPurchaseInfo(id);
 
         model.addAttribute("purchase", purchase);
         System.out.println("purchase는 뭐가 들어오지?: " + purchase);
@@ -55,6 +61,8 @@ public class ReviewController {
                              Integer user_id
     ) throws IOException {
 
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
 //        // 예시로 유저 ID를 1로 가정
 //        Integer userId = 1;
 //
@@ -68,7 +76,7 @@ public class ReviewController {
                 .goodsId("65")
                 .title(title)
 //                .type(type)
-                .user_id(user_id)
+                .user_id(user.getId())
                 .content(content)
                 .goodsId(goodsId)
                 .rate(rate)
@@ -80,7 +88,7 @@ public class ReviewController {
         saveFile(review.getId(), file2);
 //        System.out.println(title);
 
-        return "redirect:/request?userId=" + user_id;
+        return "redirect:/request?userId=" + user.getId();
     }
 
     private void saveFile(int reviewId, MultipartFile file) {
