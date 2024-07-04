@@ -50,7 +50,7 @@ public class ProductPageController {
     public String home(Model model){
         int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
         model.addAttribute("cartCnt", cartCnt);
-        return "/cho/prod/main";
+        return "cho/prod/main";
     }
 
     // 메인 페이지에서 카테고리 클릭시 제품 리스트 이동
