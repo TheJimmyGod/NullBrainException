@@ -3,8 +3,8 @@
 <mapper namespace="com.lec.spring.repository.ContactRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Contact"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into contact (user_id, goods_id, title, content, type)
-            VALUE (#{user_id}, #{goods_id}, #{title}, #{content} ,#{type})
+        insert into contact (user_id, goods_no, title, content, type)
+            VALUE (#{user_id}, #{goods_no}, #{title}, #{content} ,#{type})
     </insert>
 
     <delete id="delete" flushCache="true">
@@ -41,14 +41,14 @@
     </update>
 
     <select id="findAllContacts" resultType="com.lec.spring.domain.shop.Contact">
-        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+        SELECT id, user_id, goods_no, title, content, status, answer, regdate, type
         FROM contact
         ORDER BY regdate DESC
         limit #{limit} offset #{offset}
     </select>
 
     <select id="allContacts" resultType="com.lec.spring.domain.shop.Contact">
-    SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+    SELECT id, user_id, goods_no, title, content, status, answer, regdate, type
     FROM contact
     </select>
 
@@ -69,7 +69,7 @@
     </select>
 
     <select id="findContactsByStatus" resultType="com.lec.spring.domain.shop.Contact">
-        SELECT id, user_id, goods_id, title, content, status, answer, regdate, type
+        SELECT id, user_id, goods_no, title, content, status, answer, regdate, type
         FROM contact
         WHERE status = #{status}
         ORDER BY regdate DESC

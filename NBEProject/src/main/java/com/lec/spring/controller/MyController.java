@@ -103,7 +103,7 @@ public class MyController {
 
     @PostMapping("/contactOk")
     public String contactOk(
-                            @RequestParam(value = "goods_id", required = false) Integer goods_id,
+                            @RequestParam(value = "goods_no", required = false) Integer goods_no,
                             @RequestParam("title") String title,
                             @RequestParam("type") String type,
                             @RequestParam("content") String content,
@@ -117,7 +117,7 @@ public class MyController {
 
         Contact contact = Contact.builder()
                 .user_id(userId)
-                .goods_id((goods_id == null) ? 100073 : goods_id)
+                .goods_no((goods_no == null) ? 100073 : goods_no)
                 .title(title)
                 .type(type)
                 .content(content)

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Contact {
     private Integer id;
     private Integer user_id;
-    private Integer goods_id;
+    private Integer goods_no;
 
     private LocalDateTime regdate;
     private String type;

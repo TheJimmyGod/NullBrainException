@@ -21,7 +21,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 628px;
-            height: 786px;
+            height: 900px;
             box-sizing: border-box;
         }
         .review-container h1 {
@@ -125,6 +125,16 @@
             margin-right: 10px;
             border-radius: 4px;
         }
+
+        #title{
+            width: 400px;
+        }
+
+        #content{
+            width: 550px;
+            height: 200px;
+        }
+
     </style>
 </head>
 <script
@@ -132,7 +142,7 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
 <body>
-<div class="review-container">
+<div class="review-container"><br>
     <h1>리뷰 작성</h1>
     <img th:src="${purchase.image}" class="product-image" alt="Product Image">
     <div class="product-info">
@@ -160,16 +170,16 @@
                 <input type="file" name="file2" id="file2" accept="image/jpeg, image/png, image/jpg" th:onchange="'CheckImageFile(this)'">
             </div>
             <div id="fileList" class="file-list"></div>
-        </div>
+        </div><br>
 <!--        <div class="photo-preview" id="photo-preview"></div>-->
         <div class="form-group">
-            <label for="title">제목</label>
+            <label for="title">제목</label><br>
             <input type="text" id="title" name="title" value="">
-        </div>
+        </div><br>
         <div class="form-group">
-            <label for="content">요청사유</label>
+            <label for="content">리뷰내용</label><br>
             <textarea id="content" name="content" placeholder="리뷰를 작성해주세요..."></textarea>
-        </div>
+        </div><br>
         <button type="submit" class="submit-btn">작성완료</button>
     </form>
 </div>
