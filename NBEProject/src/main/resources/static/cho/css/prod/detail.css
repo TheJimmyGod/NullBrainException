@@ -121,42 +121,91 @@ main {
     background: #6c757d;
 }
 
+/* 모바일 우선 반응형 CSS */
+p {
+    word-wrap: break-word;
+}
 .reviews {
-    margin-top: 40px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
 }
 
 .reviews h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+.reviewCtn {
+    font-weight: bold;
+}
+
+
+.reviewRate {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffc107; /* 별점 색상 */
+}
+
+.review-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .review {
-    border-bottom: 1px solid #ddd;
-    padding: 20px 0;
+    border: 1px solid #ddd; /* 예시로 추가된 스타일 */
+    margin-bottom: 20px; /* 예시로 추가된 스타일 */
 }
 
+.review-body {
+    padding: 1%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+
 .review-header {
+    padding-left: 2%;
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .profile-image {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
 .user-info {
-    flex-grow: 1;
+    flex: 1;
 }
 
 .username {
     font-weight: bold;
+    margin: 0;
 }
 
 .user-details {
-    color: #777;
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .rating {
@@ -164,26 +213,66 @@ main {
     align-items: center;
 }
 
-.rating span {
-    color: #ff5e5e;
-    font-size: 18px;
+.star {
+    color: #ccc; /* 별점 색상 */
+    font-size: 1.2rem;
     margin-right: 5px;
 }
 
-.review-body {
+.active {
+    color: #ffc107; /* 활성화된 별의 색상 */
+}
+
+
+
+
+.review-content {
+    max-height: 50px; /* 최대 높이 설정 */
+    overflow: hidden; /* 넘치는 부분 숨김 처리 */
+    transition: max-height 0.3s ease;
+}
+
+.expanded {
+    max-height: none !important; /* 'expanded' 클래스가 적용되면 max-height를 해제하여 전체 내용을 보여줌 */
+}
+
+.toggle-btn {
+    width: 7%;
+    font-size: 0.6em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    padding: 8px 0;
+}
+
+
+
+.review-toggle {
     margin-top: 10px;
 }
 
-.review-body p {
-    margin: 10px 0;
-    white-space: pre-wrap;
+.toggle-link {
+    color: #007bff;
+    text-decoration: none;
 }
 
-.review-image {
-    width: 100px;
-    height: 100px;
-    margin-top: 10px;
+.review-image{
+    width: 40%;
+    height: 100%; /* 이미지 컨테이너의 높이를 부모 요소와 같게 설정 */
+    overflow: hidden; /* 이미지가 컨테이너를 넘치지 않도록 함 */
 }
+
+.review-image img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+
+}
+
 
 .detail-image{
     padding: 0;

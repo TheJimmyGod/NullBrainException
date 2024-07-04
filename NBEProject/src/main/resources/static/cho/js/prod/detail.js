@@ -9,6 +9,27 @@ $(document).ready(function() {
 
 
     // 스크롤 유지 end
+
+
+
+    // 별점 표시
+    $('.review').each(function() {
+        let rating = parseInt($(this).find('.rating-score').text()); // 평점 가져오기
+        let stars = $(this).find('.star'); // 별 요소들
+
+        // 전체 별 채우기
+        for (let i = 0; i < rating; i++) {
+            stars.eq(i).addClass('active');
+        }
+    });
+
+    let stars = $('.rating-total').find('.star');
+    let totalValue = $('.reviewRate').text();
+    for (let i = 0; i < totalValue; i++) {
+        stars.eq(i).addClass('active');
+    }
+
+
     // 수량 옵션
     $('#decrease').click(function() {
         let currentValue = parseInt($('#counter').val());
@@ -120,13 +141,15 @@ $(document).ready(function() {
     });
     // 구매, 장바구니 정보 전송 end
     // 리뷰 보기 기능
-    $('.review-btn').click(function (){
-        $('.review-block').toggleClass('hidden');
-        // if($.cookie('review')){
-        //     $.removeCookie('review');
-        // }else {
-        //     $.cookie('review','ok');
-        // }
+    $('.toggle-btn').click(function() {
+        var content = $(this).prev('.review-content');
+        content.toggleClass('expanded'); // 'expanded' 클래스를 토글하여 내용을 확장 또는 축소
+
+        if (content.hasClass('expanded')) {
+            $(this).text('접기'); // 버튼 텍스트 변경
+        } else {
+            $(this).text('더보기'); // 버튼 텍스트 변경
+        }
     });
     // 리뷰 더보기 기능
     var reviewContent = $('.review-content');
@@ -157,7 +180,7 @@ $(document).ready(function() {
             modal.css("display", "none");
         }
     });
-    $.removeCook
+
     // 모달 end
 
 
