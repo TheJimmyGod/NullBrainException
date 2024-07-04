@@ -21,9 +21,11 @@ public class Review {
     private LocalDateTime regdate;
     private String title;
     private String content;
-    private Double rate;
+    private Integer rate;
 
     @ToString.Exclude
     @Builder.Default
     private List<ReviewImage> images = new ArrayList<>();
+
+    private Integer user_id;
 }
