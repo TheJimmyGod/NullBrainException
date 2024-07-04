@@ -4,6 +4,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.shop.Goods;
 import com.lec.spring.domain.shop.RecentItem;
 import com.lec.spring.domain.shop.Review;
+import com.lec.spring.repository.CartRepo;
 import com.lec.spring.repository.GoodsRepo;
 import com.lec.spring.repository.RecentItemRepo;
 import com.lec.spring.util.U;
@@ -21,9 +22,12 @@ public class RecentServiceImpl implements RecentService {
     private final RecentItemRepo recentItemRepo;
     private final GoodsRepo goodsRepo;
 
+    private final CartRepo cartRepo;
+
     public RecentServiceImpl(SqlSession sqlSession) {
         this.recentItemRepo = sqlSession.getMapper(RecentItemRepo.class);
         this.goodsRepo = sqlSession.getMapper(GoodsRepo.class);
+        cartRepo = sqlSession.getMapper(CartRepo.class);
     }
 
     @Override
@@ -34,11 +38,14 @@ public class RecentServiceImpl implements RecentService {
     @Override
     public void getRecentItem(Integer userId, Integer page, Model model) {
 
+
         if(page == null || page < 1)
             page=1;
         HttpSession session = U.getSession();
+
+
         session.setAttribute("recent_page", page);
-        long cnt = recentItemRepo.count(1);
+        long cnt = recentItemRepo.count(U.getLoggedUser().getId());
         int totalPages = (int) Math.ceil(cnt/(double)PAGE_ROWS);
 
         int startPage;
@@ -54,7 +61,7 @@ public class RecentServiceImpl implements RecentService {
             startPage = ((page-1) / WRITE_PAGES) * WRITE_PAGES + 1;
             endPage = startPage + WRITE_PAGES -1;
             if(endPage >= totalPages) endPage = totalPages;
-            recentItems = recentItemRepo.selectAll(1, fromRow, PAGE_ROWS);
+            recentItems = recentItemRepo.selectAll(U.getLoggedUser().getId(), fromRow, PAGE_ROWS);
             List<Goods> recentGoods = recentItems.stream().map(e ->
                 goodsRepo.selectById(e.getGoods_no())
             ).toList();
@@ -63,6 +70,11 @@ public class RecentServiceImpl implements RecentService {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
             model.addAttribute("totalPage", totalPages);
+
+
+            int cartCnt = cartRepo.findUserCart(U.getLoggedUser().getId()).size();
+
+            model.addAttribute("cartCnt",cartCnt);
         }
 
     }
