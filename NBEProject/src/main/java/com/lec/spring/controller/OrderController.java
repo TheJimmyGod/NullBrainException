@@ -6,6 +6,7 @@ import com.lec.spring.dto.OrderForm;
 import com.lec.spring.service.CartService;
 import com.lec.spring.service.PurchaseService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,29 +22,27 @@ import java.util.List;
 public class OrderController {
     private final CartService cartService;
     private final PurchaseService purchaseService;
-    private final UserService userService;
+
 
 
 
     List<Cart> selectedItems = new ArrayList<>();
 
     public OrderController(CartService cartService,
-                           PurchaseService purchaseService,
-                           UserService userService)
+                           PurchaseService purchaseService
+    )
     {
         this.cartService = cartService;
         this.purchaseService = purchaseService;
-        this.userService = userService;
     }
 
 
 
 
     @GetMapping("/cart")
-    public String cart(@RequestParam("userId") Integer userId
-            ,@RequestParam(required = false) Integer cartId
+    public String cart(@RequestParam(required = false) Integer cartId
             , Model model) {
-        List<Cart> cartList = cartService.listUserItems(userId);
+        List<Cart> cartList = cartService.listUserItems(U.getLoggedUser().getId());
         int totalPrice = 0;
 
         for (Cart item : cartList) {
@@ -53,7 +52,10 @@ public class OrderController {
         model.addAttribute("cartItem", cartList);
         model.addAttribute("purchase", cartId);
         model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("userId", userId);
+        model.addAttribute("userId", U.getLoggedUser().getId());
+
+        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
+        model.addAttribute("cartCnt",cartCnt);
 
         return "/cho/order/cart";
     }
@@ -73,7 +75,7 @@ public class OrderController {
 
         }
 
-        return "redirect:/cart?userId="+userId;
+        return "redirect:/cart";
     }
 
     @GetMapping("/order_form")
@@ -82,12 +84,16 @@ public class OrderController {
             @RequestParam("userId") Integer userId,
             Model model){
         if(selectItem.length == 0){
-            return "redirect:/cart?userId=" + userId;
+            return "redirect:/cart";
         }
         List<Cart> itemList = cartService.selectItems(selectItem);
         OrderForm orderForm = purchaseService.createPurchase(itemList, userId);
         model.addAttribute("order", orderForm);
         model.addAttribute("itemList", itemList);
+
+        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
+        model.addAttribute("cartCnt",cartCnt);
+
         return "/cho/order/order_form";
     }
 

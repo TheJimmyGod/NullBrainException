@@ -133,7 +133,7 @@ $(document).ready(function() {
             dataType: "text",
             contentType: 'application/json',
             success: function(data, status) {
-                (status == "success") && (location.href=`/cart?userId=${user.userId}&cartId=${data}`);
+                (status == "success") && (location.href=`/cart?cartId=${data}`);
             },
         });
 

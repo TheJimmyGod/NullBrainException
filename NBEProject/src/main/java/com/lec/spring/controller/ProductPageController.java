@@ -47,7 +47,11 @@ public class ProductPageController {
     }
 
     @GetMapping("/home")
-    public String home(){return "/cho/prod/main";}
+    public String home(Model model){
+        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
+        model.addAttribute("cartCnt", cartCnt);
+        return "/cho/prod/main";
+    }
 
     // 메인 페이지에서 카테고리 클릭시 제품 리스트 이동
     @GetMapping("/prodList")
@@ -58,14 +62,19 @@ public class ProductPageController {
     // 제품 상세 페이지
     @GetMapping("/detail/{good_no}")
     public String detail(@PathVariable String good_no,Integer page, Model model){
+
+        // 로그인한 사용자 정보
+        User user = U.getLoggedUser();
+
         goodsService.getReviews(good_no, page, model);
-//        User user = U.getLoggedUser();
         String url = U.getRequest().getRequestURI();
         String currentUrl = "/nbe/detail/" + good_no;
 
+
+
         if(url.equals(currentUrl)){
-            recentService.delete(1, good_no);
-            recentService.addRecent(1, good_no);
+            recentService.delete(user.getId(), good_no);
+            recentService.addRecent(user.getId(), good_no);
         }
         return "/cho/prod/detail";
     }
@@ -73,8 +82,8 @@ public class ProductPageController {
     // 제품 최근 목록
     @GetMapping("/recent")
     public String recent(Integer page, Model model){
-//        User user = U.getLoggedUser();
-        recentService.getRecentItem(1, page, model);
+        User user = U.getLoggedUser();
+        recentService.getRecentItem(user.getId(), page, model);
 
         return "prod/recent";
     }
@@ -82,9 +91,9 @@ public class ProductPageController {
     // 상세페이지에서 구매혹은 장바구니로 이동
     @PostMapping("/prod/cart")
     public String addCart(String goodsNo, String option, Integer amount){
-        User user = userService.findById(1);
+        User user = U.getLoggedUser();
         Goods goods = goodsService.getProd(goodsNo);
-        Address addr = userService.getDefaultAddr(1);
+        Address addr = userService.getDefaultAddr(user.getId());
         OrderUser orderUser = user.oderUser(addr.getStreet_addr(), addr.getDetail_addr());
         OrderGoods orderGoods = OrderGoods.builder()
                 .goodsNo(goods.getGoods_no())
