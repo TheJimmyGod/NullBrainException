@@ -28,7 +28,7 @@ public class ProfileValidator implements Validator {
             errors.rejectValue("name", "닉네임이 비어있습니다.");
         }
 
-        if(profile.getNickName() != null && Pattern.matches(regex, profile.getNickName())){
+        if(profile.getNickName() != null && !Pattern.matches(regex, profile.getNickName())){
             errors.rejectValue("name", "올바르지 않은 형식의 닉네임입니다.");
         }
 
@@ -37,7 +37,7 @@ public class ProfileValidator implements Validator {
             errors.rejectValue("phone", "전화번호가 비어있습니다.");
         }
 
-        if(profile.getPhone() != null && Pattern.matches(phoneRegex, profile.getPhone())){
+        if(profile.getPhone() != null && !Pattern.matches(phoneRegex, profile.getPhone())){
             errors.rejectValue("phone", "올바르지 않은 형식의 전화번호입니다.");
         }
 

@@ -8,43 +8,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/user/registercss.css}">
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
-
-
-
 </head>
 <body>
     <div id="searchbtn01">
         <form class="d-flex" role="search" th:action="@{/}" method="get">
-            <input id="searchquery" class="form-control me-2" name="searchQuery" type="search" placeholder="Search" aria-label="Search">
-            <button id="searchsubmit" class="btn btn-outline-success" type="submit">Search</button>
+            <input id="searchquery" class="col-8 form-control me-2" name="searchQuery" type="search" placeholder="Search" aria-label="Search">
+            <button id="searchsubmit" class="col-2 btn btn-outline-success" type="submit">Search</button>
         </form>
         <span id="userbtn" class="text-left">
                 <a href="#" class="col-1 col-sm-1" style="text-decoration: none; color: black;">
                     <i class="fas fa-user-circle fa-3x"></i></a>
             </span>
-        <a id="cartbtn" href="#">
+        <a id="cartbtn col-1 col-sm-1" href="#">
             <i class='fas fa-cart-plus' style='font-size:48px;color:black'></i>
         </a>
     </div>
     <div>
-        <img th:src="@{/image/logo.png}" id="logoimg">
+        <img th:src="@{/image/logo.png}" id="logoimg" style="position: relative">
     </div>
     <hr id="hr1"/>
     <div id="registerbox">
         <form id="regform" th:action="@{/user/register}" method="post">
+            <br><br><br><br>
             <div id="text03">회원가입</div>
+            <br>
             <input id="inputid" class="form-control" name="username" type="text" placeholder="아이디 입력" th:value="${username }" required>
+            <div><span class="text-danger" th:if="${error_username}" th:utext="${error_username}"></span></div>
             <input id="inputpw" class="form-control" name="password" type="password" placeholder="비밀번호 입력" required>
 
-            <input id="inputname" type="text" name="name" class="form-control" placeholder="이름을 입력해주세요." th:value="${name }">
-            <input type="text" name="phone" class="form-control" placeholder="휴대폰번호를 입력해주세요." th:value="${phone }">
-            <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요" th:value="${email }">
-            <input type="text" name="birth" class="form-control" placeholder="생년월일을 입력해주세요" th:value="${birth }">
-            <input type="text" name="addressName" class="form-control" placeholder="주소지명을 입력해주세요" th:value="${addressname }">
-            <input type="text" name="street_addr" class="form-control" placeholder="주소를 입력해주세요." th:value="${street_addr }">
-            <input type="text" name="detail_addr" class="form-control" placeholder="상세 주소를 입력해주세요." th:value="${detail_addr }">
+            <input id="inputname" type="text" name="name" class="form-control" placeholder="이름을 입력해주세요." th:value="${name}">
+            <div><span class="text-danger" th:if="${error_name}" th:utext="${error_name}"></span></div>
+            <input type="text" name="phone" class="form-control" placeholder="휴대폰번호를 입력해주세요." th:value="${phone}">
+            <div><span class="text-danger" th:if="${error_phone}" th:utext="${error_phone}"></span></div>
+            <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요" th:value="${email}">
+            <div><span class="text-danger" th:if="${error_email}" th:utext="${error_email}"></span></div>
+            <input type="text" name="birth" class="form-control" placeholder="생년월일을 입력해주세요" th:value="${birth}">
+            <div><span class="text-danger" th:if="${error_birth}" th:utext="${error_birth}"></span></div>
+            <input type="text" name="addressName" class="form-control" placeholder="주소지명을 입력해주세요." th:value="${addressname}">
+            <input type="text" name="street_search" class="form-control" placeholder="도로명 주소를 입력해주세요.">
+            <select name="streetName" style="max-width: 500px"></select>
+            <input type="text" id="street_addr" name="street_addr" class="form-control" placeholder="<도로명 주소 생성란>" th:value="${street_addr}" readonly>
+            <div><span class="text-danger" th:if="${error_street_addr}" th:utext="${error_street_addr}"></span></div>
+            <input type="text" id="detail_addr" name="detail_addr" class="form-control" placeholder="상세 주소를 입력해주세요." th:value="${detail_addr}">
+            <div><span class="text-danger" th:if="${error_detail_addr}" th:utext="${error_detail_addr}"></span></div>
             <div id="text04">성별을 선택해주세요.</div>
 
             <div id="container-box">
@@ -60,8 +69,7 @@
 
             <button class="btn btn-secondary btn-lg" id="regbtn" type="submit">회원가입</button>
         </form>
-
     </div>
-    
 </body>
+<script th:src="@{/js/signIn.js}" type="text/javascript"></script>
 </html>
