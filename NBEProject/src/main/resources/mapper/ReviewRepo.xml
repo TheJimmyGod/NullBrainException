@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ReviewRepo">
-    <insert id="insert" parameterType="com.lec.spring.domain.shop.Review" flushCache="true"
-            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into review (user_id, goods_no, regdate, title, content, rate)
-        value (#{user_id}, #{goodsId}, #{regdate}, #{title}, #{content}, #{rate})
-    </insert>
 
-    <delete id="delete" flushCache="true">
-        delete from review
-        where id=#{param1}
-    </delete>
-
-    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Review">
-        update review
-        set title=#{title},
-            content=#{content},
-            rate=#{rate}
-        where
-            id=#{id}
-
-    </update>
 
     <resultMap id="U" type="com.lec.spring.domain.User">
         <result property="id" column="u_pwd"/>
@@ -78,4 +59,30 @@
         select count(*) from review
         where goods_no=#{param1}
     </select>
+
+    <insert id="save" parameterType="com.lec.spring.domain.shop.Review"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO review (user_id, goods_id, title, content, rate)
+        VALUES (#{user_id}, #{goodsId}, #{title}, #{content}, #{rate})
+    </insert>
+
+    <select id="findById" resultType="com.lec.spring.domain.reviewGoods"
+            resultMap="mapPurchase">
+        SELECT p.id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name, p.goods_id
+        FROM purchase p JOIN pay a ON p.pay_id = a.id
+                        JOIN goods g ON p.goods_id = g.goods_no
+        WHERE p.id = #{id}
+    </select>
+
+    <resultMap id="mapPurchase" type="com.lec.spring.domain.reviewGoods">
+        <result column="user_id" property="user_id"/>
+        <result column="status" property="status"/>
+        <result column="amount" property="amount"/>
+        <result column="opt" property="opt"/>
+        <result column="price" property="price"/>
+        <result column="image_1" property="image"/>
+        <result column="name" property="goodsName"/>
+        <result column="goods_id" property="goodsId"/>
+    </resultMap>
+
 </mapper>

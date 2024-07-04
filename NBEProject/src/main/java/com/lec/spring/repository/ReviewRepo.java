@@ -1,6 +1,8 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.domain.reviewGoods;
 import com.lec.spring.domain.shop.Review;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +18,12 @@ public interface ReviewRepo {
 
     // 특정 리뷰 조회
     int countReview(String goodNo);
+
+    // 여기서부터
+    // 리뷰작성 버튼을 누르면 해당 아이템의 정보 갖고오기
+    reviewGoods findById(@Param("id") Integer id);
+
+    // 리뷰 글 작성 (INSERT)
+    int save(Review review);
+
 }
