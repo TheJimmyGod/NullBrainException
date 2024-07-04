@@ -1,12 +1,13 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.shop.Purchase;
+import com.lec.spring.domain.reviewGoods;
+
 import com.lec.spring.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -17,13 +18,17 @@ public class RequestController {
     private RequestService requestService;
 
     @GetMapping("/request")
-    public String request(@RequestParam("userId") Integer userId, Model model){
-        List<Purchase> PurchaseStatusList = requestService.listPurchaseStatus(userId);
+    public String request( Integer userId, Model model){
+        List<reviewGoods> PurchaseStatusList = requestService.listPurchaseStatus(userId);
 
+        model.addAttribute("userId", userId);
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
 
         return "request";
     }
+
+
+
 
 
 
