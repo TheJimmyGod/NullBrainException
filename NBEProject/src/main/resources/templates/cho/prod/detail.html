@@ -75,14 +75,16 @@
 
         <div class="reviews">
             <h2>Reviews(<span class="reviewCtn" th:text="${reviewCnt}"></span>)</h2>
-            <span class="reviewRate" th:text="${totalRate}"></span>
-            <span class="rating-total">
-                                    <span class="star" data-value="1">&#9733;</span>
-                                    <span class="star" data-value="2">&#9733;</span>
-                                    <span class="star" data-value="3">&#9733;</span>
-                                    <span class="star" data-value="4">&#9733;</span>
-                                    <span class="star" data-value="5">&#9733;</span>
-            </span>
+            <div>
+                <span class="reviewRate" th:text="${totalRate}"></span>
+                <span class="rating-total">
+                                        <span class="star" data-value="1">&#9733;</span>
+                                        <span class="star" data-value="2">&#9733;</span>
+                                        <span class="star" data-value="3">&#9733;</span>
+                                        <span class="star" data-value="4">&#9733;</span>
+                                        <span class="star" data-value="5">&#9733;</span>
+                </span>
+            </div>
             <button class="review-btn">리뷰 보기</button>
                 <div class="review-block" th:if="${reviews}" th:each="r : ${reviews}">
 
@@ -101,7 +103,6 @@
                                 </span>
                                 <span class="rating-score" th:text="${r.rate}"></span>
                             </div>
-                            <p class="user-details">161cm | 47kg</p>
                         </div>
 
                     </div>

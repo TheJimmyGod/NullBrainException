@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")  //loadUserBy.. 필요
                         //.defaultSuccessUrl("/user/test")
-                        .successHandler(new CustomLoginSuccessHandler("/user/test"))
+                        .successHandler(new CustomLoginSuccessHandler("/nbe/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer

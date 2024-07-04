@@ -6,10 +6,7 @@ import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Goods;
 import com.lec.spring.domain.shop.Review;
-import com.lec.spring.repository.GoodsRepo;
-import com.lec.spring.repository.OptRepo;
-import com.lec.spring.repository.ReviewRepo;
-import com.lec.spring.repository.UserRepo;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -26,6 +23,7 @@ public class GoodsServiceImpl implements GoodsService {
     private final OptRepo optRepo;
 
     private final UserRepo userRepo;
+    private final CartRepo cartRepo;
 
     @Value("${app.pagination.write-pages}")
     private int WRITE_PAGES;
@@ -39,12 +37,16 @@ public class GoodsServiceImpl implements GoodsService {
         reviewRepo = sqlSession.getMapper(ReviewRepo.class);
         optRepo = sqlSession.getMapper(OptRepo.class);
         userRepo = sqlSession.getMapper(UserRepo.class);
+        cartRepo = sqlSession.getMapper(CartRepo.class);
     }
     @Override
     public void getProds(String category1, String category2, Integer page, Model model) {
+
         if(page == null || page < 1)
             page = 1;
         HttpSession session = U.getSession();
+
+
         session.setAttribute("page", page);
 
         long cnt = goodsRepo.countAll(category1, category2);
@@ -71,6 +73,9 @@ public class GoodsServiceImpl implements GoodsService {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
             model.addAttribute("totalPage", totalPages);
+            int cartCnt = cartRepo.findUserCart(U.getLoggedUser().getId()).size();
+
+            model.addAttribute("cartCnt",cartCnt);
         }
 //        List<Goods> a = goodsRepo.selectByCategory(category1, category2, WRITE_PAGES, WRITE_ROWS);
 
@@ -85,16 +90,18 @@ public class GoodsServiceImpl implements GoodsService {
     // 특정 상품의 리뷰들을 가져온다.
     @Override
     public void getReviews(String good_no, Integer page, Model model) {
+        HttpSession session = U.getSession();
+
         List<String> options = optRepo.selectByGoods(good_no);
         Goods goods = goodsRepo.selectById(good_no);
 
-        // 로그인한 유저정보로 변환필요
-        User user = userRepo.selectById(1);
-        Address addr = userRepo.getDefaultAddr(1);
+        // 로그인한 유저
+        User user = U.getLoggedUser();
+        Address addr = userRepo.getDefaultAddr(user.getId());
 
 
         if(page == null || page < 1) page=1;
-        HttpSession session = U.getSession();
+
         session.setAttribute("review_page", page);
         long cnt = reviewRepo.countReview(good_no);
         int totalPages = (int) Math.ceil(cnt/(double)PAGE_ROWS);
@@ -127,6 +134,11 @@ public class GoodsServiceImpl implements GoodsService {
             model.addAttribute("endPage", endPage);
             model.addAttribute("totalPage", totalPages);
             model.addAttribute("totalRate", totalRate);
+
+            int cartCnt = cartRepo.findUserCart(U.getLoggedUser().getId()).size();
+
+            model.addAttribute("cartCnt",cartCnt);
+
         }
     }
 

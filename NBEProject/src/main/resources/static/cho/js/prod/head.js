@@ -22,5 +22,5 @@ function category(){
 }
 
 function goCart(){
-    location.href = `http://localhost:8080/cart?userId=1`;
+    location.href = `http://localhost:8080/cart`;
 }
