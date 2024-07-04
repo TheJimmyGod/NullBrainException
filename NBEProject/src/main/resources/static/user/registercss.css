@@ -105,3 +105,9 @@
 .input{
     width:100%;
 }
+
+select[name="streetName"] {
+    float: left;
+    width: 100%; /* 필요에 따라 너비를 조정할 수 있습니다 */
+    max-width: 500px;
+}
