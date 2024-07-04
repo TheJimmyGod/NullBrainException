@@ -57,7 +57,7 @@ public class ProductPageController {
     @GetMapping("/prodList")
     public String list(String category1, String category2, Integer page, Model model){
         goodsService.getProds(category1, category2, page, model);
-        return "/cho/prod/list";
+        return "cho/prod/list";
     }
     // 제품 상세 페이지
     @GetMapping("/detail/{good_no}")
@@ -68,7 +68,7 @@ public class ProductPageController {
 
         goodsService.getReviews(good_no, page, model);
         String url = U.getRequest().getRequestURI();
-        String currentUrl = "/nbe/detail/" + good_no;
+        String currentUrl = "nbe/detail/" + good_no;
 
 
 
@@ -76,7 +76,7 @@ public class ProductPageController {
             recentService.delete(user.getId(), good_no);
             recentService.addRecent(user.getId(), good_no);
         }
-        return "/cho/prod/detail";
+        return "cho/prod/detail";
     }
 
     // 제품 최근 목록

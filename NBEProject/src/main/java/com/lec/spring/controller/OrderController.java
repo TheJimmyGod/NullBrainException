@@ -57,7 +57,7 @@ public class OrderController {
         int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
         model.addAttribute("cartCnt",cartCnt);
 
-        return "/cho/order/cart";
+        return "cho/order/cart";
     }
 
     @PostMapping("/cart/refresh")
@@ -94,7 +94,7 @@ public class OrderController {
         int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
         model.addAttribute("cartCnt",cartCnt);
 
-        return "/cho/order/order_form";
+        return "cho/order/order_form";
     }
 
 

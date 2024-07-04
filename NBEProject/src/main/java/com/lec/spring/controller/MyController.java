@@ -98,7 +98,7 @@ public class MyController {
         model.addAttribute("contact", contact);
         model.addAttribute("username", user.getUsername());
 
-        return "/mypage/contact";
+        return "mypage/contact";
     }
 
     @PostMapping("/contactOk")
@@ -128,7 +128,7 @@ public class MyController {
         saveFile(contact.getId(), file1);
         saveFile(contact.getId(), file2);
 
-        return "/mypage/contactOk";
+        return "mypage/contactOk";
     }
 
     private void saveFile(int contactId, MultipartFile file) {
