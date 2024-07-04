@@ -56,7 +56,7 @@
         <div th:if="${item.status == 'OK'}">
             <div class="btnDiv">
                 <a th:href="@{/review(id=${item.id}, userId=${userId})}"}>리뷰작성</a>
-                <a>결제취소</a>
+                <button>결제취소</button>
             </div>
         </div>
 <!--        <div th:if="${item.status == 'OK'}">-->
