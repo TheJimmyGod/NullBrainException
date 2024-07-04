@@ -60,3 +60,6 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+jar{
+    enabled = false
+}
