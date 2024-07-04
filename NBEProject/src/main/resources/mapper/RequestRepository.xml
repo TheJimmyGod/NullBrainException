@@ -4,58 +4,74 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.RequestRepository">
 
-    <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
-        <result column="p_id" property="id"/>
-        <result column="m_id" property="merchantId"/>
-        <result column="p_id" property="payId"/>
-        <result column="p_amount" property="amount"/>
-        <result column="p_opt" property="opt"/>
-        <collection property="goods" resultMap="mapGoods"/>
-        <collection property="user" resultMap="mapUser"/>
+<!--    <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">-->
+<!--        <result column="p_id" property="id"/>-->
+<!--        <result column="m_id" property="merchantId"/>-->
+<!--        <result column="p_id" property="payId"/>-->
+<!--        <result column="p_amount" property="amount"/>-->
+<!--        <result column="p_opt" property="opt"/>-->
+<!--        <collection property="goods" resultMap="mapGoods"/>-->
+<!--        <collection property="user" resultMap="mapUser"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="mapGoods" type="com.lec.spring.dto.OrderGoods">-->
+<!--        <result column="goodsNo" property="goodsNo"/>-->
+<!--        <result column="g_name" property="name"/>-->
+<!--        <result column="g_price" property="price"/>-->
+<!--        <result column="image" property="image"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="mapUser" type="com.lec.spring.dto.OrderUser">-->
+<!--        <result column="u_username" property="username"/>-->
+<!--        <result column="u_name" property="name"/>-->
+<!--        <result column="u_phone" property="phone"/>-->
+<!--        <result column="u_birth" property="birth"/>-->
+<!--        <result column="u_email" property="email"/>-->
+<!--        <result column="u_streetAddr" property="streetAddr"/>-->
+<!--        <result column="u_detailAddr" property="detailAddr"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="findByUserId" parameterType="int" resultMap="mapPurchase">-->
+<!--        select-->
+<!--            p.id "",-->
+<!--            p.merchant_id "",-->
+<!--            p.pay_id "",-->
+<!--            p.amount "",-->
+<!--            p.opt "",-->
+<!--            g.goods_no as "goodsNo",-->
+<!--            g.name as "g_name",-->
+<!--            g.price as "g_price",-->
+<!--            g.image_1 as "image",-->
+<!--            u.username as "u_username",-->
+<!--            u.name as "u_name",-->
+<!--            u.phone as "u_phone",-->
+<!--            u.birth as "u_birth",-->
+<!--            u.email as "u_email",-->
+<!--            u.street_address as "u_street_address",-->
+<!--            u.detail_address as "u_detail_address"-->
+<!--        FROM purchase p-->
+<!--                 join goods g-->
+<!--                      on g.goods_no=p.goods_id-->
+<!--                 join user u-->
+<!--                      on p.user_id=u.id-->
+<!--        WHERE 1=1-->
+<!--        and user_id=#{userId}-->
+<!--    </select>-->
+
+    <resultMap id="mapStatus" type="com.lec.spring.domain.reviewGoods">
+        <result column="user_id" property="user_id"/>
+        <result column="status" property="status"/>
+        <result column="amount" property="amount"/>
+        <result column="opt" property="opt"/>
+        <result column="price" property="price"/>
+        <result column="image_1" property="image"/>
+        <result column="name" property="goodsName"/>
     </resultMap>
 
-    <resultMap id="mapGoods" type="com.lec.spring.dto.OrderGoods">
-        <result column="goodsNo" property="goodsNo"/>
-        <result column="g_name" property="name"/>
-        <result column="g_price" property="price"/>
-        <result column="image" property="image"/>
-    </resultMap>
-
-    <resultMap id="mapUser" type="com.lec.spring.dto.OrderUser">
-        <result column="u_username" property="username"/>
-        <result column="u_name" property="name"/>
-        <result column="u_phone" property="phone"/>
-        <result column="u_birth" property="birth"/>
-        <result column="u_email" property="email"/>
-        <result column="u_streetAddr" property="streetAddr"/>
-        <result column="u_detailAddr" property="detailAddr"/>
-    </resultMap>
-
-    <select id="findByUserId" parameterType="int" resultMap="mapPurchase">
-        select
-            p.id "",
-            p.merchant_id "",
-            p.pay_id "",
-            p.amount "",
-            p.opt "",
-            g.goods_no as "goodsNo",
-            g.name as "g_name",
-            g.price as "g_price",
-            g.image_1 as "image",
-            u.username as "u_username",
-            u.name as "u_name",
-            u.phone as "u_phone",
-            u.birth as "u_birth",
-            u.email as "u_email",
-            u.street_address as "u_street_address",
-            u.detail_address as "u_detail_address"
-        FROM purchase p
-                 join goods g
-                      on g.goods_no=p.goods_id
-                 join user u
-                      on p.user_id=u.id
-        WHERE 1=1
-        and user_id=#{userId}
+    <select id="findByUserId" parameterType="int" resultMap="mapStatus">
+        SELECT p.id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name
+        FROM purchase p JOIN pay a ON p.pay_id = a.id
+                        JOIN goods g ON p.goods_id = g.goods_no
+        WHERE p.user_id = #{userId}
     </select>
-
 </mapper>

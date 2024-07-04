@@ -27,4 +27,8 @@ public interface ReviewImageRepo {
 
     // 특정 이미지를 DB에서 삭제
     int delete(int id);
+
+    // 여기서부터
+    // 특정 문의사항에 이미지 추가
+    int saveImage(ReviewImage file);
 }
