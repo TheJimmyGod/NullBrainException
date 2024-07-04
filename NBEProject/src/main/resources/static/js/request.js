@@ -27,3 +27,7 @@ $(function(){
 function category(){
     $('.category1').toggleClass('hidden');
 }
+
+function cancelRequest(){
+
+}

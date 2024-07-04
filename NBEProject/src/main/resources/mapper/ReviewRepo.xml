@@ -62,11 +62,11 @@
 
     <insert id="save" parameterType="com.lec.spring.domain.shop.Review"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO review (user_id, goods_id, title, content, rate)
+        INSERT INTO review (user_id, goods_no, title, content, rate)
         VALUES (#{user_id}, #{goodsId}, #{title}, #{content}, #{rate})
     </insert>
 
-    <select id="findById" resultType="com.lec.spring.domain.reviewGoods"
+    <select id="findById" resultType="com.lec.spring.domain.ReviewGoods"
             resultMap="mapPurchase">
         SELECT p.id, p.user_id, p.amount, p.opt, a.status, g.price, g.image_1, g.name, p.goods_id
         FROM purchase p JOIN pay a ON p.pay_id = a.id
@@ -74,7 +74,7 @@
         WHERE p.id = #{id}
     </select>
 
-    <resultMap id="mapPurchase" type="com.lec.spring.domain.reviewGoods">
+    <resultMap id="mapPurchase" type="com.lec.spring.domain.ReviewGoods">
         <result column="user_id" property="user_id"/>
         <result column="status" property="status"/>
         <result column="amount" property="amount"/>

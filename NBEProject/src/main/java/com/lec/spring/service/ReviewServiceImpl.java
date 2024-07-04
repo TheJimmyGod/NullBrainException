@@ -1,6 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.reviewGoods;
+import com.lec.spring.domain.ReviewGoods;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.repository.ReviewImageRepo;
 import com.lec.spring.repository.ReviewRepo;
@@ -26,7 +26,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public reviewGoods getPurchaseInfo(Integer id) {
+    public ReviewGoods getPurchaseInfo(Integer id) {
         return reviewRepository.findById(id);
     }
 

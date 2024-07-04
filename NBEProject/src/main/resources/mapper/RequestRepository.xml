@@ -58,7 +58,7 @@
 <!--        and user_id=#{userId}-->
 <!--    </select>-->
 
-    <resultMap id="mapStatus" type="com.lec.spring.domain.reviewGoods">
+    <resultMap id="mapStatus" type="com.lec.spring.domain.ReviewGoods">
         <result column="user_id" property="user_id"/>
         <result column="status" property="status"/>
         <result column="amount" property="amount"/>
@@ -74,4 +74,6 @@
                         JOIN goods g ON p.goods_id = g.goods_no
         WHERE p.user_id = #{userId}
     </select>
+
+
 </mapper>
