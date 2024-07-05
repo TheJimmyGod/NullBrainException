@@ -37,8 +37,8 @@
     font-weight: bold;
 }
 .container{
-    /* border: 4px solid yellow; */
-    width: 500px;
+     /*border: 4px solid yellow;*/
+    width: 200px;
     height: 100px;
     display: flex;
     align-items: center;
@@ -224,4 +224,52 @@
     position: absolute;
     top: 2px;
     left: 2px;
+}
+
+.category {
+    padding: 10px;
+}
+
+.category1 button {
+    margin-right: 10px;
+}
+
+.category1.hidden,
+.category2-man.hidden,
+.category2-woman.hidden {
+    display: none;
+}
+
+.category2-man .item,
+.category2-woman .item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1.5vw;
+}
+
+#woman:hover{
+    background-color: #ddd;
+    color: black;
+}
+
+#woman{
+    border: none;
+    background-color: #8C8C8C;
+    width: 150px;
+    height: 50px;
+}
+
+#man:hover{
+    background-color: #ddd;
+    color: black;
+}
+
+#man{
+    border: none;
+    background-color: #8C8C8C;
+    width: 150px;
+    height: 50px;
 }
