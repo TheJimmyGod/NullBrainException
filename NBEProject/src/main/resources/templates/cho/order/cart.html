@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
@@ -13,81 +14,12 @@
     <script src="/cho/js/order/cart.js" defer></script>
     <script src="/cho/js/prod/head.js" defer></script>
     <script src="/cho/js/prod/category.js" defer></script>
-    <title>Document</title>
+    <title>장바구니</title>
 
 </head>
 <body>
-
-<header class="header">
-    <div class="menu">
-        <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton home">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton post">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton recent">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton accButton" id="accButton">ACC</button>
-    </div>
-<!--    <div class="container">-->
-<!--        <div class="container-1">-->
-<!--            <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>&nbsp;-->
-<!--            <input type="search" id="search" placeholder="Search..." />-->
-<!--        </div>-->
-        <div class="container-2">
-            <a href="/mypage/detail" class="mypage">
-                <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;
-            </a>
-            <i name="menuIcon" class="fa-solid fa-cart-plus"></i>
-            <span class="cart-badge" th:text="${cartNum}">3</span>
-        </div>
-
-<!--    </div>&lt;!&ndash; TODO &ndash;&gt;-->
-</header><br><br>
-<div class="">
-    <div class="category mb-4">
-        <div class="category1 mb-3 hidden">
-            <button class="btn btn-primary woman" id="woman">여성의류</button>
-            <button class="btn btn-secondary man" id="man">남성의류</button>
-        </div>
-        <div class="category2-man hidden">
-            <div class="row">
-                <div class="col-3 col-md-2 col-sm-2 item">반팔티셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">긴팔티셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">셔츠/남방</div>
-                <div class="col-3 col-md-2 col-sm-2 item">바지/팬츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">청바지</div>
-                <div class="col-3 col-md-2 col-sm-2 item">반바지</div>
-                <div class="col-3 col-md-2 col-sm-2 item">조끼/베스트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
-                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
-                <div class="col-3 col-md-2 col-sm-2 item">자켓</div>
-                <div class="col-3 col-md-2 col-sm-2 item">점퍼</div>
-                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
-                <div class="col-3 col-md-2 col-sm-2 item">정장</div>
-            </div>
-        </div>
-        <div class="category2-woman hidden">
-            <div class="row">
-                <div class="col-3 col-md-2 col-sm-2 item">블라우스</div>
-                <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">후드/맨투맨</div>
-                <div class="col-3 col-md-2 col-sm-2 item">니트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">스커트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">원피스</div>
-                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
-                <div class="col-3 col-md-2 col-sm-2 item">청바지/진</div>
-                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
-                <div class="col-3 col-md-2 col-sm-2 item">레깅스</div>
-                <div class="col-3 col-md-2 col-sm-2 item">조끼/베스트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">자켓</div>
-                <div class="col-3 col-md-2 col-sm-2 item">코트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">점퍼/야상/패딩</div>
-                <div class="col-3 col-md-2 col-sm-2 item">정장</div>
-                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<div th:replace="~{cho/prod/header :: head}"></div>
+<hr>
 <div class="title-container">
     <div class="title">
         <hr>

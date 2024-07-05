@@ -16,7 +16,7 @@
                     <i class="fas fa-sign-in-alt text-2xl"></i><br>
                     <span style="font-size: 9px">로그인</span>
                 </a>
-                <a th:if="${userlog != null}" href="/user/logout" class="text-gray-600 hover:text-gray-800">
+                <a th:unless="${userlog == null}" href="/user/logout" class="text-gray-600 hover:text-gray-800">
                     <i class="fas fa-sign-in-alt text-2xl"></i><br>
                     <span style="font-size: 9px">로그아웃</span>
                 </a>
@@ -28,7 +28,7 @@
                     <i class="fas fa-user text-2xl"></i><br>
                     <span style="font-size: 9px; text-align: center;">마이페이지</span>
                 </a>
-                <a href="/order/cart" class="text-gray-600 hover:text-gray-800 relative">
+                <a href="/cart" class="text-gray-600 hover:text-gray-800 relative">
                     <i class="fas fa-shopping-cart text-2xl"></i><br>
                     <span style="font-size: 9px">장바구니</span>
                 </a>
