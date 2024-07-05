@@ -3,6 +3,8 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.ReviewGoods;
 
+import com.lec.spring.domain.shop.Purchase;
+import com.lec.spring.dto.PayStatus;
 import com.lec.spring.service.PurchaseService;
 import com.lec.spring.service.RequestService;
 import com.lec.spring.service.UserService;
@@ -17,21 +19,20 @@ import java.util.List;
 
 @Controller
 public class RequestController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private RequestService requestService;
+
     @Autowired
     private PurchaseService purchaseService;
 
     @GetMapping("/request")
     public String request(Model model){
         User user = U.getLoggedUser();
-        user = userService.findById(user.getId());
-        List<ReviewGoods> PurchaseStatusList = requestService.listPurchaseStatus(user.getId());
+
+        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(user.getId());
         model.addAttribute("userId", user.getId());
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
-
+        model.addAttribute("OK", PayStatus.OK);
+        model.addAttribute("READY", PayStatus.READY);
+        model.addAttribute("CANCEL", PayStatus.CANCEL);
         return "request";
     }
 

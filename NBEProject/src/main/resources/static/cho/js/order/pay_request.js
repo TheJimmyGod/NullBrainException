@@ -36,7 +36,8 @@ function requestPay() {
                     amount: rsp.amount
                }),
            }).done(function(data){
-               // const response = data.merchant_uid;
+               alert("결제에 성공하셨습니다.");
+               location.href = "/cart";
 
            })
        } else {alert("결제에 실패 하였습니다.")}

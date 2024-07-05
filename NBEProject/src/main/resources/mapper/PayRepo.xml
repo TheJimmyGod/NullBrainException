@@ -3,13 +3,19 @@
 <mapper namespace="com.lec.spring.repository.PayRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Pay"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into pay (Status, payment_uid, price) VALUES (#{status}, #{paymentUid}, #{price})
+        insert into pay (status, payment_uid, price) VALUES (#{status}, #{paymentUid}, #{price})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Pay">
         update pay
-        set Status=#{status}, payment_uid=#{paymentUid}
+        set status=#{status}, payment_uid=#{paymentUid}
         where id=#{id}
+    </update>
+
+    <update id="cancel" flushCache="true" parameterType="com.lec.spring.domain.shop.Pay">
+        update pay
+        set status=#{param2}
+        where payment_uid=#{param1}
     </update>
 
     <select id="findById" flushCache="true" resultType="com.lec.spring.domain.shop.Pay">

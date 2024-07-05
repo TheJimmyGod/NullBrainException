@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    OrderForm createPurchase(List<Cart> items, Integer userId);
+    OrderForm createPurchase(List<Cart> items);
     int delete();
 
-    List<Purchase> myPurchase(Integer userId);
+    List<Purchase> myPurchase();
 
     // 전체 주문 수 목록
     List<Purchase> orderList();
@@ -26,7 +26,7 @@ public interface PurchaseService {
     List<Purchase> orderUsername(String name);
 
     // 사용자가 구매한 물건확인
-    List<Purchase> getUserPayed(String username);
+    List<Purchase> getUserPayed(Integer userId);
 
     Long cntPurchaseItem();
 

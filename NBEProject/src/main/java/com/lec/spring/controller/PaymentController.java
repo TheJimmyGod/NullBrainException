@@ -12,6 +12,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class PaymentController {
     }
 
     @PostMapping("/request/cancel")
-    public void cancelRequest(@RequestParam String imp_uid) throws IamportResponseException, IOException {
+    public String cancelRequest(@RequestParam String imp_uid) throws IamportResponseException, IOException {
         URI uri = UriComponentsBuilder.fromUriString("https://api.iamport.kr/payments/cancel")
                 .build()
                 .toUri();
@@ -58,7 +59,12 @@ public class PaymentController {
                 entity,
                 CancelResponse.class
                 );
-        System.out.println(response);
+        Integer code = response.getBody().getCode();
+        if(code == 0){
+            return "cancelOk";
+
+        }
+        else return "cancelFail";
     }
 
 

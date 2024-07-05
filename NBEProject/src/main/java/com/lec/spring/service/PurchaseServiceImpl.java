@@ -12,6 +12,7 @@ import com.lec.spring.dto.PayStatus;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import com.lec.spring.repository.UserRepo;
+import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,17 +40,18 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public OrderForm createPurchase(List<Cart> carts, Integer userId) {
+    public OrderForm createPurchase(List<Cart> carts) {
+        User u = U.getLoggedUser();
         List<Cart> itemList = carts;
         if(itemList == null){
             return null;
         }
-        Address addr = userRepo.getDefaultAddr(1);
+        Address addr = userRepo.getDefaultAddr(u.getId());
         String uuid = UUID.randomUUID().toString();
         uuid = uuid.replaceAll("-","");
         String merchantId = uuid;
         int totalPrice = 0;
-        OrderUser orderUser = userRepo.selectById(userId).oderUser(addr.getStreet_addr(), addr.getDetail_addr());
+        OrderUser orderUser = userRepo.selectById(u.getId()).oderUser(addr.getStreet_addr(), addr.getDetail_addr());
         StringBuilder name = new StringBuilder();
 
         Pay pay = Pay.builder()
@@ -62,7 +64,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         for(Cart item : itemList){
             Purchase purchase = Purchase.builder()
                     .merchantId(merchantId)
-                    .payId(pay.getId())
+                    .pay(pay)
                     .amount((item.getAmount() * Integer.parseInt(item.getGoods().getPrice())))
                     .opt(item.getOpt())
                     .goods(item.getGoods())
@@ -89,8 +91,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> myPurchase(Integer userId) {
-        return purchaseRepo.findByUser(userId);
+    public List<Purchase> myPurchase() {
+        return purchaseRepo.findByUser(U.getLoggedUser().getId());
     }
 
     // 전체 주문 내역 조회
@@ -124,10 +126,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
     // 사용자가 결제한 물건 가져와준다
     @Override
-    public List<Purchase> getUserPayed(String username) {
-        List<Purchase> purchases = purchaseRepo.username(username);
-        List<Purchase> paid = purchases.stream().filter(e -> payRepo.findById(e.getPayId()).getStatus().equals(PayStatus.OK)).toList();
-        return paid;
+    public List<Purchase> getUserPayed(Integer userId) {
+
+        return purchaseRepo.findByUser(userId);
     }
 
     @Override
