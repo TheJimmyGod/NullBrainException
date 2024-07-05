@@ -13,6 +13,8 @@ public interface PurchaseRepo {
     int delete();
     List<Purchase> findByRequest(String orderUid);
 
+    List<Purchase> findByUser(Integer userId);
+
     int update(Purchase purchase);
 
 
@@ -24,6 +26,7 @@ public interface PurchaseRepo {
 
     // 사용자의 이름으로 확인
     public List<Purchase> username(String name);
+
 
     public List<Pay> selectAllPays();
 

@@ -88,6 +88,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseRepo.delete();
     }
 
+    @Override
+    public List<Purchase> myPurchase(Integer userId) {
+        return purchaseRepo.findByUser(userId);
+    }
+
     // 전체 주문 내역 조회
     @Override
     public List<Purchase> orderList() {
@@ -116,6 +121,13 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
         }
         return purchases;
+    }
+    // 사용자가 결제한 물건 가져와준다
+    @Override
+    public List<Purchase> getUserPayed(String username) {
+        List<Purchase> purchases = purchaseRepo.username(username);
+        List<Purchase> paid = purchases.stream().filter(e -> payRepo.findById(e.getPayId()).getStatus().equals(PayStatus.OK)).toList();
+        return paid;
     }
 
     @Override

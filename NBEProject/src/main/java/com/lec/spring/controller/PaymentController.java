@@ -39,8 +39,8 @@ public class PaymentController {
         return iamportClient.paymentByImpUid(paymentRequest.getImp_uid());
     }
 
-    @PostMapping("/request/cancel/{imp_uid}")
-    public void cancelRequest(@PathVariable String imp_uid) throws IamportResponseException, IOException {
+    @PostMapping("/request/cancel")
+    public void cancelRequest(@RequestParam String imp_uid) throws IamportResponseException, IOException {
         URI uri = UriComponentsBuilder.fromUriString("https://api.iamport.kr/payments/cancel")
                 .build()
                 .toUri();

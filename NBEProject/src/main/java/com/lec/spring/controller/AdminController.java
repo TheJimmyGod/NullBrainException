@@ -159,7 +159,7 @@ public class AdminController {
 
 
 
-        return "/admin/returnDetailPage";
+        return "admin/returnDetailPage";
     }
 
 
@@ -412,7 +412,7 @@ public class AdminController {
             model.addAttribute("images", images);
         }
         model.addAttribute("contact", contact);
-        return "/admin/inquirydetail";
+        return "admin/inquirydetail";
     }
 
     // 답변 버튼 클릭 시
