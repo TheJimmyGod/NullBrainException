@@ -41,6 +41,7 @@
                 <th>회원 번호</th>
                 <th>회원 ID</th>
                 <th>이메일</th>
+                <th>누적 금액</th>
                 <th>현재 등급</th>
                 <th>변경 등급</th>
                 <th>상태 변경</th>
@@ -51,6 +52,7 @@
                 <td th:text="${user.id}">abc</td>
                 <td th:text="${user.username}">홍길동</td>
                 <td th:text="${user.email}">이메일</td>
+                <td th:text="${user.total_price}"></td>
                 <td th:text="${user.grade}">브론즈</td>
                 <td>
                     <form th:action="@{/admin/updateGrade}" method="post" class="grade-form">
