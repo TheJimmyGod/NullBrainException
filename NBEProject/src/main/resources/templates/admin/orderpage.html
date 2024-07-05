@@ -52,8 +52,8 @@
                 <td th:text="${order.users.phone}">010-1234-5678</td>
                 <td th:text="${#temporals.format(order.regdate)}"></td>
                 <td th:text="${order.good.name}">셔츠</td>
-                <td th:text="${order.totalPrice}">30,000</td>
-                <td th:text="${order.amount}"></td>
+                <td th:text="${#numbers.formatNumber(order.totalPrice, '#,###')}">30,000</td>
+                <td th:text="${#numbers.formatNumber(order.amount, '#,###')}">30,000</td>
                 <td>
                     <span th:switch="${order.pay.status.name()}">
                         <span th:case="'OK'">결제 완료</span>
