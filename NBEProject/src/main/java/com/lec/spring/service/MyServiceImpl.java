@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MyServiceImpl implements MyService {
@@ -49,11 +51,33 @@ public class MyServiceImpl implements MyService {
     public void updateMyPage(Model model) {
         User user = U.getLoggedUser();
         user = userRepository.selectById(user.getId());
-        var addresses = addressRepository.selectAll(user.getId());
+
+        Address address = null;
+
+        List<Address> addresses = addressRepository.selectAll(user.getId());
+        List<Address> addressList = new ArrayList<>();
+        for (int i = 0; i < addresses.size(); i++) {
+            if(addresses.get(i).getIsDefault())
+            {
+                address = addresses.get(i);
+                break;
+            }
+        }
+        if(address != null)
+        {
+            addressList.add(address);
+            for (int i = 0; i < addresses.size(); i++) {
+                if(addresses.get(i).getId() == address.getId())
+                    continue;
+                else
+                    addressList.add(addresses.get(i));
+            }
+        }
+
         model.addAttribute("nickName", user.getName());
         model.addAttribute("phone", user.getPhone());
         model.addAttribute("currentPic", user.getProfileimage());
-        model.addAttribute("addresses", addresses);
+        model.addAttribute("addresses", (address != null) ? addressList : addresses);
     }
     @Transactional
     @Override
@@ -93,7 +117,6 @@ public class MyServiceImpl implements MyService {
                     .build();
             addressRepository.insert(newAddress);
         }
-        System.out.println(profile.getNickName());
         user.setName(profile.getNickName());
         user.setPhone(profile.getPhone());
 
