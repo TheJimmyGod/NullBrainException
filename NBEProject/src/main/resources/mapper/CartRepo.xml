@@ -102,6 +102,10 @@
         where id=#{param1}
     </delete>
 
+    <delete id="deleteByPay">
+        delete from cart where goods_id in (select purchase.goods_id from purchase where pay_id=#{param1})
+    </delete>
+
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.shop.Cart">
         update cart
         set opt=#{opt}

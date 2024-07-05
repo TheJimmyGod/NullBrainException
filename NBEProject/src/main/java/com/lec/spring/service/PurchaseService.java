@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    OrderForm createPurchase(List<Cart> items);
+    OrderForm createPurchase(List<Cart> items, Integer userId);
     int delete();
 
     List<Purchase> myPurchase();

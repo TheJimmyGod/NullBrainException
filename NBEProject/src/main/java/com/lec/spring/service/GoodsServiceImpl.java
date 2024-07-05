@@ -50,7 +50,7 @@ public class GoodsServiceImpl implements GoodsService {
         session.setAttribute("page", page);
 
         long cnt = goodsRepo.countAll(category1, category2);
-        int totalPages = (int) Math.ceil(cnt/ (double)WRITE_ROWS);
+        int totalPages = (int) Math.ceil(cnt/ (double)15);
 
         int startPage = 0;
         int endPage = 0;
@@ -58,12 +58,12 @@ public class GoodsServiceImpl implements GoodsService {
 
         if(cnt > 0){
             if(page > totalPages)   page = totalPages;
-            int fromRow = (page - 1) * WRITE_ROWS;
+            int fromRow = (page - 1) * 15;
 
             startPage = ((page-1) / WRITE_PAGES) * WRITE_PAGES + 1;
             endPage = startPage + WRITE_PAGES -1;
             if(endPage >= totalPages) endPage = totalPages;
-            list = goodsRepo.selectByCategory(category1, category2, fromRow, WRITE_ROWS);
+            list = goodsRepo.selectByCategory(category1, category2, fromRow, 15);
             model.addAttribute("url", U.getRequest().getRequestURI());
             model.addAttribute("category1", category1);
             model.addAttribute("category2", category2);
