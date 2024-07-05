@@ -15,15 +15,15 @@
 <header class="header">
     <div class="menu">
         <a class="logoButton">LOGO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="HOMEButton">ACC</button>
+        <button class="HOMEButton home">HOME</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton post">게시글</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton recent">최근 본 상품</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="HOMEButton" id="accButton">ACC</button>
     </div>
     <div class="container">
         <div class="container-1">
-            <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>&nbsp;
-            <input type="search" id="search" placeholder="Search..." />
+<!--            <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>&nbsp;-->
+<!--            <input type="search" id="search" placeholder="Search..." />-->
         </div>
         <div class="container-2">
             <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;&nbsp;
@@ -32,6 +32,56 @@
     </div>
 </header>
 <hr><br><br><br>
+<!--<div id="categorySection" style="display: none;">-->
+<!--    <th:block th:replace="~{/cho/prod/category}"></th:block>-->
+<!--</div>-->
+<div class="">
+    <div class="category mb-4">
+        <div class="category1 mb-3 hidden">
+            <button class="btn btn-primary woman" id="woman">여성의류</button>
+            <button class="btn btn-secondary man" id="man">남성의류</button>
+        </div>
+        <div class="category2-man hidden">
+            <div class="row">
+                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">셔츠/남방</div>
+                <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
+                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
+                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
+                <div class="col-3 col-md-2 col-sm-2 item">청바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">재킷</div>
+                <div class="col-3 col-md-2 col-sm-2 item">정장세트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">코디세트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">카디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">유니폼/단체복</div>
+            </div>
+        </div>
+        <div class="category2-woman hidden">
+            <div class="row">
+                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
+                <div class="col-3 col-md-2 col-sm-2 item">블라우스/셔츠</div>
+                <div class="col-3 col-md-2 col-sm-2 item">원피스</div>
+                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
+                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
+                <div class="col-3 col-md-2 col-sm-2 item">점프슈트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">조끼</div>
+                <div class="col-3 col-md-2 col-sm-2 item">재킷</div>
+                <div class="col-3 col-md-2 col-sm-2 item">점퍼</div>
+                <div class="col-3 col-md-2 col-sm-2 item">청바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">스커트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">코디세트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">정장세트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">카디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">레인코트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">한복</div>
+                <div class="col-3 col-md-2 col-sm-2 item">파티룩</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="transInfo" th:each="item : ${PurchaseStatusList}">
     <div class="transInfo2">
         <!-- 배송완료랑 결제완료만 -->

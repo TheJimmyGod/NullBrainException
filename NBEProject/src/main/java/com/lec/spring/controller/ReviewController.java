@@ -57,8 +57,8 @@ public class ReviewController {
                              Integer rate,
                              String content,
                              MultipartFile file1,
-                             MultipartFile file2,
-                             Integer user_id
+                             MultipartFile file2
+//                             Integer user_id
     ) throws IOException {
 
         User user = U.getLoggedUser();
@@ -88,7 +88,7 @@ public class ReviewController {
         saveFile(review.getId(), file2);
 //        System.out.println(title);
 
-        return "redirect:/request?userId=" + user.getId();
+        return "redirect:/request";
     }
 
     private void saveFile(int reviewId, MultipartFile file) {
