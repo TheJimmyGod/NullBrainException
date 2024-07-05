@@ -30,7 +30,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/post/**", "/mypage/**", "/nbe/**").authenticated()
+                        .requestMatchers("/post/**", "/mypage/**").authenticated()
 //                        .requestMatchers("/post/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
 //                        .requestMatchers("/**").hasAnyRole("!USER_BAN")

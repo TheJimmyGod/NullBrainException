@@ -66,30 +66,7 @@
 </head>
 <body class="bg-gray-100">
 <div class="">
-    <header class="py-4 mb-8 mx-8">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <div class="text-3xl font-bold">LOGO</div>
-            </div>
-            <div class="flex space-x-4 items-center">
-                <a href="/user/login" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-sign-in-alt text-2xl"></i><br>
-                    <span style="font-size: 9px">로그인</span>
-                </a>
-                <a href="#" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-user-plus text-2xl ml-1"></i><br>
-                    <span style="font-size: 9px">회원가입</span>
-                </a>
-                <a href="#" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-user text-2xl ml-3"></i><br>
-                    <span style="font-size: 9px;">마이페이지</span>
-                </a>
-                <a href="#" class="text-gray-600 hover:text-gray-800 relative">
-                    <i class="fas fa-shopping-cart text-2xl"></i><br>
-                    <span style="font-size: 9px">장바구니</span>
-                </a>
-            </div>
-        </div>
+        <div th:replace="~{cho/prod/header :: head}"></div>
         <nav class="mt-4">
             <ul class="flex justify-center space-x-6">
                 <li><a href="#" class="text-gray-800 font-bold">HOME</a></li>
