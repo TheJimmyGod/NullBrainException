@@ -109,7 +109,7 @@ public class ProductPageController {
                 .user(orderUser)
                 .build();
         cartService.insert(item);
-        return "redirect:/cart?userId=1";
+        return "redirect:/cart";
     }
 
 
