@@ -1,8 +1,8 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.ReviewGoods;
 import com.lec.spring.domain.User;
-import com.lec.spring.domain.reviewGoods;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.domain.shop.ReviewImage;
 import com.lec.spring.service.RequestService;
@@ -44,7 +44,7 @@ public class ReviewController {
 
     @RequestMapping("/review")
     public String review(@RequestParam("id") Integer id, Model model){
-        reviewGoods purchase = reviewService.getPurchaseInfo(id);
+        ReviewGoods purchase = reviewService.getPurchaseInfo(id);
 
         model.addAttribute("purchase", purchase);
         System.out.println("purchase는 뭐가 들어오지?: " + purchase);
