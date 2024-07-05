@@ -32,10 +32,13 @@
 <!--            <input type="search" id="search" placeholder="Search..." />-->
 <!--        </div>-->
         <div class="container-2">
-            <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;
+            <a href="/mypage/detail" class="mypage">
+                <i name="menuIcon" class="fa-regular fa-user"></i>&nbsp;&nbsp;
+            </a>
             <i name="menuIcon" class="fa-solid fa-cart-plus"></i>
             <span class="cart-badge" th:text="${cartNum}">3</span>
         </div>
+
 <!--    </div>&lt;!&ndash; TODO &ndash;&gt;-->
 </header><br><br>
 <div class="">
@@ -46,40 +49,39 @@
         </div>
         <div class="category2-man hidden">
             <div class="row">
-                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">반팔티셔츠</div>
+                <div class="col-3 col-md-2 col-sm-2 item">긴팔티셔츠</div>
                 <div class="col-3 col-md-2 col-sm-2 item">셔츠/남방</div>
-                <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
-                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
+                <div class="col-3 col-md-2 col-sm-2 item">바지/팬츠</div>
                 <div class="col-3 col-md-2 col-sm-2 item">청바지</div>
-                <div class="col-3 col-md-2 col-sm-2 item">재킷</div>
-                <div class="col-3 col-md-2 col-sm-2 item">정장세트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">코디세트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">카디건</div>
-                <div class="col-3 col-md-2 col-sm-2 item">유니폼/단체복</div>
+                <div class="col-3 col-md-2 col-sm-2 item">반바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">조끼/베스트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
+                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">자켓</div>
+                <div class="col-3 col-md-2 col-sm-2 item">점퍼</div>
+                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
+                <div class="col-3 col-md-2 col-sm-2 item">정장</div>
             </div>
         </div>
         <div class="category2-woman hidden">
             <div class="row">
-                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">블라우스</div>
                 <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">블라우스/셔츠</div>
-                <div class="col-3 col-md-2 col-sm-2 item">원피스</div>
-                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
-                <div class="col-3 col-md-2 col-sm-2 item">니트/스웨터</div>
-                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
-                <div class="col-3 col-md-2 col-sm-2 item">점프슈트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">조끼</div>
-                <div class="col-3 col-md-2 col-sm-2 item">재킷</div>
-                <div class="col-3 col-md-2 col-sm-2 item">점퍼</div>
-                <div class="col-3 col-md-2 col-sm-2 item">청바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">후드/맨투맨</div>
+                <div class="col-3 col-md-2 col-sm-2 item">니트</div>
                 <div class="col-3 col-md-2 col-sm-2 item">스커트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">코디세트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">정장세트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">카디건</div>
-                <div class="col-3 col-md-2 col-sm-2 item">레인코트</div>
-                <div class="col-3 col-md-2 col-sm-2 item">한복</div>
-                <div class="col-3 col-md-2 col-sm-2 item">파티룩</div>
+                <div class="col-3 col-md-2 col-sm-2 item">원피스</div>
+                <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
+                <div class="col-3 col-md-2 col-sm-2 item">청바지/진</div>
+                <div class="col-3 col-md-2 col-sm-2 item">바지</div>
+                <div class="col-3 col-md-2 col-sm-2 item">레깅스</div>
+                <div class="col-3 col-md-2 col-sm-2 item">조끼/베스트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">자켓</div>
+                <div class="col-3 col-md-2 col-sm-2 item">코트</div>
+                <div class="col-3 col-md-2 col-sm-2 item">점퍼/야상/패딩</div>
+                <div class="col-3 col-md-2 col-sm-2 item">정장</div>
+                <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
             </div>
         </div>
     </div>
