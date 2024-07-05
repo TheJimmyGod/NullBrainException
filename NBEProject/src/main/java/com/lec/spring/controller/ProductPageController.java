@@ -48,8 +48,8 @@ public class ProductPageController {
 
     @GetMapping("/home")
     public String home(Model model){
-        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
-        model.addAttribute("cartCnt", cartCnt);
+//        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
+//        model.addAttribute("cartCnt", cartCnt);
         return "cho/prod/main";
     }
 
