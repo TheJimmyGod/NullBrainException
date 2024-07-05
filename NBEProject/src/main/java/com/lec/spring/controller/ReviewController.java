@@ -1,8 +1,8 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.ReviewGoods;
 import com.lec.spring.domain.User;
-import com.lec.spring.domain.reviewGoods;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.domain.shop.ReviewImage;
 import com.lec.spring.service.RequestService;
@@ -44,7 +44,7 @@ public class ReviewController {
 
     @RequestMapping("/review")
     public String review(@RequestParam("id") Integer id, Model model){
-        reviewGoods purchase = reviewService.getPurchaseInfo(id);
+        ReviewGoods purchase = reviewService.getPurchaseInfo(id);
 
         model.addAttribute("purchase", purchase);
         System.out.println("purchase는 뭐가 들어오지?: " + purchase);
@@ -57,8 +57,8 @@ public class ReviewController {
                              Integer rate,
                              String content,
                              MultipartFile file1,
-                             MultipartFile file2,
-                             Integer user_id
+                             MultipartFile file2
+//                             Integer user_id
     ) throws IOException {
 
         User user = U.getLoggedUser();
@@ -88,7 +88,7 @@ public class ReviewController {
         saveFile(review.getId(), file2);
 //        System.out.println(title);
 
-        return "redirect:/request?userId=" + user.getId();
+        return "redirect:/request";
     }
 
     private void saveFile(int reviewId, MultipartFile file) {
