@@ -81,13 +81,12 @@ public class OrderController {
     @GetMapping("/order_form")
     public String purchasePage(
             @RequestParam(name="selectedItem", required = false) Integer[] selectItem,
-            @RequestParam("userId") Integer userId,
             Model model){
         if(selectItem.length == 0){
             return "redirect:/cart";
         }
         List<Cart> itemList = cartService.selectItems(selectItem);
-        OrderForm orderForm = purchaseService.createPurchase(itemList, userId);
+        OrderForm orderForm = purchaseService.createPurchase(itemList, U.getLoggedUser().getId());
         model.addAttribute("order", orderForm);
         model.addAttribute("itemList", itemList);
 

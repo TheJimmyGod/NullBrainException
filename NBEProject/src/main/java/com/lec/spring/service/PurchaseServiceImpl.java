@@ -40,18 +40,17 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public OrderForm createPurchase(List<Cart> carts) {
-        User u = U.getLoggedUser();
+    public OrderForm createPurchase(List<Cart> carts, Integer userId) {
         List<Cart> itemList = carts;
         if(itemList == null){
             return null;
         }
-        Address addr = userRepo.getDefaultAddr(u.getId());
+        Address addr = userRepo.getDefaultAddr(userId);
         String uuid = UUID.randomUUID().toString();
         uuid = uuid.replaceAll("-","");
         String merchantId = uuid;
         int totalPrice = 0;
-        OrderUser orderUser = userRepo.selectById(u.getId()).oderUser(addr.getStreet_addr(), addr.getDetail_addr());
+        OrderUser orderUser = userRepo.selectById(userId).oderUser(addr.getStreet_addr(), addr.getDetail_addr());
         StringBuilder name = new StringBuilder();
 
         Pay pay = Pay.builder()

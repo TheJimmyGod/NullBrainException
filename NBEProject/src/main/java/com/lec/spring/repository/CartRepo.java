@@ -21,6 +21,8 @@ public interface CartRepo {
 
     int deleteItem(int id);
 
+    int deleteByPay(int payId);
+
     int update(Cart cart);
 
 }
