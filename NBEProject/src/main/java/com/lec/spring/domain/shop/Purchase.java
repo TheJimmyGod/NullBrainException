@@ -19,16 +19,14 @@ public class Purchase {
     private Integer id;
     private String merchantId;
     private LocalDateTime regdate;
-    // Pay 참조키
-    private Integer payId;
     private Integer amount;
     private String opt;
     private OrderGoods goods;
     private OrderUser user;
-
-
-    // 페이 상태
+    // Pay 참조키
     private Pay pay;
+
+
 
     // 유저의 객체 정보
     private User users;

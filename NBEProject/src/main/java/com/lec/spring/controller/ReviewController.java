@@ -34,9 +34,6 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @Autowired
-    private RequestService requestService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -58,24 +55,16 @@ public class ReviewController {
                              String content,
                              MultipartFile file1,
                              MultipartFile file2
-//                             Integer user_id
     ) throws IOException {
 
         User user = U.getLoggedUser();
         user = userService.findById(user.getId());
-//        // 예시로 유저 ID를 1로 가정
-//        Integer userId = 1;
-//
-//        // User 객체 생성
-//        User user = User.builder()
-//                .id(userId)
-//                .build();
+
+
 
         Review review = Review.builder()
-//                .user_id(1)
                 .goodsId("65")
                 .title(title)
-//                .type(type)
                 .user_id(user.getId())
                 .content(content)
                 .goodsId(goodsId)
@@ -86,7 +75,7 @@ public class ReviewController {
 
         saveFile(review.getId(), file1);
         saveFile(review.getId(), file2);
-//        System.out.println(title);
+
 
         return "redirect:/request";
     }

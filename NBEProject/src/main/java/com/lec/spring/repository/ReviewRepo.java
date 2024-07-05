@@ -26,4 +26,6 @@ public interface ReviewRepo {
     // 리뷰 글 작성 (INSERT)
     int save(Review review);
 
+    int countUserReview(Integer userId);
+
 }

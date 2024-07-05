@@ -6,6 +6,7 @@ import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.dto.PayStatus;
 import com.lec.spring.dto.PaymentRequest;
+import com.lec.spring.repository.CartRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import org.apache.ibatis.session.SqlSession;
@@ -19,6 +20,7 @@ public class PayServiceImpl implements PayService {
 
     private final PurchaseRepo purchaseRepo;
     private final PayRepo payRepo;
+    private final CartRepo cartRepo;
 
 //    @Autowired
 //    private IamportClient iamportClient;
@@ -26,6 +28,7 @@ public class PayServiceImpl implements PayService {
     public PayServiceImpl(SqlSession sqlSession) {
         this.purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
         this.payRepo = sqlSession.getMapper(PayRepo.class);
+        this.cartRepo = sqlSession.getMapper(CartRepo.class);
     }
 
     @Override
@@ -44,8 +47,10 @@ public class PayServiceImpl implements PayService {
         // TODO
         // 해당 정보가 없을 떄 처리해주어야한다.
 
-        Pay pay = payRepo.findById(purchaseList.get(0).getPayId());
+        Pay pay = payRepo.findById(purchaseList.get(0).getPay().getId());
         pay.changePaymentBySuccess(PayStatus.OK, request.getImp_uid());
+        payRepo.update(pay);
+        cartRepo.deleteByPay(pay.getId());
     }
 
     @Override
@@ -60,6 +65,11 @@ public class PayServiceImpl implements PayService {
                 pay.setStatus(status);
                 payRepo.updateStatus(pay);
             }
+    }
+
+    @Override
+    public void updateByUid(String imp_uid, PayStatus status) {
+        payRepo.cancel(imp_uid, status);
     }
 
 }
