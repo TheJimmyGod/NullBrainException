@@ -12,5 +12,6 @@ public interface PayService {
 
     Pay findPayById(Integer id);
     void updatePayStatus(Integer id, PayStatus status);
+    void updateByUid(String imp_uid, PayStatus status);
 
 }

@@ -60,6 +60,11 @@
         where goods_no=#{param1}
     </select>
 
+    <select id="countUserReview" flushCache="true">
+        select count(*) from review
+        where user_id=#{param1}
+    </select>
+
     <insert id="save" parameterType="com.lec.spring.domain.shop.Review"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO review (user_id, goods_no, title, content, rate)

@@ -3,7 +3,7 @@
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Purchase" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into  purchase (merchant_id, amount, opt, goods_id, user_id, pay_id)
-        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{payId} )
+        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{pay.id} )
     </insert>
 
     <delete id="delete">
@@ -12,11 +12,18 @@
     <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
         <result column="p_id" property="id"/>
         <result column="m_id" property="merchantId"/>
-        <result column="pa_id" property="payId"/>
         <result column="p_amount" property="amount"/>
         <result column="p_opt" property="opt"/>
+        <collection property="pay" resultMap="mapPay"/>
         <collection property="goods" resultMap="mapGoods"/>
         <collection property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <resultMap id="mapPay" type="com.lec.spring.domain.shop.Pay">
+        <result column="order_id" property="id"/>
+        <result column="o_price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="paied_id" property="paymentUid"/>
     </resultMap>
 
     <resultMap id="mapGoods" type="com.lec.spring.dto.OrderGoods">
@@ -53,7 +60,11 @@
             u.birth as "u_birth",
             u.email as "u_email",
             a.street_addr as "street_addr",
-            a.detail_addr as "detail_adddr"
+            a.detail_addr as "detail_adddr",
+            o.id as "order_id",
+            o.status as "status",
+            o.price as "o_price",
+            o.payment_uid "paied_id"
         FROM purchase p
                  join goods g
                       on g.goods_no=p.goods_id
@@ -61,6 +72,8 @@
                       on p.user_id=u.id
                 join address a
                     on a.user_id=p.user_id
+                join pay o
+                    on p.pay_id=o.id
         WHERE 1=1
         and a.isDefault=true
 
@@ -75,6 +88,7 @@
         <include refid="selectPurchase"/>
         and p.user_id=#{param1}
     </select>
+
 
 
     <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">

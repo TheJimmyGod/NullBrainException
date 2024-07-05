@@ -86,26 +86,26 @@
     <div class="transInfo2">
         <!-- 배송완료랑 결제완료만 -->
 <!--        <h1 class="status" th:text="${item.status}">배송완료</h1>-->
-        <span class="status" th:if="${item.pay.status == 'OK'}">결제완료</span>
-        <span class="status" th:if="${item.pay.status != 'OK'}">결제중</span>
+        <span class="status" th:if="${item.pay.status == OK}">결제완료</span>
+        <span class="status" th:if="${item.pay.status != READY}">결제대기</span>
         <div class="row" style="width: 500px;">
-            <div class="col-auto">
-                <img th:src="${item.good.image_1}" id="productImage" class="productImage" alt="Product Image">
+            <div class="col-auto" th:unless="${item.pay.status == CANCEL}">
+                <img th:src="${item.goods.image}" id="productImage" class="productImage" alt="Product Image">
             </div>
             <div class="col">
                 <br>
                 <a class="productInfo" >7.10.12:00</a>
 <!--                th:text="${item.regdate}"-->
                 <br>
-                <a class="productInfo" th:text="${item.good.name}">상품이름상품이름상품이름상품이름상품이름</a><br>
-                <a class="productInfo" th:text="${item.good.price} + '원 ' + ${item.amount} + '개'">12345원 1개</a><br>
+                <a class="productInfo" th:text="${item.goods.name}">상품이름상품이름상품이름상품이름상품이름</a><br>
+                <a class="productInfo" th:text="${item.goods.price} + '원 ' + ${item.amount} + '개'">12345원 1개</a><br>
                 <a class="productInfo" th:text="${item.opt}">@@@</a><br>
             </div>
         </div><br>
         <!-- 배송완료 상태만 리뷰작성 버튼 보이게 -->
-        <div th:if="${item.pay.status == 'OK'}">
+        <div th:if="${item.pay.status == OK}">
             <div class="btnDiv">
-                <a th:href="@{/review(id=${item.id}, userId=${userId})}"}>리뷰작성</a>
+                <a th:href="@{/review(id=${item.id})}">리뷰작성</a>
                 <form class="request" th:method="post" th:action="@{request/cancel}">
                     <input type="hidden" name="imp_uid" th:value="${item.pay.paymentUid}">
                     <input type="submit" value="결제취소">

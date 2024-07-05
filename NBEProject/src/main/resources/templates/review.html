@@ -150,8 +150,7 @@
         <p th:text="'수량: ' + ${purchase.amount} + '개'">수량: 1개</p>
         <p th:text="${purchase.opt}">사이즈: "XL"</p>
     </div>
-    <form th:action="@{/reviewOk}" th:id="reviewForm" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="user_id" th:value="${purchase.user_id}">
+    <form th:action="@{reviewOk}" th:id="reviewForm" method="post" enctype="multipart/form-data">
         <input type="hidden" name="goodsId" th:value="${purchase.goodsId}">
         <div class="form-group">
             <div class="rating" id="rate">
@@ -174,7 +173,7 @@
 <!--        <div class="photo-preview" id="photo-preview"></div>-->
         <div class="form-group">
             <label for="title">제목</label><br>
-            <input type="text" id="title" name="title" value="">
+            <input type="text" id="title" name="title">
         </div><br>
         <div class="form-group">
             <label for="content">리뷰내용</label><br>

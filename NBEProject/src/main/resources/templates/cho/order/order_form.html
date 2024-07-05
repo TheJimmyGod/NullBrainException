@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="~{prod/header :: head}"></div>
+    <div th:replace="~{/cho/prod/header :: head}"></div>
     <section class="shipping-info">
         <h2>배송지</h2>
         <div class="address-info">
@@ -59,7 +59,7 @@
         </div>
     </section>
     <button type="button" class="checkout-button" onclick="requestPay()">결제하기</button>
-    <form th:action="@{/order/pay}" th:method="post">
+    <form>
         <input type="hidden" name="pg" th:value="${order.pg}">
         <input type="hidden" name="payMethod" th:value="${order.pay_method}">
         <input type="hidden" name="mId" th:value="${order.merchantId}">
