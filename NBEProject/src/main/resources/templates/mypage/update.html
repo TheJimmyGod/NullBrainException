@@ -21,7 +21,6 @@
 <div th:replace="~{background::body}"></div>
 <div th:replace="~{SecondaryBackground::body}"></div>
 <div class="container">
-    <div th:replace="~{cho/prod/header :: head}"></div>
     <div class="container border rounded" style="margin-bottom: 200px; padding-bottom: 200px">
         <div class="p-5 text-left">
             <a th:onclick="Back()" class="col-1 col-sm-1" style="text-decoration: none; color: black;"><i class="fas fa-arrow-left fa-2x"></i></a>
@@ -29,15 +28,15 @@
         <form th:action="@{/mypage/update}" method="post" enctype="multipart/form-data">
             <div class="p-5 text-left">
                 <div class="container mt-5 col-8 col-sm-8 rounded">
-                    <table class="border border-dark table ml-3">
+                    <table class="table ml-3">
                         <tbody>
                         <tr>
-                            <td class="col-4 col-sm-4 col-lg-4 ml-3" style="width: 16.66%">
+                            <td class="col-4 col-sm-4 col-lg-4 ml-3" style="width: 20%">
                                 <p class="col-12 col-sm-12 col-lg-12 rounded commentTable text-center pt-5 " style="height: 200px;">
                                     사용자 정보
                                 </p>
                             </td>
-                            <td class="col-8 col-sm-8 col-lg-8 rounded commentTable" style="width: 150px; height: 150px;">
+                            <td class="col-8 col-sm-8 col-lg-8 rounded commentTable" style="width: 500px; height: 250px;">
                                 <div>
                                     <span th:if="${logged_user}" th:id="'profile'" >
                                         <img class="ms-4 mt-3 col-lg-4 col-sm-6 col-12 rounded" th:id="'dummyProfile'" style="width: 120px; height: 120px; float: left; margin-right: 10%" th:if="${currentPic}" th:src="@{'/upload/' + ${currentPic}}" th:alt="'none'"/>
