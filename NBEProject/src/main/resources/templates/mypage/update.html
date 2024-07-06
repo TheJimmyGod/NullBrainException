@@ -94,7 +94,6 @@
         $(document).ready(function (){
             if(dataArr.length === 0)
             {
-                console.log(logged_user);
                 if(logged_user === null)
                     return;
                 for(var item of addresses)
@@ -105,7 +104,6 @@
                         if(item["user_id"] !== logged_user.id)
                             continue;
                     }
-                    console.log(item["isDefault"]);
                     for(let value of dataArr)
                     {
                         if(value["id"] === item["id"])
