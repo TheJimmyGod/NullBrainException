@@ -1,11 +1,12 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.service.CartService;
 import com.lec.spring.service.PurchaseService;
-import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -78,22 +79,40 @@ public class OrderController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/order_form")
+    @GetMapping("/pay")
     public String purchasePage(
             @RequestParam(name="selectedItem", required = false) Integer[] selectItem,
             Model model){
         if(selectItem.length == 0){
             return "redirect:/cart";
         }
+        User user = U.getLoggedUser();
         List<Cart> itemList = cartService.selectItems(selectItem);
         OrderForm orderForm = purchaseService.createPurchase(itemList, U.getLoggedUser().getId());
+        Address address = cartService.selectDefaultAddress(user.getId());
+
+        int totalPrice = 0;
+        int totalCnt = 0;
+
+        for (Cart item : itemList) {
+            totalPrice += item.getAmount() * Integer.parseInt(item.getGoods().getPrice());
+            totalCnt += item.getAmount();
+        }
+
+
+        model.addAttribute("userName", user.getName());
+        model.addAttribute("phone", user.getPhone());
+        model.addAttribute("address", address.getStreet_addr());
+        model.addAttribute("detailAddress", address.getDetail_addr());
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("order", orderForm);
         model.addAttribute("itemList", itemList);
 
         int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
         model.addAttribute("cartCnt",cartCnt);
 
-        return "cho/order/order_form";
+        return "cho/order/pay";
     }
 
 

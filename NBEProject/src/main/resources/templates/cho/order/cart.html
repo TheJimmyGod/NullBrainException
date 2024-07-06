@@ -66,10 +66,40 @@
         </form>
     </div>
 </div>
+<br><br><br><br>
+<footer class="footer">
+    <div class="footerDiv">
+        <h1 class="NBELogo">NBE</h1><br><br>
+        <div class="row">
+            <div class="INFO col">
+                <h3>INFO</h3>
+                    <a>회사소개</a><br>
+                    <a>이용약관</a><br>
+                    <a>사업자정보확인</a><br>
+                    <a>개인정보처리방침</a>
+            </div>
+            <div class="consult col">
+                <h3>1234-1234</h3><br>
+                <a>상담시간</a><br>
+                <a>월~금 오전10시-오후5시</a><br>
+                <a>점심시간 오후1시-오후2시</a><br>
+                <a>토,일,공휴일휴무</a><br><br>
+
+                <a>FAQ</a><br>
+                <a>공지사항</a>
+            </div>
+            <div class="delivery col">
+                <h3>DELIVERY</h3>
+                <a>반품주소</a><br>
+                <a>서울특별시 강남구 테헤란로 146</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
 
-<form id="pay" method="get" th:action="@{/order_form}">
+<form id="pay" method="get" th:action="@{/pay}">
     <input type="hidden" name="userId" th:value="${userId}">
     <div class="selected">
 

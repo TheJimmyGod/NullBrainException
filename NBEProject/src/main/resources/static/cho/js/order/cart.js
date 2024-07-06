@@ -1,12 +1,25 @@
 // 페이지 로드 시 실행될 함수
+$(function(){
+    $('.checkbox').change(function(){
+        const item = $('.cart-item');
+        let selectedPrice = 0;
+        item.each(function (){
+            console.log('hello')
 
+            if($(this).find('.checkbox').is(':checked')){
+                selectedPrice += parseInt($(this).find('.price').text());
+            }
+        });
+
+        $('.totalPrice').text(selectedPrice);
+    })
+});
 
 // 전체 선택 체크박스 클릭 시 모든 체크박스 선택/해제
 function selectAll(selectAll) {
     const checkboxes = document.getElementsByName('chk');
     checkboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked;
-        updateDelItems(checkbox); // 전체 선택 시에도 updateDelItems 호출
     });
 }
 
@@ -78,4 +91,3 @@ $(function(){
 function category() {
     $('.category1').toggleClass('hidden');
 }
-
