@@ -17,7 +17,6 @@ let addAddressDataArr = [];
 let isInitialize = false;
 $(function (){
     $("#submitAddress").click(function (event){
-        
         if ($name.val().trim() === "") {
             alert("이름을 입력해주세요.");
             $name.focus();
@@ -54,13 +53,14 @@ $(function (){
             newName = newName.concat("(" + $subName.val().trim() + ")");
         }
         let data = {
+            "id": currentID,
             "name": newName,
             "detail_addr": $address.val().trim() + " " + $address2.val().trim(),
             "street_addr": $street.val().trim(),
             "isDefault": $basicAdd.is(":checked"),
         };
 
-        window.opener.updateData(currentID ,data);
+        window.opener.updateData(data);
 
         window.close();
     });
@@ -146,7 +146,7 @@ function ReceiveDataFromParent(data)
 
     }
 
-    currentID = data["index"];
+    currentID = data["id"];
 
     $name.val(nameStr);
     $street.val(currentData["streetAdd"]);

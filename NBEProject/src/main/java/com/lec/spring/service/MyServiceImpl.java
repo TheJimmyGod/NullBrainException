@@ -22,7 +22,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MyServiceImpl implements MyService {
@@ -56,23 +58,35 @@ public class MyServiceImpl implements MyService {
 
         List<Address> addresses = addressRepository.selectAll(user.getId());
         List<Address> addressList = new ArrayList<>();
-        for (int i = 0; i < addresses.size(); i++) {
-            if(addresses.get(i).getIsDefault())
-            {
-                address = addresses.get(i);
-                break;
-            }
-        }
-        if(address != null)
+        try
         {
-            addressList.add(address);
             for (int i = 0; i < addresses.size(); i++) {
-                if(addresses.get(i).getId() == address.getId())
+                if(addresses.get(i) == null)
                     continue;
-                else
-                    addressList.add(addresses.get(i));
+                if(addresses.get(i).getIsDefault())
+                {
+                    address = addresses.get(i);
+                    break;
+                }
+            }
+            if(address != null)
+            {
+                addressList.add(address);
+                for (int i = 0; i < addresses.size(); i++) {
+                    if(addresses.get(i) == null)
+                        continue;
+                    else if(addresses.get(i).getId() == address.getId())
+                        continue;
+                    else
+                        addressList.add(addresses.get(i));
+                }
             }
         }
+        catch (Exception e)
+        {
+            System.out.println(e.toString());
+        }
+
 
         model.addAttribute("nickName", user.getName());
         model.addAttribute("phone", user.getPhone());
@@ -81,13 +95,35 @@ public class MyServiceImpl implements MyService {
     }
     @Transactional
     @Override
-    public int updateProfile(Profile profile) {
+    public int updateProfile(Profile profile, Address[] delAddresses) {
         User user = U.getLoggedUser();
         user = userRepository.selectById(user.getId());
         if(user == null)
             return -1;
 
         var id = user.getId();
+
+        if(delAddresses != null && delAddresses.length > 0)
+        {
+            var myAddr = addressRepository.selectAll(id);
+
+            for (var addr : myAddr)
+            {
+                for(var d_addr : delAddresses)
+                {
+                    if(addr.getStreet_addr().equals(d_addr.getStreet_addr())
+                    && addr.getDetail_addr().equals(d_addr.getDetail_addr())
+                    && addr.getName().equals(d_addr.getName())
+                    && addr.getIsDefault().equals(d_addr.getIsDefault()))
+                    {
+                        addressRepository.delete(addr.getId());
+                    }
+                    else
+                        continue;
+                }
+            }
+        }
+
         for (Address address : profile.getAddresses()) {
             Address exist = addressRepository.selectById(address.getId());
             if(exist != null)
@@ -117,6 +153,15 @@ public class MyServiceImpl implements MyService {
                     .build();
             addressRepository.insert(newAddress);
         }
+
+        var arr = Arrays.stream(profile.getAddresses()).filter(Address::getIsDefault).toArray();
+        if(profile.getAddresses().length > 0 && arr.length == 0)
+        {
+            var first = profile.getAddresses()[0];
+            first.setIsDefault(true);
+            addressRepository.update(first);
+        }
+
         user.setName(profile.getNickName());
         user.setPhone(profile.getPhone());
 

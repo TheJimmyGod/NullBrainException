@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -66,17 +68,27 @@ public class MyController {
             @RequestParam("nickname") String nickname,
             @RequestParam("phone") String phone,
             @RequestParam("addresses") String addressesJson,
+            @RequestParam("delAddresses") String delAddressesJson,
             Model model
     ){
+        User user = U.getLoggedUser();
+        user = userService.findById(user.getId());
+
         ObjectMapper objectMapper = new ObjectMapper();
         Address[] addresses;
+        Address[] delAddresses;
         try {
-            addresses = objectMapper.readValue(addressesJson, Address[].class); // JSON 문자열을 Address 배열로 변환
+            addresses = objectMapper.readValue(addressesJson, Address[].class);
+            delAddresses = objectMapper.readValue(delAddressesJson, Address[].class);
+
+            addresses = Arrays.stream(addresses)
+                    .filter(Objects::nonNull)
+                    .toArray(Address[]::new);
         } catch (JsonProcessingException e) {
             return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
-        model.addAttribute("result", myService.updateProfile(profile));
+        model.addAttribute("result", myService.updateProfile(profile, delAddresses));
         return "mypage/update";
     }
 
