@@ -3,6 +3,7 @@ package com.lec.spring.repository;
 
 
 
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Cart;
 
 import java.util.List;
@@ -24,5 +25,7 @@ public interface CartRepo {
     int deleteByPay(int payId);
 
     int update(Cart cart);
+
+    public Address selectByDefaultAdd(Integer user_id);
 
 }

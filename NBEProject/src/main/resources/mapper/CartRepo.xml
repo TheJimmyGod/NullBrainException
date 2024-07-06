@@ -111,6 +111,20 @@
         set opt=#{opt}
         where id=#{id}
     </update>
+    
+    <select id="selectByDefaultAdd" resultMap="address">
+        SELECT user_id, isDefault, street_addr, detail_addr
+        FROM address
+        WHERE isDefault = 1
+        AND id=#{id}
+    </select>
+
+    <resultMap id="address" type="com.lec.spring.domain.shop.Address">
+        <result column="user_id" property="user_id"/>
+        <result column="isDefault" property="isDefault"/>
+        <result column="street_addr" property="street_addr"/>
+        <result column="detail_addr" property="detail_addr"/>
+    </resultMap>
 </mapper>
 
 
