@@ -14,6 +14,7 @@
         <result column="m_id" property="merchantId"/>
         <result column="p_amount" property="amount"/>
         <result column="p_opt" property="opt"/>
+        <result column="p_status" property="status"/>
         <collection property="pay" resultMap="mapPay"/>
         <collection property="goods" resultMap="mapGoods"/>
         <collection property="user" resultMap="mapUser"/>
@@ -50,6 +51,7 @@
             p.pay_id "pa_id",
             p.amount "p_amount",
             p.opt "p_opt",
+            p.status "p_status",
             g.goods_no as "goodsNo",
             g.name as "g_name",
             g.price as "g_price",

@@ -87,7 +87,7 @@
         <!-- 배송완료랑 결제완료만 -->
 <!--        <h1 class="status" th:text="${item.status}">배송완료</h1>-->
         <span class="status" th:if="${item.pay.status == OK}">결제완료</span>
-        <span class="status" th:if="${item.pay.status != READY}">결제대기</span>
+        <span class="status" th:if="${item.pay.status == READY}">결제대기</span>
         <div class="row" style="width: 500px;">
             <div class="col-auto" th:unless="${item.pay.status == CANCEL}">
                 <img th:src="${item.goods.image}" id="productImage" class="productImage" alt="Product Image">
