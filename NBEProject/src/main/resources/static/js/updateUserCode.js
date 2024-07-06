@@ -1,5 +1,6 @@
 let i = 0;
 let dataArr = [];
+let deletedArr = [];
 var popup = null;
 $(document).ready(function (){
     $('[id*="addressUpdate"]').each(function (index, element){
@@ -54,6 +55,11 @@ $(function (){
         }
         let isDefault = false;
         for (let dataArrElement of dataArr) {
+            if(dataArrElement === undefined)
+            {
+                console.log("Hello world");
+                continue;
+            }
             if(dataArrElement["isDefault"] === true)
             {
                 console.log(dataArrElement["name"]);
@@ -72,6 +78,7 @@ $(function (){
         let formData = new FormData();
 
         formData.append("addresses", JSON.stringify(dataArr));
+        formData.append("delAddresses", JSON.stringify(deletedArr));
         formData.append("nickname", $nickName.val().trim());
         formData.append("phone", $phoneNum.val().trim());
         formData.append("file", $imageFile[0].files[0]);
@@ -96,7 +103,7 @@ function activate(){
     let elementIndex = $(this).attr("id").match(/\d+/);
     var data = dataArr.at(elementIndex);
     var dataToSend = {
-        "index": elementIndex,
+        "id": data["id"],
         "name":data["name"],
         "detailAdd": data["detail_addr"],
         "streetAdd": data["street_addr"],
@@ -111,36 +118,50 @@ function activate(){
     }
 }
 
-function updateData(index, data) {
-    if(data["isDefault"] === true)
+function updateData(data) {
+    try
     {
-        for(let z = 0; z < dataArr.length; ++z)
+        if(data["isDefault"] === true)
         {
-            dataArr[z]["isDefault"] = false;
+            for(let z = 0; z < dataArr.length; ++z)
+            {
+                if(dataArr[z] === undefined)
+                    continue;
+                dataArr[z]["isDefault"] = false;
+            }
         }
-    }
 
-    dataArr[index]["name"] = data["name"];
-    dataArr[index]["detail_addr"] = data["detail_addr"];
-    dataArr[index]["street_addr"] = data["street_addr"];
-    dataArr[index]["isDefault"] = data["isDefault"];
+        for (const item of dataArr) {
+            if(item === undefined)
+                continue;
+            if(item["id"] === data["id"])
+            {
+                item["name"] = data["name"];
+                item["detail_addr"] = data["detail_addr"];
+                item["street_addr"] = data["street_addr"];
+                item["isDefault"] = data["isDefault"];
+                break;
+            }
+        }
 
-    if(dataArr.length === 1)
-    {
-        data["isDefault"] = true;
-    }
-
-    let group = $("#addressGroup");
-
-    while (group[0].firstChild){
-        group[0].removeChild(group[0].firstChild);
-    }
-
-    for (let z = 0; z < dataArr.length; ++z)
-    {
-        if(dataArr[z]['isDefault'] === true)
+        if(dataArr.length === 1)
         {
-            group.append(`
+            data["isDefault"] = true;
+        }
+
+        let group = $("#addressGroup");
+
+        while (group[0].firstChild){
+            group[0].removeChild(group[0].firstChild);
+        }
+
+        for (let z = 0; z < dataArr.length; ++z)
+        {
+            if(dataArr[z] === undefined)
+                continue;
+            if(dataArr[z]['isDefault'] === true)
+            {
+                group.append(`
         <tr th:id="address_num${z}">
             <td>
             <div class="col-12 col-sm-12 col-lg-12 p-2 addressTable">
@@ -148,31 +169,38 @@ function updateData(index, data) {
             <b style="color: blue" th:id="'isDefault${z}'">(기본배송지)</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
         `);
-        }
-        else
-        {
-            group.append(`
+            }
+            else
+            {
+                group.append(`
         <tr th:id="address_num${z}">
             <td>
             <div class="col-12 col-sm-12 col-lg-12 p-2 addressTable">
             <b th:id="'basic_add${z}'">${dataArr[z]['name']}</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
         `);
+            }
         }
+        $('[id*="addressUpdate"]').each(function (index, element){
+            $(element).on("click", activate);
+        });
+    }catch (e)
+    {
+        alert(e);
     }
-    $('[id*="addressUpdate"]').each(function (index, element){
-        $(element).on("click", activate);
-    });
+
 }
 
 function receiveData(data) {
@@ -210,7 +238,8 @@ function receiveData(data) {
             <b style="color: blue" th:id="'isDefault${z}'">(기본배송지)</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
@@ -225,7 +254,8 @@ function receiveData(data) {
             <b th:id="'basic_add${z}'">${dataArr[z]['name']}</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
@@ -260,7 +290,8 @@ function initialize(data)
             <b style="color: blue" th:id="'isDefault${z}'">(기본배송지)</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
@@ -275,7 +306,8 @@ function initialize(data)
             <b th:id="'basic_add${z}'">${dataArr[z]['name']}</b>
             <p style="color: gray; font-size: 10px;" th:id="'street_add${z}'">${dataArr[z]['street_addr']}</p>
             <p style="color: gray; font-size: 10px;" th:id="'detailed_add${z}'">${dataArr[z]['detail_addr']}</p>
-            <button type="button" class="btn" id="addressUpdate${z}" style="float: right; width: 75px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="input-file-button" id="addressUpdate${z}" style="float: right; width: 100px;"><a id="btnColor">수정</a></button>
+            <button type="button" class="btn btn-danger" id="addressDelete${z}" style="width: 50px;" onclick="deleteAddress(this)"><a id="btnColor">X</a></button>
             </div>
             </td>
         </tr>
@@ -287,6 +319,17 @@ function initialize(data)
     });
 }
 
+function deleteAddress(curr)
+{
+    let index = $(curr).attr("id").match(/\d+/);
+    var item = dataArr[index];
+    if(item != null)
+    {
+        deletedArr.push(item);
+        delete dataArr[index];
+        $(curr).parent().remove();
+    }
+}
 
 function loadImage(input){
     let file = input.files[0];
