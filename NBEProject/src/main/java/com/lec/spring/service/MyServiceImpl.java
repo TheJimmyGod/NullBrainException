@@ -103,6 +103,11 @@ public class MyServiceImpl implements MyService {
 
         var id = user.getId();
 
+        for(var a : delAddresses)
+        {
+            System.out.println(a.getId());
+        }
+
         if(delAddresses != null && delAddresses.length > 0)
         {
             var myAddr = addressRepository.selectAll(id);
@@ -113,8 +118,7 @@ public class MyServiceImpl implements MyService {
                 {
                     if(addr.getStreet_addr().equals(d_addr.getStreet_addr())
                     && addr.getDetail_addr().equals(d_addr.getDetail_addr())
-                    && addr.getName().equals(d_addr.getName())
-                    && addr.getIsDefault().equals(d_addr.getIsDefault()))
+                    && addr.getName().equals(d_addr.getName()))
                     {
                         addressRepository.delete(addr.getId());
                     }
