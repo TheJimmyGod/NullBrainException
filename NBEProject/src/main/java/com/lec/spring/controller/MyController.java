@@ -71,9 +71,6 @@ public class MyController {
             @RequestParam("delAddresses") String delAddressesJson,
             Model model
     ){
-        User user = U.getLoggedUser();
-        user = userService.findById(user.getId());
-
         ObjectMapper objectMapper = new ObjectMapper();
         Address[] addresses;
         Address[] delAddresses;
