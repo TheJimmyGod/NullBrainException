@@ -3,6 +3,7 @@
 #    name: NBEProject
 #  profiles:
 #    active: dev
+# 기본 정적 리소스 위치 설정 (이미 포함되어 있는 경로)
 
 spring:
   thymeleaf:
@@ -84,4 +85,4 @@ app:
 
   # 파일 업로드 경로
   upload:
-    path: NBEProject/upload
+    path: src/main/resources/static/upload

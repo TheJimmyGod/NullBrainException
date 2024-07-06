@@ -171,6 +171,7 @@ public class MyServiceImpl implements MyService {
             }
         }
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
+        System.out.println(copyOfLocation);
         try{
             Files.copy(multipartFile.getInputStream(),
                     copyOfLocation,
