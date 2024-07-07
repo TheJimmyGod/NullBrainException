@@ -22,7 +22,7 @@
 
 
             <div class="product-item"  th:each="item : ${list}">
-                <a th:href="@{'http://localhost:8080/nbe/detail/' + ${item.goods_no}}">
+                <a th:href="@{'/nbe/detail/' + ${item.goods_no}}">
                     <img th:src="${item.image_1}" alt="Product 1">
                 </a>
                 <div class="product-info">
