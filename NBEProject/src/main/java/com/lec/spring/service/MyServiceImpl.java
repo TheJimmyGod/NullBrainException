@@ -30,8 +30,8 @@ import java.util.Objects;
 public class MyServiceImpl implements MyService {
     @Value("${app.upload.path}")
     private String uploadDir;
-    private UserRepo userRepository;
-    private AddressRepo addressRepository;
+    private final UserRepo userRepository;
+    private final AddressRepo addressRepository;
 
 
     @Autowired
@@ -44,6 +44,8 @@ public class MyServiceImpl implements MyService {
     @Override
     public void showMyPage(Model model) {
         User user = U.getLoggedUser();
+        if(user == null)
+            return;
         user = userRepository.selectById(user.getId());
         model.addAttribute("nickName", user.getName());
         model.addAttribute("currentPic", user.getProfileimage());
@@ -52,6 +54,8 @@ public class MyServiceImpl implements MyService {
     @Override
     public void updateMyPage(Model model) {
         User user = U.getLoggedUser();
+        if(user == null)
+            return;
         user = userRepository.selectById(user.getId());
 
         Address address = null;
@@ -60,25 +64,24 @@ public class MyServiceImpl implements MyService {
         List<Address> addressList = new ArrayList<>();
         try
         {
-            for (int i = 0; i < addresses.size(); i++) {
-                if(addresses.get(i) == null)
+            for (Address item : addresses) {
+                if (item == null)
                     continue;
-                if(addresses.get(i).getIsDefault())
-                {
-                    address = addresses.get(i);
+                if (item.getIsDefault()) {
+                    address = item;
                     break;
                 }
             }
             if(address != null)
             {
                 addressList.add(address);
-                for (int i = 0; i < addresses.size(); i++) {
-                    if(addresses.get(i) == null)
+                for (Address value : addresses) {
+                    if (value == null)
                         continue;
-                    else if(addresses.get(i).getId() == address.getId())
+                    else if (value.getId() == address.getId())
                         continue;
                     else
-                        addressList.add(addresses.get(i));
+                        addressList.add(value);
                 }
             }
         }
@@ -97,34 +100,20 @@ public class MyServiceImpl implements MyService {
     @Override
     public int updateProfile(Profile profile, Address[] delAddresses) {
         User user = U.getLoggedUser();
-        user = userRepository.selectById(user.getId());
         if(user == null)
             return -1;
+        user = userRepository.selectById(user.getId());
 
         var id = user.getId();
 
-        for(var a : delAddresses)
+        if(delAddresses != null)
         {
-            System.out.println(a.getId());
-        }
-
-        if(delAddresses != null && delAddresses.length > 0)
-        {
-            var myAddr = addressRepository.selectAll(id);
-
-            for (var addr : myAddr)
+            for(var addr : delAddresses)
             {
-                for(var d_addr : delAddresses)
-                {
-                    if(addr.getStreet_addr().equals(d_addr.getStreet_addr())
-                    && addr.getDetail_addr().equals(d_addr.getDetail_addr())
-                    && addr.getName().equals(d_addr.getName()))
-                    {
-                        addressRepository.delete(addr.getId());
-                    }
-                    else
-                        continue;
-                }
+                Address _addr = addressRepository.selectById(addr.getId());
+                if(!Objects.equals(_addr.getUser_id(), id))
+                    continue;
+                addressRepository.delete(_addr.getId());
             }
         }
 
@@ -194,8 +183,7 @@ public class MyServiceImpl implements MyService {
     private String upload(MultipartFile multipartFile){
         String originalFileName = multipartFile.getOriginalFilename();
         if(originalFileName == null || originalFileName.isEmpty()) return null;
-        String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String fileName = sourceName;
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         File file = new File(uploadDir, fileName);
         int pos = 0;
         if(file.exists()){
