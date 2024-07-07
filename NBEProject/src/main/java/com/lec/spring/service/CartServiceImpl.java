@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 
 
+import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.repository.CartRepo;
 import org.apache.ibatis.session.SqlSession;
@@ -55,5 +56,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public int insert(Cart cart) {
         return cartRepo.insert(cart);
+    }
+
+    @Override
+    public Address selectDefaultAddress(Integer user_id){
+        return cartRepo.selectByDefaultAdd(user_id);
     }
 }

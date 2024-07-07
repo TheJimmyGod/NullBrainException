@@ -231,3 +231,26 @@ body{
     margin-right: auto;
     text-align: center;
 }
+
+.footer{
+    background-color: #D5D5D5;
+}
+
+.footerDiv{
+    /* border: 2px solid; */
+    width: 1200px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    text-align: left;
+}
+
+.INFO a{
+    text-decoration: none;
+    color: #8c8c8c;
+}
+
+.consult a{
+    text-decoration: none;
+    color: #8c8c8c;
+}

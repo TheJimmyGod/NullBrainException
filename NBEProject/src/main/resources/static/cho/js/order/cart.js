@@ -4,7 +4,7 @@ $(function(){
         const item = $('.cart-item');
         let selectedPrice = 0;
         item.each(function (){
-                console.log('hello')
+            console.log('hello')
 
             if($(this).find('.checkbox').is(':checked')){
                 selectedPrice += parseInt($(this).find('.price').text());
@@ -18,8 +18,6 @@ $(function(){
 // 전체 선택 체크박스 클릭 시 모든 체크박스 선택/해제
 function selectAll(selectAll) {
     const checkboxes = document.getElementsByName('chk');
-    let totalPrice = 0;
-
     checkboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked;
     });
