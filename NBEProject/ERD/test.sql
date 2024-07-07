@@ -57,3 +57,30 @@ select * from contact;
 
 ALTER TABLE contact
     MODIFY COLUMN status VARCHAR(50) DEFAULT '대기 중';
+
+select * from purchase;
+
+select * from pay;
+select * from authority;
+select * from user_authorities
+where user_id = 23;
+
+INSERT INTO purchase ( user_id, goods_id, pay_id, opt,merchant_id, amount,  regdate, status)
+VALUES (23, '105218', 190, '블랙+FREE','dab92edfa3a441a18c9d68187c63ac33', 15950, now(), 'OK');
+
+select * from user;
+
+select * from goods;
+
+desc pay;
+
+UPDATE pay SET status = 'CANCEL_OK' WHERE status = 'CANCEL';
+
+
+
+
+desc purchase;
+ALTER TABLE purchase
+MODIFY COLUMN status VARCHAR(50) DEFAULT 'OK';
+
+select * from purchase;

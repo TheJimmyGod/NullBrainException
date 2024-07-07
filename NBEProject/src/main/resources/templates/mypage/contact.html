@@ -26,8 +26,11 @@
         </div>
         <div class="form-group">
             <label for="type">문의 유형</label>
-            <select id="type" name="type">
-                <option value="상품문의">상품 문의</option>
+            <input type="text" id="type" name="type" value="상품문의" readonly> <br>
+            <label for="purchase">문의할 상품</label>
+            <select name="purchase" id="purchase">
+                <option value="">상품을 선택하세요</option>
+                <option th:each="pur : ${purchase}" th:value="${pur.good.name}"></option>
             </select>
         </div>
         <div class="form-group">

@@ -119,11 +119,6 @@ public class AdminController {
 
         int totalPages = (int) Math.ceil((double) orderCnt / limit);
 
-        // 총 가격 계산
-        for (Purchase order : orderList) {
-            int price = Integer.parseInt(order.getGood().getPrice().replaceAll(",", ""));
-            order.setTotalPrice(price * order.getAmount());
-        }
 
 
        model.addAttribute("orderCnt", orderCnt);
@@ -131,7 +126,7 @@ public class AdminController {
        model.addAttribute("currentPage", page);
        model.addAttribute("orderList", orderList);
        model.addAttribute("OK", PayStatus.OK);
-       model.addAttribute("CANCEL", PayStatus.CANCEL);
+       model.addAttribute("CANCEL", PayStatus.CANCEL_OK);
        model.addAttribute("READY", PayStatus.READY);
 
        if(name != null && !name.isEmpty()){

@@ -1,10 +1,14 @@
 package com.lec.spring.domain.shop;
 
 import com.lec.spring.dto.OrderGoods;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Goods {
     private String goods_no;
