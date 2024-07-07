@@ -3,9 +3,7 @@
 .card-img .img::before and .card-img .img::after,
 then set the desired styles for .card-img. */
 
-.hidden{
-    display: none; /* 초기에는 화면에 보이지 않도록 설정 */
-}
+
 .card {
     position: fixed;
     top: 50%;
@@ -22,7 +20,7 @@ then set the desired styles for .card-img. */
     border: 2px solid var(--main-color);
     box-shadow: 4px 4px var(--main-color);
     border-radius: 5px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;

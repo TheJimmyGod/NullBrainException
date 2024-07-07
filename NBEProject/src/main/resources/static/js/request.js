@@ -1,13 +1,5 @@
 $(function(){
 
-    // 배경 클릭 시 카드 숨기기 (선택적)
-    $('.card').click(function(event) {
-        if ($(event.target).is('.card')) {
-            $(this).fadeOut(); // 카드를 서서히 사라지게 함
-        }
-    });
-
-
     $('.home').click(function(){
         location.href = 'http://localhost:8080/nbe/home';
     });
@@ -94,15 +86,22 @@ $(document).ready(function(){
 });
 
 
-function cancel(image, name, price){
-    $('.cancel-request').click(function() {
-        $('.card').toggleClass('hidden'); // 카드를 서서히 나타나게 함
+function cancel(mId, image, name, price){
+        $('.card').css({
+            "display": "flex"
+        })
         $('.card-img .img').attr('src',image);
         $('.card .card-title').text(name);
         $('.card .card-price').text(price);
 
-
-    });
-
+        $('.card-btn').click(function(){
+           $.ajax({
+               url: "/cancel?mId=" + mId,
+               method: "GET"
+           }).done(function (){
+               alert("취소요청")
+               location.href = "/request"
+           })
+        });
 
 }

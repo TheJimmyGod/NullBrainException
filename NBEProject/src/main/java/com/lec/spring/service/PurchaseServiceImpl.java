@@ -90,6 +90,21 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
+    public int updateStatus(Purchase p) {
+        return purchaseRepo.updateStatus(p);
+    }
+
+    @Override
+    public Purchase findById(Integer id) {
+        return purchaseRepo.findById(id);
+    }
+
+    @Override
+    public List<Purchase> findPurchase(String mId) {
+        return purchaseRepo.findByRequest(mId);
+    }
+
+    @Override
     public List<Purchase> myPurchase() {
         return purchaseRepo.findByUser(U.getLoggedUser().getId());
     }

@@ -151,6 +151,7 @@
         <p th:text="${purchase.opt}">사이즈: "XL"</p>
     </div>
     <form th:action="@{reviewOk}" th:id="reviewForm" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${PurchaseId}">
         <input type="hidden" name="goodsId" th:value="${purchase.goodsId}">
         <div class="form-group">
             <div class="rating" id="rate">

@@ -44,7 +44,7 @@
 
 <a class="adressInfo">배송지 정보</a>
 <section id="cutomerInfo">
-    <a th:text="${userName} + ' ' + ${phone}">이가영 010-1234-5678</a><br>
+    <a th:text="${order.buyerName} + ' ' + ${order.tel}">이가영 010-1234-5678</a><br>
     <a th:text="${address}">주소주소주소주소주소주소주소</a><br>
     <a th:text="${detailAddress}">상세주소상세주소상세주소상세주소</a><br><br>
     <select class="minimal">
@@ -91,12 +91,12 @@
             <input type="hidden" name="pg" th:value="${order.pg}">
             <input type="hidden" name="payMethod" th:value="${order.pay_method}">
             <input type="hidden" name="mId" th:value="${order.merchantId}">
-            <input type="hidden" name="mane" th:value="${order.name}">
+            <input type="hidden" name="name" th:value="${order.name}">
             <input type="hidden" name="amount" th:value="${order.amount}">
             <input type="hidden" name="email" th:value="${order.email}">
             <input type="hidden" name="buyerName" th:value="${order.buyerName}">
             <input type="hidden" name="tel" th:value="${order.tel}">
-            <input type="hidden" name="addr" th:value="${order.addr}">
+            <input type="hidden" name="addr" th:value="${address} + ${detailAddress}">
         </form>
     </div>
 </footer>

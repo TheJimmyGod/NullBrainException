@@ -7,6 +7,7 @@ import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.service.CartService;
 import com.lec.spring.service.PurchaseService;
+import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -24,17 +25,20 @@ public class OrderController {
     private final CartService cartService;
     private final PurchaseService purchaseService;
 
+    private final UserService userService;
+
 
 
 
     List<Cart> selectedItems = new ArrayList<>();
 
     public OrderController(CartService cartService,
-                           PurchaseService purchaseService
+                           PurchaseService purchaseService, UserService userService
     )
     {
         this.cartService = cartService;
         this.purchaseService = purchaseService;
+        this.userService = userService;
     }
 
 
@@ -55,8 +59,6 @@ public class OrderController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("userId", U.getLoggedUser().getId());
 
-        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
-        model.addAttribute("cartCnt",cartCnt);
 
         return "cho/order/cart";
     }
@@ -88,8 +90,8 @@ public class OrderController {
         }
         User user = U.getLoggedUser();
         List<Cart> itemList = cartService.selectItems(selectItem);
-        OrderForm orderForm = purchaseService.createPurchase(itemList, U.getLoggedUser().getId());
-        Address address = cartService.selectDefaultAddress(user.getId());
+        OrderForm orderForm = purchaseService.createPurchase(itemList, user.getId());
+        Address address = userService.getDefaultAddr(user.getId());
 
         int totalPrice = 0;
         int totalCnt = 0;
@@ -108,20 +110,11 @@ public class OrderController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("order", orderForm);
         model.addAttribute("itemList", itemList);
-
-        int cartCnt = cartService.listUserItems(U.getLoggedUser().getId()).size();
-        model.addAttribute("cartCnt",cartCnt);
-
         return "cho/order/pay";
     }
 
 
-    // 결제 진행 메소드
-    @PostMapping("/order/pay")
-    public String payRequest(String orderList){
-        System.out.println(orderList);
-        return "";
-    }
+
 
 
 

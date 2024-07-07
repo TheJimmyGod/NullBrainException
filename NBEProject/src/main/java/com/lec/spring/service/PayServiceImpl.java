@@ -22,7 +22,6 @@ public class PayServiceImpl implements PayService {
     private final PurchaseRepo purchaseRepo;
     private final PayRepo payRepo;
     private final CartRepo cartRepo;
-    private final UserRepo userRepo;
 
 
 
@@ -30,7 +29,6 @@ public class PayServiceImpl implements PayService {
         this.purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
         this.payRepo = sqlSession.getMapper(PayRepo.class);
         this.cartRepo = sqlSession.getMapper(CartRepo.class);
-        userRepo = sqlSession.getMapper(UserRepo.class);
     }
 
     @Override
@@ -46,6 +44,10 @@ public class PayServiceImpl implements PayService {
     @Override
     public void creatPay(PaymentRequest request){
         List<Purchase> purchaseList = purchaseRepo.findByRequest(request.getMerchant_uid());
+        for(Purchase p : purchaseList){
+            p.setStatus("OK");
+            purchaseRepo.updateStatus(p);
+        }
         Pay pay = payRepo.findById(purchaseList.get(0).getPay().getId());
         pay.changePaymentBySuccess(PayStatus.OK, request.getImp_uid());
 

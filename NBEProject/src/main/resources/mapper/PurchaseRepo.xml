@@ -9,6 +9,11 @@
     <delete id="delete">
         delete from purchase
     </delete>
+
+    <update id="updateStatus" flushCache="true" parameterType="com.lec.spring.domain.shop.Purchase">
+        update purchase set status=#{status}
+        where id=#{id}
+    </update>
     <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
         <result column="p_id" property="id"/>
         <result column="m_id" property="merchantId"/>
@@ -79,7 +84,19 @@
         WHERE 1=1
         and a.isDefault=true
 
+
     </sql>
+
+    <select id="findById" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and p.id=#{param1}
+    </select>
+
+    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and p.user_id=#{param1}
+        and p.goods_id=#{parma2}
+    </select>
 
     <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
         <include refid="selectPurchase"/>
