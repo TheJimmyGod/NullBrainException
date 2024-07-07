@@ -11,14 +11,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript" src="/cho/js/prod/category.js"></script>
     <link rel="stylesheet" href="/cho/css/prod/category.css">
-    <script src="/js/request.js" defer></script>
+
     <title>주문 조회</title>
+
 </head>
 <body>
 <div th:replace="~{cho/prod/header :: head}"></div>
 <div th:replace="~{background::body}"></div>
 <div th:replace="~{SecondaryBackground::body}"></div>
-<hr><br><br><br>
+
+
 <div class="transInfo" th:each="item : ${PurchaseStatusList}">
     <div class="transInfo2">
         <!-- 배송완료랑 결제완료만 -->

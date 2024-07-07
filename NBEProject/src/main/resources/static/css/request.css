@@ -203,3 +203,20 @@
     width: 150px;
     height: 50px;
 }
+
+body{
+    font-family: Arial, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
+
