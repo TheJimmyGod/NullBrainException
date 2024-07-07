@@ -453,24 +453,24 @@ public class AdminController {
 
 
     // 문의사항 이미지 제공 메서드
-    @GetMapping("/inquirydetailimage/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> inquiryImage(@PathVariable String filename) {
-        try {
-            Path file = Paths.get(UPLOAD_DIR).resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-
-            if (resource.exists() || resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
-            } else {
-                throw new RuntimeException("Could not read file: " + filename);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Could not read file: " + filename, e);
-        }
-    }
+//    @GetMapping("/inquirydetailimage/{filename:.+}")
+//    @ResponseBody
+//    public ResponseEntity<Resource> inquiryImage(@PathVariable String filename) {
+//        try {
+//            Path file = Paths.get(UPLOAD_DIR).resolve(filename);
+//            Resource resource = new UrlResource(file.toUri());
+//
+//            if (resource.exists() || resource.isReadable()) {
+//                return ResponseEntity.ok()
+//                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+//                        .body(resource);
+//            } else {
+//                throw new RuntimeException("Could not read file: " + filename);
+//            }
+//        } catch (MalformedURLException e) {
+//            throw new RuntimeException("Could not read file: " + filename, e);
+//        }
+//    }
 
 
 
