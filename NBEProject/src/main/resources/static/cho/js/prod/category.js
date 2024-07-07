@@ -79,7 +79,7 @@ $(function(){
             category3 = item;
         }
 
-        url = `http://localhost:8080/nbe/prodList?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
+        url = `/nbe/prodList?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
         location.href=url;
 
         $.ajax({
