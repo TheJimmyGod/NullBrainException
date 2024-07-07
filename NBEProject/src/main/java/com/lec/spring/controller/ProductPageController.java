@@ -113,4 +113,9 @@ public class ProductPageController {
     }
 
 
+    List<Goods> recommend(){
+
+        return null;
+    }
+
 }

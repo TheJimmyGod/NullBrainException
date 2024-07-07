@@ -32,8 +32,8 @@ public class PaymentController {
         this.payService = payService;
         this.iamportClient = iamportClient;
     }
+    @PostMapping("/payment")
     @ResponseBody
-    @RequestMapping("/payment")
     public IamportResponse<Payment> paymentByImpUid(@RequestBody PaymentRequest paymentRequest)
             throws IamportResponseException, IOException {
         payService.creatPay(paymentRequest);

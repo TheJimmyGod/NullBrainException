@@ -29,9 +29,6 @@ public class User {
     private String grade;
     private Integer total_price;
     private Integer point;
-    private String streetAddr;
-    private String detailAddr;
-
     private Address address;
 
     // 유저의 권한 리스트

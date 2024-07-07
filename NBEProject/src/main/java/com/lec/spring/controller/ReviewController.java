@@ -3,12 +3,10 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.ReviewGoods;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.domain.shop.Review;
 import com.lec.spring.domain.shop.ReviewImage;
-import com.lec.spring.service.RequestService;
-import com.lec.spring.service.ReviewImageService;
-import com.lec.spring.service.ReviewService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,17 +37,21 @@ public class ReviewController {
     @Autowired
     private ReviewImageService reviewImageService;
 
+    @Autowired
+    private PurchaseService purchaseService;
+
     @RequestMapping("/review")
     public String review(@RequestParam("id") Integer id, Model model){
         ReviewGoods purchase = reviewService.getPurchaseInfo(id);
-
         model.addAttribute("purchase", purchase);
+        model.addAttribute("PurchaseId", id);
         System.out.println("purchase는 뭐가 들어오지?: " + purchase);
         return "review";
     }
 
     @RequestMapping("/reviewOk")
-    public String contactOk( String title,
+    public String contactOk( Integer id,
+                             String title,
                              String goodsId,
                              Integer rate,
                              String content,
@@ -63,7 +65,7 @@ public class ReviewController {
 
 
         Review review = Review.builder()
-                .goodsId("65")
+                .goodsId(goodsId)
                 .title(title)
                 .user_id(user.getId())
                 .content(content)
@@ -75,7 +77,11 @@ public class ReviewController {
 
         saveFile(review.getId(), file1);
         saveFile(review.getId(), file2);
-
+        Purchase p = purchaseService.findById(id);
+        p.setStatus("REVIEW");
+        if(purchaseService.updateStatus(p) == 0) {
+            System.out.println("리뷰 변경실패");
+        }
 
         return "redirect:/request";
     }

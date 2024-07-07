@@ -9,6 +9,7 @@ import com.lec.spring.dto.PaymentRequest;
 import com.lec.spring.repository.CartRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
+import com.lec.spring.repository.UserRepo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,7 @@ public class PayServiceImpl implements PayService {
     private final PayRepo payRepo;
     private final CartRepo cartRepo;
 
-//    @Autowired
-//    private IamportClient iamportClient;
+
 
     public PayServiceImpl(SqlSession sqlSession) {
         this.purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
@@ -44,11 +44,13 @@ public class PayServiceImpl implements PayService {
     @Override
     public void creatPay(PaymentRequest request){
         List<Purchase> purchaseList = purchaseRepo.findByRequest(request.getMerchant_uid());
-        // TODO
-        // 해당 정보가 없을 떄 처리해주어야한다.
-
+        for(Purchase p : purchaseList){
+            p.setStatus("OK");
+            purchaseRepo.updateStatus(p);
+        }
         Pay pay = payRepo.findById(purchaseList.get(0).getPay().getId());
         pay.changePaymentBySuccess(PayStatus.OK, request.getImp_uid());
+
         payRepo.update(pay);
         cartRepo.deleteByPay(pay.getId());
     }

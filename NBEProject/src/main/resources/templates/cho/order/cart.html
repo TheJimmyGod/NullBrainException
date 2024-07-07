@@ -54,13 +54,16 @@
     <div class="cart-item-details">
         <div th:text="${item.goods.name}">상품명</div>
         <div th:text="${item.opt}">옵션명옵션명옵션명</div>
-        <div class="cart-item-price" th:text="${item.goods.price} + '원  ' + ${item.amount} + '개'">123,456원  3개</div>
+        <div class="cart-item-price">
+            <span class="price"  th:value="${item.goods.price}" th:text="${item.goods.price}"></span>
+            <span class="amount" th:text="${item.amount} + '개원 '"></span>
+        </div>
     </div>
 </div><br><br>
 
 <div class="title-container">
     <div class="total-container">
-        <div class="totalPay" th:text="'총 결제금액: ' + ${totalPrice} + '원'">총 결제금액: 12345원</div>
+        <div class="totalPay">총 결제금액:  <span class="totalPrice"></span>원</div>
         <div id="selectItems"></div> <!-- 선택한 아이템들을 담아오는 div -->
         <button type="button" id="checkoutButton" class="checkout-button" onclick="checkout()">결제하기</button>
         </form>

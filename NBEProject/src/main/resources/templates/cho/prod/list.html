@@ -15,14 +15,14 @@
     <script type="text/javascript" src="/cho/js/prod/category.js"></script>
 </head>
 <body>
-<div th:replace="~{/cho/prod/header :: head}"></div>
-<div th:replace="~{/cho/prod/category :: category}"></div>
+<div th:replace="~{cho/prod/header :: head}"></div>
+<div th:replace="~{cho/prod/category :: category}"></div>
 <main>
     <div class="product-list">
 
 
             <div class="product-item"  th:each="item : ${list}">
-                <a th:href="@{'http://localhost:8080/nbe/detail/' + ${item.goods_no}}">
+                <a th:href="@{'/nbe/detail/' + ${item.goods_no}}">
                     <img th:src="${item.image_1}" alt="Product 1">
                 </a>
                 <div class="product-info">

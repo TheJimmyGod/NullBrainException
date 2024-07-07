@@ -21,8 +21,11 @@ public class Purchase {
     private LocalDateTime regdate;
     private Integer amount;
     private String opt;
+    // 사용자가 결제취소요청, 리뷰작성여부확인가능
+    private String status;
     private OrderGoods goods;
     private OrderUser user;
+
     // Pay 참조키
     private Pay pay;
 

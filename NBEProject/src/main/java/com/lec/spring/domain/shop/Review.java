@@ -24,8 +24,7 @@ public class Review {
     private Integer rate;
 
     @ToString.Exclude
-    @Builder.Default
-    private List<ReviewImage> images = new ArrayList<>();
+    private List<ReviewImage> images;
 
     private Integer user_id;
 }
