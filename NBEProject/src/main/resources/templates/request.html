@@ -41,7 +41,7 @@
             </div>
         </div><br>
         <!-- 배송완료 상태만 리뷰작성 버튼 보이게 -->
-        <div th:if="${item.status == OK}">
+        <div th:if="${item.status == 'OK'}">
             <div class="btnDiv">
                 <a th:href="@{/review(id=${item.id})}">리뷰작성</a>
                 <button class="cancel-request"
