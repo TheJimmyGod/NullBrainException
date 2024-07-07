@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.*;
-import com.lec.spring.service.ContactImageService;
-import com.lec.spring.service.ContactService;
-import com.lec.spring.service.MyService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +38,6 @@ public class MyController {
 
     @Autowired
     private ContactService contactService;
-
 
     @Value("${app.upload.path}")
     private String uploadPath;
