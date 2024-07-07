@@ -39,23 +39,15 @@
         <h2>상품 정보</h2>
 
         <div class="product" th:each="o : ${itemList}">
-            <div class="product-details" >
+            <div class="img">
                 <img th:src="${o.goods.image}" alt="제품 이미지">
-                <div class="product-description">
-                    <p th:text="${o.goods.name}">2WAY 스웨 후드 집업 (MELANGE GREY)</p>
-                    <p th:text="${o.opt}">옵션: XL</p>
-                    <p th:text="${o.amount}">수량: 1개</p>
-                </div>
-                <div class="price">
-                    <p th:text="${o.goods.price}">34,500원</p>
-                </div>
             </div>
-            <!-- <div class="discount-info">
-                <p>등급 할인: 가능</p>
-                <p>적립금 선할인: 가능</p>
-                <p>적립금 사용: 가능</p>
-                <p>상품 쿠폰 할인: 사용</p>
-            </div> -->
+            <div class="product-description">
+                <p th:text="${o.goods.name}">페라어스 남성 삼색테잎 벨트 등산바지 OCPUWF8016M0</p>
+                <p th:text="${o.opt}">옵션: XL</p>
+                <p th:text="${o.amount}">수량: 1개</p>
+                <p th:text="${o.goods.price}">34,500원</p>
+            </div>
         </div>
     </section>
     <button type="button" class="checkout-button" onclick="requestPay()">결제하기</button>

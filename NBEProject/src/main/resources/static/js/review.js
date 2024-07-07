@@ -100,4 +100,13 @@ function RemoveImageFile(file) {
         });
     });
 
+    function writeOk(){
+        $.ajax({
+            url: "/write/review",
+            method: "POST",
+            header: {"Content-Type" : "application/json"},
+            data: JSON(
 
+            )
+        })
+    }

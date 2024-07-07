@@ -4,7 +4,7 @@
 
 
     <resultMap id="U" type="com.lec.spring.domain.User">
-        <result property="id" column="u_pwd"/>
+        <result property="id" column="u_id"/>
         <result property="username" column="u_username"/>
         <result property="password" column="u_pwd"/>
         <result property="regdate" column="u_reg"/>
@@ -18,7 +18,11 @@
         <result property="total_price" column="totalPrice"/>
         <result property="point" column="u_point"/>
     </resultMap>
-
+    <resultMap id="mapImage" type="com.lec.spring.domain.shop.ReviewImage">
+        <result property="id" column="i_id"/>
+        <result property="review_id" column="i_rid"/>
+        <result property="file_name" column="i_fname"/>
+    </resultMap>
     <resultMap id="REVIEW" type="com.lec.spring.domain.shop.Review">
         <result property="id" column="r_id"/>
         <result property="goodsId" column="r_gid"/>
@@ -27,6 +31,7 @@
         <result property="content" column="r_content"/>
         <result property="rate" column="r_rate"/>
         <collection property="user" resultMap="U"/>
+        <collection property="images" resultMap="mapImage"/>
     </resultMap>
     <select id="selectReviewByGoods" flushCache="true" resultMap="REVIEW">
         select
@@ -48,10 +53,16 @@
             u.profileimage "u_profile",
             u.grade "u_grade",
             u.total_price "totalPrice",
-            u.point "u_point"
-        from review r, user u
-        where r.user_id=u.id
-            and r.goods_no=#{param1}
+            u.point "u_point",
+            i.id "i_id",
+            i.review_id "i_rid",
+            i.file_name "i_fname"
+        from review r
+            join user u
+                on r.user_id=u.id
+            join review_image i
+                on r.id=i.review_id
+        where r.goods_no=#{param1}
         limit #{param2}, #{param3}
     </select>
 

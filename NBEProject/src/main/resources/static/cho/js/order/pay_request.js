@@ -23,7 +23,7 @@ function requestPay() {
         buyer_email: email,
         buyer_name: buyer_name,
         buyer_tel: tel,
-        buyer_addr: "whckdtjd456@naver.com",
+        buyer_addr: addr,
     }, function (rsp) { // callback
        if(rsp.success) {
            $.ajax({   // 결제 성공시 호출

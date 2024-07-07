@@ -13,6 +13,10 @@ public interface PurchaseService {
 
     OrderForm createPurchase(List<Cart> items, Integer userId);
     int delete();
+    int updateStatus(Purchase p);
+    List<Purchase> findPurchase(String mId);
+
+    Purchase findById(Integer id);
 
     List<Purchase> myPurchase();
 

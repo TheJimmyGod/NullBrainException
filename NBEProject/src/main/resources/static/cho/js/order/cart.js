@@ -21,6 +21,13 @@ function selectAll(selectAll) {
     checkboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked;
     });
+    const items = document.getElementsByClassName('cart-item');
+    Array.from(items).forEach((e) => {
+       let p = parseInt(e.getElementsByClassName('price').item(0).innerHTML);
+       totalPrice += p;
+    });
+
+    document.getElementsByClassName('totalPrice').item(0).innerHTML=totalPrice;
 }
 
 
@@ -91,3 +98,4 @@ $(function(){
 function category() {
     $('.category1').toggleClass('hidden');
 }
+
