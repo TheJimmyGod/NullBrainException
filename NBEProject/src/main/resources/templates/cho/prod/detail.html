@@ -108,7 +108,7 @@
                     </div>
                     <div class="review-body">
                         <div class="review-image"  th:if="${r.images}" th:each="i : ${r.images}">
-                            <img th:src="/upload/ + ${i.file_name}" alt="Review Image" class="review-image">
+                            <img th:src="@{upload/ + ${i.file_name}}" alt="Review Image" class="review-image">
                         </div>
                         <p class="review-content" th:text="${r.content}">색상이 다 예뻐서 어떤 거 살까 고민하다가 검정으로 결정했어요. 옷이 너무 예뻐서 청바지랑 입거
                             dfdkjflejfdkljfojfidjkjf;ef
