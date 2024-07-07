@@ -4,6 +4,7 @@ import com.lec.spring.domain.shop.Address;
 import com.lec.spring.domain.shop.Profile;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AddressRepo;
+import com.lec.spring.repository.ReviewRepo;
 import com.lec.spring.repository.UserRepo;
 import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
@@ -33,11 +34,13 @@ public class MyServiceImpl implements MyService {
     private final UserRepo userRepository;
     private final AddressRepo addressRepository;
 
+    private final ReviewRepo reviewRepository;
 
     @Autowired
     public MyServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepo.class);
         addressRepository = sqlSession.getMapper(AddressRepo.class);
+        reviewRepository = sqlSession.getMapper(ReviewRepo.class);
         System.out.println("MyService() 생성");
     }
 
@@ -47,8 +50,10 @@ public class MyServiceImpl implements MyService {
         if(user == null)
             return;
         user = userRepository.selectById(user.getId());
+        int cnt = reviewRepository.countUserReview(user.getId());
         model.addAttribute("nickName", user.getName());
         model.addAttribute("currentPic", user.getProfileimage());
+        model.addAttribute("reviewCount", cnt);
     }
 
     @Override
