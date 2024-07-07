@@ -126,3 +126,53 @@ header {
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
 }
+
+/*여기서부터*/
+.cart-item {
+    display: flex;
+    align-items: center;
+    width: 700px;
+    height: 150px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    /* border: 2px solid; */
+    margin: auto;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.footer{
+    background-color: #D5D5D5;
+}
+
+.footerDiv{
+    /* border: 2px solid; */
+    width: 1200px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    text-align: left;
+}
+
+.INFO a{
+    text-decoration: none;
+    color: #8c8c8c;
+}
+
+.consult a{
+    text-decoration: none;
+    color: #8c8c8c;
+}
