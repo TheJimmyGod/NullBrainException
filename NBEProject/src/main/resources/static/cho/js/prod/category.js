@@ -36,7 +36,7 @@ $(function(){
             category2=item;
         }
 
-        url = `http://localhost:8080/nbe/prodList?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
+        url = `/nbe/prodList?category1=${encodeURIComponent(category1)}&category2=${encodeURIComponent(category2)}`;
         location.href=url;
 
     });
@@ -98,7 +98,7 @@ function showImage(data){
     data.forEach(goods => {
         div.push(`
         <div class="product">
-        <a href="http://localhost:8080/shop/detail/${goods.productId}"><img src="${goods.image}" class="card-img-top embed-responsive-item"></a>
+        <a href="/shop/detail/${goods.productId}"><img src="${goods.image}" class="card-img-top embed-responsive-item"></a>
         <p>제품 설명<br>${goods.price}</p>
         </div>
         `);
