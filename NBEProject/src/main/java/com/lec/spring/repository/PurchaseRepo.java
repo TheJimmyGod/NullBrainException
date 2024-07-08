@@ -30,7 +30,7 @@ public interface PurchaseRepo {
     public List<Purchase> listOrder();
 
     // 사용자의 이름으로 확인
-    public List<Purchase> username(String name);
+    public List<Purchase> username(String username);
 
 
     public List<Pay> selectAllPays();
@@ -38,6 +38,10 @@ public interface PurchaseRepo {
 
     // 페이지 네이션 기능
     List<Purchase> pagination(int offset, int limit);
+
+    List<Purchase> userPagination(String username, String status, int offset, int limit);
+
+    List<Purchase> uPagination(String username, int offset, int limit);
 
     Long cntPurchaseItem();
 
@@ -48,6 +52,11 @@ public interface PurchaseRepo {
 
     Long cntStatusCANCEL();
 
-    void updatePayStatus(Integer purchaseId, com.lec.spring.dto.PayStatus status);
+
+    void updatePayStatus(Integer purchaseId, String status);
+
+    List<Purchase> findByStatusIn(String status, int offset, int limit);
+
+    List<Purchase> findByUserUsernameAndStatusIn(String username,  String status, int offset, int limit);
 
 }

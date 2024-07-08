@@ -5,7 +5,6 @@ package com.lec.spring.service;
 import com.lec.spring.domain.shop.Cart;
 import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
-import com.lec.spring.dto.PayStatus;
 
 import java.util.List;
 
@@ -37,11 +36,16 @@ public interface PurchaseService {
 
     List<Purchase> pagination(int offset, int limit);
 
-    void updatePayStatus(Integer purchaseId, PayStatus status);
+    List<Purchase> uPagination(String status, int offset, int limit);
+    List<Purchase> userPagination(String username, String status, int offset, int limit);
+
+    void updatePayStatus(Integer purchaseId,String status);
+
 
     Long cntCompleted();
     Long cntPending();
     Long cntFailed();
+
 
 
 
