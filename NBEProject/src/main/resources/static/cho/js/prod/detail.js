@@ -187,7 +187,7 @@ $(document).ready(function() {
 
     // 리뷰 접기 펼치기 기능
     $('.review-btn').click(function(){
-        $('.review-block').toggleClass('hidden');
+        $('.rev').toggleClass('hidden');
     })
     // 리뷰 접기 펼치기 기능 end
 
