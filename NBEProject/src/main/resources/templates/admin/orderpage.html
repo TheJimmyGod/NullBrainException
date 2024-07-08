@@ -48,13 +48,13 @@
             <tbody>
             <tr th:each="order : ${orderList}">
                 <td th:text="${order.pay.id}">1</td>
-                <td th:text="${order.users.username}">홍길동</td>
-                <td th:text="${order.users.phone}">010-1234-5678</td>
+                <td th:text="${order.user.username}">홍길동</td>
+                <td th:text="${order.user.phone}">010-1234-5678</td>
                 <td th:text="${#temporals.format(order.regdate)}"></td>
-                <td th:text="${order.good.name}">셔츠</td>
+
+                <td th:text="${order.goods.getName()}">셔츠</td>
                 <td th:text="${order.amount}">30,000</td>
                 <td>
-                    <span th:text="${order.status}"></span>
                     <span th:switch="${order.status}">
                         <span th:case="'OK'">결제 완료</span>
                         <span th:case="'CANCEL_OK'">결제 취소</span>
