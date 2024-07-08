@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/post/**", "/mypage/**").authenticated()
 //                        .requestMatchers("/post/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
-//                        .requestMatchers("/**").hasAnyRole("!USER_BAN")
+                        .requestMatchers("/**").hasAnyRole("!USER_BAN")
                         .anyRequest().permitAll()
                 ) //end auth -> auth.~
                 .formLogin(form -> form
