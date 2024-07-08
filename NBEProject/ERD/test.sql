@@ -72,12 +72,6 @@ select * from user;
 
 select * from goods;
 
-select * from user;
-
-select * from user_authorities;
-
-desc pay;
-
 desc pay;
 
 UPDATE pay SET status = 'CANCEL_OK' WHERE status = 'CANCEL';
@@ -88,10 +82,5 @@ UPDATE pay SET status = 'CANCEL_OK' WHERE status = 'CANCEL';
 desc purchase;
 ALTER TABLE purchase
 MODIFY COLUMN status VARCHAR(50) DEFAULT 'OK';
-
-ALTER TABLE pay
-MODIFY COLUMN status VARCHAR(30) DEFAULT '';
-
-select * from purchase;
 
 select * from purchase;

@@ -169,11 +169,6 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> userPagunation(String name, int offset, int limit) {
-        return purchaseRepo.userPagination(name, offset, limit);
-    }
-
-    @Override
     public void updatePayStatus(Integer purchaseId, com.lec.spring.dto.PayStatus status) {
         purchaseRepo.updatePayStatus(purchaseId, status);
     }

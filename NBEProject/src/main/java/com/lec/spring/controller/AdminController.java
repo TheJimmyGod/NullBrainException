@@ -109,10 +109,10 @@ public class AdminController {
         int offset = (page - 1) * limit;
 
         if (name != null && !name.isEmpty()) {
-            orderList = purchaseService.userPagunation(name, limit, offset);
+            orderList = purchaseService.orderUsername(name);
             orderCnt = (long) orderList.size();
         } else {
-            orderList = purchaseService.pagination(offset, limit);
+            orderList = purchaseService.pagination(offset,limit);
             orderCnt = purchaseService.orderCnt();
         }
 
@@ -447,8 +447,7 @@ public class AdminController {
 
 
 
-//     문의사항 이미지 제공 메서드
-
+    // 문의사항 이미지 제공 메서드
 //    @GetMapping("/inquirydetailimage/{filename:.+}")
 //    @ResponseBody
 //    public ResponseEntity<Resource> inquiryImage(@PathVariable String filename) {
