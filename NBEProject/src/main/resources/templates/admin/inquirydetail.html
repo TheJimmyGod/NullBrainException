@@ -71,6 +71,7 @@
                     <input type="hidden" name="id" th:value="${contact.id}">
                     <div class="buttons">
                         <button type="submit" class="answer-button">답변</button>
+                        <button type="button" class="delete-button" th:onclick="'deleteContact(' + ${contact.id} + ')'">삭제</button>
                     </div>
                 </form>
             </div>

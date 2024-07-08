@@ -25,7 +25,7 @@
     <ul>
         <li onclick="location.href='orderpage'">주문 관리</li>
         <li onclick="location.href='userlist'">회원 관리</li>
-        <li onclick="location.href='cancel'">취소 관리</li>
+<!--        <li onclick="location.href='cancel'">취소 관리</li>-->
     </ul>
 </div>
 
@@ -39,7 +39,6 @@
         <h3>판매현황</h3>
         <br>
         <p>결제 완료 : <span th:text="${comp}"></span></p> <br>
-        <p>결제 대기 : <span th:text="${pend}"></span></p> <br>
         <p>결제 취소 : <span th:text="${fail}"></span></p>
     </div>
     <div class="card">

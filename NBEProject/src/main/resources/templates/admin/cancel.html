@@ -23,9 +23,6 @@
 <div class="sidebar">
     <ul>
         <li><a th:href="@{/admin/cancel}">취소 목록</a></li>
-        <li><a th:href="@{/admin/cancel(status='대기 중')}">취소 요청 목록</a></li>
-        <li><a th:href="@{/admin/cancel(status='취소 완료')}">취소 완료 목록</a></li>
-        <li><a th:href="@{/admin/cancel(status='취소 거절')}">취소 거절 목록</a></li>
     </ul>
 </div>
 <div class="main-content">
@@ -44,21 +41,17 @@
                 <th>문의 유형</th>
                 <th>이름</th>
                 <th>이메일</th>
-                <th>문의 제목</th>
                 <th>문의 날짜</th>
                 <th>상태</th>
-                <th>상세 내용</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="contact : ${contacts}">
-                <td th:text="${contact.type}"></td>
+                <td th:text="${contact.id}"></td>
                 <td th:text="${contact.user.name}">홍길동</td>
                 <td th:text="${contact.user.email}">abc@mail.com</td>
-                <td th:text="${contact.title}">상품 문의</td>
                 <td th:text="${#temporals.format(contact.regdate)}">2024-01-01</td>
                 <td th:text="${contact.status}">답변 대기</td>
-                <td><a  class="btn btn-primary" th:href="@{/admin/cancelDetail(id=${contact.id})}">상세 보기</a></td>
             </tr>
             </tbody>
         </table>
@@ -66,9 +59,7 @@
     <div class="pagination">
         <a th:href="@{/admin/cancel(page=${currentPage - 1}, status=${status}, username=${username})}" th:if="${currentPage > 1}">&laquo;</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:href="@{/admin/cancel(page=${i}, status=${status}, username=${username})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
-        </span>
-        <a th:href="@{/admin/cancel(page=${currentPage + 1}, status=${status}, username=${username})}" th:if="${currentPage < totalPages}">&raquo;</a>
+    </span>
     </div>
 </div>
 </body>

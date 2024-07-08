@@ -9,7 +9,6 @@ import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.dto.OrderUser;
 import com.lec.spring.dto.PayStatus;
-import com.lec.spring.repository.AddressRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import com.lec.spring.repository.UserRepo;
@@ -18,10 +17,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -169,14 +164,21 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> userPagunation(String name, int offset, int limit) {
-        return purchaseRepo.userPagination(name, offset, limit);
+    public List<Purchase> uPagination(String status, int offset, int limit) {
+        return purchaseRepo.findByStatusIn( status,  offset, limit);
+    }
+
+
+    @Override
+    public List<Purchase> userPagination(String username, String status, int offset, int limit) {
+        return purchaseRepo.userPagination(username, status, offset, limit);
     }
 
     @Override
-    public void updatePayStatus(Integer purchaseId, com.lec.spring.dto.PayStatus status) {
+    public void updatePayStatus(Integer purchaseId,String status) {
         purchaseRepo.updatePayStatus(purchaseId, status);
     }
+
 
     @Override
     public Long cntCompleted() {
