@@ -108,6 +108,7 @@
     <select id="findByUser" flushCache="true" resultMap="mapPurchase">
         <include refid="select"/>
         and p.user_id=#{param1}
+        ORDER BY p.regdate DESC
     </select>
 
 
