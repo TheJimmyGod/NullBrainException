@@ -200,7 +200,7 @@ public class AdminController {
     @PostMapping("/updatePayStatus")
     public String updatePayStatus(@RequestParam("purchaseId") int purchaseId,
                                   @RequestParam("status")String status,
-                                  @RequestParam("paymentUid") String paymentUid){
+                                  @RequestParam("imp_uid") String paymentUid){
         System.out.println("Received request to update payment status. purchaseId: " + purchaseId + ", status: " + status + ", paymentUid: " + paymentUid);
 
 

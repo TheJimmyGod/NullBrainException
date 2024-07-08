@@ -6,7 +6,7 @@
     <update id="cancelPayment">
         UPDATE purchase
         SET status = 'CANCEL_OK'
-        WHERE pay_id = (SELECT id FROM pay WHERE payment_uid = #{paymentUid})
+        WHERE pay_id = (SELECT id FROM pay WHERE payment_uid = #{imp_uid})
     </update>
 
 
