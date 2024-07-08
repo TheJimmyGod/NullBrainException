@@ -3,7 +3,7 @@
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Purchase" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into  purchase (merchant_id, amount, opt, goods_id, user_id, pay_id)
-        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{pay.id} )
+            VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{pay.id} )
     </insert>
 
     <delete id="delete">
@@ -73,15 +73,12 @@
                       on g.goods_no=p.goods_id
                  join user u
                       on p.user_id=u.id
-                join address a
-                    on a.user_id=p.user_id
-                join pay o
-                    on p.pay_id=o.id
+                 join address a
+                      on a.user_id=p.user_id
+                 join pay o
+                      on p.pay_id=o.id
         WHERE 1=1
-        and a.isDefault=true
-        and o.status = 'CANCEL_OK'
-
-
+          and a.isDefault=true
     </sql>
 
     <select id="findById" flushCache="true" resultMap="mapPurchase">
@@ -200,4 +197,103 @@
     </update>
 
 
+
+
+
+
+
+
+    <resultMap id="mapPu" type="com.lec.spring.domain.shop.Purchase">
+        <result column="p_id" property="id"/>
+        <result column="m_id" property="merchantId"/>
+        <result column="p_amount" property="amount"/>
+        <result column="p_opt" property="opt"/>
+        <result column="p_status" property="status"/>
+        <collection property="pay" resultMap="mapP"/>
+        <collection property="goods" resultMap="mapG"/>
+        <collection property="user" resultMap="mapU"/>
+    </resultMap>
+
+    <resultMap id="mapP" type="com.lec.spring.domain.shop.Pay">
+        <result column="order_id" property="id"/>
+        <result column="o_price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="paied_id" property="paymentUid"/>
+    </resultMap>
+
+    <resultMap id="mapG" type="com.lec.spring.dto.OrderGoods">
+        <result column="goodsNo" property="goodsNo"/>
+        <result column="g_name" property="name"/>
+        <result column="g_price" property="price"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <resultMap id="mapU" type="com.lec.spring.dto.OrderUser">
+        <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_birth" property="birth"/>
+        <result column="u_email" property="email"/>
+        <result column="street_addr" property="streetAddr"/>
+        <result column="detail_addr" property="detailAddr"/>
+    </resultMap>
+
+    <sql id="select">
+        select
+            p.id "p_id",
+            p.merchant_id "m_id",
+            p.pay_id "pa_id",
+            p.amount "p_amount",
+            p.opt "p_opt",
+            p.status "p_status",
+            g.goods_no as "goodsNo",
+            g.name as "g_name",
+            g.price as "g_price",
+            g.image_1 as "image",
+            u.username as "u_username",
+            u.name as "u_name",
+            u.phone as "u_phone",
+            u.birth as "u_birth",
+            u.email as "u_email",
+            a.street_addr as "street_addr",
+            a.detail_addr as "detail_adddr",
+            o.id as "order_id",
+            o.status as "status",
+            o.price as "o_price",
+            o.payment_uid "paied_id"
+        FROM purchase p
+                 join goods g
+                      on g.goods_no=p.goods_id
+                 join user u
+                      on p.user_id=u.id
+                 join address a
+                      on a.user_id=p.user_id
+                 join pay o
+                      on p.pay_id=o.id
+        WHERE 1=1
+          and a.isDefault=true
+
+
+    </sql>
+
+<!--    <select id="findById" flushCache="true" resultMap="mapPurchase">-->
+<!--        <include refid="selectPurchase"/>-->
+<!--        and p.id=#{param1}-->
+<!--    </select>-->
+
+<!--    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">-->
+<!--        <include refid="selectPurchase"/>-->
+<!--        and p.user_id=#{param1}-->
+<!--        and p.goods_id=#{parma2}-->
+<!--    </select>-->
+
+    <select id="findByR" flushCache="true" resultMap="mapPu">
+        <include refid="select"/>
+        and p.merchant_id=#{param1}
+    </select>
+
+    <select id="findByU" flushCache="true" resultMap="mapPu">
+        <include refid="select"/>
+        and p.user_id=#{param1}
+    </select>
 </mapper>
