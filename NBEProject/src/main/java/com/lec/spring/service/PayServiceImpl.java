@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 
+import com.lec.spring.domain.User;
 import com.lec.spring.domain.shop.Pay;
 import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
@@ -10,6 +11,7 @@ import com.lec.spring.repository.CartRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import com.lec.spring.repository.UserRepo;
+import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class PayServiceImpl implements PayService {
     private final PurchaseRepo purchaseRepo;
     private final PayRepo payRepo;
     private final CartRepo cartRepo;
+    private final UserRepo userRepo;
 
 
 
@@ -29,6 +32,7 @@ public class PayServiceImpl implements PayService {
         this.purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
         this.payRepo = sqlSession.getMapper(PayRepo.class);
         this.cartRepo = sqlSession.getMapper(CartRepo.class);
+        this.userRepo = sqlSession.getMapper(UserRepo.class);
     }
 
     @Override
@@ -49,6 +53,13 @@ public class PayServiceImpl implements PayService {
             purchaseRepo.updateStatus(p);
         }
         Pay pay = payRepo.findById(purchaseList.get(0).getPay().getId());
+        User user = U.getLoggedUser();
+        Integer price = user.getTotal_price();
+        price += request.getAmount();
+        user.setTotal_price(price);
+        userRepo.update(user);
+
+
         pay.changePaymentBySuccess(PayStatus.OK, request.getImp_uid());
 
         payRepo.update(pay);
