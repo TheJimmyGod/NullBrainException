@@ -336,6 +336,7 @@ p {
 
     .product-detail {
         flex-direction: row;
+        justify-content: space-around;
     }
 
     .product-info {
