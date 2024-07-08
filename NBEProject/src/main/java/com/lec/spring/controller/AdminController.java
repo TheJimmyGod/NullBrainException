@@ -57,7 +57,7 @@ public class AdminController {
     public String adminpage(Model model){
         System.out.println("main 페이지 들어옴");
 
-        Long cancel = contactService.cancelOrder();
+        Long cancel = purchaseService.cntFailed();
         Long userCnt = userService.cntUser();
         Long countAll = contactService.countAll();
         Long countUnAnswer = contactService.countUnAnswer();

@@ -64,8 +64,8 @@
 
                 <td>
                     <form id="updatePayStatusForm"  th:id="'updatePayStatusForm' + ${iterStat.index}" method="post">
-                        <input type="text" id="purchaseId" name="purchaseId" th:value="${order.id}">
-                        <input type="text" id="paymentUid" name="paymentUid" th:value="${order.pay.paymentUid}">
+                        <input type="hidden" id="purchaseId" name="purchaseId" th:value="${order.id}">
+                        <input type="hidden" id="paymentUid" name="paymentUid" th:value="${order.pay.paymentUid}">
                         <select name="status" class="status-select" id="orderStatus">
                             <option value="OK" th:selected="${order.status == 'OK'}">결제 완료</option>
                             <option value="CANCEL" th:selected="${order.status == 'CANCEL'}">취소 대기</option>
