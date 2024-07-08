@@ -9,6 +9,7 @@ import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.OrderForm;
 import com.lec.spring.dto.OrderUser;
 import com.lec.spring.dto.PayStatus;
+import com.lec.spring.repository.AddressRepo;
 import com.lec.spring.repository.PayRepo;
 import com.lec.spring.repository.PurchaseRepo;
 import com.lec.spring.repository.UserRepo;
@@ -115,10 +116,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<Purchase> orderList() {
         List<Purchase> purchases = purchaseRepo.listOrder();
+        Address addr = userRepo.getDefaultAddr(U.getLoggedUser().getId());
         for (Purchase purchase : purchases) {
             if (purchase.getUser() != null) {
-                User users = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(users);
+                User user = userRepo.selectById(purchase.getUser().getUserId());
+                purchase.setUser(user.oderUser(addr.getStreet_addr(), addr.getDetail_addr()));
             }
         }
         return purchases;
@@ -132,10 +134,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<Purchase> orderUsername(String name) {
         List<Purchase> purchases = purchaseRepo.username(name);
+        Address addr = userRepo.getDefaultAddr(U.getLoggedUser().getId());
         for (Purchase purchase : purchases) {
-            if (purchase.getUsers() != null) {
-                User users = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(users);
+            if (purchase.getUser() != null) {
+                User users = userRepo.selectById(purchase.getUser().getUserId());
+                purchase.setUser(users.oderUser(addr.getStreet_addr(), addr.getDetail_addr()));
             }
         }
         return purchases;
@@ -144,7 +147,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<Purchase> getUserPayed(Integer userId) {
 
-        return purchaseRepo.selectById(userId);
+        return purchaseRepo.findByUser(userId);
     }
 
     @Override
@@ -156,9 +159,10 @@ public class PurchaseServiceImpl implements PurchaseService {
     public List<Purchase> pagination(int offset, int limit) {
         List<Purchase> purchases = purchaseRepo.pagination(offset, limit);
         for (Purchase purchase : purchases) {
-            if (purchase.getUsers() != null) {
-                User users = userRepo.selectById(purchase.getUsers().getId());
-                purchase.setUsers(users);
+            if (purchase.getUser() != null) {
+                User user = userRepo.selectById(purchase.getUser().getUserId());
+                Address addr = userRepo.getDefaultAddr(purchase.getUser().getUserId());
+                purchase.setUser(user.oderUser(addr.getStreet_addr(), addr.getStreet_addr()));
             }
         }
         return purchases;
