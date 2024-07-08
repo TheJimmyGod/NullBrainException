@@ -44,20 +44,21 @@
             </div>
         </div>
         <!-- 배송완료 상태만 리뷰작성 버튼 보이게 -->
-        <div th:if="${item.status == 'OK'}">
-            <div class="btnDiv">
-                <a th:href="@{/review(id=${item.id})}">리뷰작성</a>
-                <button class="cancel-request"
-                        th:mId="${item.merchantId}"
-                        th:image="${item.goods.image}"
-                        th:goods_name="${item.goods.name}"
-                        th:price="${item.goods.price}"
-                        onclick="cancel(this.getAttribute('mId') ,this.getAttribute('image'),
-                            this.getAttribute('goods_name'),
-                            this.getAttribute('price'))">
-                    결제취소 </button>
-            </div>
-        </div><br><br>
+<!--        <div th:if="${item.status == 'OK'}">-->
+<!--        </div>-->
+        <div class="btnDiv">
+            <a th:href="@{/review(id=${item.id})}">리뷰작성</a>
+            <button class="cancel-request"
+                    th:mId="${item.merchantId}"
+                    th:image="${item.goods.image}"
+                    th:goods_name="${item.goods.name}"
+                    th:price="${item.goods.price}"
+                    onclick="cancel(this.getAttribute('mId') ,this.getAttribute('image'),
+                        this.getAttribute('goods_name'),
+                        this.getAttribute('price'))">
+                결제취소 </button>
+        </div>
+        <br><br>
     </div>
 </div><br>
 <br><br>
