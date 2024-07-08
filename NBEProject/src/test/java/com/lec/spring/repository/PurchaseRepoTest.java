@@ -24,4 +24,11 @@ class PurchaseRepoTest {
 //            System.out.println("success");
 //        }else System.out.println("failed");
     }
+
+    @Test
+    void findByRequest() {
+        purchaseRepo = sqlSession.getMapper(PurchaseRepo.class);
+        List<Purchase> p = purchaseRepo.findByRequest("aa1edfbe0d4d4c02b982a7f4a87c5ba7");
+        System.out.println(p.size());
+    }
 }

@@ -25,18 +25,12 @@ public class Purchase {
     private String status;
     private OrderGoods goods;
     private OrderUser user;
-
     // Pay 참조키
     private Pay pay;
+    // 유저아이디로 Purchae
 
 
 
-    // 유저의 객체 정보
-    private User users;
-
-
-    // 상품의 정보
-    private Goods good;
 
 
     // 총 가격 필드 추가
