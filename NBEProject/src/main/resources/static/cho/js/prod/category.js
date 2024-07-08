@@ -2,7 +2,7 @@ $(function(){
     let item;
 
     $('#accButton').click(function(){
-        $('.category1').toggleClass('hidden');
+        $('.category1').toggleClass('cate1');
         $('.category2-man').addClass('hidden');
         $('.category2-woman').addClass('hidden');
     });
