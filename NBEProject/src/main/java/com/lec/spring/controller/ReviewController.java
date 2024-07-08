@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Controller
@@ -89,38 +90,36 @@ public class ReviewController {
 
     private void saveFile(int reviewId, MultipartFile file) {
         if (!file.isEmpty()) {
-            try {
-                String originalFilename = file.getOriginalFilename();
-                String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
-                String uuid = UUID.randomUUID().toString();
-                String savedFilename = uuid + ext;
 
-                // 상대 경로를 절대 경로로 변환
+            String originalFilename = file.getOriginalFilename();
+            String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+            String uuid = UUID.randomUUID().toString();
+            String savedFilename = uuid + ext;
+
+            // 상대 경로를 절대 경로로 변환
 //                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
-                Path uploadDir = Paths.get(new File(uploadPath, savedFilename).getAbsolutePath());
-                System.out.println(uploadDir);
-                if (!Files.exists(uploadDir)) {
-                    Files.createDirectories(uploadDir);
-                    System.out.println("Created directories: " + uploadDir.toString());
-                }
+            Path uploadDir = Paths.get(new File(uploadPath, savedFilename).getAbsolutePath());
+            System.out.println(uploadDir);
 
-                Path targetPath = uploadDir.resolve(savedFilename).normalize();
-                file.transferTo(targetPath.toFile());
-                System.out.println("Saved file to: " + targetPath.toString());
-
-                ReviewImage reviewImage = ReviewImage.builder()
-                        .review_id(reviewId)
-                        .file_name(savedFilename)
-                        .build();
-
-                reviewImageService.addImage(reviewImage);
+            try {
+                Files.copy(file.getInputStream(),
+                        uploadDir,
+                        StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+
+
+            ReviewImage reviewImage = ReviewImage.builder()
+                    .review_id(reviewId)
+                    .file_name(savedFilename)
+                    .build();
+
+            reviewImageService.addImage(reviewImage);
+
         }
+
+
     }
-
-
-
 }
 

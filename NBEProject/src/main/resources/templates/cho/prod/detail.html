@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/cho/css/prod/detail.css">
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/cho/js/prod/head.js"></script>
     <script type="text/javascript" src="/cho/js/prod/category.js"></script>
     <script type="text/javascript" src="/cho/js/prod/detail.js"></script>
@@ -91,25 +92,27 @@
 
                     <div class="review" >
                         <div class="review-header">
-                        <img th:src="@{${r.user.profileimage}}"  alt="User Image" class="profile-image">
-                        <div class="user-info">
-                            <p class="username" th:text="${r.user.username}">cho</p>
-                            <div class="rating">
-                                <span class="rating-stars">
-                                    <span class="star" data-value="1">&#9733;</span>
-                                    <span class="star" data-value="2">&#9733;</span>
-                                    <span class="star" data-value="3">&#9733;</span>
-                                    <span class="star" data-value="4">&#9733;</span>
-                                    <span class="star" data-value="5">&#9733;</span>
-                                </span>
-                                <span class="rating-score" th:text="${r.rate}"></span>
+                            <img th:src="@{'/upload/' + ${r.user.profileimage}}"  alt="User Image" class="profile-image">
+                            <div class="user-info">
+                                <p class="username" th:text="${r.user.username}">cho</p>
+                                <div class="rating">
+                                    <span class="rating-stars">
+                                        <span class="star" data-value="1">&#9733;</span>
+                                        <span class="star" data-value="2">&#9733;</span>
+                                        <span class="star" data-value="3">&#9733;</span>
+                                        <span class="star" data-value="4">&#9733;</span>
+                                        <span class="star" data-value="5">&#9733;</span>
+                                    </span>
+                                    <span class="rating-score" th:text="${r.rate}"></span>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
                     <div class="review-body">
-                        <div class="review-image"  th:if="${r.images}" th:each="i : ${r.images}">
-                            <img th:src="@{'/upload/' + ${i.file_name}}" alt="Review Image" class="review-image">
+                        <div class="review-image">
+                            <div th:if="${r.images}" th:each="i : ${r.images}">
+                                <img th:src="@{'/upload/' + ${i.file_name}}" alt="Review Image" class="review-image">
+                            </div>
                         </div>
                         <p class="review-content" th:text="${r.content}">색상이 다 예뻐서 어떤 거 살까 고민하다가 검정으로 결정했어요. 옷이 너무 예뻐서 청바지랑 입거
                             dfdkjflejfdkljfojfidjkjf;ef
@@ -119,7 +122,6 @@
                             ㅇ라ㅓㅇㄴ렂ㄷ모ㅓㅎㄹ;ㅣ마ㅓㅣㅓㄷ
 
                         </p>
-                        <button class="toggle-btn">더보기</button>
                     </div>
                 </div>
 
@@ -134,8 +136,8 @@
                         <!--/* 페이징 안의 '숫자' 표시 */-->
                         <th:block th:if="${totalPage > 1 }">`
                             <th:block th:each="k: ${#numbers.sequence(startPage, endPage)}">
-                                <li class="page-item" th:unless="${k == page }"><a class="page-link" th:href="@{${url }(page=${k})}" th:text="${k}"></a></li>
-                                <li class="page-item active" th:if="${k == page }"><a class="page-link" href="javascript:void(0);" th:text="${k}"></a></li>
+                                <li class="page-item" th:unless="${k == page }"><a class="page-link num" th:href="@{${url }(page=${k})}" th:text="${k}"></a></li>
+                                <li class="page-item active" th:if="${k == page }"><a class="page-link num" href="javascript:void(0);" th:text="${k}"></a></li>
                             </th:block>
                         </th:block>
                         <!--/* > 표시 여부 */-->

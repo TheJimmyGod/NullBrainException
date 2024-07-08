@@ -57,7 +57,7 @@ $(document).ready(function() {
 
     // 리뷰 접기 펼치기 기능
     $('.review-btn').click(function(){
-        $('.rev').toggleClass('hidden');
+        visible();
     })
     // 리뷰 접기 펼치기 기능 end
 
@@ -154,3 +154,13 @@ function buy(){
 }
 // 구매, 장바구니 정보 전송 end
 
+
+// 쿠키 생성 및 토글
+
+function visible(){
+    $('.rev').toggleClass('hidden');
+    if($.cookie("review").val() == "OK"){
+        $.cookie("review", "NO")
+    }
+    else $.cookie("review", "OK")
+}
