@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,7 +96,9 @@ public class ReviewController {
                 String savedFilename = uuid + ext;
 
                 // 상대 경로를 절대 경로로 변환
-                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
+//                Path uploadDir = Paths.get(uploadPath).toAbsolutePath().normalize();
+                Path uploadDir = Paths.get(new File(uploadPath, savedFilename).getAbsolutePath());
+                System.out.println(uploadDir);
                 if (!Files.exists(uploadDir)) {
                     Files.createDirectories(uploadDir);
                     System.out.println("Created directories: " + uploadDir.toString());
