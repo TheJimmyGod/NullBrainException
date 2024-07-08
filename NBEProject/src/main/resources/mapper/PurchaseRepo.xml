@@ -15,41 +15,50 @@
         where id=#{id}
     </update>
 
+
+
     <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
-        <id column="p_id" property="id"/>
+        <result column="p_id" property="id"/>
         <result column="m_id" property="merchantId"/>
+        <result column="m_reg" property="regdate"/>
         <result column="p_amount" property="amount"/>
         <result column="p_opt" property="opt"/>
         <result column="p_status" property="status"/>
-        <association property="pay" javaType="com.lec.spring.domain.shop.Pay">
-            <id column="pay_id" property="id"/>
-            <result column="o_price" property="price"/>
-            <result column="status" property="status"/>
-            <result column="paied_id" property="paymentUid"/>
-        </association>
-        <association property="goods" javaType="com.lec.spring.dto.OrderGoods">
-            <id column="goodsNo" property="goodsNo"/>
-            <result column="g_name" property="name"/>
-            <result column="g_price" property="price"/>
-            <result column="image" property="image"/>
-        </association>
-        <association property="users" javaType="com.lec.spring.dto.OrderUser">
-            <id column="u_id" property="id"/>
-            <result column="u_username" property="username"/>
-            <result column="u_name" property="name"/>
-            <result column="u_phone" property="phone"/>
-            <result column="u_birth" property="birth"/>
-            <result column="u_email" property="email"/>
-            <result column="street_addr" property="streetAddr"/>
-            <result column="detail_addr" property="detailAddr"/>
-        </association>
+        <collection property="pay" resultMap="mapPay"/>
+        <collection property="goods" resultMap="mapGoods"/>
+        <collection property="user" resultMap="mapUser"/>
     </resultMap>
 
-    <sql id="selectPurchase">
+    <resultMap id="mapPay" type="com.lec.spring.domain.shop.Pay">
+        <result column="order_id" property="id"/>
+        <result column="o_price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="paied_id" property="paymentUid"/>
+    </resultMap>
+
+    <resultMap id="mapGoods" type="com.lec.spring.dto.OrderGoods">
+        <result column="goodsNo" property="goodsNo"/>
+        <result column="g_name" property="name"/>
+        <result column="g_price" property="price"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <resultMap id="mapUser" type="com.lec.spring.dto.OrderUser">
+        <result column="userId" property="userId"/>
+        <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone" property="phone"/>
+        <result column="u_birth" property="birth"/>
+        <result column="u_email" property="email"/>
+        <result column="street_addr" property="streetAddr"/>
+        <result column="detail_addr" property="detailAddr"/>
+    </resultMap>
+
+    <sql id="select">
         select
             p.id "p_id",
             p.merchant_id "m_id",
-            p.pay_id "pa_id",
+            p.regdate "m_reg",
             p.amount "p_amount",
             p.opt "p_opt",
             p.status "p_status",
@@ -57,6 +66,7 @@
             g.name as "g_name",
             g.price as "g_price",
             g.image_1 as "image",
+            u.id as "userId",
             u.username as "u_username",
             u.name as "u_name",
             u.phone as "u_phone",
@@ -79,90 +89,37 @@
                       on p.pay_id=o.id
         WHERE 1=1
           and a.isDefault=true
+
+
     </sql>
 
+
     <select id="findById" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.id=#{param1}
     </select>
 
-    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
-        and p.user_id=#{param1}
-        and p.goods_id=#{parma2}
-    </select>
-
     <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.merchant_id=#{param1}
     </select>
 
+
     <select id="findByUser" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.user_id=#{param1}
     </select>
 
 
 
-
-    <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">
-        <id column="id" property="id"/>
-        <result column="merchant_id" property="merchantId"/>
-        <result column="amount" property="amount"/>
-        <result column="opt" property="opt"/>
-        <result column="regdate" property="regdate"/>
-        <association property="users" javaType="com.lec.spring.domain.User">
-            <id column="user_id" property="id"/>
-            <result column="username" property="username"/>
-            <result column="phone" property="phone"/>
-            <result column="email" property="email"/>
-        </association>
-        <association property="good" javaType="com.lec.spring.domain.shop.Goods">
-            <id column="goods_no" property="goods_no"/>
-            <result column="name" property="name"/>
-            <result column="price" property="price"/>
-        </association>
-        <association property="pay" javaType="com.lec.spring.domain.shop.Pay">
-            <id column="pay_id" property="id"/>
-            <result column="pay_price" property="price"/>
-            <result column="pay_status" property="status"/>
-            <result column="payment_uid" property="paymentUid"/>
-        </association>
-    </resultMap>
-
-    <select id="listOrder" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
+    <select id="listOrder" resultMap="mapPurchase">
+        <include refid="select"/>
     </select>
 
-    <select id="username" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
-        WHERE u.username LIKE CONCAT('%', #{name}, '%')
-    </select>
 
-    <select id="pagination" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
-        LIMIT #{limit} OFFSET #{offset}
+    <select id="pagination" resultMap="mapPurchase">
+        <include refid="select"/>
+        limit #{param1}, #{param2}
     </select>
 
     <select id="cntOrder" resultType="long">
@@ -190,110 +147,9 @@
         WHERE status = 'CANCEL_OK'
     </select>
 
-    <update id="updatePayStatus" parameterType="map">
+    <update id="updatePayStatus">
         UPDATE pay
         SET status = #{status}
         WHERE id = #{purchaseId}
     </update>
-
-
-
-
-
-
-
-
-    <resultMap id="mapPu" type="com.lec.spring.domain.shop.Purchase">
-        <result column="p_id" property="id"/>
-        <result column="m_id" property="merchantId"/>
-        <result column="p_amount" property="amount"/>
-        <result column="p_opt" property="opt"/>
-        <result column="p_status" property="status"/>
-        <collection property="pay" resultMap="mapP"/>
-        <collection property="goods" resultMap="mapG"/>
-        <collection property="user" resultMap="mapU"/>
-    </resultMap>
-
-    <resultMap id="mapP" type="com.lec.spring.domain.shop.Pay">
-        <result column="order_id" property="id"/>
-        <result column="o_price" property="price"/>
-        <result column="status" property="status"/>
-        <result column="paied_id" property="paymentUid"/>
-    </resultMap>
-
-    <resultMap id="mapG" type="com.lec.spring.dto.OrderGoods">
-        <result column="goodsNo" property="goodsNo"/>
-        <result column="g_name" property="name"/>
-        <result column="g_price" property="price"/>
-        <result column="image" property="image"/>
-    </resultMap>
-
-    <resultMap id="mapU" type="com.lec.spring.dto.OrderUser">
-        <result column="u_username" property="username"/>
-        <result column="u_name" property="name"/>
-        <result column="u_phone" property="phone"/>
-        <result column="u_birth" property="birth"/>
-        <result column="u_email" property="email"/>
-        <result column="street_addr" property="streetAddr"/>
-        <result column="detail_addr" property="detailAddr"/>
-    </resultMap>
-
-    <sql id="select">
-        select
-            p.id "p_id",
-            p.merchant_id "m_id",
-            p.pay_id "pa_id",
-            p.amount "p_amount",
-            p.opt "p_opt",
-            p.status "p_status",
-            g.goods_no as "goodsNo",
-            g.name as "g_name",
-            g.price as "g_price",
-            g.image_1 as "image",
-            u.username as "u_username",
-            u.name as "u_name",
-            u.phone as "u_phone",
-            u.birth as "u_birth",
-            u.email as "u_email",
-            a.street_addr as "street_addr",
-            a.detail_addr as "detail_adddr",
-            o.id as "order_id",
-            o.status as "status",
-            o.price as "o_price",
-            o.payment_uid "paied_id"
-        FROM purchase p
-                 join goods g
-                      on g.goods_no=p.goods_id
-                 join user u
-                      on p.user_id=u.id
-                 join address a
-                      on a.user_id=p.user_id
-                 join pay o
-                      on p.pay_id=o.id
-        WHERE 1=1
-          and a.isDefault=true
-
-
-    </sql>
-
-    <select id="selectById" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
-        and p.id=#{param1}
-    </select>
-
-<!--    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">-->
-<!--        <include refid="selectPurchase"/>-->
-<!--        and p.user_id=#{param1}-->
-<!--        and p.goods_id=#{parma2}-->
-<!--    </select>-->
-
-    <select id="findByR" flushCache="true" resultMap="mapPu">
-        <include refid="select"/>
-        and p.merchant_id=#{param1}
-    </select>
-
-    <select id="findByU" flushCache="true" resultMap="mapPu">
-        <include refid="select"/>
-        and p.user_id=#{param1}
-    </select>
 </mapper>
