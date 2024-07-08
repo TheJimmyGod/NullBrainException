@@ -31,10 +31,7 @@ public class RequestController {
 
     @GetMapping("/request")
     public String request(Model model){
-        Integer id = U.getLoggedUser().getId();
-        User user = userService.findById(id);
-        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(user.getId());
-        model.addAttribute("userId", user.getId());
+        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(U.getLoggedUser().getId());
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
         return "request";
     }
