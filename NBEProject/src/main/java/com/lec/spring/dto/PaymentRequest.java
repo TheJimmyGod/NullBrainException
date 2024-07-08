@@ -9,5 +9,4 @@ import lombok.Data;
 public class PaymentRequest {
     private String imp_uid;
     private String merchant_uid;
-    private Integer amount;
 }
