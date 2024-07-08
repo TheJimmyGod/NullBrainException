@@ -55,7 +55,7 @@ $(document).ready(function() {
     })
 
     cart.click(function (){
-        location.href = "../../cart";
+        location.href = "/cart";
     })
 
     $('.cart').click(function(){
