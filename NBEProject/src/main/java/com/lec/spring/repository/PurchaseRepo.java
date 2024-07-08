@@ -16,9 +16,11 @@ public interface PurchaseRepo {
     Purchase findById(Integer id);
     Purchase findPurchase(Integer userId, String goodsId);
     List<Purchase> findByRequest(String orderUid);
+    List<Purchase> findByR(String orderUid);
 
     List<Purchase> findByUser(Integer userId);
 
+    List<Purchase> selectById(Integer id);
     int update(Purchase purchase);
 
 

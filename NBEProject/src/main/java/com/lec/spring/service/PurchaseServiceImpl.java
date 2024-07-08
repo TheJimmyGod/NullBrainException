@@ -144,7 +144,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<Purchase> getUserPayed(Integer userId) {
 
-        return purchaseRepo.findByUser(userId);
+        return purchaseRepo.selectById(userId);
     }
 
     @Override

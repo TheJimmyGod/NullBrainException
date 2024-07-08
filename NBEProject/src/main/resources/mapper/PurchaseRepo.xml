@@ -276,10 +276,10 @@
 
     </sql>
 
-<!--    <select id="findById" flushCache="true" resultMap="mapPurchase">-->
-<!--        <include refid="selectPurchase"/>-->
-<!--        and p.id=#{param1}-->
-<!--    </select>-->
+    <select id="selectById" flushCache="true" resultMap="mapPurchase">
+        <include refid="selectPurchase"/>
+        and p.id=#{param1}
+    </select>
 
 <!--    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">-->
 <!--        <include refid="selectPurchase"/>-->

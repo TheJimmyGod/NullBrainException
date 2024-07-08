@@ -43,7 +43,7 @@ public class PayServiceImpl implements PayService {
     }
     @Override
     public void creatPay(PaymentRequest request){
-        List<Purchase> purchaseList = purchaseRepo.findByRequest(request.getMerchant_uid());
+        List<Purchase> purchaseList = purchaseRepo.findByR(request.getMerchant_uid());
         for(Purchase p : purchaseList){
             p.setStatus("OK");
             purchaseRepo.updateStatus(p);
