@@ -26,13 +26,15 @@ public class RequestController {
 
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/request")
     public String request(Model model){
         Integer id = U.getLoggedUser().getId();
-        User user = userRepo.selectById();
-        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(id);
-        model.addAttribute("userId", id);
+        User user = userService.findById(id);
+        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(user.getId());
+        model.addAttribute("userId", user.getId());
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
         return "request";
     }
