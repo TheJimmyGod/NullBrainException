@@ -1,18 +1,11 @@
 $(function(){
     let item;
-    // 여성의류 버튼 클릭 이벤트
-    // $('.woman').click(function() {
-    //     $('.category2-woman').toggleClass('show');
-    //     $('.category2-man').removeClass('show');
-    // });
 
-
-
-    // 남성의류 버튼 클릭 이벤트
-    // $('.man').click(function() {
-    //     $('.category2-man').toggleClass('show');
-    //     $('.category2-woman').removeClass('show');
-    // });
+    $('#accButton').click(function(){
+        $('.category1').toggleClass('hidden');
+        $('.category2-man').addClass('hidden');
+        $('.category2-woman').addClass('hidden');
+    });
 
     // 다른 영역 클릭 시 드롭다운 숨김 처리
     $(document).click(function(event) {
@@ -20,6 +13,7 @@ $(function(){
             $('.category2-woman, .category2-man').removeClass('show');
         }
     });
+
 
 
     $(".item").on("click", function(){
@@ -106,10 +100,3 @@ function showImage(data){
     $(".product-list").html(div.join("\n"));
 }
 
-$(document).ready(function(){
-    $('#accButton').click(function(){
-        $('.category1').toggleClass('hidden');
-        $('.category2-man').addClass('hidden');
-        $('.category2-woman').addClass('hidden');
-    });
-});
