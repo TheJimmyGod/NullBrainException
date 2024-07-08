@@ -90,7 +90,7 @@
     <select id="allUser" flushCache="true" resultType="com.lec.spring.domain.User">
         <include refid="SELECT_BASE"/>
             AND
-            username LIKE CONCAT('%', #{username}, '%')
+            name LIKE CONCAT('%', #{name}, '%')
     </select>
 
     <!--  유저의 권한 업데이트(활성, 비활성)  -->
@@ -105,6 +105,7 @@
         UPDATE user
         SET status = #{status}
         where id = #{userId}
+
     </update>
 
 <!--   유저 기본배송지 정보 가져오기 -->
