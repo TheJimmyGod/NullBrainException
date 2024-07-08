@@ -29,10 +29,10 @@ public class RequestController {
 
     @GetMapping("/request")
     public String request(Model model){
-        User user = U.getLoggedUser();
-
-        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(U.getLoggedUser().getId());
-        model.addAttribute("userId", U.getLoggedUser().getId());
+        Integer id = U.getLoggedUser().getId();
+        User user = userRepo.selectById();
+        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(id);
+        model.addAttribute("userId", id);
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
         return "request";
     }
