@@ -295,6 +295,10 @@ then set the desired styles for .card-img. */
     color: black;
 }
 
+.productDiv{
+    text-align: left;
+}
+
 .btnDiv {
     display: flex;
     align-items: center;

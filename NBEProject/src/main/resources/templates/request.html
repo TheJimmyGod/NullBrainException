@@ -23,7 +23,7 @@
 <div class="transInfo" th:each="item : ${PurchaseStatusList}">
     <div class="transInfo2">
         <!-- 배송완료랑 결제완료만 -->
-<!--        <h1 class="status" th:text="${item.status}">배송완료</h1>-->
+        <!--        <h1 class="status" th:text="${item.status}">배송완료</h1>-->
         <div class="statusDiv">
             <span class="status" th:if="${(item.status == 'OK') || (item.status == 'REVIEW')}">결제완료</span>
             <span class="status" th:if="${item.status == 'CANCEL'}">취소 처리중</span>
@@ -33,10 +33,9 @@
             <div class="col-auto">
                 <img th:src="${item.goods.image}" id="productImage" class="productImage" alt="Product Image">
             </div>
-            <div class="col">
-                <br>
+            <div class="productDiv col">
                 <a class="productInfo" th:text="${item.regdate}">7.10.12:00</a>
-<!--                th:text="${item.regdate}"-->
+                <!--                th:text="${item.regdate}"-->
                 <br>
                 <a class="productInfo" th:text="${item.goods.name}">상품이름상품이름상품이름상품이름상품이름</a><br>
                 <a class="productInfo" th:text="${item.goods.price} + '원 ' + ${item.amount} + '개'">12345원 1개</a><br>
@@ -55,25 +54,25 @@
                         onclick="cancel(this.getAttribute('mId') ,this.getAttribute('image'),
                             this.getAttribute('goods_name'),
                             this.getAttribute('price'))">
-                        결제취소 </button>
+                    결제취소 </button>
             </div>
         </div><br><br>
     </div>
 </div><br>
 <br><br>
 
-<div class="pagination2">
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
-    </div>
-</div>
+<!--<div class="pagination2">-->
+<!--    <div class="pagination">-->
+<!--        <a href="#">&laquo;</a>-->
+<!--        <a href="#">1</a>-->
+<!--        <a href="#">2</a>-->
+<!--        <a href="#">3</a>-->
+<!--        <a href="#">4</a>-->
+<!--        <a href="#">5</a>-->
+<!--        <a href="#">6</a>-->
+<!--        <a href="#">&raquo;</a>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 
@@ -95,6 +94,6 @@
 
 </html>
 
-<!--            <form th:method="get" th:action="@{/review(id=${item.itemId})}">-->
-<!--                <input type="hidden" class="itemId" th:value="${item.itemId}">-->
-<!--            </form>-->
+<!—            <form th:method="get" th:action="@{/review(id=${item.itemId})}">—>
+    <!—                <input type="hidden" class="itemId" th:value="${item.itemId}">—>
+    <!—            </form>—>
