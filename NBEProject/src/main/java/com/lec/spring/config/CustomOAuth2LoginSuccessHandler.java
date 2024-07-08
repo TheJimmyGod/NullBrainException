@@ -45,6 +45,7 @@ public class CustomOAuth2LoginSuccessHandler extends SavedRequestAwareAuthentica
         System.out.println(id);
         System.out.println(userDetails.getUser());
 
+
 //        String prov = userDetails.getUser().getProviderId();
 
 //        System.out.println(prov);
