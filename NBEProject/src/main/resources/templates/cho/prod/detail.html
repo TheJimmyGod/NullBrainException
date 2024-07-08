@@ -90,7 +90,7 @@
 
                     <div class="review" >
                         <div class="review-header">
-                        <img th:src="${r.user.profileimage}"  alt="User Image" class="profile-image">
+                        <img th:src="@{r.user.profileimage}"  alt="User Image" class="profile-image">
                         <div class="user-info">
                             <p class="username" th:text="${r.user.username}">cho</p>
                             <div class="rating">
