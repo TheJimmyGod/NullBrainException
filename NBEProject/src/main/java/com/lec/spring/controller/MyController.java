@@ -85,7 +85,7 @@ public class MyController {
             return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
-        model.addAttribute("result", myService.updateProfile(profile, delAddresses));
+        myService.updateProfile(profile, delAddresses);
         return "mypage/update";
     }
 
