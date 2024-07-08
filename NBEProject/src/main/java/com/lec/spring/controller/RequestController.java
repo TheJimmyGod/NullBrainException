@@ -31,8 +31,8 @@ public class RequestController {
     public String request(Model model){
         User user = U.getLoggedUser();
 
-        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(user.getId());
-        model.addAttribute("userId", user.getId());
+        List<Purchase> PurchaseStatusList = purchaseService.getUserPayed(U.getLoggedUser().getId());
+        model.addAttribute("userId", U.getLoggedUser().getId());
         model.addAttribute("PurchaseStatusList", PurchaseStatusList);
         return "request";
     }
