@@ -37,6 +37,8 @@ public interface PurchaseService {
 
     List<Purchase> pagination(int offset, int limit);
 
+    List<Purchase> userPagunation(String name, int offset, int limit);
+
     void updatePayStatus(Integer purchaseId, PayStatus status);
 
     Long cntCompleted();

@@ -38,6 +38,8 @@ public interface PurchaseRepo {
     // 페이지 네이션 기능
     List<Purchase> pagination(int offset, int limit);
 
+    List<Purchase> userPagination(String name, int offset, int limit);
+
     Long cntPurchaseItem();
 
 
