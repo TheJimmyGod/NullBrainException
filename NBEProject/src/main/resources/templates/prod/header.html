@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-dW4HrQmS+L+VDXXZrZql3yC1vS8/y7iJrJr0coikTP5F1R8b5i+I2r4HykIThEwrWQI8+gV9v5/Tuxf9is7eRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="/cho/js/prod/category.js"></script>
 </head>
 <style>
     *{
@@ -34,6 +36,49 @@
             </div>
         </div>
     </header>
+
+    <div class="category1 mb-3 hidden">
+        <button class="btn btn-primary woman" id="woman">여성의류</button>
+        <button class="btn btn-secondary man" id="man">남성의류</button>
+    </div>
+    <div class="category2-man hidden">
+        <div class="row">
+            <div class="col-3 col-md-2 col-sm-2 item man">반팔티셔츠</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">긴팔티셔츠</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">셔츠/남방</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">바지/팬츠</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">청바지</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">반바지</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">조끼/베스트</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">니트/스웨터</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">가디건</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">자켓</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">점퍼</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">트레이닝복</div>
+            <div class="col-3 col-md-2 col-sm-2 item man">정장</div>
+        </div>
+
+    </div>
+    <div class="category2-woman hidden">
+        <div class="row">
+            <div class="col-3 col-md-2 col-sm-2 item">블라우스</div>
+            <div class="col-3 col-md-2 col-sm-2 item">티셔츠</div>
+            <div class="col-3 col-md-2 col-sm-2 item">후드/맨투맨</div>
+            <div class="col-3 col-md-2 col-sm-2 item">니트</div>
+            <div class="col-3 col-md-2 col-sm-2 item">스커트</div>
+            <div class="col-3 col-md-2 col-sm-2 item">원피스</div>
+            <div class="col-3 col-md-2 col-sm-2 item">가디건</div>
+            <div class="col-3 col-md-2 col-sm-2 item">청바지/진</div>
+            <div class="col-3 col-md-2 col-sm-2 item">바지</div>
+            <div class="col-3 col-md-2 col-sm-2 item">레깅스</div>
+            <div class="col-3 col-md-2 col-sm-2 item">조끼/베스트</div>
+            <div class="col-3 col-md-2 col-sm-2 item">자켓</div>
+            <div class="col-3 col-md-2 col-sm-2 item">코트</div>
+            <div class="col-3 col-md-2 col-sm-2 item">점퍼/야상/패딩</div>
+            <div class="col-3 col-md-2 col-sm-2 item">정장</div>
+            <div class="col-3 col-md-2 col-sm-2 item">트레이닝복</div>
+        </div>
+    </div>
     <hr>
 </th:block>
 </html>

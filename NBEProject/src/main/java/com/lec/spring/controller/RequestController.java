@@ -40,7 +40,7 @@ public class RequestController {
     public ResponseEntity<String> cancelRequest(@RequestParam String mId){
         List<Purchase> purchaseList = purchaseService.findPurchase(mId);
         for(Purchase p : purchaseList){
-            p.setStatus("CANCEL_OK");
+            p.setStatus("CANCEL");
             purchaseService.updateStatus(p);
         }
         return ResponseEntity.ok().build();
