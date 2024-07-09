@@ -88,7 +88,7 @@
 
     <!-- 추천 제품 섹션 -->
     <section class="mb-8">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">추천 제품</h2>
+        <br><br>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
                 <div class="relative">
@@ -107,7 +107,7 @@
 
     <!-- 랜덤 상품 섹션 -->
     <section class="mb-8">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">추천 상품</h2>
+        <br><br>
         <div class="relative">
             <button type="button" class="random-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10"><i class="fas fa-chevron-left"></i></button>
             <div id="random-products-slider" class="random-products-slider grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -130,67 +130,45 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-        // 랜덤 상품 데이터 (예시 데이터)
-        const products = [
-            { title: '남자 청바지', image: 'https://specialoffer.kr/data/goods/cTqN3Hfw8ht4nfSP7THwVCYSkMD27N.jpg', description: '14300' },
-            { title: '세일러 카라 원피스', image: 'https://veluevu.godohosting.com/coordifficial/2023/0327/06/sum01.jpg', description: '24700' },
-            { title: '빅사이즈 가디건', image: 'https://specialoffer.kr/data/goods/7Swf7SAfteuZSAmzXf6W6v1x2skmlL.jpg', description: '15800' },
-            { title: '프릴청 원피스', image: 'https://specialoffer.kr/data/goods/ZK1cuJCmFJ3D2pcA4lzKHrcJXrtuPz.jpg', description: '36300' },
-            { title: '남자 반바지', image: 'https://specialoffer.kr/data/goods/LJyNqyzLZGqRgjtJWUw87P4pEZAkMZ.jpg', description: '4400' },
-            { title: '여자청 남방', image: 'https://specialoffer.kr/data/goods/1687501333_2745_4a4emSD8YAmKSA1CZ9b8zYgYmCmz8e.jpg', description: '25400' },
-            { title: '상품 7', image: 'https://specialoffer.kr/data/goods/ESB38kKlRUKgUdLHbsazgqzJlRnh8Y.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 8', image: 'https://specialoffer.kr/data/goods/sELy6ml4Ayem7NxkBLb4k8Rzpj95Wg.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 9', image: 'https://specialoffer.kr/data/goods/S2yAX4FsFPx5BcgRmB8gsmeVj6kfbW.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 10', image: 'https://bizb2b2.shopon.biz/data/goods_img/goods_img/1/2023/06/178486/1_9840large.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 11', image: 'https://bizb2b2.shopon.biz/data/goods_img/goods_img/1/2020/04/95205/95205_0000_eb72b998cb831340ace1cb1f9576d1140004large.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 12', image: 'https://specialoffer.kr/data/goods/YdZ92AK9tVycMl7fJYn7yyJv7c1ZP4.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 13', image: 'https://specialoffer.kr/data/goods/5gFftTpvgm2FCW6LCYbfCWKDzwFvV3.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 14', image: 'https://specialoffer.kr/data/goods/yVcDllyEEeL1uUtGV7Br6D2RbalCjW.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 15', image: 'http://vivaday7799.cafe24.com/hjjjj/VIDS/1553.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 16', image: 'http://vivaday7799.cafe24.com/hjjjj/JJM/64.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 17', image: 'https://veluevu.godohosting.com/coordifficial/2022/0622/13/sum01.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 18', image: 'https://specialoffer.kr/data/goods/xd9zrdkMVk5CVEx6Qz8qd6teLQ7MEA.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 19', image: 'https://specialoffer.kr/data/goods/PGWfVcnjZN4equ4Xjv5zmA7NlMlcDT.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 20', image: 'https://specialoffer.kr/data/goods/1712756852_5034_Ga2CFa7sn9jRCZ4qMptmTwMJfhze8k.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 21', image: 'https://specialoffer.kr/data/goods/W6PtQajRg1TVJNG3b8HDzxRSPxHKFV.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 22', image: 'https://specialoffer.kr/data/goods/1712823933_4863_jxMg3dSKnparDtkCrYPmGcM87ZUfLe.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 23', image: 'https://specialoffer.kr/data/goods/Qbq3lqdAqZE3KGsaJUWVhQlPm9lvya.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 24', image: 'https://veluevu.godohosting.com/coordifficial/2024/007/sum01.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 25', image: 'https://specialoffer.kr/data/goods/1714107457_1299_J49jWmM5YJq7zjPXHzBRqlXvcbYh1S.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 26', image: 'https://specialoffer.kr/data/goods/4TPTUDNexrJvnZFR3M466RVbj1eMyk.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 27', image: 'https://specialoffer.kr/data/goods/QlLUlRv6fCJNJSd1gsG2a75shpjMDa.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 28', image: 'https://specialoffer.kr/data/goods/gEgRk8NjSSAWDKBKvAu86dAj671Kwg.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 29', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/406.jpg', description: '최신 패션 아이템을 만나보세요.' },
-            { title: '상품 30', image: 'https://specialoffer.kr/data/goods/SfeWT7Rb4vLX57J89PDeCVRSvkymEA.jpg', description: '최신 패션 아이템을 만나보세요.' },
-        ];
+    // 랜덤 상품 데이터 (예시 데이터)
+    const products = [
+        { title: '여성 스커트', image: 'https://specialoffer.kr/data/goods/7YG1fGnpY8C89zfqhJV8d1UJgE8fc1.jpg', description: '14300' , link: 'http://localhost:8080/nbe/detail/346058x'},
+        { title: '여자청 남방', image: 'https://specialoffer.kr/data/goods/1687501333_2745_4a4emSD8YAmKSA1CZ9b8zYgYmCmz8e.jpg', description: '25400' },,
+        { title: '상품 15', image: 'http://vivaday7799.cafe24.com/hjjjj/VIDS/1553.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/326975'},
+        { title: '상품 16', image: 'http://vivaday7799.cafe24.com/hjjjj/JJM/64.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/247895'},
+        { title: '상품 29', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/406.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/337854'},
+        { title: '상품 30', image: 'https://specialoffer.kr/data/goods/SfeWT7Rb4vLX57J89PDeCVRSvkymEA.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/351600' },
+        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/DK/SJ/113.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/363754' },
+        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/510.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/367540' },
+    ];
 
-        // 30개 중 8개의 랜덤 상품 선택
-        const selectedProducts = [];
-        while (selectedProducts.length < 8) {
-            const randomIndex = Math.floor(Math.random() * products.length);
-            const randomProduct = products[randomIndex];
-            if (!selectedProducts.includes(randomProduct)) {
-                selectedProducts.push(randomProduct);
-            }
+    // 30개 중 8개의 랜덤 상품 선택
+    const selectedProducts = [];
+    while (selectedProducts.length < 6) {
+        const randomIndex = Math.floor(Math.random() * products.length);
+        const randomProduct = products[randomIndex];
+        if (!selectedProducts.includes(randomProduct)) {
+            selectedProducts.push(randomProduct);
         }
-
-        // 랜덤 상품 섹션에 추가
-        const randomProductsContainer = document.getElementById('random-products-slider');
-        selectedProducts.forEach(product => {
-            const productElement = `
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="${product.image}" alt="${product.title}" class="w-full h-full object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-bold mb-2">${product.title}</h3>
-                    <p class="text-gray-600">${product.description}</p>
-                </div>
+    }
+    // 랜덤 상품 섹션에 추가
+    const randomProductsContainer = document.getElementById('random-products-slider');
+    selectedProducts.forEach(product => {
+        const productElement = `
+        <div class="bg-white rounded-lg shadow-md overflow-hidden product">
+            <a href="${product.link}" target="_blank">
+                <img src="${product.image}" alt="${product.title}" class="w-full object-contain" style="height: 300px;">
+            </a>
+            <div class="p-4">
+                <h3 class="text-xl font-bold mb-2">${product.title}</h3>
+                <b><p class="text-gray-600">${product.description}</p></b>
             </div>
-        `;
-            randomProductsContainer.innerHTML += productElement;
-        });
+        </div>
+    `;
+        randomProductsContainer.innerHTML += productElement;
+    });
 
-        // 랜덤 상품 슬라이더 초기화
+    // 랜덤 상품 슬라이더 초기화
         $('#random-products-slider').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
@@ -224,7 +202,6 @@
                 }
             ]
         });
-    });
 </script>
 </body>
 </html>

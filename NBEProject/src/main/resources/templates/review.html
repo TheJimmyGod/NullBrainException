@@ -147,7 +147,6 @@
     <img th:src="${purchase.image}" class="product-image" alt="Product Image">
     <div class="product-info">
         <p th:text="'상품명: ' + ${purchase.goodsName}">상품명: </p>
-        <p th:text="'수량: ' + ${purchase.amount} + '개'">수량: 1개</p>
         <p th:text="${purchase.opt}">사이즈: "XL"</p>
     </div>
     <form th:action="@{reviewOk}" th:id="reviewForm" method="post" enctype="multipart/form-data">

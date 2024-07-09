@@ -31,7 +31,7 @@
                 <img th:src="${goods.image_1}" alt="Product Image">
             </div>
             <div class="product-info">
-                <h2>샘플상품 2</h2>
+                <h2 th:text="${goods.name}">샘플상품 2</h2>
                 <p class="price" th:text="${goods.price}">10,000원</p>
                 <form class="order_frm" th:action="@{/order_form}" method="get">
                     <div class="req">
