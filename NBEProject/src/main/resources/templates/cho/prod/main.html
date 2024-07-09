@@ -132,14 +132,14 @@
 <script>
     // 랜덤 상품 데이터 (예시 데이터)
     const products = [
-        { title: '여성 스커트', image: 'https://specialoffer.kr/data/goods/7YG1fGnpY8C89zfqhJV8d1UJgE8fc1.jpg', description: '14300' , link: 'http://localhost:8080/nbe/detail/346058x'},
+        { title: '여성 스커트', image: 'https://specialoffer.kr/data/goods/7YG1fGnpY8C89zfqhJV8d1UJgE8fc1.jpg', description: '14300' , link: '/nbe/detail/346058x'},
         { title: '여자청 남방', image: 'https://specialoffer.kr/data/goods/1687501333_2745_4a4emSD8YAmKSA1CZ9b8zYgYmCmz8e.jpg', description: '25400' },,
-        { title: '상품 15', image: 'http://vivaday7799.cafe24.com/hjjjj/VIDS/1553.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/326975'},
-        { title: '상품 16', image: 'http://vivaday7799.cafe24.com/hjjjj/JJM/64.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/247895'},
-        { title: '상품 29', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/406.jpg', description: '최신 패션 아이템을 만나보세요.' , link : 'http://localhost:8080/nbe/detail/337854'},
+        { title: '상품 15', image: 'http://vivaday7799.cafe24.com/hjjjj/VIDS/1553.jpg', description: '최신 패션 아이템을 만나보세요.' , link : '/nbe/detail/326975'},
+        { title: '상품 16', image: 'http://vivaday7799.cafe24.com/hjjjj/JJM/64.jpg', description: '최신 패션 아이템을 만나보세요.' , link : '/nbe/detail/247895'},
+        { title: '상품 29', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/406.jpg', description: '최신 패션 아이템을 만나보세요.' , link : '/nbe/detail/337854'},
         { title: '상품 30', image: 'https://specialoffer.kr/data/goods/SfeWT7Rb4vLX57J89PDeCVRSvkymEA.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/351600' },
-        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/DK/SJ/113.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/363754' },
-        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/510.jpg', description: '최신 패션 아이템을 만나보세요.', link : 'ttp://localhost:8080/nbe/detail/367540' },
+        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/DK/SJ/113.jpg', description: '최신 패션 아이템을 만나보세요.', link : '/nbe/detail/363754' },
+        { title: '상품 30', image: 'http://vivaday3.cafe24.com/HJJJJ/JJM/510.jpg', description: '최신 패션 아이템을 만나보세요.', link : '/nbe/detail/367540' },
     ];
 
     // 30개 중 8개의 랜덤 상품 선택
@@ -159,10 +159,6 @@
             <a href="${product.link}" target="_blank">
                 <img src="${product.image}" alt="${product.title}" class="w-full object-contain" style="height: 300px;">
             </a>
-            <div class="p-4">
-                <h3 class="text-xl font-bold mb-2">${product.title}</h3>
-                <b><p class="text-gray-600">${product.description}</p></b>
-            </div>
         </div>
     `;
         randomProductsContainer.innerHTML += productElement;
