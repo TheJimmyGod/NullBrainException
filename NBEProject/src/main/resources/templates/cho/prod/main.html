@@ -144,7 +144,7 @@
 
     // 30개 중 8개의 랜덤 상품 선택
     const selectedProducts = [];
-    while (selectedProducts.length < 6) {
+    while (selectedProducts.length < 4) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];
         if (!selectedProducts.includes(randomProduct)) {
