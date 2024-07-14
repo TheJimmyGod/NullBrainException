@@ -2,12 +2,12 @@
 디지털 컨버전스 팀
 
 ### 목차
-1. 개요
-2. 팀원
-3. 활용한 기술
-4. 구현
-5. 발표영상
-6. 교육기관
+1. [개요](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%EA%B0%9C%EC%9A%94)
+2. [팀원](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%ED%8C%80%EC%9B%90)
+3. [활용한 기술](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B8%B0%EC%88%A0)
+4. [구현](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%EA%B5%AC%ED%98%84)
+5. [발표영상](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%EB%B0%9C%ED%91%9C%EC%98%81%EC%83%81)
+6. [교육기관](https://github.com/TheJimmyGod/NullBrainException/blob/master/README.md#%EA%B5%90%EC%9C%A1%EA%B8%B0%EA%B4%80)
 
 ### 개요
 공공데이터와 커뮤니티를 활용한 옷 쇼핑몰 웹사이트는 직관적이고 편리한 웹 옷쇼핑을 위해서 사용자들이 다양한 옷을 조회 할 수 있고, 구매할 수 있으며, 자신만의 코디로 게시글을 작성하고 다른 사용자들과 소통할 수 있는 옷 쇼핑몰 웹 사이트입니다.
