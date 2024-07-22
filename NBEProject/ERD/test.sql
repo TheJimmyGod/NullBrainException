@@ -24,6 +24,25 @@ create table opt (
 );
 SELECT * FROM goods;
 
+DROP TABLE IF EXISTS user;
+DROP TABLE  IF EXISTS  post;
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS purchase;
+DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS request;
+DROP TABLE IF EXISTS request_image;
+DROP TABLE IF EXISTS coupon_box;
+DROP TABLE IF EXISTS recent_item;
+DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS review_image;
+DROP TABLE  IF EXISTS  post_image;
+DROP TABLE  IF EXISTS  comment;
+DROP TABLE IF EXISTS authority;
+DROP TABLE  IF EXISTS  contact;
+DROP TABLE  IF EXISTS  contact_image;
+DROP TABLE IF EXISTS user_authorities;
+
 alter table goods modify contents LONGTEXT;
 alter table goods modify keywords LONGTEXT;
 alter table goods modify image_1 LONGTEXT;
@@ -33,8 +52,6 @@ alter table goods modify image_4 LONGTEXT;
 alter table goods modify image_5 LONGTEXT;
 alter table goods modify image_6 LONGTEXT;
 alter table goods modify name TEXT;
-
-alter table contact ADD COLUMN type VARCHAR(20);
 
 alter table user ADD COLUMN status boolean default true;
 
@@ -63,10 +80,15 @@ select * from purchase;
 select * from pay;
 select * from authority;
 select * from user_authorities
-where user_id = 23;
+where user_id = 1;
 
 INSERT INTO purchase ( user_id, goods_id, pay_id, opt,merchant_id, amount,  regdate, status)
 VALUES (23, '105218', 190, '블랙+FREE','dab92edfa3a441a18c9d68187c63ac33', 15950, now(), 'OK');
+
+INSERT INTO user(id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point)
+VALUES (2, 'JimmyGod', 12345678, null , '진민장', '010-0000-0000', '19921120', 'minjang@mail.com', 1, null, 'Bronze',0, 0);
+
+INSERT INTO authority(id, auth) VALUES (2, 2);
 
 select * from user;
 

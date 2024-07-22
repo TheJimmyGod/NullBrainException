@@ -215,8 +215,10 @@ CREATE TABLE user
   email        VARCHAR(50)  NOT NULL COMMENT 'Email',
   gender       INT          NULL     DEFAULT 0 COMMENT 'Gender',
   profileimage VARCHAR(600) NULL     COMMENT 'ProfileImage',
-  grade        ENUM         NULL     DEFAULT 'Bronze' COMMENT 'Grade',
+  grade        ENUM('Bronze','Silver', 'Gold', 'Diamond')         NULL     DEFAULT 'Bronze' COMMENT 'Grade',
   total_price  INT          NULL     DEFAULT 0,
+  provider VARCHAR(100) NULL DEFAULT 'ROLE_MEMBER',
+  providerId INT NULL DEFAULT 0,
   point        INT          NOT NULL DEFAULT 0 COMMENT 'Point',
   PRIMARY KEY (id)
 ) COMMENT '유저';
