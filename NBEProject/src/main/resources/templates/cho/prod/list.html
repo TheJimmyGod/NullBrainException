@@ -11,12 +11,19 @@
     <link rel="stylesheet" href="/cho/css/prod/category.css">
     <link rel="stylesheet" href="/cho/css/prod/head.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-    <script type="text/javascript" src="/cho/js/prod/head.js"></script>
-    <script type="text/javascript" src="/cho/js/prod/category.js"></script>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{cho/prod/header :: head}"></div>
-<div th:replace="~{cho/prod/category :: category}"></div>
+
 <main>
     <div class="product-list">
 

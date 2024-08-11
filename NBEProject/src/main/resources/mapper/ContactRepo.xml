@@ -61,7 +61,7 @@
     </select>
 
     <select id="cancel" resultType="Long">
-        SELECT COUNT(*) from contact WHERE type = '취소문의'
+        SELECT COUNT(*) from contact WHERE type = '결제 취소'
     </select>
 
     <select id="type" resultType="String">

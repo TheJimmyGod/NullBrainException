@@ -1,22 +1,18 @@
 $(function(){
     $('.home').click(function(){
-        location.href = 'http://localhost:8080/nbe/home';
+        location.href = '/nbe/home';
     });
 
     $('.post').click(function(){
-        location.href = 'http://localhost:8080/post/list';
+        location.href = '/post/list';
     });
 
     $('.cart').click(function(){
-        location.href = `http://localhost:8080/cart?userId=1`;
-    });
-
-    $('.recent').click(function(){
-        location.href = 'http://localhost:8080/nbe/recent';
+        location.href = '/cart';
     });
 
     $('.user').click(function(){
-        location.href = 'http://localhost:8080/mypage/detail';
+        location.href = '/mypage/detail';
     });
 
     $('.accButton').click(function (){
@@ -29,5 +25,5 @@ function category(){
 }
 
 function goCart(){
-    location.href = `http://localhost:8080/cart`;
+    location.href = `/cart`;
 }

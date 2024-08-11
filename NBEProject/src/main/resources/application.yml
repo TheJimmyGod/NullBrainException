@@ -85,4 +85,5 @@ app:
 
   # 파일 업로드 경로
   upload:
-    path: NBEProject\upload
+    path: upload
+

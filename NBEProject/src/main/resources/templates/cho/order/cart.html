@@ -56,7 +56,7 @@
         <div th:text="${item.opt}">옵션명옵션명옵션명</div>
         <div class="cart-item-price">
             <span class="price"  th:value="${item.goods.price}" th:text="${item.goods.price}"></span>
-            <span class="amount" th:text="${item.amount} + '개원 '"></span>
+            <span class="amount" th:text="'원  ' + ${item.amount} + '개 '"></span>
         </div>
     </div>
 </div><br><br>

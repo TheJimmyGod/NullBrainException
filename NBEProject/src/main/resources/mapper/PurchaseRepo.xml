@@ -89,8 +89,6 @@
                       on p.pay_id=o.id
         WHERE 1=1
           and a.isDefault=true
-
-
     </sql>
 
 
@@ -108,7 +106,6 @@
     <select id="findByUser" flushCache="true" resultMap="mapPurchase">
         <include refid="select"/>
         and p.user_id=#{param1}
-        ORDER BY p.regdate DESC
     </select>
 
 
@@ -124,33 +121,83 @@
     </select>
 
     <select id="cntOrder" resultType="long">
-        SELECT COUNT(*) FROM purchase
+        SELECT COUNT(*) FROM purchase WHERE status IN ('OK', 'CANCEL_OK', 'CANCEL')
     </select>
 
     <select id="cntPurchaseItem" resultType="long">
-        SELECT COUNT(*) FROM purchase
+        SELECT COUNT(*) FROM purchase WHERE status IN('OK', 'CANCEL_OK', 'CANCEL')
     </select>
 
 
     <select id="cntStatusOK" resultType="long">
-        SELECT COUNT(*) FROM pay
+        SELECT COUNT(*) FROM purchase
         WHERE status = 'OK'
     </select>
 
     <select id="cntStatusREADY" resultType="long">
-        SELECT COUNT(*) FROM pay
-        WHERE status = 'READY'
+        SELECT COUNT(*) FROM purchase
+        WHERE status = 'CANCEL'
     </select>
 
 
     <select id="cntStatusCANCEL" resultType="long">
-        SELECT COUNT(*) FROM pay
+        SELECT COUNT(*) FROM purchase
         WHERE status = 'CANCEL_OK'
     </select>
 
     <update id="updatePayStatus">
-        UPDATE pay
+        UPDATE purchase
         SET status = #{status}
         WHERE id = #{purchaseId}
     </update>
+
+
+    <select id="findByUserUsernameAndStatusIn" parameterType="map" resultMap="mapPurchase">
+        <include refid="select"/>
+        AND p.status IN ('CANCEL_OK', 'OK')
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="findByStatusIn" parameterType="map" resultMap="mapPurchase">
+        <include refid="select"/>
+        AND p.status IN ('CANCEL_OK', 'OK', 'CANCEL')
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="uPagination" parameterType="map" resultMap="mapPurchase">
+        <include refid="select"/>
+        AND p.status = #{status}
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="userPagination" parameterType="map" resultMap="mapPurchase">
+        <include refid="select"/>
+        AND UPPER(u.username) LIKE CONCAT('%', UPPER(#{username}), '%')
+        AND p.status IN ('OK', 'CANCEL_OK', 'CANCEL')
+        ORDER BY m_reg DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultMap="mapUser">
+        SELECT
+            u.id AS userId,
+            u.username AS u_username,
+            u.name AS u_name,
+            u.phone AS u_phone,
+            u.birth AS u_birth,
+            u.email AS u_email,
+            a.street_addr AS street_addr,
+            a.detail_addr AS detail_addr
+        FROM user u
+                 JOIN address a ON a.user_id = u.id
+        WHERE u.username = #{username}
+          AND a.isDefault = true
+    </select>
+
+    <select id="username" parameterType="string" resultMap="mapPurchase">
+            <include refid="select"/>
+            AND UPPER(u.username) LIKE CONCAT('%', UPPER(#{username}), '%')
+    </select>
+
+
 </mapper>

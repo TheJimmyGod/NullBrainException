@@ -8,12 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/cho/css/prod/category.css">
     <link rel="stylesheet" type="text/css" href="/cho/css/prod/head.css">
     <link rel="stylesheet" type="text/css" href="/cho/css/prod/detail.css">
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/cho/js/prod/head.js"></script>
     <script type="text/javascript" src="/cho/js/prod/category.js"></script>
     <script type="text/javascript" src="/cho/js/prod/detail.js"></script>
@@ -31,7 +31,7 @@
                 <img th:src="${goods.image_1}" alt="Product Image">
             </div>
             <div class="product-info">
-                <h2>샘플상품 2</h2>
+                <h2 th:text="${goods.name}">샘플상품 2</h2>
                 <p class="price" th:text="${goods.price}">10,000원</p>
                 <form class="order_frm" th:action="@{/order_form}" method="get">
                     <div class="req">
@@ -63,8 +63,8 @@
                     </div>
                 </form>
                 <div class="actions">
-                    <button class="buy-now">BUY</button>
-                    <button class="cart" >CART</button>
+                    <button class="buy-now" onclick="buy()">BUY</button>
+                    <button class="addCart" onclick="addCart()">CART</button>
                 </div>
             </div>
         </div>
@@ -86,29 +86,33 @@
                 </span>
             </div>
             <button class="review-btn">리뷰 보기</button>
+            <div class="rev hidden">
+
                 <div class="review-block" th:if="${reviews}" th:each="r : ${reviews}">
 
                     <div class="review" >
                         <div class="review-header">
-                        <img th:src="${r.user.profileimage}"  alt="User Image" class="profile-image">
-                        <div class="user-info">
-                            <p class="username" th:text="${r.user.username}">cho</p>
-                            <div class="rating">
-                                <span class="rating-stars">
-                                    <span class="star" data-value="1">&#9733;</span>
-                                    <span class="star" data-value="2">&#9733;</span>
-                                    <span class="star" data-value="3">&#9733;</span>
-                                    <span class="star" data-value="4">&#9733;</span>
-                                    <span class="star" data-value="5">&#9733;</span>
-                                </span>
-                                <span class="rating-score" th:text="${r.rate}"></span>
+                            <img th:src="@{'/upload/' + ${r.user.profileimage}}"  alt="User Image" class="profile-image">
+                            <div class="user-info">
+                                <p class="username" th:text="${r.user.username}">cho</p>
+                                <div class="rating">
+                                    <span class="rating-stars">
+                                        <span class="star" data-value="1">&#9733;</span>
+                                        <span class="star" data-value="2">&#9733;</span>
+                                        <span class="star" data-value="3">&#9733;</span>
+                                        <span class="star" data-value="4">&#9733;</span>
+                                        <span class="star" data-value="5">&#9733;</span>
+                                    </span>
+                                    <span class="rating-score" th:text="${r.rate}"></span>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
                     <div class="review-body">
-                        <div class="review-image"  th:if="${r.images}" th:each="i : ${r.images}">
-                            <img th:src="@{'/upload/' + ${i.file_name}}" alt="Review Image" class="review-image">
+                        <div class="review-image">
+                            <div th:if="${r.images}" th:each="i : ${r.images}">
+                                <img th:src="@{'/upload/' + ${i.file_name}}" alt="Review Image" class="review-image">
+                            </div>
                         </div>
                         <p class="review-content" th:text="${r.content}">색상이 다 예뻐서 어떤 거 살까 고민하다가 검정으로 결정했어요. 옷이 너무 예뻐서 청바지랑 입거
                             dfdkjflejfdkljfojfidjkjf;ef
@@ -118,32 +122,33 @@
                             ㅇ라ㅓㅇㄴ렂ㄷ모ㅓㅎㄹ;ㅣ마ㅓㅣㅓㄷ
 
                         </p>
-                        <button class="toggle-btn">더보기</button>
                     </div>
                 </div>
 
             </div>
-            <!--      페이지      -->
-            <div class="container mt-1">
-                <ul class="pagination justify-content-center">
-                    <!--   표시여부   -->
-                    <li class="page-item" th:if="${page>1}"><a class="page-link" th:href="${url}" title="처음"><i class="fas fa-angle-left"></i></a></li>
-                    <!--/* < 표시 여부 */-->
-                    <li class="page-item" th:if="${startPage > 1 }"><a class="page-link" th:href="@{${url }(page=${startPage - 1 })}"><i class='fas fa-angle-left'></i></a></li>
+                <div class="container mt-1">
+                    <ul class="pagination justify-content-center">
+                        <!--   표시여부   -->
+                        <li class="page-item" th:if="${page>1}"><a class="page-link" th:href="${url}" title="처음"><i class="fas fa-angle-left"></i></a></li>
+                        <!--/* < 표시 여부 */-->
+                        <li class="page-item" th:if="${startPage > 1 }"><a class="page-link" th:href="@{${url }(page=${startPage - 1 })}"><i class='fas fa-angle-left'></i></a></li>
 
-                    <!--/* 페이징 안의 '숫자' 표시 */-->
-                    <th:block th:if="${totalPage > 1 }">`
-                        <th:block th:each="k: ${#numbers.sequence(startPage, endPage)}">
-                            <li class="page-item" th:unless="${k == page }"><a class="page-link" th:href="@{${url }(page=${k})}" th:text="${k}"></a></li>
-                            <li class="page-item active" th:if="${k == page }"><a class="page-link" href="javascript:void(0);" th:text="${k}"></a></li>
+                        <!--/* 페이징 안의 '숫자' 표시 */-->
+                        <th:block th:if="${totalPage > 1 }">`
+                            <th:block th:each="k: ${#numbers.sequence(startPage, endPage)}">
+                                <li class="page-item" th:unless="${k == page }"><a class="page-link num" th:href="@{${url }(page=${k})}" th:text="${k}"></a></li>
+                                <li class="page-item active" th:if="${k == page }"><a class="page-link num" href="javascript:void(0);" th:text="${k}"></a></li>
+                            </th:block>
                         </th:block>
-                    </th:block>
-                    <!--/* > 표시 여부 */-->
-                    <li class="page-item" th:if="${totalPage > endPage }"><a class="page-link" th:href="@{${url }(page=${endPage + 1 })}"><i class='fas fa-angle-right'></i></a></li>
-                    <!--/* >> 표시 여부 */-->
-                    <li class="page-item" th:if="${page < totalPage }"><a class="page-link" th:href="@{${url }(page=${totalPage })}"><i class='fas fa-angle-double-right'></i></a></li>
-                </ul>
-            </div>
+                        <!--/* > 표시 여부 */-->
+                        <li class="page-item" th:if="${totalPage > endPage }"><a class="page-link" th:href="@{${url }(page=${endPage + 1 })}"><i class='fas fa-angle-right'></i></a></li>
+                        <!--/* >> 표시 여부 */-->
+                        <li class="page-item" th:if="${page < totalPage }"><a class="page-link" th:href="@{${url }(page=${totalPage })}"><i class='fas fa-angle-double-right'></i></a></li>
+                    </ul>
+                </div>
+
+        </div>
+
 
         </div>
 

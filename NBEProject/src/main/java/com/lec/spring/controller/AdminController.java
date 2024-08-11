@@ -8,21 +8,15 @@ import com.lec.spring.domain.shop.Purchase;
 import com.lec.spring.dto.PayStatus;
 import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -47,6 +41,9 @@ public class AdminController {
     @Autowired
     private PayService payService;
 
+    @Autowired
+    private PaymentService paymentService;
+
 
 
     private static final String UPLOAD_DIR = "uploads/";
@@ -60,7 +57,7 @@ public class AdminController {
     public String adminpage(Model model){
         System.out.println("main 페이지 들어옴");
 
-        Long cancel = contactService.cancelOrder();
+        Long cancel = purchaseService.cntFailed();
         Long userCnt = userService.cntUser();
         Long countAll = contactService.countAll();
         Long countUnAnswer = contactService.countUnAnswer();
@@ -92,14 +89,12 @@ public class AdminController {
     // 주문 관리 페이지
     @RequestMapping("/orderpage")
     public String orderPage(@RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "username", required = false) String name,
+                            @RequestParam(value = "username", required = false) String username,
                             @RequestParam(value = "orderId", required = false) Integer orderId,
-                            @RequestParam(value = "status", required = false) PayStatus status
+                            @RequestParam(value = "status", required = false)  String status
                             ,Model model){
 
-        if(orderId != null && status != null){
-            payService.updatePayStatus(orderId, status);
-        }
+
 
        Long orderCnt;
        List<Purchase> orderList;
@@ -108,11 +103,11 @@ public class AdminController {
         int limit = 10;
         int offset = (page - 1) * limit;
 
-        if (name != null && !name.isEmpty()) {
-            orderList = purchaseService.orderUsername(name);
+        if (username != null && !username.isEmpty()) {
+            orderList = purchaseService.userPagination(username, status, offset, limit);
             orderCnt = (long) orderList.size();
         } else {
-            orderList = purchaseService.pagination(offset,limit);
+            orderList = purchaseService.uPagination(status, offset, limit);
             orderCnt = purchaseService.orderCnt();
         }
 
@@ -129,9 +124,9 @@ public class AdminController {
        model.addAttribute("CANCEL", PayStatus.CANCEL_OK);
        model.addAttribute("READY", PayStatus.READY);
 
-       if(name != null && !name.isEmpty()){
-           List<Purchase> usernameList = purchaseService.orderUsername(name);
-           model.addAttribute("username", name);
+       if(username != null && !username.isEmpty()){
+           List<Purchase> usernameList = purchaseService.orderUsername(username);
+           model.addAttribute("username", username);
 
        }
         return "admin/orderpage";
@@ -203,7 +198,18 @@ public class AdminController {
     }
 
     @PostMapping("/updatePayStatus")
-    public String updatePayStatus(@RequestParam("purchaseId") int purchaseId, @RequestParam("status")PayStatus status){
+    public String updatePayStatus(@RequestParam("purchaseId") int purchaseId,
+                                  @RequestParam("status")String status,
+                                  @RequestParam("imp_uid") String paymentUid){
+        System.out.println("Received request to update payment status. purchaseId: " + purchaseId + ", status: " + status + ", paymentUid: " + paymentUid);
+
+
+        if ("CANCEL_OK".equals(status)) {
+            boolean success = paymentService.cancelPayment(paymentUid);
+            if (!success) {
+                return "redirect:/admin/orderpage?error=true";
+            }
+        }
         purchaseService.updatePayStatus(purchaseId, status);
         return "redirect:/admin/orderpage";
     }
@@ -408,6 +414,17 @@ public class AdminController {
         }
         model.addAttribute("contact", contact);
         return "admin/inquirydetail";
+    }
+
+    @PostMapping("/admin/request/cancel")
+    public ResponseEntity<String> cancelPayment(@RequestParam("paymentUid") String paymentUid) {
+        // paymentUid를 사용하여 결제를 취소하는 로직 구현
+        boolean success = paymentService.cancelPayment(paymentUid);
+        if (success) {
+            return ResponseEntity.ok("결제가 성공적으로 취소되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소에 실패했습니다.");
+        }
     }
 
     // 답변 버튼 클릭 시

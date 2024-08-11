@@ -33,7 +33,6 @@ function requestPay() {
                data: JSON.stringify({
                     imp_uid: rsp.imp_uid,
                     merchant_uid: rsp.merchant_uid,
-                    amount: rsp.amount
                }),
            }).done(function(data){
                alert("결제에 성공하셨습니다.");
@@ -44,3 +43,7 @@ function requestPay() {
     });
 
 }
+
+
+
+

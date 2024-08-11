@@ -38,7 +38,11 @@ public class CartController {
                     .goods(cart.getGoods())
                     .build();
 
-            cartService.insert(item);
+            if(cartService.insert(item) > 0){
+                System.out.println("장바구니 저장성공");
+            }else {
+                System.out.println("장바구니 저장실패");
+            }
             return ResponseEntity.ok("goCart");
 
         } catch (Exception e){

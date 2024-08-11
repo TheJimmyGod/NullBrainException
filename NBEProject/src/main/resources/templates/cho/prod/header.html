@@ -1,49 +1,56 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="head">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
     <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/cho/css/prod/head.css">
+    <link rel="stylesheet" href="/cho/css/prod/category.css">
+    <script src="/cho/js/prod/head.js"></script>
+    <script src="/cho/js/prod/category.js"></script>
     <header class="py-4 mb-8">
         <div class="container mx-auto flex justify-between items-center">
             <div class="">
-                <a href="/nbe/home"><div class="text-3xl font-bold">NBE</div>
+                <a href="/nbe/home"><div class="text-4xl font-bold">NBE</div>
                 </a>
             </div>
             <div class="flex space-x-4 items-center">
-                <a th:if="${userlog == null}" href="/user/login" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-sign-in-alt text-2xl"></i><br>
-                    <span style="font-size: 9px">로그인</span>
+
+                <a sec:authorize="isAnonymous()" th:if="${userlog == null}" href="/user/login" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-sign-in-alt text-3xl"></i><br>
+                    <span style="font-size: 12px">로그인</span>
                 </a>
-                <a th:unless="${userlog == null}" href="/user/logout" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-sign-in-alt text-2xl"></i><br>
-                    <span style="font-size: 9px">로그아웃</span>
+                <a sec:authorize="isAuthenticated()" th:unless="${userlog == null}" href="/user/logout" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-sign-in-alt text-3xl"></i><br>
+                    <span style="font-size: 12px">로그아웃</span>
                 </a>
-                <a th:if="${userlog == null}" href="/user/register" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-user-plus text-2xl"></i><br>
-                    <span style="font-size: 9px">회원가입</span>
+                <a sec:authorize="isAnonymous()" th:if="${userlog == null}" href="/user/register" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-user-plus text-3xl"></i><br>
+                    <span style="font-size: 12px">회원가입</span>
                 </a>
-                <a href="/mypage/detail" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-user text-2xl"></i><br>
-                    <span style="font-size: 9px; text-align: center;">마이페이지</span>
+                <a sec:authorize="isAuthenticated()" href="/mypage/detail" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-user text-3xl"></i><br>
+                    <span style="font-size: 12px; text-align: center;">마이페이지</span>
                 </a>
-                <a href="/cart" class="text-gray-600 hover:text-gray-800 relative">
-                    <i class="fas fa-shopping-cart text-2xl"></i><br>
-                    <span style="font-size: 9px">장바구니</span>
+                <a sec:authorize="isAuthenticated()" href="/cart" class="text-gray-600 hover:text-gray-800 relative">
+                    <i class="fas fa-shopping-cart text-3xl"></i><br>
+                    <span style="font-size: 12px">장바구니</span>
+
                 </a>
             </div>
         </div>
         <nav class="mt-4">
             <ul class="flex justify-center space-x-6">
-                <li><a href="/nbe/home" class="text-gray-800 font-bold">HOME</a></li>
-                <li><a href="/post/list" class="text-gray-800 font-bold">NOTICE</a></li>
-                <li><a href="/nbe/recent" class="text-gray-800 font-bold">RECENT</a></li>
-                <li><a class="text-gray-800 font-bold" id="accButton">CATEGORY</a></li>
+
+                <li><a href="/nbe/home" class="text-gray-800 text-2xl font-bold ml-10">HOME</a></li>
+                <li><a class="text-gray-800 text-2xl font-bold ml-10" id="accButton">CATEGORY</a></li>
+                <li><a href="/post/list" class="text-gray-800 text-2xl font-bold ml-10">NOTICE</a></li>
             </ul>
         </nav>
     </header>
-<br><br>
+
     <div class="">
         <div class="category mb-4">
             <div class="category1 mb-3 hidden">
@@ -90,8 +97,6 @@
             </div>
         </div>
     </div>
-    <script>
 
-    </script>
 </th:block>
 </html>

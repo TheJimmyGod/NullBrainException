@@ -30,7 +30,7 @@
             <label for="purchase">문의할 상품</label>
             <select name="purchase" id="purchase">
                 <option value="">상품을 선택하세요</option>
-                <option th:each="pur : ${purchase}" th:value="${pur.good.name}"></option>
+                <option th:each="pur : ${purchase}" th:value="${pur.goods.name}"></option>
             </select>
         </div>
         <div class="form-group">
