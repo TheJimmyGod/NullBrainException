@@ -84,7 +84,7 @@ public class UserController {
             return "redirect:/user/register";
         }
         int cnt = userService.register(userDto);
-        String page = "/user/registerOk";
+        String page = "user/registerOk";
         model.addAttribute("result", cnt);
         return page;
     }

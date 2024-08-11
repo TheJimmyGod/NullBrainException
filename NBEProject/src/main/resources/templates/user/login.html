@@ -49,6 +49,8 @@
     </div>
     <div id="loginbox">
         <div id="text01">로그인</div>
+        <p th:if="${param.error}" style="color: red;">아이디 혹은 비밀번호가 틀립니다.</p>
+<!--        <p th:if="${error}" style="color: red;" th:text="${errorMessage}">로그인에 실패하였습니다.</p>-->
         <form th:action="@{/user/login}" method="POST">
             <input id="inputid" class="form-control" name="username" type="text" placeholder="아이디 입력" required>
             <input id="inputpw" class="form-control" name="password" type="password" placeholder="비밀번호 입력" required>

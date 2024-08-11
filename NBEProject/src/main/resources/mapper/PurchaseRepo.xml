@@ -3,7 +3,7 @@
 <mapper namespace="com.lec.spring.repository.PurchaseRepo">
     <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.shop.Purchase" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into  purchase (merchant_id, amount, opt, goods_id, user_id, pay_id)
-        VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{pay.id} )
+            VALUE (#{merchantId}, #{amount}, #{opt}, #{goods.goodsNo}, #{user.userId}, #{pay.id} )
     </insert>
 
     <delete id="delete">
@@ -14,9 +14,13 @@
         update purchase set status=#{status}
         where id=#{id}
     </update>
+
+
+
     <resultMap id="mapPurchase" type="com.lec.spring.domain.shop.Purchase">
         <result column="p_id" property="id"/>
         <result column="m_id" property="merchantId"/>
+        <result column="m_reg" property="regdate"/>
         <result column="p_amount" property="amount"/>
         <result column="p_opt" property="opt"/>
         <result column="p_status" property="status"/>
@@ -40,6 +44,7 @@
     </resultMap>
 
     <resultMap id="mapUser" type="com.lec.spring.dto.OrderUser">
+        <result column="userId" property="userId"/>
         <result column="u_username" property="username"/>
         <result column="u_name" property="name"/>
         <result column="u_phone" property="phone"/>
@@ -49,11 +54,11 @@
         <result column="detail_addr" property="detailAddr"/>
     </resultMap>
 
-    <sql id="selectPurchase">
+    <sql id="select">
         select
             p.id "p_id",
             p.merchant_id "m_id",
-            p.pay_id "pa_id",
+            p.regdate "m_reg",
             p.amount "p_amount",
             p.opt "p_opt",
             p.status "p_status",
@@ -61,6 +66,7 @@
             g.name as "g_name",
             g.price as "g_price",
             g.image_1 as "image",
+            u.id as "userId",
             u.username as "u_username",
             u.name as "u_name",
             u.phone as "u_phone",
@@ -77,101 +83,44 @@
                       on g.goods_no=p.goods_id
                  join user u
                       on p.user_id=u.id
-                join address a
-                    on a.user_id=p.user_id
-                join pay o
-                    on p.pay_id=o.id
+                 join address a
+                      on a.user_id=p.user_id
+                 join pay o
+                      on p.pay_id=o.id
         WHERE 1=1
-        and a.isDefault=true
+          and a.isDefault=true
 
 
     </sql>
 
+
     <select id="findById" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.id=#{param1}
     </select>
 
-    <select id="findPurchase" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
-        and p.user_id=#{param1}
-        and p.goods_id=#{parma2}
-    </select>
-
     <select id="findByRequest" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.merchant_id=#{param1}
     </select>
 
+
     <select id="findByUser" flushCache="true" resultMap="mapPurchase">
-        <include refid="selectPurchase"/>
+        <include refid="select"/>
         and p.user_id=#{param1}
+        ORDER BY p.regdate DESC
     </select>
 
 
 
-    <resultMap id="PurchaseResultMap" type="com.lec.spring.domain.shop.Purchase">
-        <id property="id" column="id"/>
-        <result property="merchantId" column="merchant_id"/>
-        <result property="payId" column="pay_id"/>
-        <result property="amount" column="amount"/>
-        <result property="opt" column="opt"/>
-        <result property="regdate" column="regdate"/>
-
-        <association property="users" javaType="com.lec.spring.domain.User">
-            <id property="id" column="user_id"/>
-            <result property="username" column="username"/>
-            <result property="phone" column="phone"/>
-            <result property="email" column="email"/>
-        </association>
-
-        <association property="good" javaType="com.lec.spring.domain.shop.Goods">
-            <id property="goods_no" column="goods_no"/>
-            <result property="name" column="goods_name"/>
-            <result property="price" column="goods_price"/>
-        </association>
-
-        <association property="pay" javaType="com.lec.spring.domain.shop.Pay">
-            <id property="id" column="pay_id"/>
-            <result property="price" column="pay_price"/>
-            <result property="status" column="pay_status"/>
-            <result property="paymentUid" column="payment_uid"/>
-        </association>
-    </resultMap>
-
-    <select id="listOrder" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
+    <select id="listOrder" resultMap="mapPurchase">
+        <include refid="select"/>
     </select>
 
-    <select id="username" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
-        WHERE u.username LIKE CONCAT('%', #{name}, '%')
-    </select>
 
-    <select id="pagination" resultMap="PurchaseResultMap">
-        SELECT p.*,
-               u.id as user_id, u.username as user_name, u.phone as user_phone, u.email as user_email,
-               g.goods_no, g.name as goods_name, g.price as goods_price,
-               pay.id as pay_id, pay.price as pay_price, pay.status as pay_status, pay.payment_uid
-        FROM purchase p
-                 LEFT JOIN user u ON p.user_id = u.id
-                 LEFT JOIN goods g ON p.goods_id = g.goods_no
-                 LEFT JOIN pay ON p.pay_id = pay.id
-        LIMIT #{limit} OFFSET #{offset}
+    <select id="pagination" resultMap="mapPurchase">
+        <include refid="select"/>
+        limit #{param1}, #{param2}
     </select>
 
     <select id="cntOrder" resultType="long">
@@ -196,14 +145,12 @@
 
     <select id="cntStatusCANCEL" resultType="long">
         SELECT COUNT(*) FROM pay
-        WHERE status = 'CANCEL'
+        WHERE status = 'CANCEL_OK'
     </select>
 
-    <update id="updatePayStatus" parameterType="map">
+    <update id="updatePayStatus">
         UPDATE pay
         SET status = #{status}
         WHERE id = #{purchaseId}
     </update>
-
-
 </mapper>

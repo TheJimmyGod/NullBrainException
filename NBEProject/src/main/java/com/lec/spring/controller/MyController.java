@@ -39,8 +39,12 @@ public class MyController {
     @Autowired
     private ContactService contactService;
 
+    @Autowired
+    private PurchaseService purchaseService;
+
     @Value("${app.upload.path}")
     private String uploadPath;
+
 
     public MyController() {
         System.out.println("MyController() 생성");
@@ -81,7 +85,7 @@ public class MyController {
             return "redirect:/mypage/update";
         }
         Profile profile = new Profile(addresses,nickname, phone, file);
-        model.addAttribute("result", myService.updateProfile(profile, delAddresses));
+        myService.updateProfile(profile, delAddresses);
         return "mypage/update";
     }
 
@@ -95,11 +99,17 @@ public class MyController {
 
     @RequestMapping("/contact")
     public String contact(Model model){
+        List<Purchase> purchaseList;
         User user = U.getLoggedUser();
         user = userService.findById(user.getId());
+        int userId = user.getId();
+
+        purchaseList = purchaseService.getUserPayed(userId);
+
 
         List<Contact> contact = contactService.allContacts();
 
+        model.addAttribute("purchase", purchaseList);
         model.addAttribute("contact", contact);
         model.addAttribute("username", user.getUsername());
 
@@ -113,12 +123,17 @@ public class MyController {
                             @RequestParam("type") String type,
                             @RequestParam("content") String content,
                             @RequestParam("file1") MultipartFile file1,
-                            @RequestParam("file2") MultipartFile file2
+                            @RequestParam("file2") MultipartFile file2,
+                            Model model
     ) throws IOException {
+        List<Purchase> purchaseList;
 
         User user = U.getLoggedUser();
         user = userService.findById(user.getId());
         int userId = user.getId();
+
+
+
 
         Contact contact = Contact.builder()
                 .user_id(userId)

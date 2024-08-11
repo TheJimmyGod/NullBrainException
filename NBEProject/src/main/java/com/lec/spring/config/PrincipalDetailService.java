@@ -27,9 +27,9 @@ public class PrincipalDetailService implements UserDetailsService {
         User user = userService.findByUsername(username); //id로 User리턴
 
         if(user != null){
-            int cartCnt = cartService.listUserItems(user.getId()).size();
-            HttpSession session = U.getSession();
-            session.setAttribute("cartCnt", cartCnt);
+//            int cartCnt = cartService.listUserItems(user.getId()).size();
+//            HttpSession session = U.getSession();
+//            session.setAttribute("cartCnt", cartCnt);
             PrincipalDetails userDetails = new PrincipalDetails(user);
             userDetails.setUserService(userService);
             return userDetails;

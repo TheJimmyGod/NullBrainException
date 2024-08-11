@@ -46,9 +46,10 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     margin: 5px 0;
     font-size: 1.5vw;
+    width: 200px;
 }
 
 #woman:hover{
@@ -59,8 +60,8 @@
 #woman{
     border: none;
     background-color: #8C8C8C;
-    width: 150px;
-    height: 50px;
+    width: 100px;
+    height: 40px;
 }
 
 #man:hover{
@@ -71,8 +72,8 @@
 #man{
     border: none;
     background-color: #8C8C8C;
-    width: 150px;
-    height: 50px;
+    width: 100px;
+    height: 40px;
 }
 
 /*body {*/

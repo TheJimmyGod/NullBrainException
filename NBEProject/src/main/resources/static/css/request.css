@@ -244,6 +244,8 @@ then set the desired styles for .card-img. */
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 .transInfo2{
@@ -255,6 +257,10 @@ then set the desired styles for .card-img. */
 .status{
     font-size: 20px;
     font-weight: bold;
+}
+
+.statusDiv{
+    text-align: left;
 }
 
 .productImage{
@@ -297,6 +303,20 @@ then set the desired styles for .card-img. */
 }
 
 .btnDiv a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 10px;
+    border: 1px solid #8C8C8C;
+    background-color: #A6A6A6;
+    padding: 0 20px; /* 좌우 패딩을 추가하여 버튼 너비 조정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+.cancel-request{
     display: inline-block;
     text-decoration: none;
     color: white;
@@ -376,12 +396,7 @@ body{
     text-align: center;
 }
 
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
-}
+
+
+
 
