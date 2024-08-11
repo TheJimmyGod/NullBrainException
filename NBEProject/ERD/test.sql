@@ -24,6 +24,11 @@ create table opt (
 );
 SELECT * FROM goods;
 
+Truncate post;
+Truncate comment;
+Truncate post_image;
+Truncate likes;
+
 DROP TABLE IF EXISTS user;
 DROP TABLE  IF EXISTS  post;
 DROP TABLE IF EXISTS likes;
@@ -38,6 +43,7 @@ DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS review_image;
 DROP TABLE  IF EXISTS  post_image;
 DROP TABLE  IF EXISTS  comment;
+DROP TABLE  IF EXISTS  likes;
 DROP TABLE IF EXISTS authority;
 DROP TABLE  IF EXISTS  contact;
 DROP TABLE  IF EXISTS  contact_image;
@@ -56,13 +62,38 @@ alter table goods modify name TEXT;
 alter table user ADD COLUMN status boolean default true;
 
 delete from goods;
+delete from post_image;
+delete from post;
+delete from comment;
+delete from likes;
 select * from goods;
 
 desc goods;
 
+INSERT INTO user VALUE (1,'Jimmy12', '1234', null, '진민장', '010-0000-0000', '19921120', 'minjang@mail.com',1, '', 'Bronze',0, '', 1, 0,true);
+
 select * from user;
 select * from contact;
 select * from contact_image;
+
+drop table if exists user;
+drop table if exists user_authorities;
+drop table if exists contact;
+drop table if exists contact_image;
+drop table if exists post;
+drop table if exists comment;
+drop table if exists post_image;
+drop table if exists review;
+drop table if exists review_image;
+drop table if exists address;
+drop table if exists recent_item;
+drop table if exists coupon_box;
+drop table if exists coupon;
+drop table if exists request;
+drop table if exists request_image;
+drop table if exists cart;
+drop table if exists purchase;
+
 delete from contact;
 delete from contact_image;
 
@@ -85,8 +116,13 @@ where user_id = 1;
 INSERT INTO purchase ( user_id, goods_id, pay_id, opt,merchant_id, amount,  regdate, status)
 VALUES (23, '105218', 190, '블랙+FREE','dab92edfa3a441a18c9d68187c63ac33', 15950, now(), 'OK');
 
+INSERT INTO user(id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point, provider, providerId, status)
+VALUES (1, 'Jimmy112', 12345678, null , '진민장', '010-0000-0000', '19921120', 'minjang@mail.com', 1, null, 'Bronze',0, 0, 'ROLE_MEMBER', 0, true);
+
 INSERT INTO user(id, username, password, regdate, name, phone, birth, email, gender, profileimage, grade, total_price, point)
 VALUES (2, 'JimmyGod', 12345678, null , '진민장', '010-0000-0000', '19921120', 'minjang@mail.com', 1, null, 'Bronze',0, 0);
+
+UPDATE user SET password = '12345678' WHERE id = 1;
 
 INSERT INTO authority(id, auth) VALUES (2, 2);
 
