@@ -71,7 +71,7 @@ function pathSearch(street){
     {
         //let keyWord = encodeURIComponent(street);
         let keyWord = encodeURIComponent(street);
-        let url = `https://business.juso.go.kr/addrlink/addrLinkApiJsonp.do?resultType=json&confmKey=devU01TX0FVVEgyMDI0MDcwNTA5MTgxMzExNDg5Mzc=&currentPage=1&countPerPage=1000&keyword=${keyWord};`
+        let url = `https://business.juso.go.kr/addrlink/addrLinkApiJsonp.do?resultType=json&confmKey=devU01TX0FVVEgyMDI0MDgxMTE0MTgyNDExNTAwMzE=&currentPage=1&countPerPage=1000&keyword=${keyWord};`
         $.ajax({
             url: url,
             type: "POST",
